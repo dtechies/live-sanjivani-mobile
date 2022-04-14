@@ -15,10 +15,10 @@ export const loginUser = (header, body) => {
     })
       .then(res => res.json())
       .then(response => {
-        console.log('URL := ', url);
-        console.log('header := ', header);
-        console.log('body := ', body);
-        console.log('Response := ', response);
+        // console.log('URL := ', url);
+        // console.log('header := ', header);
+        // console.log('body := ', body);
+        // console.log('Response := ', response);
         if (response) {
           return dispatch({
             type: actions.LOGIN_USER,

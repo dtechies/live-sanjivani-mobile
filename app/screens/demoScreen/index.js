@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {View, Pressable} from 'react-native';
 import {useTheme, useNavigation} from '@react-navigation/native';
-import {Text, ChangeLanguage} from 'components';
-import {size, color, IcWeb, IcTick} from 'theme';
+import {Text, ChangeLanguage, Button} from 'components';
+import {size, color, IcWeb, IcTick, IcPlus, IcSearch} from 'theme';
 import * as styles from './styles';
 
 export const DemoScreen = () => {
@@ -14,6 +14,7 @@ export const DemoScreen = () => {
         <Text style={styles.textLanding()} tx={'demo_screen.go_to_landing'} />
       </Pressable>
       <ChangeLanguage textStyle={{color: color.black}} />
+      <Button leftIcon={<IcPlus />} name={'submit'} />
     </View>
   );
 };
