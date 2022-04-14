@@ -1,4 +1,3 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
 
 This is a [ReactNative](https://reactnative.dev/) project created with [`npx react-native init appName`].
 
@@ -7,12 +6,16 @@ This is a [ReactNative](https://reactnative.dev/) project created with [`npx rea
 First, run the metro server:
 
 ```bash
-npm run dev
-# or
+
 # for the run on android device or emulator
 yarn android
+# or
+react-native run-android
+
 # for the run on ios device or simulator
 yarn ios
+# or
+react-native run-ios
 ```
 
 open your device or simulator or emulator to see the result.
