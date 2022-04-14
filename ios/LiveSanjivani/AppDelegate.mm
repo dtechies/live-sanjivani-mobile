@@ -29,6 +29,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  for (NSString* family in [UIFont familyNames])
+{
+  NSLog(@"font family%@", family);
+  for (NSString* name in [UIFont fontNamesForFamilyName: family])
+  {
+    NSLog(@"font name: %@", name);
+  }
+}
   RCTAppSetupPrepareApp(application);
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
