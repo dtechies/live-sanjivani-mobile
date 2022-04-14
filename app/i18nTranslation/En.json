@@ -1,0 +1,12 @@
+{
+  "demo_screen": {
+    "demo_data": "Demo",
+    "go_to_landing": "Go To Landing Page"
+  },
+  "condition": {
+    "ar": "to Hindi"
+  },
+  "landing_screen": {
+    "landing": "Landing Screen"
+  }
+}
