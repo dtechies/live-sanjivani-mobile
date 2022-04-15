@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {View, Pressable} from 'react-native';
-import {Text, Button} from 'components';
 import {useNavigation} from '@react-navigation/native';
 import {SelectCountry} from 'react-native-element-dropdown';
 
+import {Text, Button} from 'components';
 import * as styles from './styles';
+
 export const LandingScreen = () => {
   const [languageData, setLanguageData] = useState('');
   const navigation = useNavigation();
