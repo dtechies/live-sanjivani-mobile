@@ -7,6 +7,7 @@ import {Home} from './image/svgIcons/IcHome';
 import {Profile} from './image/svgIcons/IcProfile';
 import {Progress} from './image/svgIcons/IcProgress';
 import {Sharing} from './image/svgIcons/IcSharing';
+import {ArrowNext} from './image/svgIcons/IcArrowNext';
 
 export const IcWeb = props => (
   <Web height={props.height} width={props.width} fill={props.fill} />
@@ -33,4 +34,7 @@ export const IcProgress = props => (
 );
 export const IcSharing = props => (
   <Sharing height={props.height} width={props.width} fill={props.fill} />
+);
+export const IcArrowNext = props => (
+  <ArrowNext height={props.height} width={props.width} fill={props.fill} />
 );
