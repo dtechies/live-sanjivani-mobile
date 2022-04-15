@@ -1,28 +1,11 @@
 import React from 'react';
-import {
-  Svg,
-  Circle,
-  Ellipse,
-  G,
-  LinearGradient,
-  RadialGradient,
-  Line,
-  Path,
-  Polygon,
-  Polyline,
-  Rect,
-  Symbol,
-  Text,
-  Use,
-  Defs,
-  Stop,
-} from 'react-native-svg';
+import {Svg, G, Path, Defs} from 'react-native-svg';
 
 export const Search = props => {
   return (
     <Svg
-      height="25"
-      width="25"
+      height={props.height}
+      width={props.width}
       version="1.1"
       viewBox="0 0 256 256"
       xmlSpace="preserve">
@@ -49,7 +32,7 @@ export const Search = props => {
               strokeLinecap: 'butt',
               strokeLinejoin: 'miter',
               strokeMiterlimit: '10',
-              fill: 'rgba(0,0,0,0.5)',
+              fill: props.fill,
               fillRule: 'nonzero',
               opacity: '1',
             }}

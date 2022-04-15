@@ -21,6 +21,7 @@ export const InputBox = props => {
     rightIcon,
     onRightIconPress,
     inputTestId,
+    mainContainerStyle,
   } = props;
 
   const {t} = useContext(LocalizationContext);
@@ -28,14 +29,14 @@ export const InputBox = props => {
   const content = i18nText || title;
 
   return (
-    <View>
+    <View style={mainContainerStyle}>
       <Text style={[styles.titleTextStyle(), titleStyle]}> {content}</Text>
       <View style={[styles.container(leftIcon), containerStyle]}>
         {leftIcon && <View style={styles.leftIconContainer()}>{leftIcon}</View>}
         <TextInput
           testID={inputTestId}
           style={[styles.inputContainer(leftIcon), inputStyle]}
-          placeholderTextColor={color.grey}
+          placeholderTextColor={color.purple}
           selectionColor={color.dimGrey}
           value={value}
           ref={textRef}
@@ -44,7 +45,7 @@ export const InputBox = props => {
         {rightIcon && (
           <Pressable
             onPress={() => onRightIconPress()}
-            style={styles.leftIconContainer()}>
+            style={styles.rightIconContainer()}>
             {rightIcon}
           </Pressable>
         )}
