@@ -10,6 +10,11 @@ export const textLanding = () => ({
   color: color.mediumGreen,
   fontSize: fontSize.medium,
 });
+export const text = () => ({
+  fontFamily: fonts.openSansBold,
+  color: color.dimGrey,
+  fontSize: fontSize.medium,
+});
 export const button = () => ({
   backgroundColor: color.dimGrey,
   padding: size.moderateScale(10),

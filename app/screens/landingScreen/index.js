@@ -2,7 +2,6 @@ import React from 'react';
 import {View, Pressable} from 'react-native';
 import {Text} from 'components';
 import {useNavigation} from '@react-navigation/native';
-
 import * as styles from './styles';
 export const LandingScreen = () => {
   const navigation = useNavigation();

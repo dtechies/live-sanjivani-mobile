@@ -9,4 +9,6 @@ export const color = {
   purple: 'rgba(83, 93, 194,1)',
   semiTransBlack: 'rgba(0,0,0,0.5)',
   cornBlue: 'rgba(66,165,245,1)',
+  gainsBoro: 'rgba(224,226,229,1)',
+  ghostWhite: 'rgba(250,250,251,1)',
 };
