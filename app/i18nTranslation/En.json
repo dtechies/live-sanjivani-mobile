@@ -24,5 +24,12 @@
   },
   "profile_screen": {
     "profile": "Profile Screen"
+  },
+  "medication_reminder_screen": {
+    "referred_by": "Referred by",
+    "name_of_medicine": "Name of Medicine",
+    "medicine_form": "Medicine Form",
+    "dose": "Dose",
+    "medicine_strength": "Medicine Strength"
   }
 }
