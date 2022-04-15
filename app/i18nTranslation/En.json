@@ -23,5 +23,17 @@
   },
   "profile_screen": {
     "profile": "Profile Screen"
+  },
+  "appointment_reminder_screen": {
+    "title": "Appointment Reminder",
+    "name_of_doctor": "Name of Doctor/Practice",
+    "address_one": "Address1 (Required)",
+    "address_two": "Address2",
+    "city": "City",
+    "state": "State",
+    "pinCode": "PinCode",
+    "date": "Date",
+    "time": "Time",
+    "add": "Add"
   }
 }
