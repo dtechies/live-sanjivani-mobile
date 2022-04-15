@@ -31,5 +31,11 @@
     "medicine_form": "Medicine Form",
     "dose": "Dose",
     "medicine_strength": "Medicine Strength"
+  },
+  "login_screen":{
+    "number":"Enter Your Number",
+    "countryCode":"+91",
+    "learnMore":"Learn more",
+    "otp":"Enter OTP"
   }
 }

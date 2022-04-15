@@ -29,7 +29,8 @@ export const BottomStackNavigation = props => {
         routeName === 'trackOrderScreen' ||
         routeName === 'pmjFilterScreen' ||
         routeName === 'passwordChangedScreen' ||
-        routeName === 'blogDetailScreen'
+        routeName === 'blogDetailScreen' ||
+        routeName === 'loginScreen'
       ) {
         return false;
       }

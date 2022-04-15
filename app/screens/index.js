@@ -6,3 +6,4 @@ export * from './sharingScreen';
 export * from './profileScreen';
 export * from './medicationReminderScreen';
 export * from './todayScreen';
+export * from './loginScreen';

@@ -12,6 +12,10 @@ export const button = () => ({
   backgroundColor: color.cornBlue,
 });
 
+export const buttonTxt = () => ({
+  color: color.white,
+});
+
 export const dropdown = () => ({
   margin: size.moderateScale(16),
   height: size.moderateScale(50),
@@ -28,8 +32,4 @@ export const placeholderStyle = () => ({
 export const selectedTextStyle = () => ({
   fontSize: size.moderateScale(16),
   marginLeft: size.moderateScale(8),
-});
-
-export const buttonTxt = () => ({
-  color: color.white,
 });

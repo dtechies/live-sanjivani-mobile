@@ -40,7 +40,7 @@ export const LandingScreen = () => {
         buttonStyle={styles.button()}
         buttonText={styles.buttonTxt()}
         name={'Get Started'}
-        onPress={() => navigation.navigate('bottomStackNavigation')}
+        onPress={() => navigation.navigate('loginScreen')}
       />
     </View>
   );
