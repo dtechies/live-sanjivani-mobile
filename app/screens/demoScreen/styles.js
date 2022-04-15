@@ -6,9 +6,14 @@ export const container = () => ({
   alignItems: 'center',
 });
 export const textLanding = () => ({
-  // fontFamily: fonts.openSansRegular,
   color: color.mediumGreen,
   fontSize: fontSize.small,
+  fontFamily: fonts.openSansRegular,
   // fontFamily: fonts.openSansBold,
-  fontFamily: fonts.openSansMedium,
+  // fontFamily: fonts.openSansMedium,
+});
+export const button = () => ({
+  backgroundColor: color.dimGrey,
+  padding: size.moderateScale(10),
+  marginTop: size.moderateScale(10),
 });
