@@ -45,7 +45,7 @@ export const BottomStackNavigation = props => {
         return <BottomTab {...props} />;
       }}>
       <Tab.Screen
-        name="Home"
+        name="Today"
         component={HomeStackNavigation}
         options={({navigation}) => ({
           tabBarVisible: getTabBarVisibility(navigation),

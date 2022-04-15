@@ -11,7 +11,7 @@ export const textLabel = active => ({
   fontSize: fontSize.small,
   color: active ? color.cornBlue : color.darkGrey,
   fontFamily: fonts.openSansRegular,
-  textTransform: 'uppercase',
+  textTransform: 'capitalize',
   marginTop: size.moderateScale(5),
 });
 export const iconView = () => ({
