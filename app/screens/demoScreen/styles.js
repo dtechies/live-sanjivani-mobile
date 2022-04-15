@@ -12,3 +12,8 @@ export const textLanding = () => ({
   fontFamily: fonts.openSansBold,
   fontFamily: fonts.openSansMedium,
 });
+export const button = () => ({
+  backgroundColor: color.dimGrey,
+  padding: size.moderateScale(10),
+  marginTop: size.moderateScale(10),
+});

@@ -1,12 +1,27 @@
 {
   "demo_screen": {
     "demo_data": "Demo",
-    "go_to_landing": "Go To Landing Page"
+    "go_to_landing": "Go To Landing Page",
+    "demo_screen": "Demo Screen",
+    "go_to_demo": "Go To Demo Screen",
+    "back": "Go Back"
   },
   "condition": {
     "ar": "to Hindi"
   },
   "landing_screen": {
     "landing": "Landing Screen"
+  },
+  "progress_screen": {
+    "progress": "Progress Screen"
+  },
+  "sharing_screen": {
+    "sharing": "Sharing Screen"
+  },
+  "add_screen": {
+    "add": "Add Screen"
+  },
+  "profile_screen": {
+    "profile": "Profile Screen"
   }
 }

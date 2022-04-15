@@ -1,28 +1,11 @@
 import React from 'react';
-import {
-  Svg,
-  Circle,
-  Ellipse,
-  G,
-  LinearGradient,
-  RadialGradient,
-  Line,
-  Path,
-  Polygon,
-  Polyline,
-  Rect,
-  Symbol,
-  Text,
-  Use,
-  Defs,
-  Stop,
-} from 'react-native-svg';
+import {Svg, Line, Rect} from 'react-native-svg';
 
-export const Plus = props => {
+export function Plus(props) {
   return (
     <Svg
-      height="30"
-      width="23"
+      height={props.height}
+      width={props.width}
       id="Layer_1"
       version="1.1"
       viewBox="0 0 50 50"
@@ -30,7 +13,7 @@ export const Plus = props => {
       <Rect height="50" width="50" fill="none" />
       <Line
         fill="none"
-        stroke="black"
+        stroke={props.fill}
         strokeWidth="4"
         x1="9"
         x2="41"
@@ -39,7 +22,7 @@ export const Plus = props => {
       />
       <Line
         fill="none"
-        stroke="black"
+        stroke={props.fill}
         strokeWidth="4"
         x1="25"
         x2="25"

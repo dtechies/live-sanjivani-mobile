@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {View, Pressable} from 'react-native';
 import {useTheme, useNavigation} from '@react-navigation/native';
+
 import {Loader, Text, ChangeLanguage, Button, TitleBox} from 'components';
 import {size, color, IcWeb, IcTick, IcPlus, IcSearch} from 'theme';
 import * as styles from './styles';
 
 export const DemoScreen = () => {
   const navigation = useNavigation();
-  const [type, setType] = useState();
   return (
     <View style={styles.container()}>
       <Loader />
