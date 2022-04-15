@@ -14,4 +14,5 @@ export const color = {
   ghostWhite: 'rgba(250,250,251,1)',
   lavender: 'rgba(224,227,245,1)',
   lightBlue: 'rgb(130, 211, 255)',
+  steelBlue: 'rgba(160,168,223,1)',
 };

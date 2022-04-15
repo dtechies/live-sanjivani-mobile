@@ -49,5 +49,16 @@
     "countryCode": "+91",
     "learnMore": "Learn more",
     "otp": "Enter OTP"
+  },
+  "help_screen": {
+    "title": "Help (Support, Disclosures)",
+    "support": "Support",
+    "help_center": "Help Center",
+    "contact_us": "Contact Us",
+    "disclosures": "Disclosures",
+    "new_terms": "NewCo Terms",
+    "crm": "Customer Relationship Summary",
+    "Privacy": "Privacy",
+    "licenses": "Licenses"
   }
 }

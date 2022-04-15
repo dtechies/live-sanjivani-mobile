@@ -8,3 +8,4 @@ export * from './medicationReminderScreen';
 export * from './todayScreen';
 export * from './loginScreen';
 export * from './appointmentReminderScreen';
+export * from './helpSupportScreen';
