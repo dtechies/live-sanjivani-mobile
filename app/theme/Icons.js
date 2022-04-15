@@ -8,6 +8,8 @@ import {Profile} from './image/svgIcons/IcProfile';
 import {Progress} from './image/svgIcons/IcProgress';
 import {Sharing} from './image/svgIcons/IcSharing';
 import {ArrowNext} from './image/svgIcons/IcArrowNext';
+import {Calender} from './image/svgIcons/IcCalendar';
+import {Down} from './image/svgIcons/IcDown';
 
 export const IcWeb = props => (
   <Web height={props.height} width={props.width} fill={props.fill} />
@@ -37,4 +39,10 @@ export const IcSharing = props => (
 );
 export const IcArrowNext = props => (
   <ArrowNext height={props.height} width={props.width} fill={props.fill} />
+);
+export const IcCalendar = props => (
+  <Calender height={props.height} width={props.width} fill={props.fill} />
+);
+export const IcDown = props => (
+  <Down height={props.height} width={props.width} fill={props.fill} />
 );
