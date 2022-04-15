@@ -10,7 +10,8 @@
     "ar": "to Hindi"
   },
   "landing_screen": {
-    "landing": "Landing Screen"
+    "landing": "Landing Screen",
+    "get_started": "Get Started "
   },
   "progress_screen": {
     "progress": "Progress Screen"
@@ -35,5 +36,18 @@
     "date": "Date",
     "time": "Time",
     "add": "Add"
+  },
+  "medication_reminder_screen": {
+    "referred_by": "Referred by",
+    "name_of_medicine": "Name of Medicine",
+    "medicine_form": "Medicine Form",
+    "dose": "Dose",
+    "medicine_strength": "Medicine Strength"
+  },
+  "login_screen": {
+    "number": "Enter Your Number",
+    "countryCode": "+91",
+    "learnMore": "Learn more",
+    "otp": "Enter OTP"
   }
 }

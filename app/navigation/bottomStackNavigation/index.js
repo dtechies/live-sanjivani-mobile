@@ -29,7 +29,8 @@ export const BottomStackNavigation = props => {
         routeName === 'trackOrderScreen' ||
         routeName === 'pmjFilterScreen' ||
         routeName === 'passwordChangedScreen' ||
-        routeName === 'blogDetailScreen'
+        routeName === 'blogDetailScreen' ||
+        routeName === 'loginScreen'
       ) {
         return false;
       }
@@ -45,7 +46,7 @@ export const BottomStackNavigation = props => {
         return <BottomTab {...props} />;
       }}>
       <Tab.Screen
-        name="Home"
+        name="Today"
         component={HomeStackNavigation}
         options={({navigation}) => ({
           tabBarVisible: getTabBarVisibility(navigation),

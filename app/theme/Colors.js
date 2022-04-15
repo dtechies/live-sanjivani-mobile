@@ -13,4 +13,5 @@ export const color = {
   gainsBoro: 'rgba(224,226,229,1)',
   ghostWhite: 'rgba(250,250,251,1)',
   lavender: 'rgba(224,227,245,1)',
+  lightBlue: 'rgb(130, 211, 255)',
 };

@@ -13,7 +13,7 @@ export const AddScreen = () => {
         <Text style={styles.textLanding()} tx={'add_screen.add'} />
       </Pressable>
       <Pressable
-        onPress={() => navigation.navigate('demoScreen')}
+        onPress={() => navigation.navigate('medicationReminderScreen')}
         style={styles.button()}>
         <Text style={styles.textLanding()} tx={'demo_screen.go_to_demo'} />
       </Pressable>
