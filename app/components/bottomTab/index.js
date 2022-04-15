@@ -27,7 +27,7 @@ export const BottomTab = props => {
     <View style={styles.container()}>
       {state.routes.map((r, index) => {
         var Icon;
-        if (r.name === 'Home') {
+        if (r.name === 'Today') {
           Icon = IcHome;
         } else if (r.name === 'Progress') {
           Icon = IcProgress;
