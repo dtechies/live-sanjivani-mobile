@@ -1,22 +1,46 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Pressable} from 'react-native';
-import {Text} from 'components';
+import {Text, Button} from 'components';
 import {useNavigation} from '@react-navigation/native';
+import {SelectCountry} from 'react-native-element-dropdown';
 
 import * as styles from './styles';
 export const LandingScreen = () => {
+  const [languageData, setLanguageData] = useState('');
   const navigation = useNavigation();
-
+  const local_data = [
+    {
+      value: '1',
+      lable: 'English',
+    },
+    {
+      value: '2',
+      lable: 'Hindi',
+    },
+  ];
   return (
     <View style={styles.container()}>
-      <Pressable>
-        <Text style={styles.textLanding()} tx={'landing_screen.landing'} />
-      </Pressable>
-      <Pressable
-        onPress={() => navigation.navigate('demoScreen')}
-        style={styles.button()}>
-        <Text style={styles.textLanding()} tx={'demo_screen.go_to_demo'} />
-      </Pressable>
+      <SelectCountry
+        style={styles.dropdown()}
+        selectedTextStyle={styles.selectedTextStyle()}
+        placeholderStyle={styles.placeholderStyle()}
+        maxHeight={85}
+        alignItems="center"
+        value={languageData}
+        data={local_data}
+        valueField="value"
+        labelField="lable"
+        placeholder="Select Language"
+        onChange={e => {
+          setLanguageData(e.value);
+        }}
+      />
+      <Button
+        buttonStyle={styles.button()}
+        buttonText={styles.buttonTxt()}
+        name={'Get Started'}
+        onPress={() => navigation.navigate('bottomStackNavigation')}
+      />
     </View>
   );
 };
