@@ -1,18 +1,27 @@
 import React, {useState} from 'react';
 import {View, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Text, InputBox, IcHome} from 'components';
+
+import {
+  Loader,
+  Text,
+  ChangeLanguage,
+  Button,
+  TitleBox,
+  InputBox,
+  IcHome,
+} from 'components';
+import {size, color, IcWeb, IcTick, IcPlus, IcSearch} from 'theme';
+
 import * as styles from './styles';
 
 export const DemoScreen = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.container()}>
-      <Pressable>
-        <Text style={styles.textLanding()} tx={'demo_screen.demo_screen'} />
-      </Pressable>
-      <Pressable onPress={() => navigation.goBack()} style={styles.button()}>
-        <Text style={styles.textLanding()} tx={'demo_screen.back'} />
+      <Loader />
+      <Pressable onPress={() => navigation.navigate('landingScreen')}>
+        <Text style={styles.textLanding()} tx={'demo_screen.go_to_landing'} />
       </Pressable>
       <InputBox
         title={'Title'}
@@ -27,6 +36,9 @@ export const DemoScreen = () => {
         //   />
         // }
       />
+      <ChangeLanguage textStyle={{color: color.black}} />
+      <Button leftIcon={<IcPlus />} name={'submit'} />
+      <TitleBox name={'BHAVYA'} />
     </View>
   );
 };

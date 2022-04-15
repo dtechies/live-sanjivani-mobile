@@ -4,3 +4,6 @@ export * from './text';
 export * from './bottomTab';
 export * from './textInput';
 export * from './screen';
+export * from './button';
+export * from './titleBox';
+export * from './loader';
