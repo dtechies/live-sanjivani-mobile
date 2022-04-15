@@ -6,6 +6,7 @@ import {
   TodayScreen,
   AppointmentReminderScreen,
   LoginScreen,
+  HelpSupportScreen,
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
@@ -16,6 +17,7 @@ export const HomeStackNavigation = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="landingScreen" component={LandingScreen} />
+      <Stack.Screen name="HelpSupportScreen" component={HelpSupportScreen} />
       <Stack.Screen name="todayScreen" component={TodayScreen} />
       <Stack.Screen
         name="appointmentReminderScreen"
