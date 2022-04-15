@@ -9,6 +9,6 @@ export const textLanding = () => ({
   color: color.mediumGreen,
   fontSize: fontSize.small,
   fontFamily: fonts.openSansRegular,
-  // fontFamily: fonts.openSansBold,
-  // fontFamily: fonts.openSansMedium,
+  fontFamily: fonts.openSansBold,
+  fontFamily: fonts.openSansMedium,
 });
