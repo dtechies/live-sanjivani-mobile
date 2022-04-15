@@ -4,4 +4,5 @@ export const color = {
   dimGrey: 'rgba(90,98,117,1)',
   darkGrey: 'rgba(147,154,169,1)',
   mediumGreen: 'rgba(79, 174, 83,1)',
+  cornBlue: 'rgba(66,165,245,1)',
 };

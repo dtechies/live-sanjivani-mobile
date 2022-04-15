@@ -4,13 +4,13 @@ import {Text} from 'components';
 import {useNavigation} from '@react-navigation/native';
 
 import * as styles from './styles';
-export const LandingScreen = () => {
+export const AddScreen = () => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.container()}>
       <Pressable>
-        <Text style={styles.textLanding()} tx={'landing_screen.landing'} />
+        <Text style={styles.textLanding()} tx={'add_screen.add'} />
       </Pressable>
       <Pressable
         onPress={() => navigation.navigate('demoScreen')}
