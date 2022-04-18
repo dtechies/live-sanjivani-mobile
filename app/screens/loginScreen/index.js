@@ -54,13 +54,13 @@ export const LoginScreen = () => {
           <Button
             buttonStyle={styles.button()}
             buttonText={styles.buttonTxt()}
-            name={'Request OTP'}
+            nameTx={'login_screen.request_otp'}
             onPress={() => requestOtp()}
           />
           <Button
             buttonStyle={styles.button()}
             buttonText={styles.buttonTxt()}
-            name={'Register New User'}
+            nameTx={'login_screen.register_new_user'}
             onPress={() => navigation.navigate('registerScreen')}
           />
           <View style={styles.linkView()}>
@@ -107,13 +107,13 @@ export const LoginScreen = () => {
           <Button
             buttonStyle={styles.button()}
             buttonText={styles.buttonTxt()}
-            name={'Request new OTP'}
+            nameTx={'login_screen.request_new_otp'}
             onPress={() => requestOtp()}
           />
           <Button
             buttonStyle={styles.button()}
             buttonText={styles.buttonTxt()}
-            name={'Login'}
+            nameTx={'login_screen.login'}
             onPress={() => console.log('loginScreen')}
           />
           <View style={styles.linkView()}>

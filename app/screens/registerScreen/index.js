@@ -36,7 +36,7 @@ export const RegisterScreen = () => {
       {isLoading && <Loader />}
       <Screen bounces={false} style={styles.screenContainer()}>
         <TitleBox
-          title={'Lets Create Your Profile'}
+          titleTx={'register_screen.title_register'}
           titleContainerStyle={styles.titleTextContainer()}
         />
         <InputBox
@@ -116,7 +116,7 @@ export const RegisterScreen = () => {
           titleTx={'register_screen.select_language'}
           titleStyle={styles.labelDisableText()}
           value={'English'}
-          containerStyle={{borderColor: color.darkGrey}}
+          containerStyle={styles.disableLanguage()}
           editable={editable}
           inputStyle={styles.inputDisableStyle()}
           mainContainerStyle={styles.inputMainDisableContainer()}
@@ -124,7 +124,7 @@ export const RegisterScreen = () => {
         <Button
           buttonStyle={styles.button()}
           buttonText={styles.buttonTxt()}
-          name={'NEXT'}
+          nameTx={'register_screen.next'}
           onPress={() => alert('Signup')}
         />
       </Screen>

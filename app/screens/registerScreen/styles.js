@@ -89,3 +89,7 @@ export const button = () => ({
 export const buttonTxt = () => ({
   color: color.borderBlue,
 });
+
+export const disableLanguage = () => ({
+  borderColor: color.darkGrey,
+});

@@ -36,7 +36,11 @@
     "number":"Enter Your Number",
     "countryCode":"+91",
     "learnMore":"Learn more",
-    "otp":"Enter OTP"
+    "otp":"Enter OTP",
+    "request_otp":"Request OTP",
+    "register_new_user":"Register New User",
+    "request_new_otp":"Request New OTP",
+    "login":"Login"
   },
   "register_screen":{
     "first_name":"First Name",
@@ -45,6 +49,8 @@
     "phone_Number":"Phone Number",
     "gender":"Gender",
     "select_language":"Selected Language",
-    "dob":"DOB"
+    "dob":"DOB",
+    "next":"NEXT",
+    "title_register":"Lets Create Your Profile"
   }
 }
