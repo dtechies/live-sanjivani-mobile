@@ -26,7 +26,9 @@
     "download": "Download"
   },
   "add_screen": {
-    "add": "Add Screen"
+    "add": "Add",
+    "add_medication": "Add Medication",
+    "add_appointment": "Add Appointment"
   },
   "profile_screen": {
     "profile": "Profile Screen"

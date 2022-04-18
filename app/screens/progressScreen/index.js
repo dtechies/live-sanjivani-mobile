@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {View, Pressable, SafeAreaView} from 'react-native';
 import {Text, Button, Screen, InputBox} from 'components';
 import {size, IcHeart, color, IcTick, IcPlus} from 'theme';
@@ -9,7 +9,7 @@ import 'react-native-gesture-handler';
 
 import {categoriesData} from 'json';
 import * as styles from './styles';
-export const ProgressScreen = () => {
+export const ProgressScreen = props => {
   const navigation = useNavigation();
   const modalRef = useRef();
   const [showAll, setShowAll] = useState(false);
@@ -18,6 +18,11 @@ export const ProgressScreen = () => {
   const [data, setData] = useState([]);
   const [fav, setFav] = useState(false);
 
+  useEffect(() => {
+    if (props.route.params) {
+      setShowAll(props.route.params.showAll);
+    }
+  }, []);
   return (
     <SafeAreaView style={styles.full()}>
       <Screen
