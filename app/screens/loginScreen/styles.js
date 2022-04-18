@@ -8,18 +8,11 @@ export const container = () => ({
 export const imageView = () => ({
   marginVertical: size.moderateScale(40),
   alignItems: 'center',
-  // backgroundColor: 'red',
-  // height: size.deviceWidth * 0.4,
-  // width: size.deviceWidth * 0.4,
 });
 export const screenContainer = () => ({
   paddingHorizontal: size.moderateScale(20),
 });
-export const labelFieldText = () => ({
-  fontSize: fontSize.small,
-  fontFamily: fonts.openSansRegular,
-  color: color.purple,
-});
+
 export const labelFieldLinkText = () => ({
   marginRight: size.moderateScale(10),
   textDecorationLine: 'underline',
@@ -27,17 +20,21 @@ export const labelFieldLinkText = () => ({
   fontFamily: fonts.openSansRegular,
   color: color.mediumGreen,
 });
-export const inputStyle = editable => ({
-  fontSize: fontSize.small,
-  fontFamily: fonts.openSansRegular,
-  color: color.purple,
 
-  paddingLeft: size.moderateScale(5),
-});
 export const inputMainContainer = editable => ({
   width: size.deviceWidth * 0.9,
   marginVertical: size.moderateScale(10),
-  // backgroundColor: 'red',
+});
+export const labelFieldText = () => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.openSansRegular,
+  color: color.purple,
+});
+export const inputStyle = () => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.openSansRegular,
+  color: color.purple,
+  paddingLeft: size.moderateScale(5),
 });
 
 export const labelDisableText = () => ({
