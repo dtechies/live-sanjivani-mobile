@@ -5,6 +5,7 @@ import {size, IcHeart, color, IcTick, IcPlus} from 'theme';
 import {useNavigation} from '@react-navigation/native';
 import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
+import 'react-native-gesture-handler';
 
 import {categoriesData} from 'json';
 import * as styles from './styles';
@@ -75,7 +76,7 @@ export const ProgressScreen = () => {
             handleStyle={styles.dragStyle()}>
             <View>
               <Text style={styles.modalTitleText()}>{data.title}</Text>
-              <View style={styles.row()}>
+              <View style={styles.inputRowView()}>
                 <InputBox
                   titleStyle={styles.textInputTitle()}
                   placeholder={data.title}

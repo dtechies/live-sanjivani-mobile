@@ -68,14 +68,20 @@ export const modalTitleText = () => ({
   fontSize: fontSize.medium,
   marginLeft: size.moderateScale(5),
   textAlign: 'center',
+  marginBottom: size.moderateScale(5),
 });
 export const textInputTitle = () => ({
   fontFamily: fonts.openSansBold,
   color: color.purple,
   fontSize: fontSize.small,
 });
+export const inputRowView = () => [
+  row(),
+  {
+    paddingBottom: size.moderateScale(20),
+  },
+];
 export const inputMainContainer = () => ({
-  marginBottom: size.moderateScale(20),
   width: size.deviceWidth * 0.5,
 });
 export const labelFieldText = () => ({
