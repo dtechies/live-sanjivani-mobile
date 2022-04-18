@@ -19,10 +19,16 @@
     "add_to_favorite": "Add To Favorite"
   },
   "sharing_screen": {
-    "sharing": "Sharing Screen"
+    "sharing": "Sharing Screen",
+    "select_item_to_share": "Select Items to Share",
+    "select_individual": "Select Individual from Contacts or Add new contact",
+    "send_pdf": "Send as PDF",
+    "download": "Download"
   },
   "add_screen": {
-    "add": "Add Screen"
+    "add": "Add",
+    "add_medication": "Add Medication",
+    "add_appointment": "Add Appointment"
   },
   "profile_screen": {
     "profile": "Profile Screen"
@@ -46,26 +52,26 @@
     "dose": "Dose",
     "medicine_strength": "Medicine Strength"
   },
-  "login_screen":{
-    "number":"Enter Your Number",
-    "countryCode":"+91",
-    "learnMore":"Learn more",
-    "otp":"Enter OTP",
-    "request_otp":"Request OTP",
-    "register_new_user":"Register New User",
-    "request_new_otp":"Request New OTP",
-    "login":"Login"
+  "login_screen": {
+    "number": "Enter Your Number",
+    "countryCode": "+91",
+    "learnMore": "Learn more",
+    "otp": "Enter OTP",
+    "request_otp": "Request OTP",
+    "register_new_user": "Register New User",
+    "request_new_otp": "Request New OTP",
+    "login": "Login"
   },
-  "register_screen":{
-    "first_name":"First Name",
-    "last_name":"Last Name",
-    "email":"Email",
-    "phone_Number":"Phone Number",
-    "gender":"Gender",
-    "select_language":"Selected Language",
-    "dob":"DOB",
-    "next":"NEXT",
-    "title_register":"Lets Create Your Profile"
+  "register_screen": {
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email": "Email",
+    "phone_Number": "Phone Number",
+    "gender": "Gender",
+    "select_language": "Selected Language",
+    "dob": "DOB",
+    "next": "NEXT",
+    "title_register": "Lets Create Your Profile"
   },
   "help_screen": {
     "title": "Help (Support, Disclosures)",

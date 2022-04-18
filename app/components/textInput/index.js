@@ -30,7 +30,9 @@ export const InputBox = props => {
 
   return (
     <View style={mainContainerStyle}>
-      <Text style={[styles.titleTextStyle(), titleStyle]}> {content}</Text>
+      {content && (
+        <Text style={[styles.titleTextStyle(), titleStyle]}> {content}</Text>
+      )}
       <View style={[styles.container(leftIcon), containerStyle]}>
         {leftIcon && <View style={styles.leftIconContainer()}>{leftIcon}</View>}
         <TextInput
