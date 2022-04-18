@@ -14,7 +14,9 @@
     "get_started": "Get Started "
   },
   "progress_screen": {
-    "progress": "Progress Screen"
+    "progress": "Progress Screen",
+    "show_all": "Show All",
+    "add_to_favorite": "Add To Favorite"
   },
   "sharing_screen": {
     "sharing": "Sharing Screen"

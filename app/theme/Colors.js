@@ -1,5 +1,6 @@
 export const color = {
   black: 'rgba(0,0,0,1)',
+  transparent: 'rgba(0, 0, 0, 0)',
   white: 'rgba(255,255,255,1)',
   dimGrey: 'rgba(90,98,117,1)',
   darkGrey: 'rgba(147,154,169,1)',
@@ -15,4 +16,5 @@ export const color = {
   lavender: 'rgba(224,227,245,1)',
   lightBlue: 'rgb(130, 211, 255)',
   steelBlue: 'rgba(160,168,223,1)',
+  red: 'rgba(255,0,0,1)',
 };
