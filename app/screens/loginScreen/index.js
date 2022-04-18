@@ -61,7 +61,7 @@ export const LoginScreen = () => {
             buttonStyle={styles.button()}
             buttonText={styles.buttonTxt()}
             name={'Register New User'}
-            onPress={() => console.log('loginScreen')}
+            onPress={() => navigation.navigate('registerScreen')}
           />
           <View style={styles.linkView()}>
             <Text

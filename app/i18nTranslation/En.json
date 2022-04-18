@@ -37,5 +37,14 @@
     "countryCode":"+91",
     "learnMore":"Learn more",
     "otp":"Enter OTP"
+  },
+  "register_screen":{
+    "first_name":"First Name",
+    "last_name":"Last Name",
+    "email":"Email",
+    "phone_Number":"Phone Number",
+    "gender":"Gender",
+    "select_language":"Selected Language",
+    "dob":"DOB"
   }
 }

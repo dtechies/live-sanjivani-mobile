@@ -19,19 +19,7 @@ export const BottomStackNavigation = props => {
       const routeName = route.state
         ? route.state.routes[route.state.index].name
         : '';
-      if (
-        routeName === 'compareDiamondScreen' ||
-        routeName === 'whishListScreen' ||
-        routeName === 'cartScreen' ||
-        routeName === 'selectAddressScreen' ||
-        routeName === 'paymentMethodScreen' ||
-        routeName === 'paymentStatusScreen' ||
-        routeName === 'trackOrderScreen' ||
-        routeName === 'pmjFilterScreen' ||
-        routeName === 'passwordChangedScreen' ||
-        routeName === 'blogDetailScreen' ||
-        routeName === 'loginScreen'
-      ) {
+      if (routeName === 'loginScreen' || routeName === 'registerScreen') {
         return false;
       }
     }
