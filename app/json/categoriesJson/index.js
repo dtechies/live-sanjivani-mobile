@@ -1,0 +1,20 @@
+import {IcHeart} from 'theme';
+export const categoriesData = [
+  {icon: IcHeart, title: 'RestingHeart Rate', count: 67, unit: 'BPM'},
+  {title: 'Respiratory Rate', count: 14.2, unit: 'breath/min'},
+  {title: 'Sleep', count: 6, unit: 'hours min'},
+  {title: 'Steps', count: 2500, unit: 'BPM'},
+  {title: 'Blood Glycose', count: 25, unit: 'BPM'},
+  {title: 'Allergies', count: 56, unit: 'BPM'},
+  {title: 'Weight', count: 52.5, unit: 'kg'},
+  {title: 'Height', count: 162, unit: 'cm'},
+  {title: 'BMI', count: 25, unit: 'BPM'},
+  {title: 'Blood Pressure', count: 120, unit: 'mmHg'},
+  {title: 'Body temperature', count: 30, unit: 'C'},
+  {title: 'Menstruation', count: 30, unit: 'BPM'},
+  {title: 'Blood Oxygen', count: 71, unit: '%'},
+  {title: 'Alcohol Consumption', count: 71, unit: 'ml'},
+  {title: 'Inhaler Usage', count: 71, unit: 'mcg'},
+  {title: 'Sexual Activity', count: 71, unit: 'mcg'},
+  {title: 'ToothBrushing', count: 2, unit: 'in a day'},
+];

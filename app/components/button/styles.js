@@ -1,4 +1,4 @@
-import {size} from 'theme';
+import {size, fontSize} from 'theme';
 
 export const container = () => ({
   justifyContent: 'center',
@@ -10,7 +10,7 @@ export const container = () => ({
 
 export const btnTxt = () => ({
   paddingBottom: size.moderateScale(3),
-  fontSize: size.moderateScale(20),
+  fontSize: fontSize.small,
 });
 
 export const svgView = () => ({
