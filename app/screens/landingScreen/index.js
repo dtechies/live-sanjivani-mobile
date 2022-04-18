@@ -39,7 +39,7 @@ export const LandingScreen = () => {
       <Button
         buttonStyle={styles.button()}
         buttonText={styles.buttonTxt()}
-        name={'Get Started'}
+        nameTx={'landing_screen.get_started'}
         onPress={() => navigation.navigate('loginScreen')}
       />
     </View>
