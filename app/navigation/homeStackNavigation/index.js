@@ -17,11 +17,11 @@ export const HomeStackNavigation = () => {
       screenOptions={{
         headerShown: false,
       }}>
+      <Stack.Screen name="todayScreen" component={TodayScreen} />
       <Stack.Screen name="landingScreen" component={LandingScreen} />
       <Stack.Screen name="loginScreen" component={LoginScreen} />
       <Stack.Screen name="registerScreen" component={RegisterScreen} />
       <Stack.Screen name="HelpSupportScreen" component={HelpSupportScreen} />
-      <Stack.Screen name="todayScreen" component={TodayScreen} />
       <Stack.Screen
         name="appointmentReminderScreen"
         component={AppointmentReminderScreen}

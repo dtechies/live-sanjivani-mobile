@@ -10,6 +10,7 @@ import {Sharing} from './image/svgIcons/IcSharing';
 import {ArrowNext} from './image/svgIcons/IcArrowNext';
 import {Calender} from './image/svgIcons/IcCalendar';
 import {Down} from './image/svgIcons/IcDown';
+import {Delete} from './image/svgIcons/IcDelete';
 import {Heart} from './image/svgIcons/IcHeart';
 
 export const IcWeb = props => (
@@ -46,6 +47,9 @@ export const IcCalendar = props => (
 );
 export const IcDown = props => (
   <Down height={props.height} width={props.width} fill={props.fill} />
+);
+export const IcDelete = props => (
+  <Delete height={props.height} width={props.width} fill={props.fill} />
 );
 export const IcHeart = props => (
   <Heart height={props.height} width={props.width} fill={props.fill} />
