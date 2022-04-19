@@ -25,7 +25,7 @@ export const reminderView = () => ({
   paddingHorizontal: size.moderateScale(10),
   borderWidth: size.moderateScale(1),
   height: size.moderateScale(50),
-  width: size.deviceWidth * 0.9,
+  marginHorizontal: size.moderateScale(10),
   backgroundColor: color.lightGreen,
   marginBottom: size.moderateScale(10),
 });
@@ -39,7 +39,6 @@ export const reminderText = () => ({
 
 export const separator = () => ({
   height: size.moderateScale(20),
-  backgroundColor: 'red',
 });
 
 export const backgroundBtn = () => ({
@@ -53,7 +52,6 @@ export const backgroundBtn = () => ({
 });
 
 export const rowBack = () => ({
-  backgroundColor: 'red',
   alignItems: 'center',
 });
 export const labelFieldText = () => ({
@@ -61,4 +59,15 @@ export const labelFieldText = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.openSansRegular,
   color: color.purple,
+});
+
+export const tipsContainer = () => ({
+  marginHorizontal: size.moderateScale(20),
+  marginVertical: size.moderateScale(10),
+});
+
+export const tipsSubView = () => ({
+  padding: size.moderateScale(10),
+  borderWidth: size.moderateScale(1),
+  borderColor: color.darkGrey,
 });
