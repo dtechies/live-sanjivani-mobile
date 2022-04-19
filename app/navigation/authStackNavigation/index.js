@@ -9,7 +9,6 @@ export const AuthStackNavigation = () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        initialState: 'selectServiceScreen',
       }}>
       <Stack.Screen name="loginScreen" component={LoginScreen} />
       <Stack.Screen name="registerScreen" component={RegisterScreen} />

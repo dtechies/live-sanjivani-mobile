@@ -3,19 +3,15 @@ import {SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Button, TitleBox, Screen} from 'components';
 import {Dropdown} from 'react-native-element-dropdown';
-import {size, color} from 'theme';
 
+import {size} from 'theme';
+import {selectServiceList} from 'json';
 import * as styles from './styles';
 export const SelectServiceScreen = () => {
   const navigation = useNavigation();
   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
-  const service = [
-    {label: 'All', value: 'all'},
-    {label: 'Get Medicine Reminder', value: 'get medicine reminder'},
-    {label: 'Get Appointment Reminder', value: 'get appointment reminder'},
-  ];
   return (
     <SafeAreaView style={styles.container()}>
       <TitleBox
@@ -24,7 +20,7 @@ export const SelectServiceScreen = () => {
       />
       <Screen bounces={false} contentContainerStyle={styles.screenContainer()}>
         <Dropdown
-          data={service}
+          data={selectServiceList}
           labelField="label"
           valueField="value"
           placeholder={'Select Services'}
@@ -49,11 +45,12 @@ export const SelectServiceScreen = () => {
           buttonStyle={styles.button()}
           buttonText={styles.buttonTxt()}
           nameTx={'select_service_screen.next'}
-          onPress={() =>
+          onPress={() => {
             navigation.navigate('bottomStackNavigation', {
               screen: 'Add',
-            })
-          }
+              params: {screen: 'addScreen', params: {showType: value}},
+            });
+          }}
         />
       </Screen>
     </SafeAreaView>

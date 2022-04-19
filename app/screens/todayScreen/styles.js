@@ -2,8 +2,8 @@ import {color, size, fontSize, fonts} from 'theme';
 
 export const container = () => ({
   flex: 1,
-  justifyContent: 'center',
-  alignItems: 'center',
+  // justifyContent: 'center',
+  // alignItems: 'center',
 });
 export const textLanding = () => ({
   fontFamily: fonts.openSansMedium,
@@ -11,14 +11,14 @@ export const textLanding = () => ({
   fontSize: fontSize.medium,
 });
 export const screenContainer = () => ({
-  paddingHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(15),
 });
 export const titleTextContainer = () => ({
   paddingVertical: size.moderateScale(7),
   marginVertical: size.moderateScale(20),
 });
 
-export const reminderView = () => ({
+export const reminderView = isActive => ({
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -26,7 +26,7 @@ export const reminderView = () => ({
   borderWidth: size.moderateScale(1),
   height: size.moderateScale(50),
   marginHorizontal: size.moderateScale(10),
-  backgroundColor: color.lightGreen,
+  backgroundColor: isActive ? color.lightGreen : color.lavender,
   marginBottom: size.moderateScale(10),
 });
 
@@ -48,7 +48,7 @@ export const backgroundBtn = () => ({
   top: size.moderateScale(25),
   bottom: size.moderateScale(0),
   backgroundColor: color.lightGreen,
-  right: size.moderateScale(0),
+  right: size.moderateScale(15),
 });
 
 export const rowBack = () => ({

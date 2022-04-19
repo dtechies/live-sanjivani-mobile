@@ -26,10 +26,6 @@ export const MainStackNavigation = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen
-          name="selectServiceScreen"
-          component={SelectServiceScreen}
-        />
         <Stack.Screen name="landingScreen" component={LandingScreen} />
         <Stack.Screen
           name="authStackNavigation"

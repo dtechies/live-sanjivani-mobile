@@ -125,7 +125,7 @@ export const RegisterScreen = () => {
           buttonStyle={styles.button()}
           buttonText={styles.buttonTxt()}
           nameTx={'register_screen.next'}
-          onPress={() => navigation.navigate('bottomStackNavigation')}
+          onPress={() => navigation.navigate('selectServiceScreen')}
         />
       </Screen>
     </SafeAreaView>

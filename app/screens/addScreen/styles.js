@@ -76,7 +76,7 @@ export const addReminderButtonStyle = () => ({
   alignSelf: 'center',
   borderColor: color.dimGrey,
   backgroundColor: color.gainsBoro,
-  marginTop: size.moderateScale(10),
+  marginVertical: size.moderateScale(10),
 });
 export const textAddAppointment = () => ({
   fontFamily: fonts.openSansBold,
