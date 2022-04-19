@@ -90,5 +90,9 @@
   "today_screen":{
     "title_today":"Medication Reminder Profile",
     "tips_for_the_day":"Tips for the Day"
+  },
+  "select_service_screen":{
+    "title_select_service":"Select Services",
+    "next":"NEXT"
   }
 }

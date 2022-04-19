@@ -24,15 +24,7 @@ export const TodayScreen = () => {
           renderItem={data => {
             const isActive = activeIndex.includes(data.item.id);
             return (
-              <View
-                style={[
-                  styles.reminderView(),
-                  {
-                    backgroundColor: isActive
-                      ? color.lightGreen
-                      : color.lavender,
-                  },
-                ]}>
+              <View style={[styles.reminderView(isActive)]}>
                 <Text style={styles.reminderText()}>
                   {data.item.reminderTitle}
                 </Text>
@@ -57,9 +49,9 @@ export const TodayScreen = () => {
           }}
           renderHiddenItem={(data, rowData) => {
             return (
-              <View style={styles.rowBack}>
+              <View style={styles.rowBack()}>
                 <Pressable
-                  style={styles.backgroundBtn}
+                  style={styles.backgroundBtn()}
                   onPress={() => {
                     const valueIndex = reminderListData.findIndex(
                       val => val === data.item,
@@ -68,8 +60,8 @@ export const TodayScreen = () => {
                     setExtra(extra + 1);
                   }}>
                   <IcDelete
-                    height={size.moderateScale(50)}
-                    width={size.moderateScale(50)}
+                    height={size.moderateScale(30)}
+                    width={size.moderateScale(30)}
                     fill={color.black}
                   />
                 </Pressable>
@@ -90,7 +82,8 @@ export const TodayScreen = () => {
         />
         <View style={styles.tipsSubView()}>
           <Text style={styles.labelFieldText()}>
-            sssdssfbsdjfhkjdkfsjkdfkhsdfkdskfhsdkjhfksdhfkjhdskfhksdhfksdhfkshdjfhkshfkshdfksdjfkshjdfjhshjdgfjhgsdfjhsdgfhgsdjgfjsdgjfsgfdjgsdjfgjsdgfjjsgfjsg
+            1 1 Glycomet 0.5 MG Tablet,remind everyday before meal.1 1 Glycomet
+            0.5 MG Tablet,remind everyday before meal.
           </Text>
         </View>
       </View>

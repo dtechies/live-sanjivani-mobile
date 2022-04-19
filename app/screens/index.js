@@ -10,3 +10,4 @@ export * from './loginScreen';
 export * from './registerScreen';
 export * from './appointmentReminderScreen';
 export * from './helpSupportScreen';
+export * from './selectServiceScreen';

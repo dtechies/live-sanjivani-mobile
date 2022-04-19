@@ -14,15 +14,15 @@ export const AddScreen = props => {
   const [noteVal, setNoteVal] = useState('');
   const [showTakeNote, setShowTakeNote] = useState(false);
   const [show, setShow] = useState(true);
-  // const params = props.route.params && props.route.params;
-  const params = 'all';
+  const params = props.route.params && props.route.params.showType;
+
   return (
     <SafeAreaView style={styles.full()}>
       <Screen style={styles.container()}>
         <Pressable>
           <Text style={styles.textLanding()} tx={'add_screen.add'} />
         </Pressable>
-        {(params === 'medication' || params === 'all') && (
+        {(params === 'get medicine reminder' || params === 'all') && (
           <Button
             onPress={() => navigation.navigate('medicationReminderScreen')}
             nameTx="add_screen.add_medication"
@@ -37,7 +37,7 @@ export const AddScreen = props => {
             }
           />
         )}
-        {(params === 'appointment' || params === 'all') && (
+        {(params === 'get appointment reminder' || params === 'all') && (
           <Button
             onPress={() => navigation.navigate('appointmentReminderScreen')}
             nameTx="add_screen.add_appointment"
