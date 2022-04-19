@@ -1,38 +1,61 @@
 import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import {Loader, Text, Button, TitleBox, Screen, InputBox} from 'components';
 import {size, color, IcSearch} from 'theme';
 import * as styles from './styles';
+import {
+  medicineForm,
+  dose,
+  measurementUnit,
+  reminderFrequency,
+  reminderTime,
+} from 'json';
+
 export const MedicationReminderScreen = () => {
   const navigation = useNavigation();
   const [isLoading, seIsLoading] = useState(false);
-  const [value, setValue] = useState(null);
+  const [medicineValue, setMedicineValue] = useState(null);
+  const [doseValue, setDoseValue] = useState(null);
+  const [unitValue, setUniteValue] = useState(null);
+  const [extra, setExtra] = useState(0);
+  const [remindFrequencyValue, setRemindFrequencyValue] = useState(null);
+  const [remindFreqDate, setRemindFreqDate] = useState('Select a Date');
+  const [showDate, setShowDate] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
-  const medicineForm = [
-    {label: 'Tablet', value: 'tablet'},
-    {label: 'Pill', value: 'pill'},
-    {label: 'Drop', value: 'drop'},
-  ];
-  const dose = [
-    {label: '1', value: '1'},
-    {label: '2', value: '2'},
-    {label: '3', value: '3'},
-    {label: '4', value: '4'},
-    {label: '5', value: '5'},
-  ];
-  const measurementUnit = [
-    {label: 'g', value: 'g'},
-    {label: 'IU', value: 'IU'},
-    {label: 'mcg', value: 'mcg'},
-    {label: 'mL', value: 'mL'},
-  ];
+  const [remindTimeValue, setRemindTimeValue] = useState(null);
+  const [remindTime, setRemindTime] = useState('Select a Time');
+  const [showTime, setShowTime] = useState(false);
+
+  const getRemindFreqCurrentDate = givenDate => {
+    // console.log('A date has been picked: ', givenDate);
+    let day = givenDate.getDate();
+    let month = givenDate.getMonth() + 1;
+    let year = givenDate.getFullYear();
+    let newDate = day + '-' + month + '-' + year;
+    // console.log('newDate: ', newDate);
+    setRemindFreqDate(newDate);
+    setShowDate(false);
+  };
+  const getRemindTime = givenTime => {
+    // console.log('A Time picked: ', givenTime);
+    var hours = givenTime.getHours();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    let newTime = givenTime.toTimeString().slice(0, 5) + ' ' + ampm;
+    // console.log('newTime: ', newTime);
+    setRemindTime(newTime);
+    setShowTime(false);
+  };
   return (
     <SafeAreaView style={styles.container()}>
       {isLoading && <Loader />}
-      <Screen bounces={false} style={styles.screenContainer()}>
+      <Screen
+        showsVerticalScrollIndicator={false}
+        bounces={false}
+        style={styles.screenContainer()}>
         <TitleBox
           title={'Medication Reminder'}
           titleContainerStyle={styles.titleTextContainer()}
@@ -74,14 +97,14 @@ export const MedicationReminderScreen = () => {
           selectedTextStyle={styles.selectedOptionTextStyle()}
           maxHeight={size.moderateScale(175)}
           containerStyle={styles.dropdownContainer()}
-          value={value}
+          value={medicineValue}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           flatListProps={{
             bounces: false,
           }}
           onChange={item => {
-            setValue(item.value);
+            setMedicineValue(item.value);
             setIsFocus(false);
           }}
         />
@@ -100,14 +123,14 @@ export const MedicationReminderScreen = () => {
           selectedTextStyle={styles.selectedOptionTextStyle()}
           maxHeight={size.moderateScale(175)}
           containerStyle={styles.dropdownContainer()}
-          value={value}
+          value={doseValue}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           flatListProps={{
             bounces: false,
           }}
           onChange={item => {
-            setValue(item.value);
+            setDoseValue(item.value);
             setIsFocus(false);
           }}
         />
@@ -132,16 +155,154 @@ export const MedicationReminderScreen = () => {
           selectedTextStyle={styles.selectedOptionTextStyle()}
           maxHeight={size.moderateScale(175)}
           containerStyle={styles.dropdownContainer()}
-          value={value}
+          value={unitValue}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           flatListProps={{
             bounces: false,
           }}
           onChange={item => {
-            setValue(item.value);
+            setUniteValue(item.value);
             setIsFocus(false);
           }}
+        />
+        <Text
+          style={styles.labelFieldText()}
+          tx="medication_reminder_screen.reminder_frequency"
+        />
+        <Dropdown
+          data={reminderFrequency}
+          labelField="label"
+          valueField="value"
+          placeholder={'Select Frequency'}
+          dropdownPosition={'auto'}
+          style={styles.dropdown()}
+          placeholderStyle={styles.labelFieldText()}
+          selectedTextStyle={styles.selectedOptionTextStyle()}
+          maxHeight={size.moderateScale(175)}
+          containerStyle={styles.dropdownContainer()}
+          value={remindFrequencyValue}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          flatListProps={{
+            bounces: false,
+          }}
+          onChange={item => {
+            setRemindFrequencyValue(item.value);
+            setRemindFreqDate('Select a Date');
+            setIsFocus(false);
+          }}
+        />
+        {remindFrequencyValue === 'Alternate Day' && (
+          <Pressable
+            onPress={() => {
+              setShowDate(!showDate);
+            }}>
+            <Text style={styles.textDate()}>{remindFreqDate}</Text>
+          </Pressable>
+        )}
+        {remindFrequencyValue === 'Once A Week' && (
+          <Pressable
+            onPress={() => {
+              setShowDate(!showDate);
+            }}>
+            <Text style={styles.textDate()}>{remindFreqDate}</Text>
+          </Pressable>
+        )}
+        {remindFrequencyValue === 'Fixed Date' && (
+          <Pressable
+            onPress={() => {
+              setShowDate(!showDate);
+            }}>
+            <Text style={styles.textDate()}>{remindFreqDate}</Text>
+          </Pressable>
+        )}
+        {showDate && (
+          <DateTimePickerModal
+            isVisible={showDate}
+            mode="date"
+            onConfirm={val => getRemindFreqCurrentDate(val)}
+            onCancel={() => {
+              setShowDate(false);
+              setExtra(extra + 1);
+            }}
+          />
+        )}
+        <Text
+          style={styles.labelFieldText()}
+          tx="medication_reminder_screen.reminder_time"
+        />
+        <Dropdown
+          data={reminderTime}
+          labelField="label"
+          valueField="value"
+          placeholder={'Select Time'}
+          dropdownPosition={'auto'}
+          style={styles.dropdown()}
+          placeholderStyle={styles.labelFieldText()}
+          selectedTextStyle={styles.selectedOptionTextStyle()}
+          maxHeight={size.moderateScale(175)}
+          containerStyle={styles.dropdownContainer()}
+          value={remindTimeValue}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          flatListProps={{
+            bounces: false,
+          }}
+          onChange={item => {
+            setRemindTimeValue(item.value);
+            setRemindTime('Select a Time');
+            setIsFocus(false);
+          }}
+        />
+        {remindTimeValue === 'One Fixed Time' && (
+          <Pressable
+            onPress={() => {
+              setShowTime(!showTime);
+            }}>
+            <Text style={styles.textDate()}>{remindTime}</Text>
+          </Pressable>
+        )}
+        {remindTimeValue === 'Before Meal' && (
+          <Pressable
+            onPress={() => {
+              setShowTime(!showTime);
+            }}>
+            <Text style={styles.textDate()}>{remindTime}</Text>
+          </Pressable>
+        )}
+        {remindTimeValue === 'Before Bed' && (
+          <Pressable
+            onPress={() => {
+              setShowTime(!showTime);
+            }}>
+            <Text style={styles.textDate()}>{remindTime}</Text>
+          </Pressable>
+        )}
+        {showTime && (
+          <DateTimePickerModal
+            isVisible={showTime}
+            mode="time"
+            locale="en_GB"
+            onConfirm={val => getRemindTime(val)}
+            onCancel={() => {
+              setShowDate(false);
+              setExtra(extra + 1);
+            }}
+          />
+        )}
+        <InputBox
+          titleTx={'medication_reminder_screen.pill_remaining'}
+          titleStyle={styles.labelFieldText()}
+          placeholder={'0'}
+          inputStyle={styles.inputStyle()}
+          mainContainerStyle={styles.inputMainContainer()}
+        />
+        <Button
+          onPress={() => navigation.navigate('addScreen')}
+          nameTx="appointment_reminder_screen.add"
+          buttonStyle={styles.addButtonStyle()}
+          buttonText={styles.textAddButton()}
         />
       </Screen>
     </SafeAreaView>

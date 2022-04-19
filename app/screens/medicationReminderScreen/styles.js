@@ -15,13 +15,11 @@ export const labelFieldText = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.openSansRegular,
   color: color.purple,
-  //   fontWeight: 'bold',
 });
 export const inputStyle = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.openSansRegular,
   color: color.purple,
-  //   fontWeight: 'bold',
   paddingLeft: size.moderateScale(5),
 });
 
@@ -43,4 +41,23 @@ export const dropdownContainer = () => ({
 });
 export const inputMainContainer = () => ({
   marginVertical: size.moderateScale(10),
+});
+export const textDate = () => ({
+  fontFamily: fonts.openSansRegular,
+  color: color.purple,
+  fontSize: fontSize.small,
+  marginBottom: size.moderateScale(5),
+});
+export const addButtonStyle = () => ({
+  paddingVertical: size.moderateScale(10),
+  width: size.deviceWidth * 0.5,
+  alignSelf: 'center',
+  borderColor: color.mediumGreen,
+  backgroundColor: color.lightGreen,
+  marginVertical: size.moderateScale(15),
+});
+export const textAddButton = () => ({
+  fontFamily: fonts.openSansBold,
+  color: color.mediumGreen,
+  fontSize: fontSize.small,
 });

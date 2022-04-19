@@ -3,22 +3,15 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 
-import {
-  DemoScreen,
-  LandingScreen,
-  LoginScreen,
-  RegisterScreen,
-  TodayScreen,
-} from 'screens';
-
+import {DemoScreen, LandingScreen} from 'screens';
 
 import {BottomStackNavigation, AuthStackNavigation} from 'navigation';
 const Stack = createNativeStackNavigator();
 
 export const MainStackNavigation = () => {
-  const {theme} = useSelector(state => ({
-    theme: state.currentThemeMode.currentTheme,
-  }));
+  // const {theme} = useSelector(state => ({
+  //   theme: state.currentThemeMode.currentTheme,
+  // }));
 
   return (
     <NavigationContainer>

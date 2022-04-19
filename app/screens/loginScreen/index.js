@@ -69,8 +69,8 @@ export const LoginScreen = () => {
               tx="login_screen.learnMore"
             />
             <IcArrowNext
-              height={size.moderateScale(20)}
-              width={size.moderateScale(20)}
+              height={size.moderateScale(12)}
+              width={size.moderateScale(12)}
               fill={color.mediumGreen}
             />
           </View>
@@ -114,7 +114,7 @@ export const LoginScreen = () => {
             buttonStyle={styles.button()}
             buttonText={styles.buttonTxt()}
             nameTx={'login_screen.login'}
-            onPress={() => console.log('loginScreen')}
+            onPress={() => navigation.navigate('bottomStackNavigation')}
           />
           <View style={styles.linkView()}>
             <Text
@@ -122,8 +122,8 @@ export const LoginScreen = () => {
               tx="login_screen.learnMore"
             />
             <IcArrowNext
-              height={size.moderateScale(20)}
-              width={size.moderateScale(20)}
+              height={size.moderateScale(12)}
+              width={size.moderateScale(12)}
               fill={color.mediumGreen}
             />
           </View>
