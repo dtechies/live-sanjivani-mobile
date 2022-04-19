@@ -66,9 +66,9 @@ export const button = () => ({
 export const buttonTxt = () => ({
   color: color.borderBlue,
 });
-
 export const linkView = () => ({
   marginTop: size.moderateScale(20),
-  alignSelf: 'center',
   flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'center',
 });
