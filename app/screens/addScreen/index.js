@@ -15,6 +15,9 @@ export const AddScreen = props => {
   const [showTakeNote, setShowTakeNote] = useState(false);
   const [show, setShow] = useState(true);
   const params = props.route.params && props.route.params;
+  useEffect(() => {
+    console.log('params', props.route.params);
+  }, []);
   return (
     <SafeAreaView style={styles.full()}>
       <Screen style={styles.container()}>

@@ -9,8 +9,8 @@ import {
   LoginScreen,
   RegisterScreen,
   TodayScreen,
+  SelectServiceScreen,
 } from 'screens';
-
 
 import {BottomStackNavigation, AuthStackNavigation} from 'navigation';
 const Stack = createNativeStackNavigator();
@@ -26,6 +26,10 @@ export const MainStackNavigation = () => {
         screenOptions={{
           headerShown: false,
         }}>
+        <Stack.Screen
+          name="selectServiceScreen"
+          component={SelectServiceScreen}
+        />
         <Stack.Screen name="landingScreen" component={LandingScreen} />
         <Stack.Screen
           name="authStackNavigation"
