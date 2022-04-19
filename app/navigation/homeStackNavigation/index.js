@@ -26,7 +26,6 @@ export const HomeStackNavigation = () => {
         name="appointmentReminderScreen"
         component={AppointmentReminderScreen}
       />
-      {/* <Stack.Screen name="loginScreen" component={LoginScreen} /> */}
       <Stack.Screen name="demoScreen" component={DemoScreen} />
     </Stack.Navigator>
   );

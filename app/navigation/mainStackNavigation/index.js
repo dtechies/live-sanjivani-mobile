@@ -1,8 +1,8 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
 import {useSelector} from 'react-redux';
+
 import {
   DemoScreen,
   LandingScreen,
@@ -11,7 +11,8 @@ import {
   TodayScreen,
 } from 'screens';
 
-import {BottomStackNavigation} from 'navigation';
+
+import {BottomStackNavigation, AuthStackNavigation} from 'navigation';
 const Stack = createNativeStackNavigator();
 
 export const MainStackNavigation = () => {
@@ -25,10 +26,11 @@ export const MainStackNavigation = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        {/* <Stack.Screen name="todayScreen" component={TodayScreen} /> */}
-        {/* <Stack.Screen name="landingScreen" component={LandingScreen} />
-        <Stack.Screen name="loginScreen" component={LoginScreen} />
-        <Stack.Screen name="registerScreen" component={RegisterScreen} /> */}
+        <Stack.Screen name="landingScreen" component={LandingScreen} />
+        <Stack.Screen
+          name="authStackNavigation"
+          component={AuthStackNavigation}
+        />
         <Stack.Screen
           name="bottomStackNavigation"
           component={BottomStackNavigation}
