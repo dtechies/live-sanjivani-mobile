@@ -1,8 +1,8 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
 import {useSelector} from 'react-redux';
+
 import {DemoScreen, LandingScreen} from 'screens';
 
 import {BottomStackNavigation, AuthStackNavigation} from 'navigation';

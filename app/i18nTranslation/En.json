@@ -86,5 +86,9 @@
     "crm": "Customer Relationship Summary",
     "Privacy": "Privacy",
     "licenses": "Licenses"
+  },
+  "today_screen":{
+    "title_today":"Medication Reminder Profile",
+    "tips_for_the_day":"Tips for the Day"
   }
 }
