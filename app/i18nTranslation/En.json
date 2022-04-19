@@ -36,11 +36,11 @@
   "appointment_reminder_screen": {
     "title": "Appointment Reminder",
     "name_of_doctor": "Name of Doctor/Practice",
-    "address_one": "Address1 (Required)",
-    "address_two": "Address2",
+    "address_one": "Address 1 (Required)",
+    "address_two": "Address 2",
     "city": "City",
     "state": "State",
-    "pinCode": "PinCode",
+    "pinCode": "Pincode",
     "date": "Date",
     "time": "Time",
     "add": "Add"
@@ -50,7 +50,10 @@
     "name_of_medicine": "Name of Medicine",
     "medicine_form": "Medicine Form",
     "dose": "Dose",
-    "medicine_strength": "Medicine Strength"
+    "medicine_strength": "Medicine Strength",
+    "reminder_frequency": "Reminder Frequency",
+    "reminder_time": "Reminder Time",
+    "pill_remaining": "Pills Remaining"
   },
   "login_screen": {
     "number": "Enter Your Number",
