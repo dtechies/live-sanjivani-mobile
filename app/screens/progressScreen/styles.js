@@ -48,6 +48,13 @@ export const textCategoryTitle = () => ({
   fontSize: fontSize.medium,
   marginLeft: size.moderateScale(5),
 });
+export const textError = () => ({
+  fontFamily: fonts.openSans,
+  color: color.red,
+  fontSize: fontSize.small,
+  textAlign: 'center',
+  marginTop: size.moderateScale(5),
+});
 export const modalStyle = () => ({
   borderTopLeftRadius: size.moderateScale(15),
   borderTopRightRadius: size.moderateScale(15),
@@ -56,7 +63,7 @@ export const modalStyle = () => ({
   backgroundColor: color.white,
 });
 export const modalContentContainerStyle = () => ({
-  alignItems: 'center',
+  // alignItems: 'center',
   marginBottom: size.moderateScale(15),
 });
 export const dragStyle = () => ({
@@ -68,7 +75,7 @@ export const modalTitleText = () => ({
   fontSize: fontSize.medium,
   marginLeft: size.moderateScale(5),
   textAlign: 'center',
-  marginBottom: size.moderateScale(5),
+  marginBottom: size.moderateScale(10),
 });
 export const textInputTitle = () => ({
   fontFamily: fonts.openSansBold,
@@ -78,7 +85,7 @@ export const textInputTitle = () => ({
 export const inputRowView = () => [
   row(),
   {
-    paddingBottom: size.moderateScale(20),
+    justifyContent: 'center',
   },
 ];
 export const inputMainContainer = () => ({
@@ -128,4 +135,18 @@ export const textAddButton = () => ({
   fontFamily: fonts.openSansBold,
   color: color.black,
   fontSize: fontSize.small,
+});
+export const textTime = () => ({
+  fontFamily: fonts.openSansBold,
+  color: color.dimGrey,
+  fontSize: fontSize.medium,
+  marginVertical: size.moderateScale(10),
+  textAlign: 'center',
+});
+export const textHistoricalTitle = () => ({
+  fontFamily: fonts.openSansBold,
+  color: color.dimGrey,
+  fontSize: fontSize.medium,
+  marginLeft: size.moderateScale(5),
+  marginVertical: size.moderateScale(8),
 });

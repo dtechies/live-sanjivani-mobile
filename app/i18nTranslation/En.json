@@ -16,7 +16,9 @@
   "progress_screen": {
     "progress": "Progress Screen",
     "show_all": "Show All",
-    "add_to_favorite": "Add To Favorite"
+    "add_to_favorite": "Add To Favorite",
+    "add": "Add",
+    "historical_data": "Historical Data"
   },
   "sharing_screen": {
     "sharing": "Sharing Screen",
@@ -87,12 +89,12 @@
     "Privacy": "Privacy",
     "licenses": "Licenses"
   },
-  "today_screen":{
-    "title_today":"Medication Reminder Profile",
-    "tips_for_the_day":"Tips for the Day"
+  "today_screen": {
+    "title_today": "Medication Reminder Profile",
+    "tips_for_the_day": "Tips for the Day"
   },
-  "select_service_screen":{
-    "title_select_service":"Select Services",
-    "next":"NEXT"
+  "select_service_screen": {
+    "title_select_service": "Select Services",
+    "next": "NEXT"
   }
 }
