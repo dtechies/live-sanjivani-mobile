@@ -77,26 +77,8 @@ export const addServiceData = [
   {
     name: 'care giver',
     serviceSlug: 'care',
-    subCategory: [
-      {
-        name: 'Allergies ',
-      },
-      {
-        name: 'Menstruation',
-      },
-      {
-        name: 'Alcohol Consumption',
-      },
-      {
-        name: 'Inhaler Usage',
-      },
-      {
-        name: 'Sexual Activity',
-      },
-      {
-        name: 'Toothbrushing',
-      },
-    ],
+    subCategory: [],
+    navigateScreen: 'careGivenScreen',
   },
   {
     name: 'medication',

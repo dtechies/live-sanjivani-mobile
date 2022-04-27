@@ -23,7 +23,11 @@ export const inputStyle = () => ({
   color: color.purple,
   paddingLeft: size.moderateScale(5),
 });
-
+export const textValidation = () => ({
+  fontFamily: fonts.openSansRegular,
+  fontSize: fontSize.verySmall,
+  color: color.red,
+});
 export const dropdown = () => ({
   marginVertical: size.moderateScale(10),
   paddingHorizontal: size.moderateScale(5),
@@ -41,7 +45,7 @@ export const dropdownContainer = () => ({
   backgroundColor: color.lavender,
 });
 export const inputMainContainer = () => ({
-  marginBottom: size.moderateScale(15),
+  marginVertical: size.moderateScale(5),
 });
 export const labelDisableText = () => ({
   fontSize: fontSize.small,

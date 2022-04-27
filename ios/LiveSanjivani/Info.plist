@@ -37,6 +37,12 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSCameraUsageDescription</key>
+  <string>We need this permission to use camera</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>We need this permission while posting an issue in your constituency as a video we record the video with microphone</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>We need this permission when you want to post an issue in your constituency and you want to upload photos or videos that already recorded</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>OpenSans-Regular.ttf</string>

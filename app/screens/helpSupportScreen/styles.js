@@ -9,6 +9,11 @@ export const full = () => ({
   flex: 1,
   backgroundColor: color.white,
 });
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
 export const mainView = () => ({
   marginTop: size.moderateScale(20),
   marginBottom: size.moderateScale(15),

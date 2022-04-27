@@ -12,6 +12,8 @@ import {Calender} from './image/svgIcons/IcCalendar';
 import {Down} from './image/svgIcons/IcDown';
 import {Delete} from './image/svgIcons/IcDelete';
 import {Heart} from './image/svgIcons/IcHeart';
+import {Pencil} from './image/svgIcons/IcPencil';
+import {Safety} from './image/svgIcons/IcSafety';
 
 export const IcWeb = props => (
   <Web height={props.height} width={props.width} fill={props.fill} />
@@ -53,4 +55,10 @@ export const IcDelete = props => (
 );
 export const IcHeart = props => (
   <Heart height={props.height} width={props.width} fill={props.fill} />
+);
+export const IcPencil = props => (
+  <Pencil height={props.height} width={props.width} fill={props.fill} />
+);
+export const IcSafety = props => (
+  <Safety height={props.height} width={props.width} stroke={props.stroke} />
 );

@@ -8,3 +8,4 @@ export * from './button';
 export * from './titleBox';
 export * from './loader';
 export * from './switch';
+export * from './toast';

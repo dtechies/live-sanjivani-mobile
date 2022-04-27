@@ -30,14 +30,24 @@
   "add_screen": {
     "add": "Add",
     "add_medication": "Add Medication",
-    "add_appointment": "Add Appointment"
+    "add_appointment": "Add Appointment",
+    "medical_journal": "Medical Journal (take notes)"
   },
   "profile_screen": {
-    "profile": "Profile Screen"
+    "title": "Profile Screen",
+    "name": "Name",
+    "dob": "DOB",
+    "gender": "Gender",
+    "email": "Email",
+    "phone": "Phone",
+    "language": "Language",
+    "service": "Service",
+    "help": "Help"
   },
   "appointment_reminder_screen": {
     "title": "Appointment Reminder",
     "name_of_doctor": "Name of Doctor/Practice",
+    "speciality": "Speciality",
     "address_one": "Address 1 (Required)",
     "address_two": "Address 2",
     "city": "City",
@@ -55,7 +65,12 @@
     "medicine_strength": "Medicine Strength",
     "reminder_frequency": "Reminder Frequency",
     "reminder_time": "Reminder Time",
-    "pill_remaining": "Pills Remaining"
+    "pill_remaining": "Pills Remaining",
+    "speciality": "Speciality",
+    "name": "Name",
+    "upload_or_take_picture": "Upload or take picture from phone",
+    "take_picture": "Take picture from Camera",
+    "upload_picture": "Upload picture from Camera"
   },
   "login_screen": {
     "number": "Enter Your Number",
@@ -90,11 +105,29 @@
     "licenses": "Licenses"
   },
   "today_screen": {
-    "title_today": "Medication Reminder Profile",
+    "title": "Today Screen",
+    "medication_reminder": "Medication Reminder Profile",
+    "appointment_reminder": "Appointment Reminder Profile",
     "tips_for_the_day": "Tips for the Day"
   },
   "select_service_screen": {
     "title_select_service": "Select Services",
     "next": "NEXT"
+  },
+  "care_given_screen": {
+    "title": "Care Given",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "contact_phone": "Contact Phone",
+    "email": "Email",
+    "nick_name": "Nick Name",
+    "add": "Add"
+  },
+  "medical_journal_screen": {
+    "title": "Medical Journal",
+    "add_journal": "Add Medical Journal",
+    "submit": "Submit",
+    "take_picture": "Take picture from Camera",
+    "upload_picture": "Upload picture from Camera"
   }
 }

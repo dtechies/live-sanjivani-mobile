@@ -13,10 +13,20 @@ export const mainView = () => ({
   marginTop: size.moderateScale(15),
   marginBottom: size.moderateScale(15),
 });
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
 export const textInputTitle = () => ({
   fontFamily: fonts.openSansBold,
   color: color.purple,
   fontSize: fontSize.small,
+});
+export const textValidation = () => ({
+  fontFamily: fonts.openSansRegular,
+  fontSize: fontSize.verySmall,
+  color: color.red,
 });
 export const inputMainContainer = () => ({
   marginBottom: size.moderateScale(20),
@@ -75,4 +85,11 @@ export const textAddButton = () => ({
   fontFamily: fonts.openSansBold,
   color: color.mediumGreen,
   fontSize: fontSize.small,
+});
+export const searchedValueList = () => ({
+  backgroundColor: color.gainsBoro,
+  paddingVertical: size.moderateScale(15),
+  borderColor: color.purple,
+  borderWidth: size.moderateScale(1),
+  paddingHorizontal: size.moderateScale(5),
 });

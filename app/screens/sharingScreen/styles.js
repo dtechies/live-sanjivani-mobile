@@ -9,6 +9,11 @@ export const container = () => ({
   paddingHorizontal: size.moderateScale(20),
   paddingTop: size.moderateScale(5),
 });
+export const toast = () => ({
+  // marginHorizontal: size.moderateScale(20),
+  // paddingHorizontal: size.moderateScale(20),
+  // paddingVertical: size.moderateScale(12),
+});
 // dropdown style
 export const dropdown = () => ({
   marginBottom: size.moderateScale(10),

@@ -11,3 +11,5 @@ export * from './registerScreen';
 export * from './appointmentReminderScreen';
 export * from './helpSupportScreen';
 export * from './selectServiceScreen';
+export * from './careGiverScreen';
+export * from './medicalJournalScreen';

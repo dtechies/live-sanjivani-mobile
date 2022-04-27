@@ -26,6 +26,11 @@ export const showAllButton = () => ({
   padding: size.moderateScale(8),
   width: size.deviceWidth * 0.4,
 });
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
 export const row = () => ({
   flexDirection: 'row',
   alignItems: 'center',

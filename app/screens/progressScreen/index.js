@@ -6,8 +6,14 @@ import {Portal} from 'react-native-portalize';
 import {LineChart, ProgressChart} from 'react-native-chart-kit';
 import 'react-native-gesture-handler';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  getUserFavoriteList,
+  addUserFavorite,
+  getAllSubCategory,
+} from 'redux-actions';
 
-import {Text, Button, Screen, InputBox} from 'components';
+import {Text, Button, Screen, InputBox, Toast, Loader} from 'components';
 import {size, IcHeart, color, IcTick, IcPlus} from 'theme';
 import {categoriesData} from 'json';
 import * as styles from './styles';
@@ -15,14 +21,109 @@ import * as styles from './styles';
 export const ProgressScreen = props => {
   const navigation = useNavigation();
   const modalRef = useRef();
+  const subCategoriesModalRef = useRef();
+  const toastRef = useRef();
+  const dispatch = useDispatch();
   const [showAll, setShowAll] = useState(false);
   const [categoriesValue, setCategoriesValue] = useState('');
   const [categoriesValueError, setCategoriesValueError] = useState('');
   const [extra, setExtra] = useState(0);
   const [data, setData] = useState([]);
   const [fav, setFav] = useState(false);
+  const [favoriteList, setFavoriteList] = useState([]);
   const [showTime, setShowTime] = useState(false);
   const [selectedTime, setSelectedTime] = useState();
+  const [loading, setLoading] = useState(false);
+  const [subCategoryData, setSubCategoryData] = useState({});
+  const [allSubCategoryData, setAllSubCategoryData] = useState([]);
+  const [filteredSubCategory, setFilteredSubCategory] = useState([]);
+
+  const {token, userId} = useSelector(state => ({
+    token: state.userDataReducer.userDataResponse.userData.token,
+    userId: state.userDataReducer.userDataResponse.userData.id,
+  }));
+
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
+  const getUserFavoriteListData = async () => {
+    setLoading(true);
+    const getUserFavoriteListHeader = {
+      token: token,
+    };
+    const getUserFavoriteListResponse = await dispatch(
+      getUserFavoriteList(getUserFavoriteListHeader),
+    );
+    // console.log('getUserFavoriteListData ==>', getUserFavoriteListHeader);
+    const res = getUserFavoriteListResponse.payload;
+    // console.log('getUserFavoriteListData res ==>', res);
+    if (res.status) {
+      // console.log('getUserFavoriteListData list ==>', res.data.subCategoryData);
+      setFavoriteList(res.data.subCategoryData);
+
+      // toastMessage(res.message);
+
+      // setReminderOption(res.data);
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  };
+  const getAllSubCategoryList = async () => {
+    setLoading(true);
+    const getAllSubCategoryHeader = {
+      token: token,
+    };
+    const getAllSubCategoryResponse = await dispatch(
+      getAllSubCategory(getAllSubCategoryHeader),
+    );
+    // console.log('getAllSubCategoryList header ==>', getAllSubCategoryHeader);
+    const res = getAllSubCategoryResponse.payload;
+    // console.log('getAllSubCategoryList res ==>', res);
+    if (res.status) {
+      // console.log('getAllSubCategoryList list ==>', res.data);
+      setAllSubCategoryData(res.data);
+      toastMessage(res.message);
+      setLoading(false);
+    } else {
+      toastMessage(res.message);
+      setLoading(false);
+    }
+  };
+
+  const onModalAddPress = async () => {
+    modalRef.current.close();
+    setLoading(true);
+
+    const addUserFavoriteBody = {
+      user_id: userId,
+      subcategory_id: subCategoryData.id,
+      value: categoriesValue,
+      is_selected: fav,
+    };
+
+    const addUserFavoriteHeader = {
+      token: token,
+    };
+    // console.log('addUserFavorite Body ==>', addUserFavoriteBody);
+    // console.log('addUserFavorite Header ==>', addUserFavoriteHeader);
+
+    const addUserFavoriteResponse = await dispatch(
+      addUserFavorite(addUserFavoriteBody, addUserFavoriteHeader),
+    );
+
+    const res = addUserFavoriteResponse.payload;
+    // console.log('addUserFavorite Res ==>', res);
+    setLoading(false);
+
+    if (res.status) {
+      getUserFavoriteListData();
+      toastMessage(res.message);
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+    }
+  };
   const customValidation = (val, type) => {
     let testCase;
     switch (type) {
@@ -49,12 +150,38 @@ export const ProgressScreen = props => {
       newDate + ' ' + givenTime.toTimeString().slice(0, 5) + ' ' + ampm;
     return newDateTime;
   };
-  useEffect(() => {
+  const demo = () => {
+    const subCateGoryFilter = allSubCategoryData.filter(
+      elem => !favoriteList.find(({id}) => elem.id === id),
+    );
+    setFilteredSubCategory(subCateGoryFilter);
+  };
+  const initialFunction = async () => {
     if (props.route.params) {
-      setShowAll(props.route.params.showAll);
+      console.log(
+        ' props.route.params.subCategory',
+        props.route.params.subCategory,
+      );
+      setSubCategoryData(props.route.params.subCategory);
+      setTimeout(() => {
+        modalRef.current.open();
+      }, 300);
+    } else {
+      // setShowAll(true);
     }
+    // getAllSubCategoryList();
+    getAllSubCategoryList();
+    await getUserFavoriteListData();
     setSelectedTime(getCurrentTime(new Date()));
-  }, []);
+  };
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      initialFunction();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
+
   const chartData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr'],
     data: [0.4, 0.6, 0.8, 0.2],
@@ -89,55 +216,130 @@ export const ProgressScreen = props => {
   };
   return (
     <SafeAreaView style={styles.full()}>
-      <Screen
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        contentContainerStyle={!showAll && styles.containContainerStyle()}
-        style={styles.container()}>
-        {!showAll && (
-          <Button
-            onPress={() => {
-              setShowAll(true);
-            }}
-            buttonStyle={styles.showAllButton()}
-            nameTx={'progress_screen.show_all'}
-          />
-        )}
-        {showAll && (
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
+
+      <View style={styles.full()}>
+        <Screen
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+          // contentContainerStyle={!showAll && styles.containContainerStyle()}
+          style={styles.container()}>
           <View>
-            {categoriesData.map((item, index) => {
-              return (
-                <Pressable
-                  key={index.toString()}
-                  onPress={() => {
-                    setData(item);
-                    setCategoriesValueError('');
-                    setCategoriesValue('');
-                    setSelectedTime(getCurrentTime(new Date()));
-                    // console.log('item.type>', item.type);
-                    modalRef.current.open();
-                  }}
-                  style={styles.categoriesListContainer()}>
-                  <View style={styles.row()}>
-                    {item.icon && (
-                      <IcHeart
-                        height={size.moderateScale(20)}
-                        width={size.moderateScale(20)}
-                        fill={color.red}
-                      />
-                    )}
-                    <Text style={styles.textCategoryTitle()}>{item.title}</Text>
-                  </View>
-                  <View style={styles.row()}>
-                    <Text style={styles.textCategoryTitle()}>{item.count}</Text>
-                    <Text style={styles.textCategoryTitle()}>{item.unit}</Text>
-                  </View>
-                </Pressable>
-              );
-            })}
+            {favoriteList &&
+              favoriteList.map((item, index) => {
+                return (
+                  <Pressable
+                    key={index.toString()}
+                    onPress={() => {
+                      setData(item);
+                      setSubCategoryData(item);
+                      setCategoriesValueError('');
+                      setCategoriesValue(item.user_favorites[0].value);
+                      setFav(true);
+                      setSelectedTime(getCurrentTime(new Date()));
+                      modalRef.current.open();
+                    }}
+                    style={styles.categoriesListContainer()}>
+                    <View style={styles.row()}>
+                      {item.icon && (
+                        <IcHeart
+                          height={size.moderateScale(20)}
+                          width={size.moderateScale(20)}
+                          fill={color.red}
+                        />
+                      )}
+                      <Text style={styles.textCategoryTitle()}>
+                        {item.name}
+                      </Text>
+                    </View>
+                    <View style={styles.row()}>
+                      <Text style={styles.textCategoryTitle()}>
+                        {item.user_favorites[0].value}
+                      </Text>
+                      <Text style={styles.textCategoryTitle()}>
+                        {item.unit}
+                      </Text>
+                    </View>
+                  </Pressable>
+                );
+              })}
+            {!showAll && (
+              <Button
+                onPress={() => {
+                  demo();
+                  setTimeout(() => {
+                    subCategoriesModalRef.current.open();
+                  }, 150);
+                }}
+                buttonStyle={styles.showAllButton()}
+                nameTx={'progress_screen.show_all'}
+              />
+            )}
           </View>
-        )}
+        </Screen>
         <Portal>
+          <Modalize
+            ref={subCategoriesModalRef}
+            adjustToContentHeight={true}
+            handlePosition={'inside'}
+            scrollViewProps={{
+              showsVerticalScrollIndicator: false,
+              contentContainerStyle: styles.modalContentContainerStyle(),
+              keyboardShouldPersistTaps: 'handled',
+            }}
+            modalStyle={styles.modalStyle()}
+            handleStyle={styles.dragStyle()}>
+            <View>
+              {filteredSubCategory &&
+                filteredSubCategory.map((item, index) => {
+                  return (
+                    <Pressable
+                      key={index.toString()}
+                      onPress={() => {
+                        setData(item);
+                        setSubCategoryData(item);
+                        setCategoriesValueError('');
+                        setCategoriesValue('');
+                        setFav(false);
+                        setSelectedTime(getCurrentTime(new Date()));
+                        subCategoriesModalRef.current.close();
+                        setTimeout(() => {
+                          modalRef.current.open();
+                        }, 200);
+                      }}
+                      style={styles.categoriesListContainer()}>
+                      <View style={styles.row()}>
+                        {item.icon && (
+                          <IcHeart
+                            height={size.moderateScale(20)}
+                            width={size.moderateScale(20)}
+                            fill={color.red}
+                          />
+                        )}
+                        <Text style={styles.textCategoryTitle()}>
+                          {item.name}
+                        </Text>
+                      </View>
+                      <View style={styles.row()}>
+                        {/* <Text style={styles.textCategoryTitle()}>
+                        {item.count}
+                      </Text> */}
+                        <Text style={styles.textCategoryTitle()}>
+                          {item.unit}
+                        </Text>
+                      </View>
+                    </Pressable>
+                  );
+                })}
+            </View>
+          </Modalize>
           <Modalize
             ref={modalRef}
             adjustToContentHeight={true}
@@ -145,27 +347,37 @@ export const ProgressScreen = props => {
             scrollViewProps={{
               showsVerticalScrollIndicator: false,
               contentContainerStyle: styles.modalContentContainerStyle(),
+              keyboardShouldPersistTaps: 'handled',
+              // keyboardDismissMode: 'on-drag',
             }}
             modalStyle={styles.modalStyle()}
             handleStyle={styles.dragStyle()}>
             <View>
-              <Text style={styles.modalTitleText()}>{data.title}</Text>
-              <View style={styles.inputRowView()}>
-                <InputBox
-                  titleStyle={styles.textInputTitle()}
-                  placeholder={data.title}
-                  value={categoriesValue}
-                  keyboardType={'decimal-pad'}
-                  onChangeText={value => {
-                    checkRegex(value, data.type);
-                    setExtra(extra + 1);
-                  }}
-                  inputStyle={[styles.labelFieldText()]}
-                  mainContainerStyle={styles.inputMainContainer()}
-                />
+              {subCategoryData && (
+                <>
+                  <Text style={styles.modalTitleText()}>
+                    {subCategoryData.name}
+                  </Text>
+                  <View style={styles.inputRowView()}>
+                    <InputBox
+                      titleStyle={styles.textInputTitle()}
+                      placeholder={subCategoryData.title}
+                      value={categoriesValue}
+                      keyboardType={'decimal-pad'}
+                      onChangeText={value => {
+                        checkRegex(value, data.type);
+                        setExtra(extra + 1);
+                      }}
+                      inputStyle={[styles.labelFieldText()]}
+                      mainContainerStyle={styles.inputMainContainer()}
+                    />
 
-                <Text style={[styles.textCategoryTitle()]}>{data.unit}</Text>
-              </View>
+                    <Text style={[styles.textCategoryTitle()]}>
+                      {subCategoryData.unit}
+                    </Text>
+                  </View>
+                </>
+              )}
               {categoriesValueError ? (
                 <Text style={styles.textError()}>{categoriesValueError}</Text>
               ) : null}
@@ -173,7 +385,9 @@ export const ProgressScreen = props => {
                 <Text style={styles.textTime()}>{selectedTime}</Text>
               </Pressable>
               <Pressable
-                onPress={() => setFav(!fav)}
+                onPress={() => {
+                  setFav(!fav);
+                }}
                 style={styles.addFavoriteView()}>
                 <View style={styles.tickIconView()}>
                   <IcTick
@@ -236,7 +450,7 @@ export const ProgressScreen = props => {
               <Button
                 onPress={() => {
                   categoriesValue && categoriesValueError === ''
-                    ? modalRef.current.close()
+                    ? onModalAddPress()
                     : categoriesValue === '' && alert('Please enter value');
                 }}
                 nameTx="progress_screen.add"
@@ -269,7 +483,7 @@ export const ProgressScreen = props => {
             )}
           </Modalize>
         </Portal>
-      </Screen>
+      </View>
     </SafeAreaView>
   );
 };

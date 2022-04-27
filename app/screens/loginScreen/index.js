@@ -1,26 +1,76 @@
-import React, {useState} from 'react';
-import {View, Pressable, Image, SafeAreaView} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {View, Image, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
+import {useDispatch} from 'react-redux';
+import {loginUser, userData} from 'redux-actions';
 import {images, IcArrowNext} from 'theme';
-import {Loader, Text, Button, TitleBox, Screen, InputBox} from 'components';
-import {size, color, IcSearch} from 'theme';
+import {Loader, Text, Button, Screen, InputBox, Toast} from 'components';
+import {size, color} from 'theme';
 import * as styles from './styles';
+
 export const LoginScreen = () => {
-  const [subScreen, setsubScreen] = useState(false);
-  const [mainScreen, setmainScreen] = useState(true);
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const toastRef = useRef();
+  const [subScreen, setSubScreen] = useState(false);
+  const [mainScreen, setMainScreen] = useState(true);
   const [editable, setEditable] = useState(true);
   const [number, setNumber] = useState('');
-  const navigation = useNavigation();
+  const [numberCorrect, setNumberCorrect] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [extra, setExtra] = useState(0);
 
   const requestOtp = () => {
-    setEditable(false);
-    setmainScreen(false);
-    setsubScreen(true);
+    number
+      ? (setEditable(false), setMainScreen(false), setSubScreen(true))
+      : setNumberCorrect('Phone number should be equal to 10 digits');
   };
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
+  const onLoginPress = async () => {
+    setLoading(true);
 
+    const loginBody = {
+      mob_no: number,
+    };
+    // console.log('loginBody ==>', loginBody);
+    const loginResponse = await dispatch(loginUser(loginBody));
+    const res = loginResponse.payload;
+    setLoading(false);
+    // console.log('login res ==>', res);
+
+    if (res.status) {
+      dispatch(userData({userData: res.data.user, login: true}));
+      // console.log('login response data ==>', res);
+      toastMessage('Login SuccessFully');
+      setTimeout(() => {
+        navigation.navigate('bottomStackNavigation');
+      }, 300);
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+    }
+  };
+  const mobileNumberValidation = val => {
+    setNumber(val);
+    if (val.length !== 10) {
+      setNumberCorrect('Phone number should be equal to 10 digits');
+    } else {
+      setNumberCorrect('');
+    }
+  };
   return (
     <SafeAreaView style={styles.container()}>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
+
       <View style={styles.imageView()}>
         <Image
           style={{
@@ -31,14 +81,18 @@ export const LoginScreen = () => {
         />
       </View>
       {mainScreen && (
-        <Screen bounces={false} style={styles.screenContainer()}>
+        <Screen
+          keyboardShouldPersistTaps={'handled'}
+          bounces={false}
+          style={styles.screenContainer()}>
           <InputBox
             titleTx={'login_screen.number'}
             titleStyle={styles.labelFieldText()}
             placeholder={'Number'}
             value={number}
             onChangeText={value => {
-              setNumber(value);
+              mobileNumberValidation(value);
+              setExtra(extra + 1);
             }}
             maxLength={10}
             keyboardType={'number-pad'}
@@ -51,6 +105,9 @@ export const LoginScreen = () => {
               />
             }
           />
+          {numberCorrect ? (
+            <Text style={styles.textValidation()} text={numberCorrect} />
+          ) : null}
           <Button
             buttonStyle={styles.button()}
             buttonText={styles.buttonTxt()}
@@ -77,7 +134,10 @@ export const LoginScreen = () => {
         </Screen>
       )}
       {subScreen && (
-        <Screen bounces={false} style={styles.screenContainer()}>
+        <Screen
+          keyboardShouldPersistTaps={'handled'}
+          bounces={false}
+          style={styles.screenContainer()}>
           <InputBox
             titleTx={'login_screen.number'}
             titleStyle={styles.labelDisableText()}
@@ -114,7 +174,9 @@ export const LoginScreen = () => {
             buttonStyle={styles.button()}
             buttonText={styles.buttonTxt()}
             nameTx={'login_screen.login'}
-            onPress={() => navigation.navigate('bottomStackNavigation')}
+            onPress={() => {
+              onLoginPress();
+            }}
           />
           <View style={styles.linkView()}>
             <Text

@@ -9,6 +9,7 @@ import {
   HelpSupportScreen,
   RegisterScreen,
   SelectServiceScreen,
+  MedicationReminderScreen,
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
@@ -31,6 +32,10 @@ export const HomeStackNavigation = () => {
       <Stack.Screen
         name="selectServiceScreen"
         component={SelectServiceScreen}
+      />
+      <Stack.Screen
+        name="medicationReminderScreen"
+        component={MedicationReminderScreen}
       />
     </Stack.Navigator>
   );

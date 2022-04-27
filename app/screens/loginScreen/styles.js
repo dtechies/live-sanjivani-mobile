@@ -4,7 +4,16 @@ export const container = () => ({
   flex: 1,
   alignItems: 'center',
 });
-
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
+export const textValidation = () => ({
+  fontFamily: fonts.openSansRegular,
+  fontSize: fontSize.verySmall,
+  color: color.red,
+});
 export const imageView = () => ({
   marginVertical: size.moderateScale(40),
   alignItems: 'center',
