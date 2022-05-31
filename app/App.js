@@ -9,6 +9,7 @@ import i18n from 'i18n-js';
 import {store, persistor} from './redux';
 import {MainStackNavigation} from './navigation';
 import DoubleTapToClose from './utils/hooks/back-double-press';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export const LocalizationContext = createContext();
 
@@ -30,12 +31,14 @@ const App = () => {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <LocalizationContext.Provider value={localizationContext}>
-          <View style={{flex: 1}}>
+          {/* <View style={{flex: 1}}> */}
+          <GestureHandlerRootView style={{flex: 1}}>
             <Host>
               <DoubleTapToClose />
               <MainStackNavigation />
             </Host>
-          </View>
+          </GestureHandlerRootView>
+          {/* </View> */}
         </LocalizationContext.Provider>
       </PersistGate>
     </Provider>

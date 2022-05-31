@@ -1,0 +1,26 @@
+import {IcHeart} from 'theme';
+export const categoriesData = [
+  {
+    icon: IcHeart,
+    title: 'RestingHeart Rate',
+    count: 67,
+    unit: 'BPM',
+    type: 'integer',
+  },
+  {title: 'Respiratory Rate', count: 14.2, unit: 'breath/min', type: 'float'},
+  {title: 'Sleep', count: 6, unit: 'hours min', type: 'integer'},
+  {title: 'Steps', count: 2500, unit: 'BPM', type: 'integer'},
+  {title: 'Blood Glucose', count: 25, unit: 'BPM', type: 'integer'},
+  {title: 'Allergies', count: 56, unit: 'BPM'},
+  {title: 'Weight', count: 52.5, unit: 'kg', type: 'float'},
+  {title: 'Height', count: 162, unit: 'cm', type: 'integer'},
+  {title: 'BMI', count: 25, unit: 'BPM', type: 'float'},
+  {title: 'Blood Pressure', count: 120, unit: 'mmHg', type: 'integer'},
+  {title: 'Body temperature', count: 30, unit: '*F', type: 'float'},
+  {title: 'Menstruation', count: 30, unit: 'BPM', type: 'float'},
+  {title: 'Blood Oxygen', count: 71, unit: '%', type: 'float'},
+  {title: 'Alcohol Consumption', count: 71, unit: 'ml', type: 'integer'},
+  {title: 'Inhaler Usage', count: 71, unit: 'mcg', type: 'integer'},
+  {title: 'Sexual Activity', count: 71, unit: 'mcg', type: 'integer'},
+  {title: 'ToothBrushing', count: 2, unit: 'in a day', type: 'integer'},
+];
