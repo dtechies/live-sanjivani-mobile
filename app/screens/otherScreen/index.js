@@ -159,7 +159,7 @@ export const OtherScreen = props => {
       <Screen withScroll bounces={false} style={styles.screenContainer()}>
         <View style={styles.headingFirst(1)}>
           <View style={styles.headOne(1)}>
-            <IcOtherIcon1 height={25} width={25} fill={color.turquoiseNew} />
+            <IcOtherIcon1 fill={color.turquoiseNew} />
             <Text style={styles.headingTxt()}>Allegies</Text>
           </View>
           <View style={styles.itemListMain(1)}>
@@ -251,7 +251,7 @@ export const OtherScreen = props => {
         </View>
         <View style={styles.headingFirst()}>
           <View style={styles.headOne()}>
-            <IcOtherIcon2 height={35} width={35} fill={color.turquoiseNew} />
+            <IcOtherIcon2 fill={color.turquoiseNew} />
             <Text style={styles.headingTxt()}>Menstruation</Text>
           </View>
           <View style={styles.itemListMain()}>
@@ -380,7 +380,7 @@ export const OtherScreen = props => {
         </View>
         <View style={styles.headingFirst()}>
           <View style={styles.headOne()}>
-            <IcOtherIcon5 height={20} width={20} fill={color.turquoiseNew} />
+            <IcOtherIcon5 height={20} width={24} fill={color.turquoiseNew} />
             <Text style={styles.headingTxt()}>Sexual Activity</Text>
           </View>
           <View style={styles.itemListMain()}>

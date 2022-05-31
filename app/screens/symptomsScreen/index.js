@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Pressable,
@@ -42,7 +42,16 @@ export const SymptomsScreen = () => {
   const onAddPressValidation = () => {
     age === '' && setAgeErr('Enter your Age');
   };
-
+  const clearData = () => {
+    let newSymptomChecker = symptomChecker.map(i => {
+      i.isActive = false;
+      return i;
+    });
+    setSymChecker(newSymptomChecker);
+  };
+  useEffect(() => {
+    clearData();
+  }, []);
   return (
     <SafeAreaView style={styles.container()}>
       <Header
@@ -54,99 +63,95 @@ export const SymptomsScreen = () => {
         isHeading={true}
         title={'symptoms_screen.title'}
       />
+      <Text style={styles.labelTextStyle()} tx={'symptoms_screen.header'} />
       <Screen>
-        <Text style={styles.labelTextStyle()} tx={'symptoms_screen.header'} />
-        <Screen>
-          <View style={styles.mainDetailContainer()}>
-            <View>
-              <View style={styles.mainViewStyle()}>
-                <View style={styles.circleView()} />
-                <Text
-                  style={styles.labelAgeStyle()}
-                  tx={'symptoms_screen.age'}
-                />
-              </View>
-              <InputBox
-                value={age}
-                onChangeText={val => {
-                  setAge(val);
-                  setExtra(extra + 1);
-                }}
-                keyboardType={'number-pad'}
-                mainContainerStyle={styles.inputMain()}
-                inputStyle={styles.inputTextStyle()}
-                // onChangeText={val => setCareGiver({...careGiver, firstName: val})}
-              />
-              {ageErr ? (
-                <Text style={styles.textValidation()} text={ageErr} />
-              ) : null}
+        <View style={styles.mainDetailContainer()}>
+          <View>
+            <View style={styles.mainViewStyle()}>
+              <View style={styles.circleView()} />
+              <Text style={styles.labelAgeStyle()} tx={'symptoms_screen.age'} />
             </View>
-            <View style={styles.genderViewContainer()}>
-              <View style={styles.mainViewStyle()}>
-                <View style={styles.circleView()} />
-                <Text
-                  style={styles.labelAgeStyle()}
-                  tx={'symptoms_screen.gender'}
-                />
-              </View>
-              <View style={styles.selectedGenderContainer()}>
-                {gender.map((item, index) => {
-                  return (
-                    <Pressable
-                      key={index.toString()}
-                      style={styles.inputGenderMain()}
-                      onPress={() => itemSelect(index)}>
-                      <View style={styles.dotImg(isSelected, index)}></View>
-                      <Text style={styles.inputTextStyle()} text={item.value} />
-                    </Pressable>
-                  );
-                })}
-              </View>
+            <InputBox
+              value={age}
+              onChangeText={val => {
+                setAge(val);
+                setExtra(extra + 1);
+              }}
+              maxLength={3}
+              keyboardType={'number-pad'}
+              mainContainerStyle={styles.inputMain()}
+              inputStyle={styles.inputTextStyle()}
+              // onChangeText={val => setCareGiver({...careGiver, firstName: val})}
+            />
+            {ageErr ? (
+              <Text style={styles.textValidation()} text={ageErr} />
+            ) : null}
+          </View>
+          <View style={styles.genderViewContainer()}>
+            <View style={styles.mainViewStyle()}>
+              <View style={styles.circleView()} />
+              <Text
+                style={styles.labelAgeStyle()}
+                tx={'symptoms_screen.gender'}
+              />
+            </View>
+            <View style={styles.selectedGenderContainer()}>
+              {gender.map((item, index) => {
+                return (
+                  <Pressable
+                    key={index.toString()}
+                    style={styles.inputGenderMain()}
+                    onPress={() => itemSelect(index)}>
+                    <View style={styles.dotImg(isSelected, index)}></View>
+                    <Text style={styles.inputTextStyle()} text={item.value} />
+                  </Pressable>
+                );
+              })}
             </View>
           </View>
+        </View>
 
-          <Text
-            style={styles.labelTextStyle()}
-            tx={'symptoms_screen.whatAreYourSymptoms'}
-          />
-          <InputBox
-            value={searchText}
-            onChangeText={val => {
-              onSearch(val);
-            }}
-            mainContainerStyle={styles.inputSearchStyle()}
-            inputStyle={styles.inputTxt()}
-            leftIcon={true}
-            leftIconName={
-              <SearchValNew
-                height={size.moderateScale(20)}
-                width={size.moderateScale(20)}
-                fill={color.blue}
-              />
-            }
-            placeholder={'Search Symptom'}
-            placeholderTextColor={color.blueTx}
-          />
+        <Text
+          style={styles.labelTextStyle()}
+          tx={'symptoms_screen.whatAreYourSymptoms'}
+        />
+        <InputBox
+          value={searchText}
+          onChangeText={val => {
+            onSearch(val);
+          }}
+          mainContainerStyle={styles.inputSearchStyle()}
+          inputStyle={styles.inputTxt()}
+          leftIcon={true}
+          leftIconName={
+            <SearchValNew
+              height={size.moderateScale(20)}
+              width={size.moderateScale(20)}
+              fill={color.blue}
+            />
+          }
+          placeholder={'Search Symptom'}
+          placeholderTextColor={color.blueTx}
+        />
 
-          {symChecker.map((val, i) => {
-            return (
-              <Pressable
-                key={i.toString()}
-                style={styles.cardDesign()}
-                onPress={() => {
-                  symChecker[i].isActive = !val.isActive;
-                  // console.log('i', i);
-                  setExtra(extra + 1);
-                }}>
-                <View style={styles.dotImgSymptom(val.isActive)}></View>
-                <Text style={styles.cardTxt()} text={val.name} />
-              </Pressable>
-            );
-          })}
-          {symChecker.length == 0 && (
-            <Text style={styles.noData()}>No Records Found...</Text>
-          )}
-        </Screen>
+        {symChecker.map((val, i) => {
+          return (
+            <Pressable
+              key={i.toString()}
+              style={styles.cardDesign()}
+              onPress={() => {
+                symChecker[i].isActive = !val.isActive;
+                // console.log('i', i);
+                setExtra(extra + 1);
+              }}>
+              <View style={styles.dotImgSymptom(val.isActive)}></View>
+              <Text style={styles.cardTxt()} text={val.name} />
+            </Pressable>
+          );
+        })}
+        {symChecker.length == 0 && (
+          <Text style={styles.noData()}>No Records Found...</Text>
+        )}
       </Screen>
 
       <Pressable

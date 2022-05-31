@@ -21,7 +21,7 @@ import {
 export function OtherIcon2(props) {
   return (
     // height="36" width="20.379"
-    <Svg height={props.height} width={props.width} viewBox="0 0 20.379 36">
+    <Svg height="36" width="20.379" viewBox="0 0 20.379 36">
       <G id="woman-sharp" transform="translate(-7.802)">
         <Path
           id="Path_1142"

@@ -37,19 +37,19 @@ export const MedicationReminderScreen = () => {
   const [isLoading, seIsLoading] = useState(false);
   const [medicineValue, setMedicineValue] = useState(null);
   const [medicineValueDefault, setMedicineValueDefault] = useState({
-    label: 'Tablet',
-    value: 'tablet',
+    label: 'Select Forms',
+    value: 'Select Forms',
   });
   const [doseValue, setDoseValue] = useState(null);
   const [doseValueDefault, setDoseValueDefault] = useState({
-    label: '1',
-    value: '1',
+    label: 'Select Dose',
+    value: 'Select Dose',
   });
   const [unitValue, setUniteValue] = useState(null);
   const [extra, setExtra] = useState(0);
   const [remindFrequencyValue, setRemindFrequencyValue] = useState(null);
   const [remindFrequencyValueDefault, setRemindFrequencyValueDefault] =
-    useState({label: 'EveryDay', value: 'EveryDay'});
+    useState({label: 'Select Frequency', value: 'Select Frequency'});
   const [remindFreqDate, setRemindFreqDate] = useState('');
   const [showDate, setShowDate] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
@@ -69,8 +69,8 @@ export const MedicationReminderScreen = () => {
   const [medicineFormNameErr, setMedicineFormNameErr] = useState(null);
   const [medicineStrength, setMedicineStrength] = useState('');
   const [medicineStrengthDefault, setMedicineStrengthDefault] = useState({
-    label: '0.5 MG',
-    value: '0.5 MG',
+    label: 'Select Strength',
+    value: 'Select Strength',
   });
   const [doseValueErr, setDoseValueErr] = useState(null);
   const [unitValueErr, setUnitValueErr] = useState(null);
@@ -274,7 +274,6 @@ export const MedicationReminderScreen = () => {
             setReferedBy(val);
             setReferedByErr('');
             setExtra(extra + 1);
-            validation();
           }}
         />
         {referedByErr ? (
@@ -311,7 +310,7 @@ export const MedicationReminderScreen = () => {
         ) : null}
 
         <Text
-          style={styles.labelFieldText()}
+          style={styles.labelFieldDropText()}
           tx="medication_reminder_screen.medicine_form"
         />
         <Dropdown
@@ -319,10 +318,8 @@ export const MedicationReminderScreen = () => {
           data={medicineForm}
           labelField="label"
           valueField="value"
-          // placeholder={'Select Form'}
           dropdownPosition={'bottom'}
           style={styles.dropdown()}
-          // placeholderStyle={styles.labelFieldText1()}
           selectedTextStyle={styles.selectedOptionTextStyle()}
           maxHeight={size.moderateScale(82)}
           showsVerticalScrollIndicator={false}
@@ -354,7 +351,7 @@ export const MedicationReminderScreen = () => {
         ) : null}
 
         <Text
-          style={styles.labelFieldText()}
+          style={styles.labelFieldDropText()}
           tx="medication_reminder_screen.dose"
         />
         <Dropdown
@@ -395,17 +392,9 @@ export const MedicationReminderScreen = () => {
         {doseValueErr ? (
           <Text style={styles.errorText()}>{doseValueErr}</Text>
         ) : null}
-        {/* <InputBox
-          titleTx={'medication_reminder_screen.medicine_strength'}
-          titleStyle={styles.labelFieldText()}
-          placeholder={'Medicine Strength'}
-          placeholderTextColor={color.grayTxt}
-          keyboardType={'number-pad'}
-          inputStyle={styles.inputStyle()}
-          mainContainerStyle={styles.inputMainContainer()}
-        /> */}
+
         <Text
-          style={styles.labelFieldText()}
+          style={styles.labelFieldDropText()}
           tx="medication_reminder_screen.strength"
         />
         <Dropdown
@@ -448,7 +437,7 @@ export const MedicationReminderScreen = () => {
         ) : null}
 
         <Text
-          style={styles.labelFieldText()}
+          style={styles.labelFieldDropText()}
           tx="medication_reminder_screen.reminder_frequency"
         />
         <Dropdown
@@ -476,11 +465,11 @@ export const MedicationReminderScreen = () => {
           onChange={item => {
             setRemindFrequencyValue(item.value);
             setRemindFreqDate('Select a Date');
-            if (item.value == 'EveryDay') {
-              setRemindFrequencyValueErr('');
-            } else {
-              setRemindFrequencyValueErr('Select a Date');
-            }
+            // if (item.value == 'EveryDay') {
+            //   setRemindFrequencyValueErr('');
+            // } else {
+            //   setRemindFrequencyValueErr('Select a Date');
+            // }
             setIsFocus(false);
           }}
           renderItem={item => {
@@ -535,7 +524,7 @@ export const MedicationReminderScreen = () => {
           </>
         )}
         <Text
-          style={styles.labelFieldText()}
+          style={styles.labelFieldDropText()}
           tx="medication_reminder_screen.reminder_time"
         />
         <Dropdown
@@ -563,7 +552,7 @@ export const MedicationReminderScreen = () => {
           onChange={item => {
             setRemindTimeValue(item.value);
             setRemindTime('Select a Time');
-            setRemindTimeErr('Select Time');
+            setRemindTimeErr('');
             setIsFocus(false);
           }}
           renderItem={item => {
@@ -688,6 +677,7 @@ export const MedicationReminderScreen = () => {
               <IcCrossArrow width={20} height={20} fill={color.black} />
             </Pressable>
             <Image
+              resizeMode="contain"
               source={{uri: imageUpload && imageUpload?.path}}
               style={styles.imageModelView()}
             />

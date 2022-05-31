@@ -199,7 +199,7 @@ export const RegisterScreen = () => {
           value={email}
           onChangeText={text => {
             setEmail(text);
-            // setEmailErr('');
+            setEmailErr('');
             emailValidate();
           }}
           maxLength={45}

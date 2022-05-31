@@ -31,7 +31,7 @@ export const labelAgeStyle = () => ({
   paddingLeft: size.moderateScale(10),
   fontFamily: fonts.latoBold,
   color: color.blueTx,
-  fontSize: fontSize.small,
+  fontSize: fontSize.smallText,
 });
 export const inputMain = () => ({
   width: size.deviceWidth * 0.25,
@@ -58,6 +58,7 @@ export const inputGenderMain = () => ({
   alignItems: 'center',
 });
 export const inputTextStyle = () => ({
+  paddingLeft: size.moderateScale(9),
   fontSize: fontSize.medium,
   fontFamily: fonts.latoBold,
   color: color.blueTx,
@@ -67,8 +68,8 @@ export const mainViewStyle = () => ({
   alignItems: 'center',
 });
 export const circleView = () => ({
-  height: size.moderateScale(15),
-  width: size.moderateScale(15),
+  height: size.moderateScale(12),
+  width: size.moderateScale(12),
   backgroundColor: color.blueTx,
   borderRadius: size.moderateScale(50),
 });

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, SafeAreaView, FlatList, BackHandler, Alert} from 'react-native';
+import {View, SafeAreaView, FlatList, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {MultiSelect} from 'react-native-element-dropdown';
 
@@ -26,27 +26,7 @@ export const ProgressScreen = () => {
     });
     setExtra(extra + 1);
   };
-  // useEffect(() => {
-  //   const backAction = () => {
 
-  //     Alert.alert('Hold on!', 'Are you sure you want to Exit App?', [
-  //       {
-  //         text: 'Cancel',
-  //         onPress: () => null,
-  //         style: 'cancel',
-  //       },
-  //       {text: 'YES', onPress: () => BackHandler.exitApp()},
-  //     ]);
-  //     return true;
-  //   };
-
-  //   const backHandler = BackHandler.addEventListener(
-  //     'hardwareBackPress',
-  //     backAction,
-  //   );
-
-  //   return () => backHandler.remove();
-  // }, []);
   return (
     <SafeAreaView style={styles.container()}>
       <Header

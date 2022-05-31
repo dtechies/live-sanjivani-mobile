@@ -1,11 +1,22 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {View, Pressable, SafeAreaView, ScrollView, Image} from 'react-native';
+import {
+  View,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  Image,
+  BackHandler,
+} from 'react-native';
 import moment from 'moment';
 import {Text, TitleBox, Screen, Header, ToggleSwitch} from 'components';
 import {size, color, IcDelete, IcBtnPlus, images, IcFalse, IcTrue} from 'theme';
 import {reminderListData, medicationReminder} from 'json';
 import * as styles from './styles';
-import {useNavigation} from '@react-navigation/native';
+import {
+  useNavigation,
+  useFocusEffect,
+  useRoute,
+} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const TodayScreen = () => {
@@ -15,13 +26,47 @@ export const TodayScreen = () => {
   const [currentTime, setCurrentTime] = useState(new moment().format('hh:mm'));
   const [currentAmTime, setCurrentAmTime] = useState(new moment().format('A'));
   const navigation = useNavigation();
+  const [exitApp, setExitApp] = useState(0);
+
+  const route = useRoute();
+  console.log('route', route.name);
 
   const onEditMedicineReminderStatusPress = async index => {
     console.log('item ==>', medicationData[index].status);
     medicationData[index].status = !medicationData[index].status;
     setExtra(extra + 1);
   };
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     const onBackPress = () => {
+  //       return true;
+  //     };
 
+  //     BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+  //     return () =>
+  //       BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+  //   }, []),
+  // );
+  const backAction = () => {
+    setTimeout(() => {
+      setExitApp(0);
+    }, 2000);
+
+    if (exitApp === 0) {
+      setExitApp(exitApp + 1);
+    } else if (exitApp === 1) {
+      BackHandler.exitApp();
+    }
+    return true;
+  };
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+    return () => route.name === 'todayScreen' && backHandler.remove();
+  });
   useEffect(() => {
     let secTimer = setInterval(() => {
       setCurrentTime(new moment().format('hh:mm'));
@@ -30,7 +75,6 @@ export const TodayScreen = () => {
     }, 1000);
     return () => clearInterval(secTimer);
   }, []);
-
 
   return (
     <SafeAreaView style={styles.container()}>

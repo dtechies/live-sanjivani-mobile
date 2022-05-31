@@ -57,6 +57,8 @@ export const CheckMedicationReminderScreen = props => {
   const validation = () => {
     if (remindFreqDate === null || remindFreqDate === '') {
       seIsDateErr('Please select Date...');
+    } else {
+      navigation.navigate('todayScreen');
     }
   };
 
@@ -78,81 +80,77 @@ export const CheckMedicationReminderScreen = props => {
         isCamera={false}
         title={'CheckMedicationReminderScreen.title'}
       />
-      <Screen withScroll bounces={false} style={styles.screenContainer()}>
-        <View>
-          <View style={styles.cardFirst()}>
-            <View style={styles.backHalf()}>
-              <Text style={styles.labelFieldText()} text={'Glycomet 0.5 MG'} />
-              <Text
-                style={styles.titleDetails()}
-                text={'1 Tablet Everyday before meal.'}
-              />
-            </View>
-            <View style={styles.cardSecond()}>
-              <View style={styles.dayMain()}>
-                {days.map((val, i) => {
-                  return (
-                    <Pressable
-                      onPress={() => {
-                        days[i].isSelected = !val.isSelected;
-                        setExtra(extra + 1);
-                      }}
-                      style={styles.singleDay(val.isSelected)}
-                      key={i.toString()}>
-                      <Text style={styles.singleDayTxt(val.isSelected)}>
-                        {val.date}
-                      </Text>
-                    </Pressable>
-                  );
-                })}
-              </View>
-              <View style={styles.infoCard()}>
-                <Pressable
-                  onPress={() => {
-                    setShowDate(true);
-                    setExtra(extra + 1);
-                  }}
-                  style={styles.cardShort()}>
-                  <Text
-                    style={styles.startDateTitleTxt()}
-                    text={'Start Date'}
-                  />
-                  <Text style={styles.startDateTxt()} text={remindFreqDate} />
-                </Pressable>
-                <View style={styles.cardShort(1)}>
-                  <Text style={styles.startDateTitleTxt()} text={'Inventory'} />
-                  <Text
-                    style={styles.startDateTxt()}
-                    text={'10/30 Tablets Left'}
-                  />
-                </View>
 
-                {showDate && (
-                  <DateTimePickerModal
-                    isVisible={showDate}
-                    mode="date"
-                    onConfirm={val => getRemindFreqCurrentDate(val)}
-                    onCancel={() => {
-                      setShowDate(false);
+      <View style={styles.screenContainer()}>
+        <View style={styles.cardFirst()}>
+          <View style={styles.backHalf()}>
+            <Text style={styles.labelFieldText()} text={'Glycomet 0.5 MG'} />
+            <Text
+              style={styles.titleDetails()}
+              text={'1 Tablet Everyday before meal.'}
+            />
+          </View>
+          <View style={styles.cardSecond()}>
+            <View style={styles.dayMain()}>
+              {days.map((val, i) => {
+                return (
+                  <Pressable
+                    onPress={() => {
+                      days[i].isSelected = !val.isSelected;
                       setExtra(extra + 1);
                     }}
-                  />
-                )}
-              </View>
-              {isDateErr ? (
-                <Text style={styles.errorText()}>{isDateErr}</Text>
-              ) : null}
+                    style={styles.singleDay(val.isSelected)}
+                    key={i.toString()}>
+                    <Text style={styles.singleDayTxt(val.isSelected)}>
+                      {val.date}
+                    </Text>
+                  </Pressable>
+                );
+              })}
             </View>
+            <View style={styles.infoCard()}>
+              <Pressable
+                onPress={() => {
+                  setShowDate(true);
+                  setExtra(extra + 1);
+                }}
+                style={styles.cardShort()}>
+                <Text style={styles.startDateTitleTxt()} text={'Start Date'} />
+                <Text style={styles.startDateTxt()} text={remindFreqDate} />
+              </Pressable>
+              <View style={styles.cardShort(1)}>
+                <Text style={styles.startDateTitleTxt()} text={'Inventory'} />
+                <Text
+                  style={styles.startDateTxt()}
+                  text={'10/30 Tablets Left'}
+                />
+              </View>
+
+              {showDate && (
+                <DateTimePickerModal
+                  isVisible={showDate}
+                  mode="date"
+                  onConfirm={val => getRemindFreqCurrentDate(val)}
+                  onCancel={() => {
+                    setShowDate(false);
+                    setExtra(extra + 1);
+                  }}
+                />
+              )}
+            </View>
+            {isDateErr ? (
+              <Text style={styles.errorText()}>{isDateErr}</Text>
+            ) : null}
           </View>
         </View>
-      </Screen>
+      </View>
+
       <Button
         buttonStyle={styles.button()}
         buttonText={styles.buttonTxt()}
         nameTx={'ViewMedicationScreen.save'}
         onPress={() => {
           validation();
-          console.log('save btn..');
         }}
       />
     </SafeAreaView>

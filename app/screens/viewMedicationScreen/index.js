@@ -43,26 +43,26 @@ export const ViewMedicationScreen = () => {
     // console.log('FilteredValue', FilteredValue);
     setMedicine(FilteredValue);
   };
-  const backAction = () => {
-    setTimeout(() => {
-      setExitApp(0);
-    }, 2000); // 2 seconds to tap second-time
+  // const backAction = () => {
+  //   setTimeout(() => {
+  //     setExitApp(0);
+  //   }, 2000); // 2 seconds to tap second-time
 
-    if (exitApp === 0) {
-      setExitApp(exitApp + 1);
-    } else if (exitApp === 1) {
-      BackHandler.exitApp();
-    }
-    return true;
-  };
-  useEffect(() => {
-    // console.log('navigation', navigation);
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-    return () => route.name === 'viewMedicationScreen' && backHandler.remove();
-  });
+  //   if (exitApp === 0) {
+  //     setExitApp(exitApp + 1);
+  //   } else if (exitApp === 1) {
+  //     BackHandler.exitApp();
+  //   }
+  //   return true;
+  // };
+  // useEffect(() => {
+  //   // console.log('navigation', navigation);
+  //   const backHandler = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     backAction,
+  //   );
+  //   return () => route.name === 'viewMedicationScreen' && backHandler.remove();
+  // });
   const getMedicineReminderData = async () => {
     setLoading(true);
     const getMedicineReminderProfileHeader = {

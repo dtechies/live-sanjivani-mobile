@@ -71,7 +71,7 @@ export const LoginScreen = () => {
           onChangeText={val => {
             // mobileNumberValidation(val);
             setNumber(val);
-            // console.log('val', val);
+            setNumberCorrect('');
             setExtra(extra + 1);
           }}
           inputStyle={styles.inputTxt()}

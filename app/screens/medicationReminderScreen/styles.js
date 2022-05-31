@@ -16,13 +16,19 @@ export const labelFieldText = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
   color: color.blueTx,
-  marginLeft: 7,
+  marginLeft: size.moderateScale(7),
+});
+export const labelFieldDropText = () => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoBold,
+  color: color.blueTx,
+  marginLeft: size.moderateScale(10),
 });
 export const labelFieldText1 = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
   color: color.dimGray,
-  marginLeft: 7,
+  marginLeft: size.moderateScale(7),
 });
 export const inputStyle = () => ({
   fontSize: fontSize.small,
@@ -96,7 +102,7 @@ export const selectedOptionTextStyle = () => ({
   color: color.blueTx,
   fontFamily: fonts.latoBold,
   fontSize: fontSize.small,
-  marginLeft: size.moderateScale(10),
+  marginLeft: size.moderateScale(5),
   textTransform: 'capitalize',
 });
 export const dropdownContainer = () => ({
