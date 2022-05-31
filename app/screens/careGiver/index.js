@@ -30,7 +30,7 @@ export const CareGiver = () => {
       setEmailCorrect('');
     }
   };
-  // console.log('phone', phone);
+
   const phoneValidate = () => {
     if (phone === '') {
       setPhoneCorrect('Please Enter Phone number');
@@ -42,7 +42,7 @@ export const CareGiver = () => {
   };
 
   const validation = () => {
-    // console.log('in validation....');
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (firstName === '') {
       setFirstNameCorrect('Please Enter First Name');
     }
@@ -52,8 +52,21 @@ export const CareGiver = () => {
     if (nickName === '') {
       setNickNameCorrect('Please select Gender');
     }
-    emailValidate();
-    phoneValidate();
+    if (email === '') {
+      setEmailCorrect('Please Enter Email Address');
+    } else if (reg.test(email) === false) {
+      setEmailCorrect('Invalid email');
+    } else {
+      setEmailCorrect('');
+    }
+    if (phone === '') {
+      setPhoneCorrect('Please Enter Phone number');
+    } else if (phone.length < 10) {
+      setPhoneCorrect('Invalid Phone number');
+    } else {
+      setPhoneCorrect('');
+      setExtra(extra + 1);
+    }
   };
   return (
     <SafeAreaView style={styles.container()}>
@@ -129,8 +142,8 @@ export const CareGiver = () => {
               value={phone}
               onChangeText={val => {
                 setPhone(val);
+                setPhoneCorrect('');
                 setExtra(extra + 1);
-                phoneValidate(val);
               }}
               maxLength={10}
               keyboardType={'number-pad'}
@@ -155,7 +168,7 @@ export const CareGiver = () => {
               value={email}
               onChangeText={val => {
                 setEmail(val);
-                emailValidate();
+                setEmailCorrect('');
                 setExtra(extra + 1);
               }}
               // maxLength={20}

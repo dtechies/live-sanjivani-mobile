@@ -274,7 +274,6 @@ export const MedicationReminderScreen = () => {
             setReferedBy(val);
             setReferedByErr('');
             setExtra(extra + 1);
-            validation();
           }}
         />
         {referedByErr ? (
@@ -311,7 +310,7 @@ export const MedicationReminderScreen = () => {
         ) : null}
 
         <Text
-          style={styles.labelFieldText()}
+          style={styles.labelFieldDropText()}
           tx="medication_reminder_screen.medicine_form"
         />
         <Dropdown
@@ -354,7 +353,7 @@ export const MedicationReminderScreen = () => {
         ) : null}
 
         <Text
-          style={styles.labelFieldText()}
+          style={styles.labelFieldDropText()}
           tx="medication_reminder_screen.dose"
         />
         <Dropdown
@@ -405,7 +404,7 @@ export const MedicationReminderScreen = () => {
           mainContainerStyle={styles.inputMainContainer()}
         /> */}
         <Text
-          style={styles.labelFieldText()}
+          style={styles.labelFieldDropText()}
           tx="medication_reminder_screen.strength"
         />
         <Dropdown
@@ -448,7 +447,7 @@ export const MedicationReminderScreen = () => {
         ) : null}
 
         <Text
-          style={styles.labelFieldText()}
+          style={styles.labelFieldDropText()}
           tx="medication_reminder_screen.reminder_frequency"
         />
         <Dropdown
@@ -535,7 +534,7 @@ export const MedicationReminderScreen = () => {
           </>
         )}
         <Text
-          style={styles.labelFieldText()}
+          style={styles.labelFieldDropText()}
           tx="medication_reminder_screen.reminder_time"
         />
         <Dropdown

@@ -1,20 +1,18 @@
 import {color, size, fonts, fontSize} from 'theme';
 
 export const container = () => ({
-  flex: 1,
+  // flex: 1,
   justifyContent: 'center',
 });
 export const screenContainer = () => ({
   backgroundColor: color.themeBack,
 });
 export const cardFirst = () => ({
-  height: size.deviceHeight * 1,
   shadowColor: color.black,
   shadowRadius: size.moderateScale(5),
   shadowOffset: {height: size.moderateScale(3), width: 0},
   shadowOpacity: 0.2,
   elevation: size.moderateScale(5),
-  marginTop: size.moderateScale(7),
 });
 export const cardSecond = () => ({
   height: size.moderateScale(200),

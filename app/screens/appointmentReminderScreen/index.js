@@ -22,7 +22,9 @@ export const AppointmentReminderScreen = animated => {
   const [extra, setExtra] = useState(0);
   const [showTime, setShowTime] = useState(false);
   const [showTimeReminder, setShowTimeReminder] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState(
+    new moment().format('YYYY/MM/DD'),
+  );
   const [selectedDateErr, setSelectedDateErr] = useState('');
   const [searchVal, setSearchVal] = useState('');
   const [searchValErr, setSearchValErr] = useState('');

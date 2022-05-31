@@ -6,7 +6,6 @@ export const container = () => ({
 });
 export const screenContainer = () => ({
   paddingHorizontal: size.moderateScale(20),
-  paddingTop: size.moderateScale(15),
   backgroundColor: color.themeBack,
 });
 export const mainProfileStyle = () => ({
