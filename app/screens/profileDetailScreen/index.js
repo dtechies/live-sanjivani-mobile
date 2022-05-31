@@ -33,7 +33,7 @@ import {
   measurementUnit,
   reminderFrequency,
   reminderTime,
-  genderval,
+  genderVal,
   languageVal,
 } from 'json';
 
@@ -261,7 +261,7 @@ export const ProfileDetailScreen = () => {
             <Dropdown
               defaultValue={genderDefault}
               // ref={genderRef}
-              data={genderval}
+              data={genderVal}
               labelField="label"
               valueField="value"
               // placeholder={'Gender'}

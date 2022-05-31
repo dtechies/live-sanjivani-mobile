@@ -70,6 +70,7 @@ export const SharingDetailScreen = props => {
           value={emailVal}
           onChangeText={val => {
             setEmailVal(val);
+            setEmailCorrect('');
             setExtra(extra + 1);
           }}
           mainContainerStyle={styles.inputMainContainer()}

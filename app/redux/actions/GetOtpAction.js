@@ -12,7 +12,7 @@ export const getOtp = body => {
         });
       })
       .catch(error => {
-        console.log('getOtp Error Response :=\n', error);
+        // console.log('getOtp Error Response :=\n', error);
         dispatch({type: actions.GET_OTP, payload: error});
       });
   };

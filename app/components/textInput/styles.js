@@ -14,7 +14,7 @@ export const container = (v1, v2) => ({
   flexDirection: 'row',
   alignItems: 'center',
   backgroundColor: color.white,
-  borderRadius: 5,
+  borderRadius: size.moderateScale(10),
   paddingLeft: size.moderateScale(5),
   height: size.deviceHeight * 0.06,
   shadowColor: v2 ? color.black : color.white,

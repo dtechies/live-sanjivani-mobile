@@ -15,10 +15,12 @@ export const container = () => ({
 
 export const TextFirstTxt = () => ({
   fontSize: fontSize.medium,
+  color: color.dimGrey,
   fontFamily: fonts.latoBold,
 });
 export const TextSecondTxt = () => ({
   fontSize: fontSize.VerySmall,
+  color: color.dimGrey,
   fontFamily: fonts.latoRegular,
 });
 

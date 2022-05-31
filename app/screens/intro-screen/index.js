@@ -9,7 +9,11 @@ import {
   Alert,
 } from 'react-native';
 
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {
+  useNavigation,
+  useRoute,
+  useFocusEffect,
+} from '@react-navigation/native';
 import {color, size} from 'theme';
 import {images, IcIntro1, IcIntro2, IcIntro3, IcSplashColor} from 'theme';
 import {Button, Text} from 'components';
@@ -21,7 +25,7 @@ export const IntroScreen = () => {
   const [active, setActive] = useState(0);
   const [exitApp, setExitApp] = useState(0);
   const route = useRoute();
-  // console.log('route', route.name);∂
+  console.log('route', route.name);
   const loginPress = () => {
     if (active < 2) {
       setActive(active + 1);
@@ -43,26 +47,18 @@ export const IntroScreen = () => {
     );
     setActive(active);
   };
-  const backAction = () => {
-    setTimeout(() => {
-      setExitApp(0);
-    }, 2000);
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = () => {
+        return true;
+      };
 
-    if (exitApp === 0) {
-      setExitApp(exitApp + 1);
-    } else if (exitApp === 1) {
-      BackHandler.exitApp();
-    }
-    return true;
-  };
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-    return () => route.name === 'introScreen' && backHandler.remove();
-  });
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
+      return () =>
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+    }, []),
+  );
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.mainView}>

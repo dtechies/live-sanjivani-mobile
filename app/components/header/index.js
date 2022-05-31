@@ -143,7 +143,7 @@ export const Header = props => {
                 style={styles.profileName(
                   props.isColor || props.isBlue ? 1 : 3,
                 )}>
-                {props.isCamera ? props.name : 'Ashish Mishra'}
+                {props.name ? props.name : 'UserName'}
               </Text>
               <Text
                 style={
@@ -153,16 +153,16 @@ export const Header = props => {
                         props.isColor || props.isBlue ? 1 : 3,
                       )
                 }>
-                {props.isCamera ? props.secName : '35 Yrs Old,'}
+                {props.secName ? props.secName : 'User Age'}
               </Text>
-              {!props.isCamera && (
+              {/* {!props.isCamera && (
                 <Text
                   style={styles.profileDetails(
                     props.isColor || props.isBlue ? 1 : 3,
                   )}>
                   Pune, MH
                 </Text>
-              )}
+              )} */}
             </View>
           </View>
         )}

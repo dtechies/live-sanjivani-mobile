@@ -30,7 +30,7 @@ export const headingTxt = () => ({
   color: color.blueTx,
   fontSize: fontSize.medium,
   fontFamily: fonts.latoBold,
-  marginLeft: size.moderateScale(7),
+  marginLeft: size.moderateScale(12),
 });
 export const headOne = val => ({
   marginTop: size.moderateScale(10),

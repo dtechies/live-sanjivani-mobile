@@ -1,7 +1,7 @@
 import * as Actions from '../Types';
 
 const initialState = {
-  loginResponse: [],
+  loginResponse: {},
 };
 
 const loginReducer = (state = initialState, action) => {

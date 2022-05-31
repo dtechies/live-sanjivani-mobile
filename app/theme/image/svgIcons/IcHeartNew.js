@@ -21,7 +21,7 @@ import {
 export function HeartNew(props) {
   return (
     <Svg
-      height="53.56"
+      height="40.56"
       id="heart_1_"
       width="28.50"
       viewBox="0 0 28.505 35.562"
