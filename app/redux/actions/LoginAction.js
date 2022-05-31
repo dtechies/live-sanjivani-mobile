@@ -1,24 +1,23 @@
 import {BASE_URL} from 'config';
 import * as actions from '../Types';
 
-export const loginUser = (header, body) => {
+export const loginUser = body => {
   return dispatch => {
     dispatch({type: actions.LOGIN_USER});
-    let url = `${BASE_URL}/users/userLogin`;
+    let url = `${BASE_URL}/user-login`;
 
     return fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: body,
+      body: JSON.stringify(body),
     })
       .then(res => res.json())
       .then(response => {
-        // console.log('URL := ', url);
-        // console.log('header := ', header);
-        // console.log('body := ', body);
-        // console.log('Response := ', response);
+        // console.log('loginUser URL := ', url);
+        // console.log('loginUser body := ', body);
+        // console.log('loginUser Response := ', response);
         if (response) {
           return dispatch({
             type: actions.LOGIN_USER,
@@ -29,7 +28,7 @@ export const loginUser = (header, body) => {
         }
       })
       .catch(error => {
-        console.log('loginUser Error Response :=\n', error);
+        // console.log('loginUser Error Response :=\n', error);
         dispatch({type: actions.LOGIN_USER, payload: error});
       });
   };

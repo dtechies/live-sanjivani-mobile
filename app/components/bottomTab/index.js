@@ -11,6 +11,7 @@ import {
   IcProfile,
   IcProgress,
   IcSharing,
+  IcHeartCare,
 } from 'theme';
 export const BottomTab = props => {
   const {navigation, state, descriptors} = props;
@@ -28,11 +29,11 @@ export const BottomTab = props => {
       {state.routes.map((r, index) => {
         var Icon;
         if (r.name === 'Today') {
-          Icon = IcHome;
+          Icon = IcHeartCare;
         } else if (r.name === 'Progress') {
           Icon = IcProgress;
         } else if (r.name === 'Sharing') {
-          Icon = IcSharing;
+          Icon = IcProfile;
         } else if (r.name === 'Add') {
           Icon = IcPlus;
         } else if (r.name === 'Profile') {
@@ -49,7 +50,7 @@ export const BottomTab = props => {
                 <Icon
                   height={size.moderateScale(20)}
                   width={size.moderateScale(20)}
-                  fill={state.index === index ? color.cornBlue : color.darkGrey}
+                  fill={state.index === index ? color.white : color.darkGrey}
                 />
               </View>
               <Text style={styles.textLabel(state.index === index)}>

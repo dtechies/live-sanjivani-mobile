@@ -8,7 +8,7 @@ import {
   Platform,
   I18nManager,
 } from 'react-native';
-
+import {size, color, IcDelete, IcBtnPlus} from 'theme';
 import PropTypes from 'prop-types';
 
 export class ToggleSwitch extends React.Component {
@@ -63,13 +63,13 @@ export class ToggleSwitch extends React.Component {
 
   static defaultProps = {
     isOn: false,
-    onColor: '#4cd137',
+    onColor: '#ecf0f1',
     offColor: '#ecf0f1',
     size: 'medium',
     labelStyle: {},
     labelPosition: 'left',
-    thumbOnStyle: {},
-    thumbOffStyle: {},
+    thumbOnStyle: {backgroundColor: 'blue'},
+    thumbOffStyle: {backgroundColor: 'red'},
     trackOnStyle: {},
     trackOffStyle: {},
     icon: null,
@@ -87,6 +87,8 @@ export class ToggleSwitch extends React.Component {
       justifyContent: 'center',
       width: this.dimensions.width,
       borderRadius: 20,
+      borderWidth: 1,
+      borderColor: color.darkGrey,
       padding: this.dimensions.padding,
       backgroundColor: this.props.isOn
         ? this.props.onColor

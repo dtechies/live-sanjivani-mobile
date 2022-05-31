@@ -1,22 +1,51 @@
 import React, {useState} from 'react';
 import {View, Pressable, Image, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
-import {images, IcArrowNext} from 'theme';
+import {useDispatch} from 'react-redux';
+import {loginUser, userData, getOtp} from 'redux-actions';
 import {Loader, Text, Button, TitleBox, Screen, InputBox} from 'components';
-import {size, color, IcSearch} from 'theme';
+import {size, color, IcArrowNext, images} from 'theme';
 import * as styles from './styles';
 export const LoginScreen = () => {
+  const dispatch = useDispatch();
   const [subScreen, setsubScreen] = useState(false);
   const [mainScreen, setmainScreen] = useState(true);
   const [editable, setEditable] = useState(true);
   const [number, setNumber] = useState('');
+  const [extra, setExtra] = useState(0);
+  const [numberCorrect, setNumberCorrect] = useState('');
   const navigation = useNavigation();
 
-  const requestOtp = () => {
-    setEditable(false);
-    setmainScreen(false);
-    setsubScreen(true);
+  const onGetOtp = async () => {
+    // setLoading(true);
+    // console.log('number', number);
+    const getOtpBody = {
+      mob_no: number,
+    };
+    // console.log('getOtpBody ==>', getOtpBody);
+    // return;
+    const getOtpResponse = await dispatch(getOtp(getOtpBody));
+    const res = getOtpResponse.payload;
+    // setLoading(false);
+    // console.log('getOtp res ==>', res);
+    // return;
+    if (res.status) {
+      // console.log('response data ==>', res.data.otp);
+      setTimeout(() => {
+        navigation.navigate('otpScreen', {
+          otpValue: res.data,
+        });
+      }, 150);
+      // dispatch(userData({userData: res.data.user, login: true}));
+      // console.log('login response data ==>', res);
+      // toastMessage('Login SuccessFully');
+      // setTimeout(() => {
+      //   navigation.navigate('bottomStackNavigation');
+      // }, 300);
+    } else {
+      // setLoading(false);
+      // toastMessage(res.message);
+    }
   };
 
   return (
@@ -24,111 +53,61 @@ export const LoginScreen = () => {
       <View style={styles.imageView()}>
         <Image
           style={{
-            height: size.moderateScale(150),
-            width: size.moderateScale(150),
+            height: size.moderateScale(175),
+            width: size.moderateScale(225),
           }}
-          source={images.icLogo}
+          source={images.icSanjivaniLogoPng}
         />
       </View>
-      {mainScreen && (
-        <Screen bounces={false} style={styles.screenContainer()}>
-          <InputBox
-            titleTx={'login_screen.number'}
-            titleStyle={styles.labelFieldText()}
-            placeholder={'Number'}
-            value={number}
-            onChangeText={value => {
-              setNumber(value);
-            }}
-            maxLength={10}
-            keyboardType={'number-pad'}
-            inputStyle={styles.inputStyle(editable)}
-            mainContainerStyle={styles.inputMainContainer()}
-            leftIcon={
-              <Text
-                style={styles.labelFieldText()}
-                tx="login_screen.countryCode"
-              />
+
+      <View style={styles.screenContainer()}>
+        <Text style={styles.labelLoginTxt()} tx={'login_screen.number'} />
+        <InputBox
+          value={number}
+          placeholder={'XXXXXXXXXX'}
+          keyboardType={'phone-pad'}
+          withButton={true}
+          maxLength={10}
+          onChangeText={val => {
+            // mobileNumberValidation(val);
+            setNumber(val);
+            // console.log('val', val);
+            setExtra(extra + 1);
+          }}
+          inputStyle={styles.inputTxt()}
+          mainContainerStyle={styles.inputMain()}
+          onRightIconPress={() => {
+            // onGetOtp();
+            if (number.length == 10) {
+              navigation.navigate('otpScreen');
+              setNumberCorrect('');
+            } else {
+              setNumberCorrect('Phone number should be equal to 10 digits');
             }
-          />
-          <Button
-            buttonStyle={styles.button()}
-            buttonText={styles.buttonTxt()}
-            nameTx={'login_screen.request_otp'}
-            onPress={() => requestOtp()}
-          />
-          <Button
-            buttonStyle={styles.button()}
-            buttonText={styles.buttonTxt()}
-            nameTx={'login_screen.register_new_user'}
-            onPress={() => navigation.navigate('registerScreen')}
-          />
-          <View style={styles.linkView()}>
+          }}
+          defaultNumber={
             <Text
-              style={styles.labelFieldLinkText()}
-              tx="login_screen.learnMore"
+              style={styles.labelFieldText()}
+              tx="login_screen.countryCode"
             />
-            <IcArrowNext
-              height={size.moderateScale(12)}
-              width={size.moderateScale(12)}
-              fill={color.mediumGreen}
-            />
-          </View>
-        </Screen>
-      )}
-      {subScreen && (
-        <Screen bounces={false} style={styles.screenContainer()}>
-          <InputBox
-            titleTx={'login_screen.number'}
-            titleStyle={styles.labelDisableText()}
-            placeholder={'Number'}
-            value={number}
-            containerStyle={{borderColor: color.darkGrey}}
-            placeholderTextColor={color.darkGrey}
-            editable={editable}
-            inputStyle={styles.inputDisableStyle()}
-            mainContainerStyle={styles.inputMainDisableContainer()}
-            leftIcon={
-              <Text
-                style={styles.labelDisableText()}
-                tx="login_screen.countryCode"
-              />
-            }
-          />
-          <InputBox
-            titleTx={'login_screen.otp'}
-            titleStyle={styles.labelFieldText()}
-            placeholder={'OTP'}
-            maxLength={4}
-            keyboardType={'number-pad'}
-            inputStyle={styles.inputStyle(editable)}
-            mainContainerStyle={styles.inputMainContainer()}
-          />
-          <Button
-            buttonStyle={styles.button()}
-            buttonText={styles.buttonTxt()}
-            nameTx={'login_screen.request_new_otp'}
-            onPress={() => requestOtp()}
-          />
-          <Button
-            buttonStyle={styles.button()}
-            buttonText={styles.buttonTxt()}
-            nameTx={'login_screen.login'}
-            onPress={() => navigation.navigate('bottomStackNavigation')}
-          />
-          <View style={styles.linkView()}>
-            <Text
-              style={styles.labelFieldLinkText()}
-              tx="login_screen.learnMore"
-            />
-            <IcArrowNext
-              height={size.moderateScale(12)}
-              width={size.moderateScale(12)}
-              fill={color.mediumGreen}
-            />
-          </View>
-        </Screen>
-      )}
+          }
+        />
+        <View style={styles.validationView()}>
+          {numberCorrect ? (
+            <Text style={styles.textValidation()} text={numberCorrect} />
+          ) : null}
+        </View>
+        <Text style={styles.labelOrTxt()} tx={'login_screen.or'} />
+        <Button
+          buttonStyle={styles.btnRegister()}
+          buttonText={styles.btnRegisterTxt()}
+          nameTx={'login_screen.register_new_user'}
+          onPress={() => navigation.navigate('registerScreen')}
+        />
+        <Pressable onPress={() => console.log('bhavya')}>
+          <Text style={styles.labelOrTxt()} tx={'login_screen.learnMore'} />
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 };

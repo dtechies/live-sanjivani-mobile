@@ -5,17 +5,14 @@ export const container = () => ({
   justifyContent: 'center',
   alignItems: 'center',
 });
-
 export const button = () => ({
   marginTop: size.deviceHeight * 0.2,
   height: size.moderateScale(40),
   backgroundColor: color.cornBlue,
 });
-
 export const buttonTxt = () => ({
   color: color.white,
 });
-
 export const dropdown = () => ({
   margin: size.moderateScale(16),
   height: size.moderateScale(50),
@@ -23,13 +20,11 @@ export const dropdown = () => ({
   backgroundColor: color.white,
   paddingHorizontal: size.moderateScale(8),
 });
-
 export const placeholderStyle = () => ({
   alignItems: 'center',
-  fontSize: size.moderateScale(15),
+  fontSize: fontSize.mediumSec,
 });
-
 export const selectedTextStyle = () => ({
-  fontSize: size.moderateScale(16),
+  fontSize: fontSize.medium,
   marginLeft: size.moderateScale(8),
 });

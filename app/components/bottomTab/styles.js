@@ -5,12 +5,12 @@ export const container = () => ({
   justifyContent: 'space-between',
   alignItems: 'center',
   minHeight: size.moderateScale(70),
-  backgroundColor: 'white',
+  backgroundColor: color.blueBtn,
 });
 export const textLabel = active => ({
   fontSize: fontSize.small,
-  color: active ? color.cornBlue : color.darkGrey,
-  fontFamily: fonts.openSansRegular,
+  color: active ? color.white : color.darkGrey,
+  fontFamily: fonts.latoRegular,
   textTransform: 'capitalize',
   marginTop: size.moderateScale(5),
 });

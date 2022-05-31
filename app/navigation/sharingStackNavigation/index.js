@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import {SharingScreen, DemoScreen} from 'screens';
+import {SharingScreen, DemoScreen, SharingDetailScreen} from 'screens';
 
 const Stack = createNativeStackNavigator();
 export const SharingStackNavigation = () => {
@@ -11,6 +11,10 @@ export const SharingStackNavigation = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="sharingScreen" component={SharingScreen} />
+      <Stack.Screen
+        name="sharingDetailScreen"
+        component={SharingDetailScreen}
+      />
       <Stack.Screen name="demoScreen" component={DemoScreen} />
     </Stack.Navigator>
   );

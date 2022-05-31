@@ -15,19 +15,33 @@
   },
   "progress_screen": {
     "progress": "Progress Screen",
-    "show_all": "Show All",
+    "selectFav": "Select Favorite",
+    "addFav": "Add To Favorite",
     "add_to_favorite": "Add To Favorite",
     "add": "Add",
     "historical_data": "Historical Data"
   },
+  "progressDetail_screen": {},
   "sharing_screen": {
+    "title": "Select Items to share",
     "sharing": "Sharing Screen",
     "select_item_to_share": "Select Items to Share",
     "select_individual": "Select Individual from Contacts or Add new contact",
     "send_pdf": "Send as PDF",
-    "download": "Download"
+    "download": "Download",
+    "shareItems": "Share Items"
+  },
+  "sharingDetail_screen": {
+    "title": "Items selected",
+    "sharing": "Sharing Screen",
+    "shareTo": "Share to",
+    "shareDetail": "Select Individual from Contacts or Add new contact",
+    "send_pdf": "Send as PDF",
+    "downloadPdf": "Download PDF",
+    "shareItems": "Share Items"
   },
   "add_screen": {
+    "title": "Add",
     "add": "Add",
     "add_medication": "Add Medication",
     "add_appointment": "Add Appointment"
@@ -36,7 +50,7 @@
     "profile": "Profile Screen"
   },
   "appointment_reminder_screen": {
-    "title": "Appointment Reminder",
+    "title": "Book an Appointment",
     "name_of_doctor": "Name of Doctor/Practice",
     "address_one": "Address 1 (Required)",
     "address_two": "Address 2",
@@ -45,7 +59,13 @@
     "pinCode": "Pincode",
     "date": "Date",
     "time": "Time",
-    "add": "Add"
+    "add": "Add",
+    "bookNow": "BOOK NOW",
+    "appointmentTime": "Appointment Time",
+    "appointmentReminderTime": "Appointment Reminder Time",
+    "appointmentConfirmed": "Appointment Confirmed!",
+    "yourAppointmentWillBeginAt": "Your Appointment Will Begin at",
+    "confirm": "CONFIRM"
   },
   "medication_reminder_screen": {
     "referred_by": "Referred by",
@@ -55,17 +75,23 @@
     "medicine_strength": "Medicine Strength",
     "reminder_frequency": "Reminder Frequency",
     "reminder_time": "Reminder Time",
-    "pill_remaining": "Pills Remaining"
+    "pill_remaining": "Pills Remaining",
+    "title": "Add Medication Reminder",
+    "strength": "Select Strength",
+    "next": "Next",
+    "take_picture": "Take Picture",
+    "upload_picture": "Upload Picture"
   },
   "login_screen": {
-    "number": "Enter Your Number",
+    "number": "Enter Your Phone Number",
     "countryCode": "+91",
     "learnMore": "Learn more",
     "otp": "Enter OTP",
     "request_otp": "Request OTP",
     "register_new_user": "Register New User",
     "request_new_otp": "Request New OTP",
-    "login": "Login"
+    "login": "Login",
+    "or": "Or"
   },
   "register_screen": {
     "first_name": "First Name",
@@ -75,11 +101,12 @@
     "gender": "Gender",
     "select_language": "Selected Language",
     "dob": "DOB",
-    "next": "NEXT",
-    "title_register": "Lets Create Your Profile"
+    "next": "Save",
+    "title_register": "Lets Create Your Profile",
+    "title": "Register New User"
   },
   "help_screen": {
-    "title": "Help (Support, Disclosures)",
+    "title": "Help",
     "support": "Support",
     "help_center": "Help Center",
     "contact_us": "Contact Us",
@@ -91,10 +118,63 @@
   },
   "today_screen": {
     "title_today": "Medication Reminder Profile",
-    "tips_for_the_day": "Tips for the Day"
+    "tips_for_the_day": "Tips for the Day",
+    "medication_Reminder": "Medication Reminder",
+    "keep_it_up!": "Keep It Up!",
+    "you_are_on_the_right_track": "You are on the right track",
+    "today_progress": "Today's Progress",
+    "today_medication": "Today's Medication"
   },
   "select_service_screen": {
     "title_select_service": "Select Services",
     "next": "NEXT"
+  },
+  "ProfileDetailScreen": {
+    "title": "Profile",
+    "Account Settings": "Account Settings",
+    "Edit": "Edit",
+    "Save": "Save"
+  },
+  "ViewMedicationScreen": {
+    "title": "Medication Reminder",
+    "SubTitle": "My Medicine",
+    "todaysMedication": "Today's Medication",
+    "save": "Save"
+  },
+  "CheckMedicationReminderScreen": {
+    "title": "Add Medicine Reminder"
+  },
+  "careGiver_screen": {
+    "title": "Care Giver",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "contactPhone": "Contact Phone",
+    "emailId": "Email ID",
+    "nickName": "Nick Name",
+    "save": "Save",
+    "continue": "Continue"
+  },
+  "symptoms_screen": {
+    "title": "Symptom Checker",
+    "header": "Identify possible condition and treatment related to your symptoms.",
+    "age": "Age",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "whatAreYourSymptoms": "What Are Your Symptoms?",
+    "continue": "Continue"
+  },
+  "otp_screen": {
+    "verification": "Verification",
+    "otp": "Insert your OTP here:",
+    "continue": "Continue",
+    "enterOtp": "Enter OTP",
+    "request": "Request New OTP",
+    "timerTxt": "Wait before requesting OTP again",
+    "login": "Login"
+  },
+  "addDetails_Screen": {
+    "save": "Save",
+    "order": "Order with Prescription"
   }
 }
