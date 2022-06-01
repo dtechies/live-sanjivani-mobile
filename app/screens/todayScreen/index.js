@@ -29,7 +29,7 @@ export const TodayScreen = () => {
   const [exitApp, setExitApp] = useState(0);
 
   const route = useRoute();
-  console.log('route', route.name);
+  // console.log('route', route.name);
 
   const onEditMedicineReminderStatusPress = async index => {
     console.log('item ==>', medicationData[index].status);
@@ -148,7 +148,9 @@ export const TodayScreen = () => {
           {medicationData.map((item, index) => {
             const isActive = activeIndex.includes(item.id);
             return (
-              <View style={styles.medicationCard()}>
+              <View
+                style={styles.medicationCard()}
+                key={index + 'medicationData'}>
                 <View style={styles.row()}>
                   <View style={styles.onlyRow()}>
                     <View style={styles.row()}>

@@ -133,7 +133,8 @@
     "title": "Profile",
     "Account Settings": "Account Settings",
     "Edit": "Edit",
-    "Save": "Save"
+    "Save": "Save",
+    "Back": "Back"
   },
   "ViewMedicationScreen": {
     "title": "Medication Reminder",

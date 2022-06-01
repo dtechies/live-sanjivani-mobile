@@ -41,22 +41,19 @@ export const BottomTab = props => {
         }
         return (
           <Pressable
+            style={styles.iconClick()}
             key={index.toString()}
             onPress={() => {
               onTabBarPress(r, index);
             }}>
-            <View>
-              <View style={styles.iconView()}>
-                <Icon
-                  height={size.moderateScale(20)}
-                  width={size.moderateScale(20)}
-                  fill={state.index === index ? color.white : color.darkGrey}
-                />
-              </View>
-              <Text style={styles.textLabel(state.index === index)}>
-                {r.name}
-              </Text>
-            </View>
+            <Icon
+              height={size.moderateScale(20)}
+              width={size.moderateScale(20)}
+              fill={state.index === index ? color.white : color.darkGrey}
+            />
+            <Text style={styles.textLabel(state.index === index)}>
+              {r.name}
+            </Text>
           </Pressable>
         );
       })}

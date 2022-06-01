@@ -17,7 +17,7 @@ export const container1 = () => ({
   borderBottomWidth: 1.5,
 });
 export const icon = () => ({
-  width: size.deviceWidth * 0.35,
+  width: size.deviceWidth * 0.32,
   alignItems: 'center',
   borderRightColor: color.borderLight,
   borderRightWidth: 1,
@@ -51,12 +51,11 @@ export const cardItem1 = () => ({
   flexDirection: 'row',
   alignItems: 'center',
 });
-export const cardItemInputBoxMain = val => ({
+export const mainCardView = () => ({
+  flexDirection: 'row',
   backgroundColor: color.white,
-  width: size.moderateScale(110),
-  height: size.moderateScale(50),
-  paddingLeft: size.moderateScale(15),
-  paddingRight: size.moderateScale(val == 3 ? 65 : 45),
+  width: size.moderateScale(125),
+  paddingHorizontal: size.moderateScale(10),
   shadowColor: color.black,
   shadowRadius: size.moderateScale(5),
   shadowOffset: {height: 3, width: 0},
@@ -64,15 +63,20 @@ export const cardItemInputBoxMain = val => ({
   elevation: size.moderateScale(10),
   borderRadius: size.moderateScale(10),
   color: color.grayTxt,
-  fontSize: fontSize.small,
-  fontFamily: fonts.segoeUIBold,
+  justifyContent: 'space-around',
+  // backgroundColor: 'green',
 });
-export const cardItemInputBoxText = val => ({
-  marginLeft: size.moderateScale(
-    val == 1 ? -55 : val == 2 ? -30 : val == 3 ? -65 : -45,
-  ),
+
+export const cardItemInputBoxMain = val => ({
   color: color.grayTxt,
-  fontSize: fontSize.small,
+  fontSize: fontSize.verySmall,
+  fontFamily: fonts.segoeUIBold,
+  flex: 1,
+});
+export const cardItemInputBoxText = () => ({
+  color: color.grayTxt,
+  alignSelf: 'center',
+  fontSize: fontSize.verySmall,
   fontFamily: fonts.segoeUIBold,
 });
 export const cardItemMain = () => ({
@@ -84,7 +88,6 @@ export const cardText = () => ({
   fontSize: fontSize.medium,
   fontFamily: fonts.segoeUIBold,
   color: color.grayTxt,
-  // width: size.moderateScale(40),
   backgroundColor: 'green',
 });
 export const btnContinue = () => ({

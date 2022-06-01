@@ -1,24 +1,40 @@
-import React, {useState, useEffect} from 'react';
-import {View, Pressable, SafeAreaView, TextInput} from 'react-native';
-import {Text, Screen, InputBox, Button, Header} from 'components';
+import React, {useState, useEffect, useRef} from 'react';
+import {View, Pressable, SafeAreaView} from 'react-native';
+import {
+  Text,
+  Screen,
+  InputBox,
+  Button,
+  Header,
+  Toast,
+  Loader,
+} from 'components';
 import {useNavigation} from '@react-navigation/native';
-
+import {useDispatch} from 'react-redux';
+import {getAllCategoryAndSubCategory} from 'redux-actions';
 import {size, color, IcPlus, IcBack} from 'theme';
 import {addServiceData, AddNavData} from 'json';
 import * as styles from './styles';
 
 export const AddScreen = props => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+  const toastRef = useRef();
   const [activeIndex, setActiveIndex] = useState(null);
   const [extra, setExtra] = useState(0);
   const [noteVal, setNoteVal] = useState(null);
   const [noteValErr, setNoteValErr] = useState('');
   const [showTakeNote, setShowTakeNote] = useState(false);
   const [show, setShow] = useState(true);
-  const [addSelected, setAddSelected] = useState(false);
+  const [showSub, setShowSub] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [allCategory, setAllCategory] = useState([]);
+
   const params = props.route.params && props.route.params.showType;
   const [data, setData] = useState(addServiceData);
-
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
   const clearData = () => {
     data.map((val, i) => {
       data[i].selected = false;
@@ -28,9 +44,26 @@ export const AddScreen = props => {
     });
     setExtra(extra + 1);
   };
+  const getAllCategoryAndSubCategoryData = async () => {
+    setLoading(true);
+    const allCatResponse = await dispatch(getAllCategoryAndSubCategory());
+    const res = allCatResponse;
+    console.log('allCatResponse_NEW ==>', res);
+    if (res.status) {
+      setLoading(false);
+      setShowSub(true);
+      setAllCategory(res.data.categoryData);
+      setExtra(extra + 1);
+    } else {
+      setLoading(false);
+      setShowSub(false);
+      toastMessage(res.message);
+    }
+  };
 
   useEffect(() => {
     clearData();
+    getAllCategoryAndSubCategoryData();
   }, []);
 
   const validation = () => {
@@ -43,6 +76,14 @@ export const AddScreen = props => {
   };
   return (
     <SafeAreaView style={styles.full()}>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <Header
         isColor={true}
         isClose={false}
@@ -55,104 +96,6 @@ export const AddScreen = props => {
         title={'add_screen.title'}
       />
       <Screen withScroll style={styles.container()}>
-        {/* {(params === 'get medicine reminder' || params === 'all') && (
-          <Button
-            onPress={() => navigation.navigate('medicationReminderScreen')}
-            nameTx="add_screen.add_medication"
-            buttonStyle={styles.addReminderButtonStyle()}
-            buttonText={styles.textAddAppointment()}
-            leftIcon={
-              <IcPlus
-                height={size.moderateScale(20)}
-                width={size.moderateScale(20)}
-                fill={color.black}
-              />
-            }
-          />
-        )}
-        {(params === 'get appointment reminder' || params === 'all') && (
-          <Button
-            onPress={() => navigation.navigate('appointmentReminderScreen')}
-            nameTx="add_screen.add_appointment"
-            buttonStyle={styles.addReminderButtonStyle()}
-            buttonText={styles.textAddAppointment()}
-            leftIcon={
-              <IcPlus
-                height={size.moderateScale(20)}
-                width={size.moderateScale(20)}
-                fill={color.black}
-              />
-            }
-          />
-        )}
-        {data.map((item, index) => {
-          const isActive = activeIndex === index;
-
-          return (
-            <>
-              <Pressable
-                style={styles.listView()}
-                onPress={() => {
-                  if (isActive) {
-                    setActiveIndex(null);
-                  } else {
-                    setActiveIndex(index);
-                    setExtra(extra + 1);
-                  }
-                }}>
-                <Text style={styles.categoryName()}>{item.name}</Text>
-              </Pressable>
-              {isActive &&
-                item.subCategory.map((subItem, subIndex) => {
-                  return (
-                    <Pressable
-                      onPress={() =>
-                        navigation.navigate('progressScreen', {
-                          showAll: true,
-                        })
-                      }>
-                      <Text style={styles.subItemText()}>{subItem.name}</Text>
-                    </Pressable>
-                  );
-                })}
-            </>
-          );
-        })}
-        {show && (
-          <Pressable
-            onPress={() => {
-              setShowTakeNote(!showTakeNote);
-              setShow(false);
-            }}
-            style={styles.takeNoteView()}>
-            <Text style={styles.textTakeNot()}>
-              {noteVal.length > 0 ? noteVal : 'Medical Journal (take notes)'}
-            </Text>
-          </Pressable>
-        )}
-        {showTakeNote && (
-          <View>
-            <InputBox
-              value={noteVal}
-              onChangeText={value => {
-                setNoteVal(value);
-                setExtra(extra + 1);
-              }}
-              inputStyle={[styles.labelFieldText()]}
-              mainContainerStyle={styles.inputMainContainer()}
-            />
-
-            <Button
-              onPress={() => {
-                setShow(true);
-                setShowTakeNote(false);
-              }}
-              nameTx="appointment_reminder_screen.add"
-              buttonStyle={styles.addButtonStyle()}
-              buttonText={styles.textAddButton()}
-            />
-          </View>
-        )} */}
         <View style={styles.mainCard()}>
           {data.map((item, index) => {
             return (
@@ -164,12 +107,16 @@ export const AddScreen = props => {
                     item.name == 'Activity'
                   ) {
                     setTimeout(() => {
+                      allCategory.map(val => {
+                        if (val.name == item.name) {
+                          navigation.navigate('addDetailsScreen', {
+                            title: item.name,
+                            sub: val.subcategories,
+                          });
+                        }
+                      });
                       // clearData();
                       // console.log('selected', data[index].selected);
-                      navigation.navigate('addDetailsScreen', {
-                        title: item.name,
-                        sub: item.subCategory,
-                      });
                     }, 500);
                   }
                   if (item.name == 'Care giver') {
@@ -207,7 +154,8 @@ export const AddScreen = props => {
                   setExtra(extra + 1);
                 }}
                 style={styles.addNavStyle(item.selected)}
-                key={index + 'addMedication'}>
+                key={index + 'addMedication'}
+                disabled={!showSub}>
                 <Text
                   text={item.name}
                   style={styles.labelAddStyle(item.selected)}

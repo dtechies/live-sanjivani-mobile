@@ -3,6 +3,11 @@ import {color, size, fontSize, fonts} from 'theme';
 export const full = () => ({
   flex: 1,
 });
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
 export const container = () => ({
   flex: 1,
   backgroundColor: color.themeBack,

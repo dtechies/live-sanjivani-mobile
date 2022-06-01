@@ -1,45 +1,21 @@
-import {BASE_URL} from 'config';
-import * as Actions from '../Types';
+import * as actions from '../Types';
+import {_addAppointmentReminderView} from 'services';
 
-export const getAppointmentReminderAllDetail = header => {
-  const {token} = header;
-
+export const getAppointmentReminderAllDetail = () => {
   return dispatch => {
-    dispatch({type: Actions.ADD_APPOINTMENT_REMINDER_ALL_DETAIL});
-    let url = `${BASE_URL}/add-appointment-reminder-view`;
-    return fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => res.json())
+    dispatch({type: actions.GET_OTP});
+    return _addAppointmentReminderView()
       .then(response => {
-        // console.log('getAppointmentReminderAllDetail URL := ', url);
-        // console.log('getAppointmentReminderAllDetail Header := ', header);
-        // console.log('getAppointmentReminderAllDetail Response := ', response);
-        if (response) {
-          return dispatch({
-            type: Actions.ADD_APPOINTMENT_REMINDER_ALL_DETAIL,
-            payload: response,
-          });
-        } else {
-          return dispatch({
-            type: Actions.ADD_APPOINTMENT_REMINDER_ALL_DETAIL,
-            payload: response,
-          });
-        }
+        dispatch({
+          type: actions.GET_OTP,
+          payload: response,
+        });
+        return response;
       })
       .catch(error => {
-        // console.log(
-        //   'getAppointmentReminderAllDetail Action Error Response :=\n',
-        //   error,
-        // );
-        dispatch({
-          type: Actions.ADD_APPOINTMENT_REMINDER_ALL_DETAIL,
-          payload: error,
-        });
+        // console.log('getOtp Error Response :=\n', error);
+        dispatch({type: actions.GET_OTP, payload: error});
+        return error;
       });
   };
 };

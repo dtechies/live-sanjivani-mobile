@@ -5,6 +5,11 @@ export const container = () => ({
   paddingHorizontal: size.moderateScale(20),
   backgroundColor: color.themeBack,
 });
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
 export const full = () => ({
   flex: 1,
   backgroundColor: color.themeBack,
@@ -161,9 +166,11 @@ export const textValidation = () => ({
   color: color.red,
 });
 export const searchedValueList = () => ({
-  // backgroundColor: color.gainsBoro,
-  paddingVertical: size.moderateScale(15),
-  borderColor: color.purple,
+  marginTop: 2,
+  paddingVertical: size.moderateScale(10),
+  borderColor: color.white,
   borderWidth: size.moderateScale(1),
-  paddingHorizontal: size.moderateScale(5),
+  paddingHorizontal: size.moderateScale(15),
+  backgroundColor: color.white,
+  borderRadius: 10,
 });

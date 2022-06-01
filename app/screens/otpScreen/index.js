@@ -1,19 +1,11 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {View, Pressable, Image, SafeAreaView, TextInput} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import moment from 'moment';
 import {loginUser, userData, getOtp} from 'redux-actions';
-import {
-  Loader,
-  Text,
-  Button,
-  Toast,
-  TitleBox,
-  Screen,
-  InputBox,
-} from 'components';
-import {size, color, IcArrowNext, IcCrossArrow, images} from 'theme';
+import {Loader, Text, Button, Toast} from 'components';
+import {size, color, IcCrossArrow, images} from 'theme';
 import * as styles from './styles';
 
 export const OtpScreen = props => {
@@ -23,7 +15,6 @@ export const OtpScreen = props => {
   const [iscount, setIsCount] = useState(false);
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
-  const [otpArr, setOtpArr] = useState(0);
   const [firstDigit, setFirstDigit] = useState('');
   const [secondDigit, setSecondDigit] = useState('');
   const [thirdDigit, setThirdDigit] = useState('');
@@ -40,13 +31,9 @@ export const OtpScreen = props => {
   const [currentDate, setCurrentDate] = useState(
     new moment().format('YYYY-MM-DD'),
   );
-
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-  // const {userDetail} = useSelector(state => ({
-  //   userDetail: state.userDataReducer.userDataResponse.userData,
-  // }));
   const onLoginPress = async () => {
     setLoading(true);
     let otpVal = firstDigit + secondDigit + thirdDigit + fourthDigit;
@@ -62,21 +49,17 @@ export const OtpScreen = props => {
       setLoading(false);
       var a = moment(res.data.user.dob);
       var b = moment(currentDate);
-
       var years = b.diff(a, 'year');
       b.add(years, 'years');
-
-      // dispatch(userData({userData: userDetail, age: years}));
       dispatch(userData({userData: res.data.user, age: years, login: true}));
       // console.log('login response data ==>', res);
       toastMessage(res.message);
       setTimeout(() => {
-        navigation.navigate('bottomStackNavigation');
+        navigation.navigate('bottomStackNavigation', {screen: 'Today'});
       }, 150);
     } else {
       setLoading(false);
       toastMessage(res.message);
-      // setOtpErr(res.message);
     }
   };
 

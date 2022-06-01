@@ -1,8 +1,19 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {View, Pressable, SafeAreaView} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {useDispatch} from 'react-redux';
 import moment from 'moment';
-import {Text, Screen, TitleBox, InputBox, Button, Header} from 'components';
+import {getAppointmentReminderAllDetail} from 'redux-actions';
+import {
+  Text,
+  Screen,
+  TitleBox,
+  InputBox,
+  Button,
+  Header,
+  Toast,
+  Loader,
+} from 'components';
 import {useNavigation} from '@react-navigation/native';
 import DatePicker from 'react-native-modern-datepicker';
 import {
@@ -18,6 +29,8 @@ import * as styles from './styles';
 import {Portal} from 'react-native-portalize';
 import {Modalize} from 'react-native-modalize';
 export const AppointmentReminderScreen = animated => {
+  const dispatch = useDispatch();
+  const toastRef = useRef();
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
   const [showTime, setShowTime] = useState(false);
@@ -34,11 +47,14 @@ export const AppointmentReminderScreen = animated => {
   const [selectedTimeErr, setSelectedTimeErr] = useState('');
   const [reminderTime, setReminderTime] = useState('Time');
   const [selectedTimeErrSecond, setSelectedTimeErrSecond] = useState('');
-  const [doctorFilteredName, setDoctorFilteredName] = useState([]);
+
   const [doctorData, setDoctorData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [speciality, setSpeciality] = useState('');
   const [specialityErr, setSpecialityErr] = useState('');
   const popUpRef = useRef();
+
+  const [doctorFilteredName, setDoctorFilteredName] = useState([]);
   const onOpenPopUp = () => {
     // alert('hiiii');
     popUpRef.current?.open();
@@ -82,17 +98,47 @@ export const AppointmentReminderScreen = animated => {
   };
   const onDoctorNameType = val => {
     setSearchVal(val);
-    let text = val.toLowerCase() || val.toUpperCase();
-    // console.log('onDoctorNameType ==>', val);
+    let text = val.toLowerCase();
     if (val.length >= 2) {
       let filteredName = doctorData.filter(item => {
+        console.log('item ==> ', item);
         return item.doctor_name.toLowerCase().match(text);
       });
       setDoctorFilteredName(filteredName);
+    } else {
+      setDoctorFilteredName([]);
     }
   };
+
+  const onGetDoctorDetails = async () => {
+    setLoading(true);
+    const getOtpResponse = await dispatch(getAppointmentReminderAllDetail());
+    const res = getOtpResponse;
+    console.log('getOtp res ==>', res.data.DoctorsData);
+    if (res.status) {
+      setLoading(false);
+      toastMessage(res.message);
+      setDoctorData(res.data.DoctorsData);
+      setExtra(extra + 1);
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+    }
+  };
+  useEffect(() => {
+    onGetDoctorDetails();
+  }, []);
+
   return (
     <SafeAreaView style={styles.full()}>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <Header
         leftOnPress={() => {
           navigation.goBack();
@@ -219,13 +265,15 @@ export const AppointmentReminderScreen = animated => {
                   style={styles.searchedValueList()}
                   onPress={() => {
                     setSearchVal(item.doctor_name);
-                    setSpeciality(item.speciality);
+                    setAddressOne(item.doctor_address);
+                    setExtra(extra + 1);
+                    // setSpeciality(item.speciality);
                     setSearchValErr('');
                     setSpecialityErr('');
                     setDoctorFilteredName([]);
-                    Keyboard.dismiss;
+                    // Keyboard.dismiss;
                   }}>
-                  <Text>{item.doctor_name}</Text>
+                  <Text style={styles.inputTxt()}>{item.doctor_name}</Text>
                 </Pressable>
               );
             })}
