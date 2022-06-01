@@ -2,7 +2,6 @@ import {color, size, fontSize, fonts} from 'theme';
 
 export const full = () => ({
   flex: 1,
-  backgroundColor: color.white,
 });
 export const container = () => ({
   flex: 1,
@@ -24,31 +23,13 @@ export const categoryName = () => ({
   textTransform: 'capitalize',
   paddingVertical: size.moderateScale(2),
 });
-export const subCategoriesRow = () => ({
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  borderBottomWidth: size.moderateScale(1),
-  paddingVertical: size.moderateScale(7),
-  flex: 1,
-});
 export const subItemText = () => ({
   fontFamily: fonts.latoRegular,
   color: color.darkGrey,
   fontSize: fontSize.medium,
   textTransform: 'capitalize',
-  marginLeft: size.moderateScale(5),
-  flex: 1,
-});
-export const subItemUnitText = () => ({
-  fontFamily: fonts.openSansMedium,
-  color: color.dimGrey,
-  fontSize: fontSize.small,
-  textTransform: 'capitalize',
-});
-export const subCateGoryIcon = () => ({
-  height: size.moderateScale(30),
-  width: size.moderateScale(30),
+  paddingVertical: size.moderateScale(3),
+  borderBottomWidth: size.moderateScale(1),
 });
 export const takeNoteView = () => [
   listView(),

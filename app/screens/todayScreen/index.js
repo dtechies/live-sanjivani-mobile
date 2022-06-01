@@ -19,12 +19,7 @@ import {
 } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
-export const TodayScreen = props => {
-  const modalRef = useRef();
-  const toastRef = useRef();
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-
+export const TodayScreen = () => {
   const [activeIndex, setActiveIndex] = useState([]);
   const [medicationData, setMedication] = useState(medicationReminder);
   const [extra, setExtra] = useState(0);
@@ -81,118 +76,6 @@ export const TodayScreen = props => {
     return () => clearInterval(secTimer);
   }, []);
 
-      // setReminderOption(res.data);
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
-    }
-  };
-  const getAppointmentReminderData = async () => {
-    setLoading(true);
-    const getAppointmentReminderProfileHeader = {
-      token: token,
-    };
-    const getAppointmentReminderProfileResponse = await dispatch(
-      getAppointmentReminderProfile(getAppointmentReminderProfileHeader),
-    );
-    // console.log(
-    //   'getAppointmentReminderData header ==>',
-    //   getAppointmentReminderProfileHeader,
-    // );
-    const res = getAppointmentReminderProfileResponse.payload;
-    // console.log('getAppointmentReminderData res ==>', res);
-    setLoading(false);
-    if (res.status) {
-      // console.log(
-      //   'getAppointmentReminderData list ==>',
-      //   res.data.AppointmentReminderProfileData,
-      // );
-      setAppointmentReminderData(res.data.AppointmentReminderProfileData);
-      setExtra(extra + 1);
-      toastMessage(res.message);
-
-      // setReminderOption(res.data);
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
-    }
-  };
-  const onEditMedicineReminderStatusPress = async data => {
-    setLoading(true);
-    // console.log('data ==>', data);
-    const editMedicineReminderStatusBody = {
-      id: data.id,
-      status: !data.status,
-    };
-    const editMedicineReminderStatusHeader = {
-      token: token,
-    };
-    // console.log(
-    //   'editMedicineReminderStatusBody ==>',
-    //   editMedicineReminderStatusBody,
-    // );
-    const editMedicineReminderStatusResponse = await dispatch(
-      editMedicineReminderStatus(
-        editMedicineReminderStatusBody,
-        editMedicineReminderStatusHeader,
-      ),
-    );
-    const res = editMedicineReminderStatusResponse.payload;
-    setLoading(false);
-    // console.log('editMedicineReminderStatusPress ==>', res);
-    if (res.status) {
-      // console.log('editMedicineReminderStatusPress list ==>', res);
-      getMedicineReminderData();
-
-      toastMessage(res.message);
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
-    }
-  };
-  const onEditAppointmentReminderStatusPress = async data => {
-    setLoading(true);
-
-    const editAppointmentReminderStatusBody = {
-      id: data.id,
-      status: !data.status,
-    };
-    const editAppointmentReminderStatusHeader = {
-      token: token,
-    };
-    // console.log(
-    //   'editAppointmentReminderStatusBody ==>',
-    //   editAppointmentReminderStatusBody,
-    // );
-    const editAppointmentReminderStatusResponse = await dispatch(
-      editAppointmentReminderStatus(
-        editAppointmentReminderStatusBody,
-        editAppointmentReminderStatusHeader,
-      ),
-    );
-    const res = editAppointmentReminderStatusResponse.payload;
-    setLoading(false);
-    // console.log('onEditAppointmentReminderStatusPress ==>', res);
-    if (res.status) {
-      // console.log('onEditAppointmentReminderStatusPress response ==>', res);
-      getAppointmentReminderData();
-
-      toastMessage(res.message);
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
-    }
-  };
-  useEffect(() => {
-    if (props.route.params) {
-      // console.log('props.route.params ==>', props.route.params);
-      props.route.params.medication && getMedicineReminderData();
-      props.route.params.appointment && getAppointmentReminderData();
-    }
-    // getAppointmentReminderData();
-    // getMedicineReminderData();
-    getTipForDayData();
-  }, []);
   return (
     <SafeAreaView style={styles.container()}>
       <Header

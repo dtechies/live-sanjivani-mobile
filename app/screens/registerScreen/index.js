@@ -23,6 +23,7 @@ export const RegisterScreen = () => {
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
   const [isLoading, seIsLoading] = useState(false);
+  const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [showDate, setShowDate] = useState(false);
@@ -51,9 +52,8 @@ export const RegisterScreen = () => {
     let day = givenDate.getDate();
     let month = givenDate.getMonth() + 1;
     let year = givenDate.getFullYear();
-    let newDate = year + '-' + month + '-' + day;
+    let newDate = day + '-' + month + '-' + year;
     setSelectedDate(newDate);
-    setDateCorrect('');
     setShowDate(false);
     setDobErr('');
   };
@@ -172,11 +172,6 @@ export const RegisterScreen = () => {
       <Screen bounces={false} style={styles.screenContainer()}>
         <InputBox
           placeholder={'First Name'}
-          value={firstName}
-          onChangeText={val => {
-            firstNameValidation(val);
-            setExtra(extra + 1);
-          }}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
           placeholderTextColor={color.grayTxt}
@@ -192,11 +187,6 @@ export const RegisterScreen = () => {
         ) : null}
         <InputBox
           placeholder={'Last Name'}
-          value={lastName}
-          onChangeText={val => {
-            lastNameValidation(val);
-            setExtra(extra + 1);
-          }}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
           placeholderTextColor={color.grayTxt}
@@ -265,11 +255,6 @@ export const RegisterScreen = () => {
         {dobErr ? <Text style={styles.errorText()}>{dobErr}</Text> : null}
         <InputBox
           placeholder={'Email'}
-          value={email}
-          onChangeText={val => {
-            emailValidation(val);
-            setExtra(extra + 1);
-          }}
           keyboardType={'email-address'}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
@@ -285,12 +270,6 @@ export const RegisterScreen = () => {
         {emailErr ? <Text style={styles.errorText()}>{emailErr}</Text> : null}
         <InputBox
           placeholder={'Phone Number'}
-          value={phone}
-          onChangeText={val => {
-            mobileNumberValidation(val);
-            setExtra(extra + 1);
-          }}
-          maxLength={10}
           keyboardType={'number-pad'}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}

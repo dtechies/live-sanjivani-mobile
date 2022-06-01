@@ -14,42 +14,8 @@ import {
 } from 'theme';
 import * as styles from './styles';
 export const HelpSupportScreen = () => {
-  // const navigation = useNavigation();
-  const toastRef = useRef();
-  const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const [helpSupportData, setHelpSupportData] = useState();
+  const navigation = useNavigation();
 
-  const {token} = useSelector(state => ({
-    token: state.userDataReducer.userDataResponse.userData.token,
-  }));
-  const toastMessage = msg => {
-    toastRef.current.show(msg);
-  };
-  const getHelpSupportData = async () => {
-    setLoading(true);
-    const getHelpSupportHeader = {
-      token: token,
-    };
-    // console.log('getHelpSupportHeader ==>', getHelpSupportHeader);
-    const getHelpSupportResponse = await dispatch(
-      getHelpSupport(getHelpSupportHeader),
-    );
-    const res = getHelpSupportResponse.payload;
-    // console.log('getHelpSupport ==>', res);
-    setLoading(false);
-    if (res.status) {
-      // console.log('getHelpSupport data ==>', res.data.HelpSupportData);
-      toastMessage(res.message);
-      setHelpSupportData(res.data.HelpSupportData);
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
-    }
-  };
-  useEffect(() => {
-    getHelpSupportData();
-  }, []);
   return (
     <SafeAreaView style={styles.full()}>
       <Header
@@ -73,7 +39,7 @@ export const HelpSupportScreen = () => {
               />
               <Text
                 style={styles.textSupport()}
-                tx={'help_screen.disclosures'}
+                tx={'help_screen.help_center'}
               />
             </Pressable>
             <Pressable style={styles.supportSubcategoriesView()}>

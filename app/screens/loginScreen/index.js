@@ -14,7 +14,6 @@ import {
 } from 'components';
 import {size, color, IcArrowNext, images} from 'theme';
 import * as styles from './styles';
-
 export const LoginScreen = () => {
   const dispatch = useDispatch();
   const [subScreen, setsubScreen] = useState(false);
@@ -30,11 +29,6 @@ export const LoginScreen = () => {
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-  const toastMessage = msg => {
-    toastRef.current.show(msg);
-  };
-  const onLoginPress = async () => {
-    setLoading(true);
 
   const onGetOtp = async () => {
     setLoading(true);

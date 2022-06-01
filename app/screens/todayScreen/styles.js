@@ -54,8 +54,7 @@ export const screenContainer = () => ({
 });
 export const titleTextContainer = () => ({
   paddingVertical: size.moderateScale(7),
-
-  margin: size.moderateScale(15),
+  marginVertical: size.moderateScale(20),
 });
 export const medicineName = () => ({
   paddingTop: size.moderateScale(10),
@@ -84,6 +83,7 @@ export const medicationView = () => ({
   backgroundColor: color.white,
   marginVertical: size.moderateScale(20),
 });
+
 export const reminderText = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoRegular,

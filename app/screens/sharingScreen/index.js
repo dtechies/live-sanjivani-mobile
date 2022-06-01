@@ -10,10 +10,7 @@ import {size, color, IcSearch, IcDown} from 'theme';
 import * as styles from './styles';
 
 export const SharingScreen = () => {
-  // const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const toastRef = useRef();
-
+  const navigation = useNavigation();
   const [isFocus, setIsFocus] = useState(false);
   const [selected, setSelected] = useState([]);
   const [allCategoryList, setAllCategoryList] = useState([]);

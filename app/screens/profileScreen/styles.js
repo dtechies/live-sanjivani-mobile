@@ -1,9 +1,5 @@
 import {color, size, fonts, fontSize} from 'theme';
 
-export const full = () => ({
-  flex: 1,
-  backgroundColor: color.white,
-});
 export const container = () => ({
   flex: 1,
   justifyContent: 'center',

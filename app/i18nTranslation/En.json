@@ -44,24 +44,14 @@
     "title": "Add",
     "add": "Add",
     "add_medication": "Add Medication",
-    "add_appointment": "Add Appointment",
-    "medical_journal": "Medical Journal (take notes)"
+    "add_appointment": "Add Appointment"
   },
   "profile_screen": {
-    "title": "Profile Screen",
-    "name": "Name",
-    "dob": "DOB",
-    "gender": "Gender",
-    "email": "Email",
-    "phone": "Phone",
-    "language": "Language",
-    "service": "Service",
-    "help": "Help"
+    "profile": "Profile Screen"
   },
   "appointment_reminder_screen": {
     "title": "Book an Appointment",
     "name_of_doctor": "Name of Doctor/Practice",
-    "speciality": "Speciality",
     "address_one": "Address 1 (Required)",
     "address_two": "Address 2",
     "city": "City",

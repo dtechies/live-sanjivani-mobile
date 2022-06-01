@@ -2,10 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {View, Pressable, SafeAreaView, TextInput} from 'react-native';
 import {Text, Screen, InputBox, Button, Header} from 'components';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {getReminderOption, getAllCategoryAndSubCategory} from 'redux-actions';
-
-import {size, color, IcPlus, IcHeart} from 'theme';
 
 import {size, color, IcPlus, IcBack} from 'theme';
 import {addServiceData, AddNavData} from 'json';
@@ -74,7 +70,7 @@ export const AddScreen = props => {
             }
           />
         )}
-        {reminderOption.is_appointment_reminder === 1 && (
+        {(params === 'get appointment reminder' || params === 'all') && (
           <Button
             onPress={() => navigation.navigate('appointmentReminderScreen')}
             nameTx="add_screen.add_appointment"
@@ -89,59 +85,62 @@ export const AddScreen = props => {
             }
           />
         )}
+        {data.map((item, index) => {
+          const isActive = activeIndex === index;
 
-        {categoryWithSubCategoryData &&
-          categoryWithSubCategoryData.map((item, index) => {
-            const isActive = activeIndex === index;
-            return (
-              <View>
-                <Pressable
-                  key={index.toString()}
-                  style={styles.listView()}
-                  onPress={() => {
-                    if (item.navigateScreen) {
-                      navigation.navigate(item.navigateScreen);
-                    } else if (isActive) {
-                      setActiveIndex(null);
-                    } else {
-                      setActiveIndex(index);
-                      setExtra(extra + 1);
-                    }
-                  }}>
-                  <Text style={styles.categoryName()}>{item.name}</Text>
-                </Pressable>
-                {isActive &&
-                  item.subcategories.map((subcategories, subIndex) => {
-                    return (
-                      <Pressable
-                        style={styles.subCategoriesRow()}
-                        onPress={() =>
-                          navigation.navigate('progressScreen', {
-                            subCategory: subcategories,
-                          })
-                        }>
-                        {/* <Image
-                          // resizeMode="cover"
-                          source={subcategories.icon}
-                          style={styles.subCateGoryIcon()}
-                        /> */}
-                        <IcHeart
-                          height={size.moderateScale(20)}
-                          width={size.moderateScale(20)}
-                          fill={color.red}
-                        />
-                        <Text style={styles.subItemText()}>
-                          {subcategories.name}
-                        </Text>
-                        <Text style={styles.subItemUnitText()}>
-                          {subcategories.unit}
-                        </Text>
-                      </Pressable>
-                    );
-                  })}
-              </View>
-            );
-          })}
+          return (
+            <>
+              <Pressable
+                style={styles.listView()}
+                onPress={() => {
+                  if (isActive) {
+                    setActiveIndex(null);
+                  } else {
+                    setActiveIndex(index);
+                    setExtra(extra + 1);
+                  }
+                }}>
+                <Text style={styles.categoryName()}>{item.name}</Text>
+              </Pressable>
+              {isActive &&
+                item.subCategory.map((subItem, subIndex) => {
+                  return (
+                    <Pressable
+                      onPress={() =>
+                        navigation.navigate('progressScreen', {
+                          showAll: true,
+                        })
+                      }>
+                      <Text style={styles.subItemText()}>{subItem.name}</Text>
+                    </Pressable>
+                  );
+                })}
+            </>
+          );
+        })}
+        {show && (
+          <Pressable
+            onPress={() => {
+              setShowTakeNote(!showTakeNote);
+              setShow(false);
+            }}
+            style={styles.takeNoteView()}>
+            <Text style={styles.textTakeNot()}>
+              {noteVal.length > 0 ? noteVal : 'Medical Journal (take notes)'}
+            </Text>
+          </Pressable>
+        )}
+        {showTakeNote && (
+          <View>
+            <InputBox
+              value={noteVal}
+              onChangeText={value => {
+                setNoteVal(value);
+                setExtra(extra + 1);
+              }}
+              inputStyle={[styles.labelFieldText()]}
+              mainContainerStyle={styles.inputMainContainer()}
+            />
 
             <Button
               onPress={() => {

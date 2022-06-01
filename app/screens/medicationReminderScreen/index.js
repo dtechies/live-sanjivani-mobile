@@ -47,23 +47,6 @@ export const MedicationReminderScreen = () => {
   });
   const [unitValue, setUniteValue] = useState(null);
   const [extra, setExtra] = useState(0);
-  const [isFocus, setIsFocus] = useState(false);
-  const [searchVal, setSearchVal] = useState('');
-  const [searchValErr, setSearchValErr] = useState('');
-  const [speciality, setSpeciality] = useState('');
-  const [specialityErr, setSpecialityErr] = useState('');
-  const [name, setName] = useState('');
-  const [nameErr, setNameErr] = useState('');
-  const [medicineName, setMedicineName] = useState('');
-  const [medicineNameErr, setMedicineNameErr] = useState('');
-  const [medicineFormName, setMedicineFormName] = useState(null);
-  const [medicineFormNameErr, setMedicineFormNameErr] = useState(null);
-  const [medicineStrength, setMedicineStrength] = useState('');
-  const [medicineStrengthErr, setMedicineStrengthErr] = useState('');
-  const [doseValue, setDoseValue] = useState(null);
-  const [doseValueErr, setDoseValueErr] = useState(null);
-  const [unitValue, setUnitValue] = useState(null);
-  const [unitValueErr, setUnitValueErr] = useState(null);
   const [remindFrequencyValue, setRemindFrequencyValue] = useState(null);
   const [remindFrequencyValueDefault, setRemindFrequencyValueDefault] =
     useState({label: 'Select Frequency', value: 'Select Frequency'});
@@ -276,7 +259,6 @@ export const MedicationReminderScreen = () => {
         title={'medication_reminder_screen.title'}
       />
       <Screen
-        keyboardShouldPersistTaps={'handled'}
         showsVerticalScrollIndicator={false}
         bounces={false}
         style={styles.screenContainer()}>
@@ -481,8 +463,7 @@ export const MedicationReminderScreen = () => {
             },
           }}
           onChange={item => {
-            setRemindFrequencyValue(item.name);
-            setRemindFrequencyValueErr('');
+            setRemindFrequencyValue(item.value);
             setRemindFreqDate('Select a Date');
             // if (item.value == 'EveryDay') {
             //   setRemindFrequencyValueErr('');
@@ -499,14 +480,7 @@ export const MedicationReminderScreen = () => {
             );
           }}
         />
-        {remindFrequencyValueErr ? (
-          <Text
-            style={styles.textValidation()}
-            text={remindFrequencyValueErr}
-          />
-        ) : null}
-
-        {remindFrequencyValue !== '' && remindFrequencyValue !== null && (
+        {remindFrequencyValue === 'Alternate Day' && (
           <Pressable
             onPress={() => {
               setShowDate(!showDate);
@@ -515,11 +489,7 @@ export const MedicationReminderScreen = () => {
             <Text style={styles.textDate()}>{remindFreqDate}</Text>
           </Pressable>
         )}
-        {remindFreqDateErr ? (
-          <Text style={styles.textValidation()} text={remindFreqDateErr} />
-        ) : null}
-
-        {/* {remindFrequencyValue === 'Alternate Day' && (
+        {remindFrequencyValue === 'Once A Week' && (
           <Pressable
             onPress={() => {
               setShowDate(!showDate);
@@ -528,7 +498,7 @@ export const MedicationReminderScreen = () => {
             <Text style={styles.textDate()}>{remindFreqDate}</Text>
           </Pressable>
         )}
-        {remindFrequencyValue === 'Once a week' && (
+        {remindFrequencyValue === 'Fixed Date' && (
           <Pressable
             onPress={() => {
               setShowDate(!showDate);
@@ -580,7 +550,7 @@ export const MedicationReminderScreen = () => {
             },
           }}
           onChange={item => {
-            setRemindTimeValue(item.name);
+            setRemindTimeValue(item.value);
             setRemindTime('Select a Time');
             setRemindTimeErr('');
             setIsFocus(false);
@@ -593,28 +563,7 @@ export const MedicationReminderScreen = () => {
             );
           }}
         />
-
-        {remindTimeValue !== '' && remindTimeValue !== null && (
-          <Pressable
-            onPress={() => {
-              setShowTime(!showTime);
-            }}>
-            <Text style={styles.textDate()}>{remindTime}</Text>
-          </Pressable>
-        )}
-
-        {remindTimeErr ? (
-          <Text style={styles.textValidation()} text={remindTimeErr} />
-        ) : null}
-        {/* {remindTimeValue === 'Before breakfast' && (
-          <Pressable
-            onPress={() => {
-              setShowTime(!showTime);
-            }}>
-            <Text style={styles.textDate()}>{remindTime}</Text>
-          </Pressable>
-        )}
-        {remindTimeValue === 'After breakfast' && (
+        {remindTimeValue === 'One Fixed Time' && (
           <Pressable
             onPress={() => {
               setShowTime(!showTime);
@@ -632,7 +581,7 @@ export const MedicationReminderScreen = () => {
             <Text style={styles.textDate()}>{remindTime}</Text>
           </Pressable>
         )}
-        {remindTimeValue === 'After Meal' && (
+        {remindTimeValue === 'Before Bed' && (
           <Pressable
             onPress={() => {
               setShowTime(!showTime);

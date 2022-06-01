@@ -19,10 +19,6 @@ import {Portal} from 'react-native-portalize';
 import {Modalize} from 'react-native-modalize';
 export const AppointmentReminderScreen = animated => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const toastRef = useRef();
-
-  const [loading, setLoading] = useState(false);
   const [extra, setExtra] = useState(0);
   const [showTime, setShowTime] = useState(false);
   const [showTimeReminder, setShowTimeReminder] = useState(false);

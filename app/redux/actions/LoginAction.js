@@ -15,7 +15,7 @@ export const loginUser = body => {
         });
       })
       .catch(error => {
-        // console.log('loginUser Error Response :=\n', error);
+        console.log('loginUser Error Response :=\n', error);
         dispatch({type: actions.LOGIN_USER, payload: error});
       });
   };

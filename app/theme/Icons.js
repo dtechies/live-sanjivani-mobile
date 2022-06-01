@@ -298,9 +298,3 @@ export const IcOtherIcon5 = props => (
 export const IcOtherIcon6 = props => (
   <OtherIcon6 height={props.height} width={props.width} fill={props.fill} />
 );
-export const IcPencil = props => (
-  <Pencil height={props.height} width={props.width} fill={props.fill} />
-);
-export const IcSafety = props => (
-  <Safety height={props.height} width={props.width} stroke={props.stroke} />
-);

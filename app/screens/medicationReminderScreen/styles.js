@@ -50,11 +50,6 @@ export const dropdown = val => ({
 export const inputMainContainer = () => ({
   marginVertical: size.moderateScale(7),
 });
-export const textInputTitle = () => ({
-  fontFamily: fonts.openSansBold,
-  color: color.purple,
-  fontSize: fontSize.small,
-});
 export const textDate = () => ({
   fontFamily: fonts.latoBold,
   color: color.blueTx,

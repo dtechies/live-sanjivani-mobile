@@ -167,10 +167,3 @@ export const searchedValueList = () => ({
   borderWidth: size.moderateScale(1),
   paddingHorizontal: size.moderateScale(5),
 });
-export const searchedValueList = () => ({
-  backgroundColor: color.gainsBoro,
-  paddingVertical: size.moderateScale(15),
-  borderColor: color.purple,
-  borderWidth: size.moderateScale(1),
-  paddingHorizontal: size.moderateScale(5),
-});
