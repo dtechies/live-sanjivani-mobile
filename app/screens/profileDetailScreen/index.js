@@ -15,6 +15,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {
   Loader,
@@ -38,26 +39,30 @@ import {
 } from 'json';
 
 export const ProfileDetailScreen = () => {
-  const [firstNm, setFirstNm] = useState('Ashish');
+  const {userDetails = {}, age = ''} = useSelector(state => ({
+    userDetails: state.userDataReducer.userDataResponse.userData,
+    age: state.userDataReducer.userDataResponse.age,
+  }));
+  const [firstNm, setFirstNm] = useState(userDetails.first_name);
   const [firstNmErr, setFirstNmErr] = useState('');
-  const [lastNm, setLastNm] = useState('Mishra');
+  const [lastNm, setLastNm] = useState(userDetails.last_name);
   const [lastNmErr, setLastNmErr] = useState('');
-  const [dob, setDob] = useState('15/09/1987');
+  const [dob, setDob] = useState(userDetails.dob);
   const [dobErr, setDobErr] = useState('');
-  const [email, setEmail] = useState('abc@gmail.com');
+  const [email, setEmail] = useState(userDetails.email);
   const [emailErr, setEmailErr] = useState('');
-  const [phone, setPhone] = useState('8989898989');
+  const [phone, setPhone] = useState(userDetails.mob_no);
   const [phoneErr, setPhoneErr] = useState('');
-  const [gender, setGender] = useState('male');
+  const [gender, setGender] = useState(userDetails.gender);
   const [genderDefault, setGenderDefault] = useState({
-    label: 'Female',
-    value: 'Female',
+    label: userDetails.gender,
+    value: userDetails.gender,
   });
   const [genderErr, setGenderErr] = useState('');
-  const [language, setLanguage] = useState('Hindi');
+  const [language, setLanguage] = useState(userDetails.language);
   const [languageDefault, setLanguageDefault] = useState({
-    label: 'Hindi',
-    value: 'Hindi',
+    label: userDetails.language,
+    value: userDetails.language,
   });
   const [languageErr, setLanguageErr] = useState('');
   const [extra, setExtra] = useState(0);
@@ -67,6 +72,11 @@ export const ProfileDetailScreen = () => {
   const navigation = useNavigation();
   const [isFocus, setIsFocus] = useState(false);
   const [showDate, setShowDate] = useState(false);
+
+  useEffect(() => {
+    console.log('userDetails ==> ', userDetails);
+  }, []);
+
   const modalRef = useRef();
 
   const uploadFromGallery = () => {
@@ -196,8 +206,8 @@ export const ProfileDetailScreen = () => {
         isBlue={false}
         isCamera={true}
         title={'ProfileDetailScreen.title'}
-        name={'Name'}
-        secName={'Email Id'}
+        name={firstNm + ' ' + lastNm}
+        secName={email}
       />
       <Screen withScroll style={styles.screenContainer()}>
         <View style={styles.settingMain()}>
@@ -214,6 +224,16 @@ export const ProfileDetailScreen = () => {
               }}>
               <Text style={styles.editText()} tx="ProfileDetailScreen.Edit" />
               <IcEdit height={10} width={10} fill={color.blue} />
+            </Pressable>
+          )}
+          {isEditable && (
+            <Pressable
+              style={styles.editIcon()}
+              onPress={() => {
+                setIsEditable(false);
+                setExtra(extra + 1);
+              }}>
+              <Text style={styles.editText()} tx="ProfileDetailScreen.Back" />
             </Pressable>
           )}
         </View>
@@ -267,7 +287,7 @@ export const ProfileDetailScreen = () => {
               // placeholder={'Gender'}
               dropdownPosition={'bottom'}
               style={styles.dropdown()}
-              // placeholderStyle={styles.labelFieldText()}
+              placeholderStyle={styles.labelFieldText()}
               selectedTextStyle={styles.selectedOptionTextStyle()}
               maxHeight={size.moderateScale(55)}
               containerStyle={styles.dropdownContainer()}

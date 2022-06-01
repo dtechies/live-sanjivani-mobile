@@ -1,21 +1,17 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {SafeAreaView, Pressable, View, ScrollView} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import moment from 'moment';
 import {Loader, Text, Screen, Header, Toast} from 'components';
 import {images} from 'theme';
 import * as styles from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {MainProfileDetail} from 'json';
-import {loginUser, userData, getOtp} from 'redux-actions';
+import {userData, getOtp} from 'redux-actions';
 
 export const ProfileScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
-  const [currentTime, setCurrentTime] = useState(
-    new moment().format('YYYY-MM-DD'),
-  );
   const [detailProfile, setDetailProfile] = useState(MainProfileDetail);
   const toastRef = useRef();
   const toastMessage = msg => {
@@ -37,21 +33,10 @@ export const ProfileScreen = () => {
       toastMessage('Logout Successfully');
     } else {
       setLoading(false);
-      toastMessage('some Issue...please try again...');
+      toastMessage('some Issue Please try again...');
     }
   };
 
-  useEffect(() => {
-    // console.log(userDetail.dob, 'dob', currentTime);
-    // var a = moment(userDetail.dob);
-    // var b = moment(currentTime);
-    // var years = b.diff(a, 'year');
-    // b.add(years, 'years');
-    // console.log('demo ==>', years + ' years ');
-    // console.log('UPDATE DOB ==>', userDetail.dob);
-    // dispatch(userData({userData: userDetail, age: years}));
-    console.log(': userData', userDetails);
-  }, []);
   return (
     <SafeAreaView style={styles.container()}>
       <Toast
@@ -72,14 +57,17 @@ export const ProfileScreen = () => {
         isHeading={true}
         isBlue={false}
         isCamera={false}
-        name={userDetails.first_name + ' ' + userDetails.last_name}
+        name={
+          userDetails
+            ? userDetails.first_name + ' ' + userDetails.last_name
+            : 'UserName'
+        }
         secName={age.toString() + " year's Old"}
         source={{uri: ''}}
       />
       <Screen withScroll bounces={false} style={styles.screenContainer()}>
         <View style={styles.mainProfileStyle()}>
           {detailProfile.map((item, i) => {
-            // console.log('item', item.value);
             return (
               <Pressable
                 key={i.toString()}

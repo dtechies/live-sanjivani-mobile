@@ -34,6 +34,7 @@ export const button = val => ({
   fontSize: fontSize.small,
   marginLeft: size.moderateScale(10),
   color: val ? color.blue : color.darkGrey,
+  textTransform: 'capitalize',
 });
 export const buttonSave = val => ({
   width: size.deviceWidth * 0.35,
@@ -72,6 +73,7 @@ export const labelFieldText = () => ({
   fontFamily: fonts.latoBold,
   marginLeft: size.moderateScale(10),
   color: color.blue,
+  textTransform: 'capitalize',
 });
 export const dropdown = () => ({
   width: size.deviceWidth * 0.9,
@@ -88,6 +90,7 @@ export const selectedOptionTextStyle = () => ({
   fontFamily: fonts.latoBold,
   marginLeft: size.moderateScale(10),
   color: color.blue,
+  textTransform: 'capitalize',
 });
 export const separator = () => ({
   backgroundColor: color.lightPurple,
