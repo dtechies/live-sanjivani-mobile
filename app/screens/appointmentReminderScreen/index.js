@@ -1,186 +1,89 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {View, Pressable, SafeAreaView, Keyboard} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {View, Pressable, SafeAreaView} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import {
-  Text,
-  Screen,
-  TitleBox,
-  InputBox,
-  Button,
-  Loader,
-  Toast,
-} from 'components';
+import moment from 'moment';
+import {Text, Screen, TitleBox, InputBox, Button, Header} from 'components';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import DatePicker from 'react-native-modern-datepicker';
 import {
-  addAppointmentReminder,
-  getAppointmentReminderAllDetail,
-} from 'redux-actions';
-
-import {IcSearch, color, size, IcCalendar, IcDown} from 'theme';
+  IcSearch,
+  color,
+  size,
+  IcCalendar,
+  IcDown,
+  SearchValNew,
+  IcCrossArrow,
+} from 'theme';
 import * as styles from './styles';
-
-export const AppointmentReminderScreen = () => {
+import {Portal} from 'react-native-portalize';
+import {Modalize} from 'react-native-modalize';
+export const AppointmentReminderScreen = animated => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const toastRef = useRef();
 
   const [loading, setLoading] = useState(false);
   const [extra, setExtra] = useState(0);
+  const [showTime, setShowTime] = useState(false);
+  const [showTimeReminder, setShowTimeReminder] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(
+    new moment().format('YYYY/MM/DD'),
+  );
+  const [selectedDateErr, setSelectedDateErr] = useState('');
   const [searchVal, setSearchVal] = useState('');
   const [searchValErr, setSearchValErr] = useState('');
-  const [speciality, setSpeciality] = useState('');
-  const [specialityErr, setSpecialityErr] = useState('');
   const [addressOne, setAddressOne] = useState('');
   const [addressOneErr, setAddressOneErr] = useState('');
-  const [addressTwo, setAddressTwo] = useState('');
-  const [addressTwoErr, setAddressTwoErr] = useState('');
-  const [city, setCity] = useState('');
-  const [cityErr, setCityErr] = useState('');
-  const [state, setState] = useState('');
-  const [stateErr, setStateErr] = useState('');
-  const [pinCode, setPinCode] = useState('');
-  const [pinCodeErr, setPinCodeErr] = useState('');
-  const [selectedDate, setSelectedDate] = useState('Date');
-  const [selectedDateErr, setSelectedDateErr] = useState('');
-  const [showDate, setShowDate] = useState(false);
-  const [showTime, setShowTime] = useState(false);
   const [selectedTime, setSelectedTime] = useState('Time');
   const [selectedTimeErr, setSelectedTimeErr] = useState('');
-  const [doctorData, setDoctorData] = useState([]);
+  const [reminderTime, setReminderTime] = useState('Time');
+  const [selectedTimeErrSecond, setSelectedTimeErrSecond] = useState('');
   const [doctorFilteredName, setDoctorFilteredName] = useState([]);
-  const [specialityFilteredName, setSpecialityFilteredName] = useState([]);
-
-  const toastMessage = msg => {
-    toastRef.current.show(msg);
+  const [doctorData, setDoctorData] = useState([]);
+  const [speciality, setSpeciality] = useState('');
+  const [specialityErr, setSpecialityErr] = useState('');
+  const popUpRef = useRef();
+  const onOpenPopUp = () => {
+    // alert('hiiii');
+    popUpRef.current?.open();
   };
-
-  const getCurrentDate = givenDate => {
-    // console.log('A date has been picked: ', givenDate);
-    let day = givenDate.getDate();
-    let month = givenDate.getMonth() + 1;
-    let year = givenDate.getFullYear();
-    let newDate = day + '-' + month + '-' + year;
-    setSelectedDate(newDate);
-    setSelectedDateErr('');
-    setShowDate(false);
+  const onClosePopUp = () => {
+    popUpRef.current?.close();
   };
-  const getCurrentTime = givenTime => {
-    // console.log('A Time picked: ', givenTime);
+  const getAppointmentTime = givenTime => {
     var hours = givenTime.getHours();
     var ampm = hours >= 12 ? 'PM' : 'AM';
     let newDate = givenTime.toTimeString().slice(0, 5);
-    // let newDate = givenTime.toTimeString().slice(0, 5) + ' ' + ampm;
     setSelectedTime(newDate);
     setSelectedTimeErr('');
     setShowTime(false);
   };
-  const {token, userId} = useSelector(state => ({
-    token: state.userDataReducer.userDataResponse.userData.token,
-    userId: state.userDataReducer.userDataResponse.userData.id,
-  }));
-
-  const getAppointmentReminderAllList = async () => {
-    setLoading(true);
-    const getAppointmentReminderAllHeader = {
-      token: token,
-    };
-    const getAppointmentReminderAllResponse = await dispatch(
-      getAppointmentReminderAllDetail(getAppointmentReminderAllHeader),
-    );
-    // console.log(
-    //   'getAppointmentReminderAll Header ==>',
-    //   getAppointmentReminderAllHeader,
-    // );
-    const res = getAppointmentReminderAllResponse.payload;
-    // console.log('getAppointmentReminderAll res ==>', res);
-    if (res.status) {
-      // console.log('getAppointmentReminderAll Data  ==>', res.data.DoctorsData);
-      setDoctorData(res.data.DoctorsData);
-      toastMessage(res.message);
-      setLoading(false);
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
-    }
+  const getReminderTime = givenTime => {
+    var hours = givenTime.getHours();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    let newDate = givenTime.toTimeString().slice(0, 5);
+    setReminderTime(newDate);
+    setSelectedTimeErrSecond('');
+    setShowTimeReminder(false);
   };
 
   const validation = () => {
+    if (selectedDate === '') {
+      setSelectedDateErr('Enter Appointment Date');
+    }
     if (searchVal === '') {
       setSearchValErr('Enter doctor name');
-    }
-    if (speciality === '') {
-      setSpecialityErr('Enter speciality');
     }
     if (addressOne === '') {
       setAddressOneErr('Enter address one');
     }
-    if (addressTwo === '') {
-      setAddressTwoErr('Enter address two');
-    }
-    if (city === '') {
-      setCityErr('Enter city');
-    }
-    if (state === '') {
-      setStateErr('Select state');
-    }
-    if (pinCode.length !== 6) {
-      setPinCodeErr('Pincode must have 6 digit');
-    }
-    if (selectedDate === 'Date') {
-      setSelectedDateErr('Select date');
-    }
     if (selectedTime === 'Time') {
       setSelectedTimeErr('Select time');
     }
-  };
-
-  const OnAddReminder = async () => {
-    setLoading(true);
-
-    let formData = new FormData();
-    formData.append('user_id', userId);
-    formData.append('doctor_name', searchVal);
-    formData.append('speciality', speciality);
-    formData.append('date', selectedDate);
-    formData.append('address1', addressOne);
-    formData.append('address2', addressTwo);
-    formData.append('city', city);
-    formData.append('state', state);
-    formData.append('pincode', pinCode);
-    formData.append('user_selected_time', selectedTime);
-
-    const addAppointmentReminderHeader = {
-      token: token,
-    };
-    // console.log('addMedicineReminder form data ==>', formData);
-    // console.log('addMedicineReminderHeader ==>', addAppointmentReminderHeader);
-
-    const addMedicineReminderResponse = await dispatch(
-      addAppointmentReminder(formData, addAppointmentReminderHeader),
-    );
-    const res = addMedicineReminderResponse.payload;
-    setLoading(false);
-    // console.log('addMedicineReminder Res ==>', res);
-
-    if (res.status) {
-      // console.log('addMedicineReminder List ==>', res);
-      toastMessage(res.message);
-      setTimeout(() => {
-        navigation.navigate('Today', {
-          screen: 'todayScreen',
-          params: {appointment: true},
-        });
-      }, 150);
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
+    if (reminderTime === 'Time') {
+      setSelectedTimeErrSecond('Select time');
     }
   };
-  useEffect(() => {
-    getAppointmentReminderAllList();
-  }, []);
-
   const onDoctorNameType = val => {
     setSearchVal(val);
     let text = val.toLowerCase() || val.toUpperCase();
@@ -192,57 +95,123 @@ export const AppointmentReminderScreen = () => {
       setDoctorFilteredName(filteredName);
     }
   };
-  const onSpecialityNameType = val => {
-    setSpeciality(val);
-    let text = val.toLowerCase() || val.toUpperCase();
-    // console.log('Speciality type ==>', val);
-    if (val.length >= 2) {
-      let filteredName = doctorData.filter(item => {
-        return item.speciality.toLowerCase().match(text);
-      });
-      setSpecialityFilteredName(filteredName);
-    }
-  };
   return (
     <SafeAreaView style={styles.full()}>
-      <Toast
-        ref={toastRef}
-        position="top"
-        style={styles.toast()}
-        fadeOutDuration={200}
-        opacity={0.9}
+      <Header
+        leftOnPress={() => {
+          navigation.goBack();
+        }}
+        isColor={true}
+        isLeftArrow={true}
+        isHeading={true}
+        title={'appointment_reminder_screen.title'}
       />
-      {loading && <Loader />}
-      <Screen
-        keyboardShouldPersistTaps={'handled'}
-        style={styles.container()}
-        bounces={false}
-        showsVerticalScrollIndicator={false}>
-        <TitleBox
-          titleContainerStyle={styles.titleStyle()}
-          titleTx={'appointment_reminder_screen.title'}
-        />
+      <Screen style={styles.container()}>
         <View style={styles.mainView()}>
+          <View style={styles.dataPickerStyle()}>
+            <DatePicker
+              options={{
+                textHeaderColor: color.black,
+                textDefaultColor: color.black,
+                selectedTextColor: color.white,
+                mainColor: color.turquoise,
+                textSecondaryColor: color.turquoise,
+                borderColor: color.black,
+              }}
+              current={moment(new Date()).format('YYYY-MM-DD')}
+              // // selected={moment(new Date()).format('YYYY-MM-DD')}
+              onSelectedChange={date => {
+                setSelectedDate(date);
+                setSelectedDateErr('');
+                // setExtra(extra + 1);
+              }}
+              mode="calendar"
+              minuteInterval={30}
+              style={styles.calenderMain_view()}
+            />
+          </View>
+
+          <View style={styles.dateMainView()}>
+            <Text style={styles.textDate()}>{selectedDate}</Text>
+          </View>
+          {selectedDateErr ? (
+            <Text style={styles.textValidation()} text={selectedDateErr} />
+          ) : null}
+
+          <Pressable
+            style={styles.timeMainView()}
+            onPress={() => {
+              setShowTime(!showTime);
+            }}>
+            <Text
+              style={styles.textTimeNameDate()}
+              tx={'appointment_reminder_screen.appointmentTime'}
+            />
+            <Text style={styles.textTimeDate()}>{selectedTime} </Text>
+            {showTime && (
+              <DateTimePickerModal
+                isVisible={showTime}
+                mode="time"
+                locale="en_GB"
+                onConfirm={val => getAppointmentTime(val)}
+                onCancel={() => {
+                  setShowTime(false);
+                  setExtra(extra + 1);
+                }}
+              />
+            )}
+          </Pressable>
+          {selectedTimeErr ? (
+            <Text style={styles.textValidation()} text={selectedTimeErr} />
+          ) : null}
+          <Pressable
+            style={styles.timeMainView()}
+            onPress={() => {
+              setShowTimeReminder(!showTimeReminder);
+            }}>
+            <Text
+              style={styles.textTimeNameDate()}
+              tx={'appointment_reminder_screen.appointmentReminderTime'}
+            />
+            <Text style={styles.textTimeDate()}>{reminderTime} </Text>
+            {showTimeReminder && (
+              <DateTimePickerModal
+                isVisible={showTimeReminder}
+                mode="time"
+                locale="en_GB"
+                onConfirm={val => getReminderTime(val)}
+                onCancel={() => {
+                  setShowTimeReminder(false);
+                  setExtra(extra + 1);
+                }}
+              />
+            )}
+          </Pressable>
+          {selectedTimeErrSecond ? (
+            <Text
+              style={styles.textValidation()}
+              text={selectedTimeErrSecond}
+            />
+          ) : null}
           <InputBox
-            titleTx={'appointment_reminder_screen.name_of_doctor'}
-            titleStyle={styles.textInputTitle()}
-            placeholder={'Search'}
             value={searchVal}
             onChangeText={value => {
               onDoctorNameType(value);
               setSearchValErr('');
               setExtra(extra + 1);
             }}
-            onSubmitEditing={Keyboard.dismiss}
-            inputStyle={[styles.labelFieldText()]}
-            mainContainerStyle={styles.inputMainContainer()}
-            rightIcon={
-              <IcSearch
+            mainContainerStyle={styles.inputMain()}
+            inputStyle={styles.inputTxt()}
+            leftIcon={true}
+            leftIconName={
+              <SearchValNew
                 height={size.moderateScale(20)}
                 width={size.moderateScale(20)}
-                fill={color.purple}
+                fill={color.blue}
               />
             }
+            placeholder={'Doctor/Practice...'}
+            placeholderTextColor={color.black}
           />
           {searchValErr ? (
             <Text style={styles.textValidation()} text={searchValErr} />
@@ -265,201 +234,88 @@ export const AppointmentReminderScreen = () => {
               );
             })}
           <InputBox
-            titleTx={'appointment_reminder_screen.speciality'}
-            titleStyle={styles.textInputTitle()}
-            placeholder={'Speciality'}
-            value={speciality}
-            onChangeText={value => {
-              onSpecialityNameType(value);
-              setSpecialityErr('');
-              setExtra(extra + 1);
-            }}
-            inputStyle={[styles.labelFieldText()]}
-            mainContainerStyle={styles.inputMainContainer()}
-          />
-          {specialityErr ? (
-            <Text style={styles.textValidation()} text={specialityErr} />
-          ) : null}
-          {specialityFilteredName.length > 0 &&
-            specialityFilteredName.map((item, index) => {
-              return (
-                <Pressable
-                  style={styles.searchedValueList}
-                  onPress={() => {
-                    setSpeciality(item.speciality);
-                    setSpecialityErr('');
-                    setSpecialityFilteredName([]);
-                    Keyboard.dismiss;
-                  }}>
-                  <Text>{item.speciality}</Text>
-                </Pressable>
-              );
-            })}
-          <InputBox
-            titleTx={'appointment_reminder_screen.address_one'}
-            titleStyle={styles.textInputTitle()}
-            placeholder={'Address 1'}
             value={addressOne}
             onChangeText={value => {
               setAddressOne(value);
               setAddressOneErr('');
               setExtra(extra + 1);
             }}
-            inputStyle={[styles.labelFieldText()]}
-            mainContainerStyle={styles.inputMainContainer()}
+            mainContainerStyle={styles.inputMain(1)}
+            inputStyle={styles.inputTxt()}
+            leftIcon={true}
+            leftIconName={
+              <SearchValNew
+                height={size.moderateScale(20)}
+                width={size.moderateScale(20)}
+                fill={color.blue}
+              />
+            }
+            placeholder={'Address'}
+            placeholderTextColor={color.black}
           />
           {addressOneErr ? (
             <Text style={styles.textValidation()} text={addressOneErr} />
           ) : null}
-          <InputBox
-            titleTx={'appointment_reminder_screen.address_two'}
-            titleStyle={styles.textInputTitle()}
-            placeholder={'Address 2'}
-            value={addressTwo}
-            onChangeText={value => {
-              setAddressTwo(value);
-              setAddressTwoErr('');
-              setExtra(extra + 1);
-            }}
-            inputStyle={[styles.labelFieldText()]}
-            mainContainerStyle={styles.inputMainContainer()}
-          />
-          {addressTwoErr ? (
-            <Text style={styles.textValidation()} text={addressTwoErr} />
-          ) : null}
-          <InputBox
-            titleTx={'appointment_reminder_screen.city'}
-            titleStyle={styles.textInputTitle()}
-            placeholder={'City'}
-            value={city}
-            onChangeText={value => {
-              setCity(value);
-              setCityErr('');
-              setExtra(extra + 1);
-            }}
-            inputStyle={[styles.labelFieldText()]}
-            mainContainerStyle={styles.inputMainContainer()}
-          />
-          {cityErr ? (
-            <Text style={styles.textValidation()} text={cityErr} />
-          ) : null}
-          <InputBox
-            titleTx={'appointment_reminder_screen.state'}
-            titleStyle={styles.textInputTitle()}
-            placeholder={'State'}
-            value={state}
-            onChangeText={value => {
-              setState(value);
-              setStateErr('');
-              setExtra(extra + 1);
-            }}
-            inputStyle={[styles.labelFieldText()]}
-            mainContainerStyle={styles.inputMainContainer()}
-          />
-          {stateErr ? (
-            <Text style={styles.textValidation()} text={stateErr} />
-          ) : null}
-          <InputBox
-            titleTx={'appointment_reminder_screen.pinCode'}
-            titleStyle={styles.textInputTitle()}
-            placeholder={'PinCode'}
-            value={pinCode}
-            maxLength={6}
-            keyboardType={'number-pad'}
-            onChangeText={value => {
-              setPinCode(value);
-              setPinCodeErr('');
-              setExtra(extra + 1);
-            }}
-            inputStyle={[styles.labelFieldText()]}
-            mainContainerStyle={styles.inputMainContainer()}
-          />
-          {pinCodeErr ? (
-            <Text style={styles.textValidation()} text={pinCodeErr} />
-          ) : null}
-          <Text
-            style={styles.textDateTitle()}
-            tx={'appointment_reminder_screen.date'}
-          />
-          <Pressable
-            style={styles.dateMainView()}
-            onPress={() => {
-              setShowDate(true);
-            }}>
-            <IcCalendar
-              height={size.moderateScale(20)}
-              width={size.moderateScale(20)}
-              fill={color.purple}
-            />
-            <Text style={styles.textDate()}>{selectedDate}</Text>
-            {showDate && (
-              <DateTimePickerModal
-                isVisible={showDate}
-                mode="date"
-                onConfirm={val => getCurrentDate(val)}
-                onCancel={() => {
-                  setShowDate(false);
-                  setExtra(extra + 1);
-                }}
-              />
-            )}
-          </Pressable>
-          {selectedDateErr ? (
-            <Text style={styles.textValidation()} text={selectedDateErr} />
-          ) : null}
-          <Text
-            style={styles.textDateTitle()}
-            tx={'appointment_reminder_screen.time'}
-          />
-          <Pressable
-            style={styles.timeMainView()}
-            onPress={() => {
-              setShowTime(!showTime);
-            }}>
-            <Text style={styles.textDate()}>{selectedTime} </Text>
-            {showTime && (
-              <DateTimePickerModal
-                isVisible={showTime}
-                mode="time"
-                locale="en_GB"
-                onConfirm={val => getCurrentTime(val)}
-                onCancel={() => {
-                  setShowTime(false);
-                  setExtra(extra + 1);
-                }}
-              />
-            )}
-            <IcDown
-              height={size.moderateScale(20)}
-              width={size.moderateScale(20)}
-              fill={color.cornBlue}
-            />
-          </Pressable>
-          {selectedTimeErr ? (
-            <Text style={styles.textValidation()} text={selectedTimeErr} />
-          ) : null}
-          <View>
-            <Button
-              onPress={() => {
-                searchVal &&
-                speciality &&
-                addressOne &&
-                addressTwo &&
-                city &&
-                state &&
-                pinCode &&
-                selectedDate &&
-                selectedTime
-                  ? OnAddReminder()
-                  : validation();
-              }}
-              nameTx="appointment_reminder_screen.add"
-              buttonStyle={styles.addButtonStyle()}
-              buttonText={styles.textAddButton()}
-            />
-          </View>
         </View>
+        <Portal>
+          <Modalize
+            panGestureEnabled={false}
+            withHandle={false}
+            closeOnOverlayTap={false}
+            modalStyle={styles.modalStyle()}
+            ref={popUpRef}
+            tapGestureEnabled={false}
+            scrollViewProps={{
+              showsVerticalScrollIndicator: false,
+              scrollEnabled: false,
+            }}>
+            <View style={styles.modelize_view()}>
+              <Pressable
+                onPress={() => onClosePopUp()}
+                style={styles.crossSvgStyle()}>
+                <IcCrossArrow width={13} height={13} fill={color.grayIcon} />
+              </Pressable>
+
+              <Text
+                tx={'appointment_reminder_screen.appointmentConfirmed'}
+                style={styles.txtConfirm()}
+              />
+              <Text
+                tx={'appointment_reminder_screen.yourAppointmentWillBeginAt'}
+                style={styles.txtBegin()}
+              />
+              <Text text={'On 6th May 2017'} style={styles.txtDate()} />
+              <Text text={'9:00 PM'} style={styles.txtDate()} />
+              <Text
+                text={'Dr.Mital Gal - Dentist'}
+                style={styles.txtDoctor()}
+              />
+              <Text
+                text={'Shivaji Nagar,Pune 3 Km'}
+                style={styles.txtBegin()}
+              />
+              <Button
+                nameTx="appointment_reminder_screen.confirm"
+                buttonStyle={styles.btnModel()}
+                buttonText={styles.textAddButton()}
+                onPress={() => navigation.goBack()}
+              />
+            </View>
+          </Modalize>
+        </Portal>
       </Screen>
+      <Button
+        nameTx="appointment_reminder_screen.bookNow"
+        buttonStyle={styles.addButtonStyle()}
+        buttonText={styles.textAddButton()}
+        onPress={() => {
+          selectedDate && searchVal && addressOne
+            ? // selectedTime == 'Time' &&
+              // reminderTime == 'Time'
+              onOpenPopUp()
+            : validation();
+        }}
+      />
     </SafeAreaView>
   );
 };

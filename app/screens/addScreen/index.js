@@ -1,95 +1,65 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {View, Pressable, SafeAreaView} from 'react-native';
-import {Text, Screen, Button, Loader, Toast} from 'components';
+import React, {useState, useEffect} from 'react';
+import {View, Pressable, SafeAreaView, TextInput} from 'react-native';
+import {Text, Screen, InputBox, Button, Header} from 'components';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getReminderOption, getAllCategoryAndSubCategory} from 'redux-actions';
 
 import {size, color, IcPlus, IcHeart} from 'theme';
 
+import {size, color, IcPlus, IcBack} from 'theme';
+import {addServiceData, AddNavData} from 'json';
 import * as styles from './styles';
+
 export const AddScreen = props => {
   const navigation = useNavigation();
-  const toastRef = useRef();
-  const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(null);
   const [extra, setExtra] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [reminderOption, setReminderOption] = useState('');
-  const [categoryWithSubCategoryData, setCategoryWithSubCategoryData] =
-    useState([]);
+  const [noteVal, setNoteVal] = useState(null);
+  const [noteValErr, setNoteValErr] = useState('');
+  const [showTakeNote, setShowTakeNote] = useState(false);
+  const [show, setShow] = useState(true);
+  const [addSelected, setAddSelected] = useState(false);
+  const params = props.route.params && props.route.params.showType;
+  const [data, setData] = useState(addServiceData);
 
-  const {token} = useSelector(state => ({
-    token: state.userDataReducer.userDataResponse.userData.token,
-  }));
-  const toastMessage = msg => {
-    toastRef.current.show(msg);
-  };
-  const getReminderOptionData = async () => {
-    setLoading(true);
-    const getReminderOptionHeader = {
-      token: token,
-    };
-    // console.log('getReminderOption header ==>>', getReminderOptionHeader);
-    const getReminderOptionResponse = await dispatch(
-      getReminderOption(getReminderOptionHeader),
-    );
-    const res = getReminderOptionResponse.payload;
-    // console.log('getReminderOption response ==>>', res);
-
-    if (res.status) {
-      // console.log('getReminderOption data ==>>', res.data);
-      setReminderOption(res.data);
-      setLoading(false);
-    } else {
-      setLoading(false);
-    }
-  };
-  const getAllCategoryAndSubCategoryData = async () => {
-    setLoading(true);
-    const getAllCategoryAndSubCategoryHeader = {
-      token: token,
-    };
-    // console.log('getAllCategoryAndSubCategory header ==>>', getAllCategoryAndSubCategoryHeader);
-    const getAllCategoryAndSubCategoryResponse = await dispatch(
-      getAllCategoryAndSubCategory(getAllCategoryAndSubCategoryHeader),
-    );
-    const res = getAllCategoryAndSubCategoryResponse.payload;
-    // console.log('getAllCategoryAndSubCategory response ==>>', res);
-    if (res.status) {
-      // console.log('getAllCategoryAndSubCategory data ==>>', res.data);
-      toastMessage(res.message);
-      setCategoryWithSubCategoryData(res.data.categoryData);
-      setLoading(false);
-      // setReminderOption(res.data);
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
-    }
+  const clearData = () => {
+    data.map((val, i) => {
+      data[i].selected = false;
+    });
+    addServiceData.map((val, i) => {
+      addServiceData[i].selected = false;
+    });
+    setExtra(extra + 1);
   };
 
   useEffect(() => {
-    getReminderOptionData();
-    getAllCategoryAndSubCategoryData();
+    clearData();
   }, []);
+
+  const validation = () => {
+    if (noteVal == ' ' || noteVal == null) {
+      setNoteValErr('Please Enter medical journal details');
+    } else {
+      setShow(true);
+      setShowTakeNote(false);
+    }
+  };
   return (
     <SafeAreaView style={styles.full()}>
-      <Toast
-        ref={toastRef}
-        position="top"
-        style={styles.toast()}
-        fadeOutDuration={200}
-        opacity={0.9}
+      <Header
+        isColor={true}
+        isClose={false}
+        isLogo={false}
+        isLongArrowLeft={false}
+        isLogoCenter={false}
+        isHeading={true}
+        isBlue={false}
+        isCamera={false}
+        title={'add_screen.title'}
       />
-      {loading && <Loader />}
-      <Screen
-        keyboardShouldPersistTaps={'handled'}
-        bounces={false}
-        style={styles.container()}>
-        <Pressable>
-          <Text style={styles.textLanding()} tx={'add_screen.add'} />
-        </Pressable>
-        {reminderOption.is_medicine_reminder === 1 && (
+      <Screen withScroll style={styles.container()}>
+        {/* {(params === 'get medicine reminder' || params === 'all') && (
           <Button
             onPress={() => navigation.navigate('medicationReminderScreen')}
             nameTx="add_screen.add_medication"
@@ -173,14 +143,123 @@ export const AddScreen = props => {
             );
           })}
 
-        <Pressable
-          style={styles.takeNoteView()}
-          onPress={() => navigation.navigate('medicalJournalScreen')}>
-          <Text
-            style={styles.textTakeNot()}
-            tx={'add_screen.medical_journal'}
-          />
-        </Pressable>
+            <Button
+              onPress={() => {
+                setShow(true);
+                setShowTakeNote(false);
+              }}
+              nameTx="appointment_reminder_screen.add"
+              buttonStyle={styles.addButtonStyle()}
+              buttonText={styles.textAddButton()}
+            />
+          </View>
+        )} */}
+        <View style={styles.mainCard()}>
+          {data.map((item, index) => {
+            return (
+              <Pressable
+                onPress={() => {
+                  if (
+                    item.name == 'Vitals' ||
+                    item.name == 'Measurements' ||
+                    item.name == 'Activity'
+                  ) {
+                    setTimeout(() => {
+                      // clearData();
+                      // console.log('selected', data[index].selected);
+                      navigation.navigate('addDetailsScreen', {
+                        title: item.name,
+                        sub: item.subCategory,
+                      });
+                    }, 500);
+                  }
+                  if (item.name == 'Care giver') {
+                    clearData();
+                    setTimeout(() => {
+                      navigation.navigate('careGiver');
+                    }, 500);
+                  }
+                  if (item.name == 'Appointments') {
+                    clearData();
+                    setTimeout(() => {
+                      navigation.navigate('appointmentReminderScreen');
+                    }, 500);
+                  }
+                  if (item.name == 'Symptoms check') {
+                    clearData();
+                    setTimeout(() => {
+                      navigation.navigate('symptomsScreen');
+                    }, 500);
+                  }
+                  if (item.name == 'Others') {
+                    clearData();
+                    setTimeout(() => {
+                      navigation.navigate('otherScreen');
+                    }, 500);
+                  }
+                  if (item.name == 'Medication') {
+                    clearData();
+                    setTimeout(() => {
+                      navigation.navigate('medicationReminderScreen');
+                    }, 500);
+                  }
+                  clearData();
+                  data[index].selected = !item.selected;
+                  setExtra(extra + 1);
+                }}
+                style={styles.addNavStyle(item.selected)}
+                key={index + 'addMedication'}>
+                <Text
+                  text={item.name}
+                  style={styles.labelAddStyle(item.selected)}
+                />
+                <IcBack fill={item.selected ? color.white : color.blueTx} />
+              </Pressable>
+            );
+          })}
+          <View>
+            <Pressable
+              onPress={() => {
+                setShowTakeNote(!showTakeNote);
+                setShow(!show);
+              }}
+              style={styles.addNavStyle()}>
+              <Text
+                style={styles.labelAddStyle()}
+                text={'Medical Journal (take notes)'}
+              />
+            </Pressable>
+            {showTakeNote && (
+              <View>
+                <InputBox
+                  value={noteVal}
+                  onChangeText={value => {
+                    setNoteVal(value);
+                    setNoteValErr('');
+                    setExtra(extra + 1);
+                  }}
+                  textAlignVertical="top"
+                  multiline={true}
+                  inputStyle={[styles.labelFieldText()]}
+                  mainContainerStyle={styles.inputMainContainer()}
+                  containerStyle={styles.showNote()}
+                  numberOfLines={10}
+                />
+                {noteValErr ? (
+                  <Text style={styles.errorText()}>{noteValErr}</Text>
+                ) : null}
+                <Button
+                  onPress={() => {
+                    validation();
+                  }}
+                  nameTx="appointment_reminder_screen.add"
+                  buttonStyle={styles.addButtonStyle()}
+                  buttonText={styles.textAddButton()}
+                />
+              </View>
+            )}
+          </View>
+        </View>
       </Screen>
     </SafeAreaView>
   );

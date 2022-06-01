@@ -1,4 +1,4 @@
-import {color, size, fontSize, fonts} from 'theme';
+import {color, size, fonts, fontSize} from 'theme';
 
 export const full = () => ({
   flex: 1,
@@ -6,44 +6,41 @@ export const full = () => ({
 });
 export const container = () => ({
   flex: 1,
+  justifyContent: 'center',
+});
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
   paddingHorizontal: size.moderateScale(20),
-  backgroundColor: color.white,
-  marginTop: size.moderateScale(15),
+  paddingVertical: size.moderateScale(12),
 });
-export const titleTextContainer = () => ({
-  paddingVertical: size.moderateScale(7),
-  marginBottom: size.moderateScale(10),
+export const screenContainer = () => ({
+  paddingHorizontal: size.moderateScale(20),
+  paddingTop: size.moderateScale(20),
+  backgroundColor: color.themeBack,
 });
-export const textName = () => ({
-  fontFamily: fonts.openSansMedium,
-  color: color.darkGrey,
-  fontSize: fontSize.medium,
-  flex: 1,
-  textTransform: 'capitalize',
-});
-export const textNameTitle = () => ({
-  fontFamily: fonts.openSansMedium,
-  color: color.darkGrey,
-  fontSize: fontSize.medium,
-  marginRight: size.moderateScale(5),
-  minWidth: size.deviceWidth * 0.25,
-  textTransform: 'capitalize',
-});
-export const nameRow = () => ({
+export const mainProfileStyle = () => ({
   flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'space-between',
+  paddingHorizontal: size.moderateScale(20),
+});
+export const subProfileStyle = val => ({
+  backgroundColor: color.white,
+  height: size.moderateScale(110),
+  width: size.moderateScale(125),
+  borderRadius: size.moderateScale(10),
+  justifyContent: 'center',
   alignItems: 'center',
-  paddingVertical: size.moderateScale(5),
+  marginBottom: val == 1 ? size.moderateScale(40) : size.moderateScale(20),
+  shadowColor: color.black,
+  shadowOffset: {width: 0, height: 5},
+  shadowOpacity: 0.09,
+  elevation: size.moderateScale(10),
 });
-export const addButtonStyle = () => ({
-  paddingVertical: size.moderateScale(10),
-  width: size.deviceWidth - size.moderateScale(40),
-  alignSelf: 'center',
-  borderColor: color.dimGrey,
-  backgroundColor: color.ghostWhite,
-  marginVertical: size.moderateScale(15),
-});
-export const textAddButton = () => ({
-  fontFamily: fonts.openSansBold,
-  color: color.darkGrey,
+export const profileText = () => ({
   fontSize: fontSize.small,
+  fontFamily: fonts.latoBold,
+  color: color.blueTx,
+  textAlign: 'center',
+  paddingTop: size.moderateScale(5),
 });

@@ -28,6 +28,7 @@ import getAppointmentReminderProfileReducer from './GetAppointmentReminderProfil
 import addAppointmentReminderReducer from './AddAppointmentReminderReducer';
 import getAppointmentReminderAllDetailReducer from './GetAppointmentReminderAllDetailReducer';
 import getSubCategoryDataReducer from './getSubCategoryDataReducer';
+import getOtpReducer from './GetOtpReducer';
 
 const persistConfig = {
   key: 'root',
@@ -60,6 +61,7 @@ const appReducer = combineReducers({
   getAppointmentReminderAllDetailReducer:
     getAppointmentReminderAllDetailReducer,
   getSubCategoryDataReducer: getSubCategoryDataReducer,
+  getOtpReducer: getOtpReducer,
 });
 
 const rootReducer = (state, action) => {

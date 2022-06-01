@@ -1,21 +1,23 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {View, Pressable, SafeAreaView} from 'react-native';
-import {SwipeListView} from 'react-native-swipe-list-view';
-import {Modalize} from 'react-native-modalize';
-import {Portal} from 'react-native-portalize';
-import {useDispatch, useSelector} from 'react-redux';
 import {
-  getTipForDay,
-  getMedicineReminderProfile,
-  editMedicineReminderStatus,
-  getAppointmentReminderProfile,
-  editAppointmentReminderStatus,
-} from 'redux-actions';
-
-import {Text, TitleBox, Screen, ToggleSwitch, Loader, Toast} from 'components';
-import {size, color, IcDelete, IcSafety} from 'theme';
-import {reminderListData} from 'json';
+  View,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  Image,
+  BackHandler,
+} from 'react-native';
+import moment from 'moment';
+import {Text, TitleBox, Screen, Header, ToggleSwitch} from 'components';
+import {size, color, IcDelete, IcBtnPlus, images, IcFalse, IcTrue} from 'theme';
+import {reminderListData, medicationReminder} from 'json';
 import * as styles from './styles';
+import {
+  useNavigation,
+  useFocusEffect,
+  useRoute,
+} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
 
 export const TodayScreen = props => {
   const modalRef = useRef();
@@ -24,60 +26,60 @@ export const TodayScreen = props => {
   const [loading, setLoading] = useState(false);
 
   const [activeIndex, setActiveIndex] = useState([]);
+  const [medicationData, setMedication] = useState(medicationReminder);
   const [extra, setExtra] = useState(0);
-  const [selectedItem, setSelectedItem] = useState([]);
-  const [tipForDayData, setTipForDayData] = useState([]);
-  const [medicineReminderData, setMedicineReminderData] = useState([]);
-  const [appointmentReminderData, setAppointmentReminderData] = useState([]);
-  const {token} = useSelector(state => ({
-    token: state.userDataReducer.userDataResponse.userData.token,
-  }));
-  const toastMessage = msg => {
-    toastRef.current.show(msg);
+  const [currentTime, setCurrentTime] = useState(new moment().format('hh:mm'));
+  const [currentAmTime, setCurrentAmTime] = useState(new moment().format('A'));
+  const navigation = useNavigation();
+  const [exitApp, setExitApp] = useState(0);
+
+  const route = useRoute();
+  console.log('route', route.name);
+
+  const onEditMedicineReminderStatusPress = async index => {
+    console.log('item ==>', medicationData[index].status);
+    medicationData[index].status = !medicationData[index].status;
+    setExtra(extra + 1);
   };
-  const getTipForDayData = async () => {
-    setLoading(true);
-    const getTipForDayHeader = {
-      token: token,
-    };
-    const getTipForDayResponse = await dispatch(
-      getTipForDay(getTipForDayHeader),
-    );
-    // console.log('getTipForDayData header ==>', getTipForDayHeader);
-    const res = getTipForDayResponse.payload;
-    // console.log('getTipForDayData res ==>', res);
-    if (res.status) {
-      // console.log('getTipForDayData list ==>', res.data.TipForDayData);
-      setTipForDayData(res.data.TipForDayData);
-      toastMessage(res.message);
-      setLoading(false);
-      toastMessage(res.message);
-    } else {
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     const onBackPress = () => {
+  //       return true;
+  //     };
+
+  //     BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+  //     return () =>
+  //       BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+  //   }, []),
+  // );
+  const backAction = () => {
+    setTimeout(() => {
+      setExitApp(0);
+    }, 2000);
+
+    if (exitApp === 0) {
+      setExitApp(exitApp + 1);
+    } else if (exitApp === 1) {
+      BackHandler.exitApp();
     }
+    return true;
   };
-  const getMedicineReminderData = async () => {
-    setLoading(true);
-    const getMedicineReminderProfileHeader = {
-      token: token,
-    };
-    const getMedicineReminderProfileResponse = await dispatch(
-      getMedicineReminderProfile(getMedicineReminderProfileHeader),
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
     );
-    // console.log(
-    //   'getMedicineReminderData ==>',
-    //   getMedicineReminderProfileHeader,
-    // );
-    const res = getMedicineReminderProfileResponse.payload;
-    // console.log('getMedicineReminderData res ==>', res);
-    setLoading(false);
-    if (res.status) {
-      // console.log(
-      //   'getMedicineReminderData list ==>',
-      //   res.data.MedicineReminderProfileData,
-      // );
-      setMedicineReminderData(res.data.MedicineReminderProfileData);
+    return () => route.name === 'todayScreen' && backHandler.remove();
+  });
+  useEffect(() => {
+    let secTimer = setInterval(() => {
+      setCurrentTime(new moment().format('hh:mm'));
+      setCurrentAmTime(new moment().format('A'));
       setExtra(extra + 1);
-      toastMessage(res.message);
+    }, 1000);
+    return () => clearInterval(secTimer);
+  }, []);
 
       // setReminderOption(res.data);
     } else {
@@ -193,207 +195,113 @@ export const TodayScreen = props => {
   }, []);
   return (
     <SafeAreaView style={styles.container()}>
-      {loading && <Loader />}
-      <Toast
-        ref={toastRef}
-        position="top"
-        style={styles.toast()}
-        fadeOutDuration={200}
-        opacity={0.9}
+      <Header
+        isColor={true}
+        isHeading={true}
+        isBlue={false}
+        title={'today_screen.medication_Reminder'}
       />
-      <TitleBox
-        // titleTx={'today_screen.medication_reminder'}
-        titleTx={
-          props.route.params && props.route.params.appointment
-            ? 'today_screen.appointment_reminder'
-            : props.route.params && props.route.params.medication
-            ? 'today_screen.medication_reminder'
-            : 'today_screen.title'
-        }
-        titleContainerStyle={styles.titleTextContainer()}
+      <Text style={styles.textHeaderName()} text={'Hi Ashish'} />
+      <Text style={styles.textLanding()} tx={'today_screen.keep_it_up!'} />
+      <Text
+        style={styles.textLanding()}
+        tx={'today_screen.you_are_on_the_right_track'}
       />
-      <Screen bounces={false} style={styles.screenContainer()}>
-        <SwipeListView
-          // data={reminderListData}
-          data={medicineReminderData && medicineReminderData}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={(data, index) => {
-            return (
-              <View style={[styles.reminderView(data.item.status)]}>
-                <Pressable
-                  onPress={() => {
-                    modalRef.current.open();
-                    setSelectedItem(data.item);
-                  }}>
-                  <Text style={styles.reminderText()}>
-                    {data.item.dose +
-                      ' ' +
-                      data.item.medicine_name +
-                      ' ' +
-                      data.item.medicine_strength_unit +
-                      ' ' +
-                      data.item.medicine_form +
-                      ' ' +
-                      'remind' +
-                      ' ' +
-                      data.item.frequency_value +
-                      ' ' +
-                      data.item.reminder_time}
-                  </Text>
-                </Pressable>
-                <ToggleSwitch
-                  onColor={color.mediumGreen}
-                  isOn={data.item.status}
-                  size={'small'}
-                  onToggle={val => {
-                    onEditMedicineReminderStatusPress(data.item);
-                  }}
-                />
-              </View>
-            );
-          }}
-          renderHiddenItem={(data, rowData) => {
-            return (
-              <View style={styles.rowBack()}>
-                <Pressable
-                  style={styles.backgroundBtn()}
-                  onPress={() => {
-                    const valueIndex = reminderListData.findIndex(
-                      val => val === data.item,
-                    );
-                    reminderListData.splice(valueIndex, 1);
-                    setExtra(extra + 1);
-                  }}>
-                  <IcDelete
-                    height={size.moderateScale(30)}
-                    width={size.moderateScale(30)}
-                    fill={color.black}
-                  />
-                </Pressable>
-              </View>
-            );
-          }}
-          ItemSeparatorComponent={() => <View style={styles.separator()} />}
-          showsVerticalScrollIndicator={false}
-          rightOpenValue={-90}
-          useNativeDriver={true}
-          disableRightSwipe
-        />
-        <SwipeListView
-          // data={reminderListData}
-          data={appointmentReminderData && appointmentReminderData}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={(data, index) => {
-            return (
-              <View style={[styles.reminderView(data.item.status)]}>
-                <Pressable
-                  onPress={() => {
-                    modalRef.current.open();
-                    setSelectedItem(data.item);
-                  }}>
-                  <Text style={styles.reminderText()}>
-                    {data.item.date +
-                      ' ' +
-                      data.item.address1 +
-                      ' ' +
-                      data.item.address2 +
-                      ' \n' +
-                      data.item.city +
-                      ' ' +
-                      data.item.state +
-                      ' ' +
-                      data.item.pincode +
-                      ' ' +
-                      'remind ' +
-                      ' ' +
-                      data.item.user_selected_time +
-                      'at ' +
-                      data.item.date}
-                  </Text>
-                </Pressable>
-                <ToggleSwitch
-                  onColor={color.mediumGreen}
-                  isOn={data.item.status}
-                  size={'small'}
-                  onToggle={val => {
-                    onEditAppointmentReminderStatusPress(data.item);
-                  }}
-                />
-              </View>
-            );
-          }}
-          renderHiddenItem={(data, rowData) => {
-            return (
-              <View style={styles.rowBack()}>
-                <Pressable
-                  style={styles.backgroundBtn()}
-                  onPress={() => {
-                    const valueIndex = reminderListData.findIndex(
-                      val => val === data.item,
-                    );
-                    reminderListData.splice(valueIndex, 1);
-                    setExtra(extra + 1);
-                  }}>
-                  <IcDelete
-                    height={size.moderateScale(30)}
-                    width={size.moderateScale(30)}
-                    fill={color.black}
-                  />
-                </Pressable>
-              </View>
-            );
-          }}
-          ItemSeparatorComponent={() => <View style={styles.separator()} />}
-          showsVerticalScrollIndicator={false}
-          rightOpenValue={-90}
-          useNativeDriver={true}
-          disableRightSwipe
-        />
-      </Screen>
-      {tipForDayData &&
-        tipForDayData.map((item, index) => {
-          return (
-            <View style={styles.tipsContainer()}>
-              <Text style={styles.labelFieldText()}>{item.name}</Text>
-              <View style={styles.tipsSubView()}>
-                <Text style={styles.labelFieldText()}>{item.value}</Text>
-              </View>
+      <ScrollView>
+        <LinearGradient
+          colors={[color.denim, color.steelBlue]}
+          style={styles.circleTimeView()}>
+          <View style={styles.circleSecondView()}>
+            <View style={styles.circleThirdView()}>
+              <Text style={styles.timeStyle()} text={currentTime} />
+              <Text style={styles.timeAMStyle()} text={currentAmTime} />
             </View>
-          );
-        })}
-      <Portal>
-        <Modalize
-          ref={modalRef}
-          adjustToContentHeight={true}
-          handlePosition={'inside'}
-          scrollViewProps={{
-            showsVerticalScrollIndicator: false,
-            contentContainerStyle: styles.modalContentContainerStyle(),
-          }}
-          modalStyle={styles.modalStyle()}
-          handleStyle={styles.dragStyle()}>
-          <View>
-            <Text style={styles.labelFieldText()}>
-              {' '}
-              Generic Name : TabThoxin 50 MG Tablet{' '}
-            </Text>
-            <View style={styles.row()}>
-              <IcSafety
-                height={size.moderateScale(30)}
-                width={size.moderateScale(30)}
-                stroke={color.red}
-              />
-              <View />
-              <Text style={[styles.labelFieldText(), styles.modalText()]}>
-                {selectedItem.reminderTitle}
-              </Text>
-            </View>
-            <Text style={[styles.labelFieldText(), styles.modalText()]}>
-              Symptom: {selectedItem.reminderTitle}
-            </Text>
           </View>
-        </Modalize>
-      </Portal>
+        </LinearGradient>
+
+        <View style={styles.progressView()}>
+          <View style={styles.row()}>
+            <Text
+              style={styles.textTodayProgress()}
+              tx={'today_screen.today_progress'}
+            />
+            <Text style={styles.textTodayProgress()} text={'2/3'} />
+          </View>
+          <View style={styles.rowImage()}>
+            <IcTrue />
+            <Image
+              source={images.icPath}
+              style={{width: size.moderateScale(128)}}
+            />
+            <IcTrue />
+            <Image
+              source={images.icPath}
+              style={{width: size.moderateScale(128)}}
+            />
+            <IcFalse />
+          </View>
+          <Text
+            style={styles.desTextStyle()}
+            text={'1 Glycomet 0.5 MG Tablet, Everyday before meal.'}
+          />
+        </View>
+        <View style={styles.medicationView()}>
+          <View style={styles.row()}>
+            <Text
+              style={styles.textTodayProgress()}
+              tx={'today_screen.today_medication'}
+            />
+            <Pressable
+              style={styles.squadBtnView()}
+              onPress={() => {
+                console.log('add symptom');
+              }}>
+              <IcBtnPlus
+                height={size.moderateScale(25)}
+                width={size.moderateScale(25)}
+              />
+            </Pressable>
+          </View>
+          {medicationData.map((item, index) => {
+            const isActive = activeIndex.includes(item.id);
+            return (
+              <View style={styles.medicationCard()}>
+                <View style={styles.row()}>
+                  <View style={styles.onlyRow()}>
+                    <View style={styles.row()}>
+                      <View style={styles.circleView()} />
+                      <Text style={styles.textTime()} text={item.date} />
+                    </View>
+
+                    <ToggleSwitch
+                      isOn={item.status}
+                      size={'small'}
+                      onToggle={val => {
+                        onEditMedicineReminderStatusPress(index);
+                      }}
+                    />
+                  </View>
+                </View>
+                <Text style={styles.medicineName()} text={item.name} />
+                <Text style={styles.desTextStyle()} text={item.dec} />
+                <View style={styles.separator()} />
+              </View>
+            );
+          })}
+        </View>
+      </ScrollView>
+
+      <Pressable
+        style={styles.circleBtnView()}
+        onPress={() => {
+          console.log('hiii');
+          navigation.navigate('viewMedicationScreen');
+        }}>
+        <IcBtnPlus
+          height={size.moderateScale(69)}
+          width={size.moderateScale(69)}
+        />
+      </Pressable>
     </SafeAreaView>
   );
 };

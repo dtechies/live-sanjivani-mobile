@@ -1,34 +1,53 @@
-import React, {useState} from 'react';
-import {SafeAreaView, Pressable} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-
-import {Loader, Text, Button, TitleBox, Screen, InputBox} from 'components';
-import {size} from 'theme';
+import {useDispatch} from 'react-redux';
+import {loginUser, userData, registerUser} from 'redux-actions';
+import {
+  Loader,
+  Text,
+  Button,
+  TitleBox,
+  Screen,
+  InputBox,
+  Header,
+  Toast,
+} from 'components';
+import {size, color} from 'theme';
 import * as styles from './styles';
-
+import {genderVal, languageVal} from 'json';
 export const RegisterScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
   const [isLoading, seIsLoading] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
-  const [selectedDate, setSelectedDate] = useState('Date');
-  const [dateCorrect, setDateCorrect] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
   const [showDate, setShowDate] = useState(false);
   const [editable, setEditable] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [firstNameCorrect, setFirstNameCorrect] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [lastNameCorrect, setLastNameCorrect] = useState('');
-  const [phone, setPhone] = useState('');
-  const [phoneCorrect, setPhoneCorrect] = useState('');
+  const [firstNm, setFirstNm] = useState('');
+  const [firstNmErr, setFirstNmErr] = useState('');
+  const [lastNm, setLastNm] = useState('');
+  const [lastNmErr, setLastNmErr] = useState('');
+  const [dob, setDob] = useState('');
+  const [dobErr, setDobErr] = useState('');
   const [email, setEmail] = useState('');
-  const [emailCorrect, setEmailCorrect] = useState('');
-  const [genderType, setGenderType] = useState('');
-  const [genderCorrect, setGenderCorrect] = useState('');
+  const [emailErr, setEmailErr] = useState('');
+  const [phone, setPhone] = useState('');
+  const [phoneErr, setPhoneErr] = useState('');
+  const [gender, setGender] = useState('');
+  const [genderErr, setGenderErr] = useState('');
+  const [language, setLanguage] = useState('');
+  const [languageErr, setLanguageErr] = useState('');
+  const [loading, setLoading] = useState(false);
+  const toastRef = useRef();
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
+
   const getCurrentDate = givenDate => {
-    // console.log('A date has been picked: ', givenDate);
     let day = givenDate.getDate();
     let month = givenDate.getMonth() + 1;
     let year = givenDate.getFullYear();
@@ -36,68 +55,122 @@ export const RegisterScreen = () => {
     setSelectedDate(newDate);
     setDateCorrect('');
     setShowDate(false);
+    setDobErr('');
   };
-  const gender = [
-    {label: 'Male', value: 'male'},
-    {label: 'Female', value: 'female'},
-  ];
-  const firstNameValidation = val => {
-    setFirstName(val);
-    if (val === '') {
-      setFirstNameCorrect('Enter your first name');
-    } else {
-      setFirstNameCorrect('');
-    }
-  };
-  const lastNameValidation = val => {
-    setLastName(val);
-    if (val === '') {
-      setLastNameCorrect('Enter your last name');
-    } else {
-      setLastNameCorrect('');
-    }
-  };
-  const mobileNumberValidation = val => {
-    setPhone(val);
-    if (val.length !== 10) {
-      setPhoneCorrect('Phone number should be equal to 10 digits');
-    } else {
-      setPhoneCorrect('');
-    }
-  };
-  const emailValidation = val => {
-    setEmail(val);
-    {
-      const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      if (reg.test(val) === false) {
-        setEmailCorrect('Enter valid email');
 
-        return false;
-      } else {
-        setEmailCorrect('');
-      }
+  const onRegisterData = async () => {
+    setLoading(true);
+    let dateForRequest = selectedDate.split('-');
+    const RegisterBody = {
+      first_name: firstNm,
+      last_name: lastNm,
+      gender: gender,
+      dob: `${dateForRequest[2]}-${dateForRequest[1]}-${dateForRequest[0]}`,
+      mob_no: phone,
+      email: email,
+      language: language,
+    };
+    console.log('RegisterBody ==>', RegisterBody);
+    const RegisterResponse = await dispatch(registerUser(RegisterBody));
+    const res = RegisterResponse.payload;
+    console.log('Register res ==>', res);
+    if (res.status) {
+      setLoading(false);
+      dispatch(userData({userData: res.data.user, login: true}));
+      console.log('Register response data ==>', res);
+      toastMessage(res.message);
+      setTimeout(() => {
+        navigation.navigate('loginScreen');
+      }, 150);
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+      // setOtpErr(res.message);
     }
   };
-  const onNextPressValidation = () => {
-    (firstName === '' && setFirstNameCorrect('Enter your first name')) ||
-      (lastName === '' && setLastNameCorrect('Enter your last name')) ||
-      (phone === '' &&
-        setPhoneCorrect('Phone number should be equal to 10 digits')) ||
-      (email === '' && setEmailCorrect('Enter valid email')) ||
-      (genderType === '' && setGenderCorrect('Select gender')) ||
-      (selectedDate === 'Date' && setDateCorrect('Select date'));
+
+  const emailValidate = () => {
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (email === '') {
+      setEmailErr('Please Enter Email Address');
+      return false;
+    } else if (reg.test(email) === false) {
+      setEmailErr('Invalid email');
+      return false;
+    } else {
+      setEmailErr('');
+      return true;
+    }
+  };
+  const validation = () => {
+    let error = false;
+    if (firstNm === '') {
+      setFirstNmErr('Please Enter First Name');
+      error = true;
+    }
+    if (lastNm === '') {
+      setLastNmErr('Please Enter Last Name');
+      error = true;
+    }
+    if (gender === '') {
+      setGenderErr('Please select Gender');
+      error = true;
+    }
+    if (selectedDate === '') {
+      setDobErr('Please select Date');
+      error = true;
+    }
+    let ans = emailValidate();
+    if (!ans) {
+      error = true;
+    }
+    if (phone === '') {
+      setPhoneErr('Please Enter Phone number');
+      error = true;
+    } else if (phone.length < 10) {
+      setPhoneErr('Invalid Phone number');
+      error = true;
+    }
+    if (language === '') {
+      setLanguageErr('Please select Language');
+      error = true;
+    }
+
+    if (!error) {
+      onRegisterData();
+    }
+  };
+
+  const editProfileDetails = () => {
+    navigation.goBack();
   };
   return (
     <SafeAreaView style={styles.container()}>
-      {isLoading && <Loader />}
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
+      <Header
+        leftOnPress={() => {
+          navigation.goBack();
+        }}
+        isColor={true}
+        isClose={false}
+        isLogo={false}
+        isLongArrowLeft={false}
+        isLeftArrow={true}
+        isLogoCenter={false}
+        isHeading={true}
+        isBlue={false}
+        isCamera={true}
+        title={'register_screen.title'}
+      />
       <Screen bounces={false} style={styles.screenContainer()}>
-        <TitleBox
-          titleTx={'register_screen.title_register'}
-          titleContainerStyle={styles.titleTextContainer()}
-        />
         <InputBox
-          titleTx={'register_screen.first_name'}
-          titleStyle={styles.labelFieldText()}
           placeholder={'First Name'}
           value={firstName}
           onChangeText={val => {
@@ -106,13 +179,18 @@ export const RegisterScreen = () => {
           }}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
+          placeholderTextColor={color.grayTxt}
+          value={firstNm}
+          onChangeText={text => {
+            setFirstNm(text);
+            setFirstNmErr('');
+          }}
+          maxLength={15}
         />
-        {firstNameCorrect ? (
-          <Text style={styles.textValidation()} text={firstNameCorrect} />
+        {firstNmErr ? (
+          <Text style={styles.errorText()}>{firstNmErr}</Text>
         ) : null}
         <InputBox
-          titleTx={'register_screen.last_name'}
-          titleStyle={styles.labelFieldText()}
           placeholder={'Last Name'}
           value={lastName}
           onChangeText={val => {
@@ -121,45 +199,57 @@ export const RegisterScreen = () => {
           }}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
+          placeholderTextColor={color.grayTxt}
+          value={lastNm}
+          onChangeText={text => {
+            setLastNm(text);
+            setLastNmErr('');
+          }}
+          maxLength={15}
         />
-        {lastNameCorrect ? (
-          <Text style={styles.textValidation()} text={lastNameCorrect} />
-        ) : null}
-        <Text style={styles.labelFieldText()} tx="register_screen.gender" />
-
+        {lastNmErr ? <Text style={styles.errorText()}>{lastNmErr}</Text> : null}
         <Dropdown
-          data={gender}
+          data={genderVal}
           labelField="label"
           valueField="value"
-          placeholder={'Select Gender'}
+          placeholder={'Gender'}
           dropdownPosition={'bottom'}
           style={styles.dropdown()}
           placeholderStyle={styles.labelFieldText()}
           selectedTextStyle={styles.selectedOptionTextStyle()}
-          maxHeight={size.moderateScale(105)}
+          maxHeight={size.moderateScale(55)}
           containerStyle={styles.dropdownContainer()}
-          value={genderType}
+          value={gender}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           flatListProps={{
             bounces: false,
           }}
           onChange={item => {
-            setGenderType(item.value);
-            setGenderCorrect('');
+            setGender(item.value);
+            setGenderErr('');
             setIsFocus(false);
           }}
+          renderItem={item => {
+            return (
+              <View>
+                <Text text={item.value} style={styles.InsideLabelFieldText()} />
+                <View style={styles.separator()} />
+              </View>
+            );
+          }}
         />
-        {genderCorrect ? (
-          <Text style={styles.textValidation()} text={genderCorrect} />
-        ) : null}
-        <Text style={styles.labelFieldText()} tx="register_screen.dob" />
+        {genderErr ? <Text style={styles.errorText()}>{genderErr}</Text> : null}
         <Pressable
           style={styles.dateMainView()}
           onPress={() => {
             setShowDate(true);
+            // setDobErr('');
+            setExtra(extra + 1);
           }}>
-          <Text style={styles.textDate()}>{selectedDate}</Text>
+          <Text style={styles.textDate(selectedDate == '' ? 1 : 0)}>
+            {selectedDate == '' ? 'DOB' : selectedDate}
+          </Text>
           {showDate && (
             <DateTimePickerModal
               isVisible={showDate}
@@ -172,12 +262,8 @@ export const RegisterScreen = () => {
             />
           )}
         </Pressable>
-        {dateCorrect ? (
-          <Text style={styles.textValidation()} text={dateCorrect} />
-        ) : null}
+        {dobErr ? <Text style={styles.errorText()}>{dobErr}</Text> : null}
         <InputBox
-          titleTx={'register_screen.email'}
-          titleStyle={styles.labelFieldText()}
           placeholder={'Email'}
           value={email}
           onChangeText={val => {
@@ -187,13 +273,17 @@ export const RegisterScreen = () => {
           keyboardType={'email-address'}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
+          placeholderTextColor={color.grayTxt}
+          value={email}
+          onChangeText={text => {
+            setEmail(text);
+            setEmailErr('');
+            // emailValidate();
+          }}
+          maxLength={45}
         />
-        {emailCorrect ? (
-          <Text style={styles.textValidation()} text={emailCorrect} />
-        ) : null}
+        {emailErr ? <Text style={styles.errorText()}>{emailErr}</Text> : null}
         <InputBox
-          titleTx={'register_screen.phone_Number'}
-          titleStyle={styles.labelFieldText()}
           placeholder={'Phone Number'}
           value={phone}
           onChangeText={val => {
@@ -204,11 +294,16 @@ export const RegisterScreen = () => {
           keyboardType={'number-pad'}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
+          placeholderTextColor={color.grayTxt}
+          value={phone}
+          maxLength={10}
+          onChangeText={text => {
+            setPhone(text);
+            setPhoneErr('');
+          }}
         />
-        {phoneCorrect ? (
-          <Text style={styles.textValidation()} text={phoneCorrect} />
-        ) : null}
-        <InputBox
+        {phoneErr ? <Text style={styles.errorText()}>{phoneErr}</Text> : null}
+        {/* <InputBox
           titleTx={'register_screen.select_language'}
           titleStyle={styles.labelDisableText()}
           value={'English'}
@@ -216,24 +311,49 @@ export const RegisterScreen = () => {
           editable={editable}
           inputStyle={styles.inputDisableStyle()}
           mainContainerStyle={styles.inputMainDisableContainer()}
+        /> */}
+        <Dropdown
+          data={languageVal}
+          labelField="label"
+          valueField="value"
+          placeholder={'Language'}
+          dropdownPosition={'bottom'}
+          style={styles.dropdown()}
+          placeholderStyle={styles.labelFieldText()}
+          selectedTextStyle={styles.selectedOptionTextStyle()}
+          maxHeight={size.moderateScale(56)}
+          containerStyle={styles.dropdownContainer()}
+          value={language}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          flatListProps={{
+            bounces: false,
+          }}
+          onChange={item => {
+            setLanguage(item.value);
+            setIsFocus(false);
+            setLanguageErr('');
+          }}
+          renderItem={item => {
+            return (
+              <View>
+                <Text text={item.value} style={styles.InsideLabelFieldText()} />
+                <View style={styles.separator()} />
+              </View>
+            );
+          }}
         />
+        {languageErr ? (
+          <Text style={styles.errorText()}>{languageErr}</Text>
+        ) : null}
+
         <Button
           buttonStyle={styles.button()}
           buttonText={styles.buttonTxt()}
           nameTx={'register_screen.next'}
-          onPress={() =>
-            firstName && lastName && phone && email
-              ? navigation.navigate('selectServiceScreen', {
-                  first_name: firstName,
-                  last_name: lastName,
-                  gender: genderType,
-                  dob: selectedDate,
-                  mob_no: phone,
-                  email: email,
-                  language: 'english',
-                })
-              : onNextPressValidation()
-          }
+          onPress={() => {
+            validation();
+          }}
         />
       </Screen>
     </SafeAreaView>

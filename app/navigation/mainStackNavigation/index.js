@@ -3,9 +3,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useSelector} from 'react-redux';
 
-import {DemoScreen, LandingScreen} from 'screens';
+import {SplashScreen} from 'screens';
 
-import {BottomStackNavigation, AuthStackNavigation} from 'navigation';
+import {
+  BottomStackNavigation,
+  AuthStackNavigation,
+  AddStackNavigation,
+} from 'navigation';
 const Stack = createNativeStackNavigator();
 
 export const MainStackNavigation = () => {
@@ -19,7 +23,8 @@ export const MainStackNavigation = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="landingScreen" component={LandingScreen} />
+        <Stack.Screen name="splashScreen" component={SplashScreen} />
+
         <Stack.Screen
           name="authStackNavigation"
           component={AuthStackNavigation}
@@ -28,7 +33,6 @@ export const MainStackNavigation = () => {
           name="bottomStackNavigation"
           component={BottomStackNavigation}
         />
-        <Stack.Screen name="demoScreen" component={DemoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

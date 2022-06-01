@@ -7,8 +7,11 @@ import {
   ProgressScreen,
   MedicationReminderScreen,
   AppointmentReminderScreen,
-  CareGivenScreen,
-  MedicalJournalScreen,
+  CheckMedicationReminderScreen,
+  OtherScreen,
+  CareGiver,
+  SymptomsScreen,
+  AddDetailsScreen,
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
@@ -19,8 +22,11 @@ export const AddStackNavigation = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="addScreen" component={AddScreen} />
-      <Stack.Screen name="demoScreen" component={DemoScreen} />
-      <Stack.Screen name="progressScreen" component={ProgressScreen} />
+      <Stack.Screen name="otherScreen" component={OtherScreen} />
+      <Stack.Screen
+        name="checkMedicationReminderScreen"
+        component={CheckMedicationReminderScreen}
+      />
       <Stack.Screen
         name="medicationReminderScreen"
         component={MedicationReminderScreen}
@@ -29,11 +35,11 @@ export const AddStackNavigation = () => {
         name="appointmentReminderScreen"
         component={AppointmentReminderScreen}
       />
-      <Stack.Screen name="careGivenScreen" component={CareGivenScreen} />
-      <Stack.Screen
-        name="medicalJournalScreen"
-        component={MedicalJournalScreen}
-      />
+      <Stack.Screen name="addDetailsScreen" component={AddDetailsScreen} />
+      <Stack.Screen name="demoScreen" component={DemoScreen} />
+      <Stack.Screen name="progressScreen" component={ProgressScreen} />
+      <Stack.Screen name="careGiver" component={CareGiver} />
+      <Stack.Screen name="symptomsScreen" component={SymptomsScreen} />
     </Stack.Navigator>
   );
 };

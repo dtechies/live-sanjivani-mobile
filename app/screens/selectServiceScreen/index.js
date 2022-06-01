@@ -89,7 +89,7 @@ export const SelectServiceScreen = props => {
           style={styles.dropdown()}
           placeholderStyle={styles.labelFieldText()}
           selectedTextStyle={styles.selectedOptionTextStyle()}
-          maxHeight={size.moderateScale(160)}
+          maxHeight={size.moderateScale(82)}
           containerStyle={styles.dropdownContainer()}
           value={value}
           onFocus={() => setIsFocus(true)}

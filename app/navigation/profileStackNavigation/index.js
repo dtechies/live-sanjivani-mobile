@@ -5,10 +5,12 @@ import {
   ProfileScreen,
   DemoScreen,
   HelpSupportScreen,
-  AddScreen,
+  SymptomsScreen,
+  MedicalJournalScreen,
   MedicationReminderScreen,
   AppointmentReminderScreen,
-  MedicalJournalScreen,
+  LoginScreen,
+  ProfileDetailScreen,
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
@@ -19,8 +21,11 @@ export const ProfileStackNavigation = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="profileScreen" component={ProfileScreen} />
-      <Stack.Screen name="addScreen" component={AddScreen} />
-      <Stack.Screen name="helpSupportScreen" component={HelpSupportScreen} />
+      <Stack.Screen name="HelpSupportScreen" component={HelpSupportScreen} />
+      <Stack.Screen
+        name="medicalJournalScreen"
+        component={MedicalJournalScreen}
+      />
       <Stack.Screen
         name="medicationReminderScreen"
         component={MedicationReminderScreen}
@@ -30,10 +35,11 @@ export const ProfileStackNavigation = () => {
         component={AppointmentReminderScreen}
       />
       <Stack.Screen
-        name="medicalJournalScreen"
-        component={MedicalJournalScreen}
+        name="profileDetailScreen"
+        component={ProfileDetailScreen}
       />
-      <Stack.Screen name="demoScreen" component={DemoScreen} />
+      <Stack.Screen name="symptomsScreen" component={SymptomsScreen} />
+      <Stack.Screen name="loginScreen" component={LoginScreen} />
     </Stack.Navigator>
   );
 };

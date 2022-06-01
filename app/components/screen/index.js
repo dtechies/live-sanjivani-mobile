@@ -4,6 +4,9 @@ export const Screen = props => {
   return (
     <KeyboardAwareFlatList
       data={['ok']}
+      // enableOnAndroid
+      // extraScrollHeight={130}
+      // extraHeight={130}
       removeClippedSubviews={false}
       ListEmptyComponent={null}
       keyExtractor={() => 'dummy'}
@@ -14,6 +17,7 @@ export const Screen = props => {
       renderItem={(item, index) => (
         <React.Fragment key={index}>{props.children}</React.Fragment>
       )}
+      keyboardShouldPersistTaps
     />
   );
 };

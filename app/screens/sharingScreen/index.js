@@ -1,12 +1,12 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {View, SafeAreaView} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, SafeAreaView, FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {MultiSelect} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAllCategory, getSubCategoryData} from 'redux-actions';
-
-import {Text, Screen, InputBox, Button, Toast, Loader} from 'components';
-import {size, color, IcDown} from 'theme';
+import {Text, Screen, InputBox, Button, Header, MedicalItems} from 'components';
+import {serviceListData, SharingData} from 'json';
+import {size, color, IcSearch, IcDown} from 'theme';
 import * as styles from './styles';
 
 export const SharingScreen = () => {
@@ -18,17 +18,23 @@ export const SharingScreen = () => {
   const [selected, setSelected] = useState([]);
   const [allCategoryList, setAllCategoryList] = useState([]);
   const [extra, setExtra] = useState(0);
-  const [emailVal, setEmailVal] = useState('');
-  const [loading, setLoading] = useState(false);
-
+  const [sharingData, setSharingData] = useState(SharingData);
+  const clearData = () => {
+    sharingData.map((val, i) => {
+      sharingData[i].selectedCard = false;
+    });
+    setExtra(extra + 1);
+  };
   const {token} = useSelector(state => ({
-    token: state.userDataReducer.userDataResponse.userData.token,
+    token: state.userDataReducer.userDataResponse.userData,
   }));
+  console.log('user data ==>', token);
+
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
   const getAllCategoryData = async () => {
-    setLoading(true);
+    // setLoading(true);
     const getAllCategoryDataHeader = {
       token: token,
     };
@@ -41,9 +47,9 @@ export const SharingScreen = () => {
 
     // console.log('getAllCategoryData res ==>', res);
     if (res.status) {
-      toastMessage(res.message);
+      // toastMessage(res.message);
       // console.log('getAllCategoryData List ==>', res.data);
-      setLoading(false);
+      // setLoading(false);
       setAllCategoryList(res.data);
     } else {
       setLoading(false);
@@ -51,7 +57,7 @@ export const SharingScreen = () => {
     }
   };
   const onSendPdf = async () => {
-    setLoading(true);
+    // setLoading(true);
     const getSubCategoryDataHeader = {
       token: token,
     };
@@ -63,102 +69,59 @@ export const SharingScreen = () => {
     const res = getSubCategoryDataResponse.payload;
 
     // console.log('getSubCategoryData res ==>', res);
-    setLoading(false);
+    // setLoading(false);
     if (res.status) {
       // toastMessage(res.message);
       // console.log('getSubCategoryData List ==>', res.data);
       // setAllCategoryList(res.data);
     } else {
-      setLoading(false);
-      toastMessage(res.message);
+      // setLoading(false);
+      // toastMessage(res.message);
     }
   };
   useEffect(() => {
     getAllCategoryData();
   }, []);
   return (
-    <SafeAreaView style={styles.full()}>
-      <Toast
-        ref={toastRef}
-        position="top"
-        style={styles.toast()}
-        fadeOutDuration={100}
-        opacity={0.9}
-      />
-      {loading && <Loader />}
-      <Screen style={styles.container()}>
-        <Text
-          style={styles.textItemToShare()}
-          tx="sharing_screen.select_item_to_share"
-        />
-        <MultiSelect
-          data={allCategoryList}
-          labelField="name"
-          valueField="name"
-          placeholder={'Select items'}
-          dropdownPosition={'bottom'}
-          style={styles.dropdown()}
-          placeholderStyle={styles.placeHolderStyle()}
-          selectedTextStyle={styles.selectedOptionTextStyle()}
-          maxHeight={size.moderateScale(180)}
-          containerStyle={styles.dropdownContainer()}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          renderRightIcon={() => (
-            <IcDown
-              height={size.moderateScale(20)}
-              width={size.moderateScale(20)}
-              fill={color.cornBlue}
-            />
-          )}
-          flatListProps={{
-            bounces: false,
-          }}
-          value={selected}
-          onChange={item => {
-            setSelected(item);
-          }}
-        />
-        <Text
-          style={styles.textItemToShare()}
-          tx="sharing_screen.select_individual"
-        />
-        <InputBox
-          placeholder={'Enter email'}
-          value={emailVal}
-          onChangeText={val => {
-            setEmailVal(val);
-            setExtra(extra + 1);
-          }}
-          inputStyle={[styles.labelFieldText()]}
-          mainContainerStyle={styles.inputMainContainer()}
-          // rightIcon={
-          //   <IcSearch
-          //     height={size.moderateScale(20)}
-          //     width={size.moderateScale(20)}
-          //     fill={color.purple}
-          //   />
-          // }
-        />
+    <SafeAreaView style={styles.container()}>
+      <Header isColor={true} isHeading={true} title={'sharing_screen.title'} />
+
+      <Screen withScroll>
         <View style={styles.row()}>
-          <Button
-            onPress={() => {
-              selected.length > 0 ? onSendPdf() : alert('pleaseselect Item!!');
-            }}
-            nameTx="sharing_screen.send_pdf"
-            buttonStyle={styles.addButtonStyle()}
-            buttonText={styles.textAddButton()}
-          />
-          <Button
-            onPress={() => {
-              selected.length > 0 ? onSendPdf() : alert('pleaseselect Item!!');
-            }}
-            nameTx="sharing_screen.download"
-            buttonStyle={styles.addButtonStyle()}
-            buttonText={styles.textAddButton()}
-          />
+          {sharingData.map((item, index) => {
+            let Icon = item.svg;
+            return (
+              <MedicalItems
+                key={index.toString()}
+                onPress={() => {
+                  sharingData[index].selectedCard = !item.selectedCard;
+                  setExtra(extra + 1);
+                }}
+                containerStyle={styles.listViewStyle()}
+                nameFirst={item.value}
+                nameSecond={item.name}
+                nameThird={item.unit}
+                svgCardItems={<Icon />}
+                isSelected={item.selectedCard}
+              />
+            );
+          })}
         </View>
       </Screen>
+      <Button
+        buttonStyle={styles.button()}
+        buttonText={styles.buttonTxt()}
+        nameTx={'sharing_screen.shareItems'}
+        onPress={() => {
+          let data = sharingData.filter(val => val.selectedCard == true);
+          setTimeout(() => {
+            navigation.navigate('sharingDetailScreen', {
+              selectedItems: data,
+            });
+          }, 100);
+          clearData();
+        }}
+      />
     </SafeAreaView>
   );
 };

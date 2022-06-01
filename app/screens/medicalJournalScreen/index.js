@@ -1,131 +1,41 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {View, SafeAreaView, Pressable, Image} from 'react-native';
+import React, {useEffect, useState, useRef} from 'react';
+import {SafeAreaView, Pressable, View, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Modalize} from 'react-native-modalize';
-import {Portal} from 'react-native-portalize';
+import {Dropdown} from 'react-native-element-dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import ImagePicker from 'react-native-image-crop-picker';
-import {useDispatch, useSelector} from 'react-redux';
-import {getMedicalJournalNote, addEditMedicalJournalNote} from 'redux-actions';
+import {Modalize} from 'react-native-modalize';
+import {Portal} from 'react-native-portalize';
 
 import {
+  Loader,
   Text,
-  Screen,
-  InputBox,
   Button,
   TitleBox,
-  Toast,
-  Loader,
+  Screen,
+  InputBox,
+  Header,
 } from 'components';
-import {size, color, IcPencil, images} from 'theme';
+import {size, color, images} from 'theme';
 import * as styles from './styles';
+import {dose, MainProfileDetail, DWMYData, AddNavData} from 'json';
 
-export const MedicalJournalScreen = () => {
-  // const navigation = useNavigation();
+export const MedicalJournalScreen = props => {
+  const navigation = useNavigation();
   const modalRef = useRef();
-  const toastRef = useRef();
-  const dispatch = useDispatch();
+  const [isLoading, seIsLoading] = useState(false);
   const [extra, setExtra] = useState(0);
-  const [journalName, setJournalName] = useState('');
-  const [journalNameErr, setJournalNameErr] = useState('');
-  const [journalDescription, setJournalDescription] = useState('');
-  const [journalDescriptionErr, setJournalDescriptionErr] = useState('');
-  const [showTime, setShowTime] = useState(false);
-  const [selectedTime, setSelectedTime] = useState();
   const [imageData, setImageData] = useState(null);
   const [imageDataErr, setImageDataErr] = useState('');
-  const [medicalJournalList, setMedicalJournalList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [timeErr, setTimeErr] = useState('');
+  const [dateErr, setDateErr] = useState('');
+  const [title, setTitle] = useState('Medical Journal');
+  const [subCategory, setSubCategory] = useState([]);
+  const [showTime, setShowTime] = useState(false);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [showDate, setShowDate] = useState(false);
 
-  const getCurrentTime = givenTime => {
-    var hours = givenTime.getHours();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    let newDateTime = givenTime.toTimeString().slice(0, 5);
-    // let newDateTime = givenTime.toTimeString().slice(0, 5) + ' ' + ampm;
-    return newDateTime;
-  };
-
-  const {token} = useSelector(state => ({
-    token: state.userDataReducer.userDataResponse.userData.token,
-  }));
-  const toastMessage = msg => {
-    toastRef.current.show(msg);
-  };
-
-  const validation = () => {
-    if (journalName === '') {
-      setJournalNameErr('Enter medical journal name');
-    }
-    if (journalDescription === '') {
-      setJournalDescriptionErr('Enter medical journal description');
-    }
-    if (imageData === null) {
-      setImageDataErr('Upload / take image');
-    }
-  };
-
-  const getMedicalJournalList = async () => {
-    setLoading(true);
-    const getMedicalJournalHeader = {
-      token: token,
-    };
-    const getMedicalJournalResponse = await dispatch(
-      getMedicalJournalNote(getMedicalJournalHeader),
-    );
-    // console.log('getMedicalJournalList ==>', getMedicalJournalHeader);
-    const res = getMedicalJournalResponse.payload;
-    // console.log('getMedicalJournalList res ==>', res);
-    setLoading(false);
-    if (res.status) {
-      // console.log(
-      //   'getMedicalJournalList list ==>',
-      //   res.data.MedicalJournalNoteData,
-      // );
-      setMedicalJournalList(res.data.MedicalJournalNoteData);
-      toastMessage(res.message);
-    } else {
-      setLoading(false);
-    }
-  };
-  const addMedicalJournal = async () => {
-    // call medical journal api
-    setLoading(true);
-    modalRef.current.close();
-    const addEditMedicalJournalHeader = {
-      token: token,
-    };
-    let formData = new FormData();
-    formData.append('name', journalName);
-    formData.append('time', selectedTime);
-    formData.append('description', journalDescription);
-    formData.append('image', {
-      uri: imageData.path,
-      name: imageData.imageName,
-      type: imageData.mime,
-    });
-
-    // console.log('addEditMedicalJournalBody ==>', formData);
-    // console.log('addEditMedicalJournalHeader ==>', addEditMedicalJournalHeader);
-
-    const addEditMedicalJournalResponse = await dispatch(
-      addEditMedicalJournalNote(formData, addEditMedicalJournalHeader),
-    );
-    const res = addEditMedicalJournalResponse.payload;
-    setLoading(false);
-    // console.log('addEditMedicalJournal Res ==>', res);
-
-    if (res.status) {
-      // console.log('addEditMedicalJournal List ==>', res);
-      getMedicalJournalList();
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
-    }
-  };
-  useEffect(() => {
-    setSelectedTime(getCurrentTime(new Date()));
-    getMedicalJournalList();
-  }, []);
   const uploadFromGallery = () => {
     ImagePicker.openPicker({
       width: size.moderateScale(300),
@@ -136,9 +46,11 @@ export const MedicalJournalScreen = () => {
       var imgPathIndex = image.path.lastIndexOf('/');
       var imgPathSubstr = image.path.substring(imgPathIndex + 1);
       image.imageName = imgPathSubstr;
-      // console.log('uploadFromGallery Image ==>', image);
+      modalRef.current.close();
+      setImageData(image.path);
       setImageDataErr('');
-      setImageData(image);
+      setExtra(extra + 1);
+      // console.log('uploadFromGallery Image ==>', image.path);
     });
   };
   const takeFromCamera = () => {
@@ -153,71 +65,166 @@ export const MedicalJournalScreen = () => {
       var imgPathSubstr = image.path.substring(imgPathIndex + 1);
       image.imageName = imgPathSubstr;
       // console.log('takeFromCamera Image ==>', image);
-      setImageDataErr('');
+      modalRef.current.close();
       setImageData(image);
+      setImageDataErr('');
     });
   };
+
+  const getCurrentDate = givenDate => {
+    let day = givenDate.getDate();
+    if (day < 10) {
+      day = '0' + day;
+    }
+    let month = givenDate.getMonth() + 1;
+    if (month < 10) {
+      month = '0' + month;
+    }
+    let year = givenDate.getFullYear();
+    let newDate = day + '/' + month + '/' + year;
+    setSelectedDate(newDate);
+    setDateErr('');
+    setShowDate(false);
+  };
+  const getAppointmentTime = givenTime => {
+    var hours = givenTime.getHours();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    let newDate = givenTime.toTimeString().slice(0, 5) + ' ' + ampm;
+    setSelectedTime(newDate);
+    setTimeErr('');
+    setShowTime(false);
+  };
+  useEffect(() => {
+    if (props.route.params) {
+      setTitle(props.route.params.title);
+      setSubCategory(props.route.params.sub);
+      setExtra(extra + 1);
+    }
+  }, []);
+
+  const validation = () => {
+    if (selectedDate === null) {
+      setDateErr('Please select Date...');
+    }
+    if (selectedTime === null) {
+      setTimeErr('Please select Time...');
+    }
+    if (imageData === null) {
+      setImageDataErr('Please Upload / take image...');
+    }
+  };
+
+  const addMedicalJournal = () => {
+    navigation.goBack();
+  };
   return (
-    <SafeAreaView style={styles.full()}>
-      {loading && <Loader />}
-      <Toast
-        ref={toastRef}
-        position="top"
-        style={styles.toast()}
-        fadeOutDuration={200}
-        opacity={0.9}
+    <SafeAreaView style={styles.container()}>
+      {isLoading && <Loader />}
+      <Header
+        leftOnPress={() => {
+          navigation.goBack();
+        }}
+        isColor={true}
+        isClose={false}
+        isLogo={false}
+        isLongArrowLeft={false}
+        isLeftArrow={true}
+        isLogoCenter={false}
+        isHeading={true}
+        isBlue={false}
+        isCamera={false}
+        text={title}
       />
-      <TitleBox
-        titleContainerStyle={styles.titleStyle()}
-        titleTx={'medical_journal_screen.title'}
-      />
+      <Screen withScroll bounces={false} style={styles.screenContainer()}>
+        <View style={styles.headingMain()}>
+          <View style={styles.cardDesign()}>
+            <View style={styles.circleView()} />
+            <Text style={styles.cardTxt()} text="Date" />
+            {showDate && (
+              <DateTimePickerModal
+                isVisible={showDate}
+                mode="date"
+                onConfirm={val => getCurrentDate(val)}
+                onCancel={() => {
+                  setShowDate(false);
+                  setExtra(extra + 1);
+                }}
+              />
+            )}
+          </View>
+          <View style={styles.cardDesign(1)}>
+            <View style={styles.circleView()} />
+            <Text style={styles.cardTxt()} text="Time" />
+            {showTime && (
+              <DateTimePickerModal
+                isVisible={showTime}
+                mode="time"
+                locale="en_GB"
+                onConfirm={val => getAppointmentTime(val)}
+                onCancel={() => {
+                  setShowTime(false);
+                  setExtra(extra + 1);
+                }}
+              />
+            )}
+          </View>
+        </View>
+        <View style={styles.headingMain()}>
+          <Pressable
+            style={styles.cardView()}
+            onPress={() => {
+              setShowDate(true);
+            }}>
+            <Text style={styles.cardTxt(1)} text={selectedDate} />
+          </Pressable>
 
-      <Screen
-        style={styles.container()}
-        showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps={'handled'}
-        bounces={false}>
-        <Button
-          onPress={() => modalRef.current.open()}
-          nameTx="medical_journal_screen.add_journal"
-          buttonStyle={styles.addButtonStyle()}
-          buttonText={styles.textAddButton()}
-        />
-
-        {medicalJournalList &&
-          medicalJournalList.map((item, index) => {
-            return (
-              <View>
-                <Text style={styles.textJournalTitle()}>
-                  Selected Time : {item.time}
-                </Text>
-
-                <Text style={styles.textJournalTitle()}>
-                  Journal Title:{'\n'}
-                  {item.name}{' '}
-                </Text>
-                <Text style={styles.textJournalTitle()}>
-                  Journal Description:{'\n'}
-                  {item.description}{' '}
-                </Text>
-
-                {item.image === '' || item.image === null ? null : (
-                  <View>
-                    <Text style={styles.textJournalTitle()}>
-                      Journal Image{'\n'}{' '}
-                    </Text>
-                    <Image
-                      style={styles.imageStyle()}
-                      source={images.icLogo}
-                      // source={{
-                      //   uri: item.image,
-                      // }}
-                    />
-                  </View>
-                )}
-              </View>
-            );
-          })}
+          <Pressable
+            style={styles.cardView(1)}
+            onPress={() => {
+              setShowTime(!showTime);
+            }}>
+            <Text style={styles.cardTxt(1)} text={selectedTime} />
+          </Pressable>
+        </View>
+        <View style={styles.headingMain()}>
+          {dateErr ? <Text style={styles.errorText()}>{dateErr}</Text> : null}
+          {timeErr ? (
+            <Text style={dateErr ? styles.errorText(1) : styles.errorText1(1)}>
+              {timeErr}
+            </Text>
+          ) : null}
+        </View>
+        <View>
+          <View style={styles.headingMain(1)}>
+            <Text style={styles.cardTxt(2)} tx="addDetails_Screen.order" />
+          </View>
+          <InputBox
+            placeholderTextColor={color.blue}
+            mainContainerStyle={styles.inputMain()}
+            placeholder={'Type here'}
+            isRightSide={true}
+            inputStyle={styles.inputValue()}
+            onRightIconPress={() => {
+              modalRef.current.open();
+            }}
+            containerStyle={styles.mainContainerStyle()}
+          />
+        </View>
+        {imageDataErr ? (
+          <Text style={styles.errorText(2)}>{imageDataErr}</Text>
+        ) : null}
+        <View>
+          <Button
+            buttonStyle={styles.btnContinue()}
+            buttonText={styles.btnContinueTxt()}
+            nameTx={'addDetails_Screen.save'}
+            onPress={() => {
+              selectedDate && selectedTime && imageData
+                ? addMedicalJournal()
+                : validation();
+            }}
+          />
+        </View>
       </Screen>
       <Portal>
         <Modalize
@@ -227,104 +234,23 @@ export const MedicalJournalScreen = () => {
           scrollViewProps={{
             showsVerticalScrollIndicator: false,
             contentContainerStyle: styles.modalContentContainerStyle(),
-            keyboardShouldPersistTaps: 'handled',
           }}
           modalStyle={styles.modalStyle()}
           handleStyle={styles.dragStyle()}>
           <View>
-            <View style={styles.timeAndEditIconRow()}>
-              <Text style={styles.textTime()}>Time: {selectedTime}</Text>
-              <Pressable onPress={() => setShowTime(!showTime)}>
-                <IcPencil
-                  height={size.moderateScale(20)}
-                  width={size.moderateScale(20)}
-                  fill={color.purple}
-                />
-              </Pressable>
-            </View>
-            <InputBox
-              placeholder={'Add medical journal name'}
-              textAlignVertical={'top'}
-              value={journalName}
-              onChangeText={val => {
-                setJournalName(val);
-                setJournalNameErr('');
-                setExtra(extra + 1);
-              }}
-              inputStyle={[styles.labelFieldText()]}
-              mainContainerStyle={styles.inputMainContainer()}
-            />
-            {journalNameErr ? (
-              <Text style={styles.textValidation()} text={journalNameErr} />
-            ) : null}
-            <InputBox
-              placeholder={'Add medical journal description'}
-              multiline
-              textAlignVertical={'top'}
-              value={journalDescription}
-              onChangeText={val => {
-                setJournalDescription(val);
-                setJournalDescriptionErr('');
-                setExtra(extra + 1);
-              }}
-              inputStyle={[styles.journalDescriptionInputStyle()]}
-              mainContainerStyle={styles.inputMainContainer()}
-            />
-            {journalDescriptionErr ? (
-              <Text
-                style={styles.textValidation()}
-                text={journalDescriptionErr}
-              />
-            ) : null}
             <Button
               onPress={() => takeFromCamera()}
-              nameTx="medical_journal_screen.take_picture"
+              nameTx="medication_reminder_screen.take_picture"
               buttonStyle={styles.submitButtonStyle()}
               buttonText={styles.textSubmitButton()}
             />
             <Button
               onPress={() => uploadFromGallery()}
-              nameTx="medical_journal_screen.upload_picture"
-              buttonStyle={styles.submitButtonStyle()}
-              buttonText={styles.textSubmitButton()}
-            />
-            {imageDataErr ? (
-              <Text style={styles.textValidation()} text={imageDataErr} />
-            ) : null}
-            {imageData === '' || imageData === null ? null : (
-              <Image
-                style={styles.imageStyle()}
-                source={{
-                  uri: imageData.path,
-                }}
-              />
-            )}
-            <Button
-              onPress={() => {
-                journalName && journalDescription && imageData
-                  ? addMedicalJournal()
-                  : validation();
-              }}
-              nameTx="medical_journal_screen.submit"
+              nameTx="medication_reminder_screen.upload_picture"
               buttonStyle={styles.submitButtonStyle()}
               buttonText={styles.textSubmitButton()}
             />
           </View>
-          {showTime && (
-            <DateTimePickerModal
-              isVisible={showTime}
-              mode="time"
-              locale="en_GB"
-              onConfirm={val => {
-                setSelectedTime(getCurrentTime(val));
-                setShowTime(false);
-              }}
-              onCancel={() => {
-                setShowTime(false);
-                setExtra(extra + 1);
-              }}
-            />
-          )}
         </Modalize>
       </Portal>
     </SafeAreaView>

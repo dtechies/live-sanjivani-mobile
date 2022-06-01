@@ -1,57 +1,95 @@
+import {
+  IcHeartNew1,
+  IcIcon2,
+  IcIcon3,
+  IcIcon4,
+  IcIcon5,
+  IcIcon6,
+  IcIcon7,
+  IcIcon8,
+  IcIcon9,
+  IcIcon10,
+  IcIcon11,
+  size,
+  color,
+} from 'theme';
+
 export const addServiceData = [
   {
-    name: 'vitals',
+    name: 'Vitals',
     serviceSlug: 'vitals',
     subCategory: [
       {
         name: 'Resting Heart Rate',
+        icon: IcHeartNew1,
+        unit: 'BPM',
       },
       {
         name: 'Respiratory Rate',
+        icon: IcIcon2,
+        unit: 'B/Min',
       },
       {
         name: 'Body Temperature',
-      },
-      {
-        name: 'Blood Pressure',
-      },
-      {
-        name: 'Blood Glycose',
+        icon: IcIcon3,
+        unit: '`F`',
       },
       {
         name: 'Oxygen Saturation',
+        icon: IcIcon4,
+        unit: '%',
+      },
+      {
+        name: 'Blood Glycose',
+        icon: IcIcon5,
+        unit: 'mmol/L',
+      },
+      {
+        name: 'Meal Time',
+        icon: IcIcon6,
+        unit: '',
       },
     ],
   },
   {
-    name: 'measurements',
+    name: 'Measurements',
     serviceSlug: 'measurements',
     subCategory: [
       {
         name: 'Height ',
+        icon: IcIcon7,
+        unit: 'in/ft',
       },
       {
         name: 'Weight ',
+        icon: IcIcon8,
+        unit: 'Kg',
       },
       {
         name: 'BMI',
+        icon: IcIcon9,
+        unit: '',
       },
     ],
   },
   {
-    name: 'activity',
+    name: 'Activity',
     serviceSlug: 'activity',
     subCategory: [
       {
         name: 'Sleep',
+        icon: IcIcon10,
+        unit: '',
       },
       {
         name: 'Steps',
+        icon: IcIcon11,
+        unit: 'Steps',
       },
     ],
   },
   {
-    name: 'others',
+    name: 'Others',
     serviceSlug: 'others',
     subCategory: [
       {
@@ -75,21 +113,42 @@ export const addServiceData = [
     ],
   },
   {
-    name: 'care giver',
+    name: 'Care giver',
     serviceSlug: 'care',
-    subCategory: [],
-    navigateScreen: 'careGivenScreen',
+    subCategory: [
+      {
+        name: 'First name ',
+      },
+      {
+        name: 'Last name',
+      },
+      {
+        name: 'Contact Phone',
+      },
+      {
+        name: 'Email ID',
+      },
+      {
+        name: 'Nick name',
+      },
+    ],
   },
   {
-    name: 'medication',
+    name: 'Medication',
     serviceSlug: 'medication',
     navigateScreen: 'medicationReminderScreen',
     subCategory: [],
   },
   {
-    name: 'symptoms check',
+    name: 'Appointments',
+    serviceSlug: 'medication',
+    navigateScreen: 'appointmentReminderScreen',
+    subCategory: [],
+  },
+  {
+    name: 'Symptoms check',
     serviceSlug: 'symptoms',
-    navigateScreen: 'medicationReminderScreen',
+    navigateScreen: 'symptomsScreen',
     subCategory: [],
   },
 ];

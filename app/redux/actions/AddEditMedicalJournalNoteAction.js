@@ -4,8 +4,8 @@ import * as actions from '../Types';
 export const addEditMedicalJournalNote = (body, header) => {
   const {token} = header;
   // console.log('addEditMedicalJournalNote URL := ', url);
-  console.log('addEditMedicalJournalNote header := ', header);
-  console.log('addEditMedicalJournalNote body := ', body);
+  // console.log('addEditMedicalJournalNote header := ', header);
+  // console.log('addEditMedicalJournalNote body := ', body);
   // console.log('addEditMedicalJournalNote Response := ', response);
   return dispatch => {
     dispatch({type: actions.ADD_EDIT_MEDICAL_JOURNAL_NOTE});

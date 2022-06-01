@@ -1,29 +1,34 @@
 import React, {useState, useRef} from 'react';
-import {View, Image, SafeAreaView} from 'react-native';
+import {View, Pressable, Image, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {loginUser, userData} from 'redux-actions';
-import {images, IcArrowNext} from 'theme';
-import {Loader, Text, Button, Screen, InputBox, Toast} from 'components';
-import {size, color} from 'theme';
+import {loginUser, userData, getOtp} from 'redux-actions';
+import {
+  Loader,
+  Text,
+  Button,
+  TitleBox,
+  Screen,
+  InputBox,
+  Toast,
+} from 'components';
+import {size, color, IcArrowNext, images} from 'theme';
 import * as styles from './styles';
 
 export const LoginScreen = () => {
-  const navigation = useNavigation();
   const dispatch = useDispatch();
-  const toastRef = useRef();
-  const [subScreen, setSubScreen] = useState(false);
-  const [mainScreen, setMainScreen] = useState(true);
+  const [subScreen, setsubScreen] = useState(false);
+  const [mainScreen, setmainScreen] = useState(true);
   const [editable, setEditable] = useState(true);
-  const [number, setNumber] = useState('');
-  const [numberCorrect, setNumberCorrect] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [number, setNumber] = useState('7046892973');
   const [extra, setExtra] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [numberCorrect, setNumberCorrect] = useState('');
+  const navigation = useNavigation();
+  const toastRef = useRef();
 
-  const requestOtp = () => {
-    number
-      ? (setEditable(false), setMainScreen(false), setSubScreen(true))
-      : setNumberCorrect('Phone number should be equal to 10 digits');
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
   };
   const toastMessage = msg => {
     toastRef.current.show(msg);
@@ -31,33 +36,34 @@ export const LoginScreen = () => {
   const onLoginPress = async () => {
     setLoading(true);
 
-    const loginBody = {
+  const onGetOtp = async () => {
+    setLoading(true);
+    const getOtpBody = {
       mob_no: number,
     };
-    // console.log('loginBody ==>', loginBody);
-    const loginResponse = await dispatch(loginUser(loginBody));
-    const res = loginResponse.payload;
-    setLoading(false);
-    // console.log('login res ==>', res);
-
+    const getOtpResponse = await dispatch(getOtp(getOtpBody));
+    const res = getOtpResponse.payload;
     if (res.status) {
-      dispatch(userData({userData: res.data.user, login: true}));
-      // console.log('login response data ==>', res);
-      toastMessage('Login SuccessFully');
+      console.log('response data ==>', res.data);
+      setLoading(false);
+      toastMessage(res.message);
       setTimeout(() => {
-        navigation.navigate('bottomStackNavigation');
-      }, 300);
+        navigation.navigate('otpScreen', {
+          otpValue: res.data,
+        });
+      }, 150);
     } else {
       setLoading(false);
       toastMessage(res.message);
     }
   };
-  const mobileNumberValidation = val => {
-    setNumber(val);
-    if (val.length !== 10) {
-      setNumberCorrect('Phone number should be equal to 10 digits');
-    } else {
+
+  const validateMobile = () => {
+    if (number.length == 10) {
       setNumberCorrect('');
+      onGetOtp();
+    } else {
+      setNumberCorrect('Phone number should be equal to 10 digits');
     }
   };
   return (
@@ -70,127 +76,58 @@ export const LoginScreen = () => {
         opacity={0.9}
       />
       {loading && <Loader />}
-
       <View style={styles.imageView()}>
         <Image
           style={{
-            height: size.moderateScale(150),
-            width: size.moderateScale(150),
+            height: size.moderateScale(175),
+            width: size.moderateScale(225),
           }}
-          source={images.icLogo}
+          source={images.icSanjivaniLogoPng}
         />
       </View>
-      {mainScreen && (
-        <Screen
-          keyboardShouldPersistTaps={'handled'}
-          bounces={false}
-          style={styles.screenContainer()}>
-          <InputBox
-            titleTx={'login_screen.number'}
-            titleStyle={styles.labelFieldText()}
-            placeholder={'Number'}
-            value={number}
-            onChangeText={value => {
-              mobileNumberValidation(value);
-              setExtra(extra + 1);
-            }}
-            maxLength={10}
-            keyboardType={'number-pad'}
-            inputStyle={styles.inputStyle(editable)}
-            mainContainerStyle={styles.inputMainContainer()}
-            leftIcon={
-              <Text
-                style={styles.labelFieldText()}
-                tx="login_screen.countryCode"
-              />
-            }
-          />
+
+      <View style={styles.screenContainer()}>
+        <Text style={styles.labelLoginTxt()} tx={'login_screen.number'} />
+        <InputBox
+          value={number}
+          placeholder={'XXXXXXXXXX'}
+          keyboardType={'phone-pad'}
+          withButton={true}
+          maxLength={10}
+          onChangeText={val => {
+            // mobileNumberValidation(val);
+            setNumber(val);
+            setNumberCorrect('');
+            setExtra(extra + 1);
+          }}
+          inputStyle={styles.inputTxt()}
+          mainContainerStyle={styles.inputMain()}
+          onRightIconPress={() => {
+            validateMobile();
+          }}
+          defaultNumber={
+            <Text
+              style={styles.labelFieldText()}
+              tx="login_screen.countryCode"
+            />
+          }
+        />
+        <View style={styles.validationView()}>
           {numberCorrect ? (
             <Text style={styles.textValidation()} text={numberCorrect} />
           ) : null}
-          <Button
-            buttonStyle={styles.button()}
-            buttonText={styles.buttonTxt()}
-            nameTx={'login_screen.request_otp'}
-            onPress={() => requestOtp()}
-          />
-          <Button
-            buttonStyle={styles.button()}
-            buttonText={styles.buttonTxt()}
-            nameTx={'login_screen.register_new_user'}
-            onPress={() => navigation.navigate('registerScreen')}
-          />
-          <View style={styles.linkView()}>
-            <Text
-              style={styles.labelFieldLinkText()}
-              tx="login_screen.learnMore"
-            />
-            <IcArrowNext
-              height={size.moderateScale(12)}
-              width={size.moderateScale(12)}
-              fill={color.mediumGreen}
-            />
-          </View>
-        </Screen>
-      )}
-      {subScreen && (
-        <Screen
-          keyboardShouldPersistTaps={'handled'}
-          bounces={false}
-          style={styles.screenContainer()}>
-          <InputBox
-            titleTx={'login_screen.number'}
-            titleStyle={styles.labelDisableText()}
-            placeholder={'Number'}
-            value={number}
-            containerStyle={{borderColor: color.darkGrey}}
-            placeholderTextColor={color.darkGrey}
-            editable={editable}
-            inputStyle={styles.inputDisableStyle()}
-            mainContainerStyle={styles.inputMainDisableContainer()}
-            leftIcon={
-              <Text
-                style={styles.labelDisableText()}
-                tx="login_screen.countryCode"
-              />
-            }
-          />
-          <InputBox
-            titleTx={'login_screen.otp'}
-            titleStyle={styles.labelFieldText()}
-            placeholder={'OTP'}
-            maxLength={4}
-            keyboardType={'number-pad'}
-            inputStyle={styles.inputStyle(editable)}
-            mainContainerStyle={styles.inputMainContainer()}
-          />
-          <Button
-            buttonStyle={styles.button()}
-            buttonText={styles.buttonTxt()}
-            nameTx={'login_screen.request_new_otp'}
-            onPress={() => requestOtp()}
-          />
-          <Button
-            buttonStyle={styles.button()}
-            buttonText={styles.buttonTxt()}
-            nameTx={'login_screen.login'}
-            onPress={() => {
-              onLoginPress();
-            }}
-          />
-          <View style={styles.linkView()}>
-            <Text
-              style={styles.labelFieldLinkText()}
-              tx="login_screen.learnMore"
-            />
-            <IcArrowNext
-              height={size.moderateScale(12)}
-              width={size.moderateScale(12)}
-              fill={color.mediumGreen}
-            />
-          </View>
-        </Screen>
-      )}
+        </View>
+        <Text style={styles.labelOrTxt()} tx={'login_screen.or'} />
+        <Button
+          buttonStyle={styles.btnRegister()}
+          buttonText={styles.btnRegisterTxt()}
+          nameTx={'login_screen.register_new_user'}
+          onPress={() => navigation.navigate('registerScreen')}
+        />
+        <Pressable onPress={() => console.log('bhavya')}>
+          <Text style={styles.labelOrTxt()} tx={'login_screen.learnMore'} />
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 };

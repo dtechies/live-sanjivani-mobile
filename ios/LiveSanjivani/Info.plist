@@ -45,6 +45,11 @@
   <string>We need this permission when you want to post an issue in your constituency and you want to upload photos or videos that already recorded</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>PollerOne-Regular.ttf</string>
+		<string>Segoe-UI-Bold.ttf</string>
+		<string>Segoe-UI.ttf</string>
+		<string>Lato-Bold.ttf</string>
+		<string>Lato-Regular.ttf</string>
 		<string>OpenSans-Regular.ttf</string>
 		<string>OpenSans-Bold.ttf</string>
 		<string>OpenSans-Medium.ttf</string>
@@ -63,5 +68,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+  <string>We need this permission to use camera</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>We need this permission while posting an issue in your constituency as a video we record the video with microphone</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>We need this permission when you want to post an issue in your constituency and you want to u</string>
 </dict>
 </plist>

@@ -1,10 +1,17 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {View, SafeAreaView} from 'react-native';
-import {Text, Screen, TitleBox, Loader, Toast} from 'components';
+import React from 'react';
+import {View, Pressable, SafeAreaView} from 'react-native';
+import {Text, Screen, TitleBox, Header} from 'components';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {getHelpSupport} from 'redux-actions';
-
+import {
+  size,
+  color,
+  IcHelp,
+  IcCustomer,
+  IcFile,
+  IcLicenseLine,
+  IcMdContacts,
+  IcShieldFill,
+} from 'theme';
 import * as styles from './styles';
 export const HelpSupportScreen = () => {
   // const navigation = useNavigation();
@@ -45,71 +52,81 @@ export const HelpSupportScreen = () => {
   }, []);
   return (
     <SafeAreaView style={styles.full()}>
-      <Toast
-        ref={toastRef}
-        position="top"
-        style={styles.toast()}
-        fadeOutDuration={200}
-        opacity={0.9}
+      <Header
+        leftOnPress={() => {
+          navigation.goBack();
+        }}
+        isColor={true}
+        isLeftArrow={true}
+        isHeading={true}
+        title={'help_screen.title'}
       />
-      {loading && <Loader />}
       <Screen style={styles.container()} showsVerticalScrollIndicator={false}>
-        <TitleBox
-          titleContainerStyle={styles.titleStyle()}
-          titleTx={'help_screen.title'}
-        />
         <View style={styles.mainView()}>
-          {helpSupportData &&
-            helpSupportData.map((item, index) => {
-              return (
-                <View>
-                  <Text style={styles.textSupport()}>{item.name}</Text>
-                </View>
-              );
-            })}
-          {/* <Text style={styles.textSupport()} tx={'help_screen.support'} />
-              <View style={styles.supportView()}>
-                <Pressable style={styles.supportSubcategoriesView()}>
-                  <Text
-                    style={styles.textSupport()}
-                    tx={'help_screen.help_center'}
-                  />
-                </Pressable>
-                <Pressable style={styles.supportSubcategoriesView()}>
-                  <Text
-                    style={styles.textSupport()}
-                    tx={'help_screen.contact_us'}
-                  />
-                </Pressable>
-              </View>
-              <View style={styles.dashView()} />
+          <Text style={styles.textMainHeader()} tx={'help_screen.support'} />
+          <View style={styles.supportView()}>
+            <Pressable style={styles.supportSubcategoriesView()}>
+              <IcHelp
+                height={size.moderateScale(20)}
+                width={size.moderateScale(20)}
+                fill={color.blue}
+              />
               <Text
                 style={styles.textSupport()}
                 tx={'help_screen.disclosures'}
               />
-              <View style={styles.supportView()}>
-                <Pressable style={styles.supportSubcategoriesView()}>
-                  <Text
-                    style={styles.textSupport()}
-                    tx={'help_screen.new_terms'}
-                  />
-                </Pressable>
-                <Pressable style={styles.supportSubcategoriesView()}>
-                  <Text
-                    style={styles.textSupport()}
-                    tx={'help_screen.Privacy'}
-                  />
-                </Pressable>
-                <Pressable style={styles.supportSubcategoriesView()}>
-                  <Text style={styles.textSupport()} tx={'help_screen.crm'} />
-                </Pressable>
-                <Pressable style={styles.supportSubcategoriesView()}>
-                  <Text
-                    style={styles.textSupport()}
-                    tx={'help_screen.licenses'}
-                  />
-                </Pressable>
-              </View> */}
+            </Pressable>
+            <Pressable style={styles.supportSubcategoriesView()}>
+              <IcMdContacts
+                height={size.moderateScale(20)}
+                width={size.moderateScale(20)}
+                fill={color.blue}
+              />
+              <Text
+                style={styles.textSupport()}
+                tx={'help_screen.contact_us'}
+              />
+            </Pressable>
+          </View>
+          <View style={styles.dashView()} />
+          <Text
+            style={styles.textMainHeader()}
+            tx={'help_screen.disclosures'}
+          />
+          <View style={styles.supportView()}>
+            <Pressable style={styles.supportSubcategoriesView()}>
+              <IcFile
+                height={size.moderateScale(20)}
+                width={size.moderateScale(20)}
+                fill={color.blue}
+              />
+              <Text style={styles.textSupport()} tx={'help_screen.new_terms'} />
+            </Pressable>
+            <Pressable style={styles.supportSubcategoriesView()}>
+              <IcShieldFill
+                height={size.moderateScale(20)}
+                width={size.moderateScale(20)}
+                fill={color.blue}
+              />
+              <Text style={styles.textSupport()} tx={'help_screen.Privacy'} />
+            </Pressable>
+            <Pressable style={styles.supportSubcategoriesView()}>
+              <IcCustomer
+                height={size.moderateScale(20)}
+                width={size.moderateScale(20)}
+                fill={color.blue}
+              />
+              <Text style={styles.textSupport()} tx={'help_screen.crm'} />
+            </Pressable>
+            <Pressable style={styles.supportSubcategoriesView()}>
+              <IcLicenseLine
+                height={size.moderateScale(20)}
+                width={size.moderateScale(20)}
+                fill={color.blue}
+              />
+              <Text style={styles.textSupport()} tx={'help_screen.licenses'} />
+            </Pressable>
+          </View>
         </View>
       </Screen>
     </SafeAreaView>

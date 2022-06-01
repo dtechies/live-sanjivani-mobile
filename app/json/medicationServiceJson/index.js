@@ -16,6 +16,11 @@ export const measurementUnit = [
   {label: 'mcg', value: 'mcg'},
   {label: 'mL', value: 'mL'},
 ];
+export const strength = [
+  {label: '0.5 MG', value: '0.5 MG'},
+  {label: '1 MG', value: '1 MG'},
+  {label: '1.5 MG', value: '1.5 MG'},
+];
 export const reminderFrequency = [
   {label: 'EveryDay', value: 'EveryDay'},
   {label: 'Alternate Day', value: 'Alternate Day'},
@@ -26,4 +31,57 @@ export const reminderTime = [
   {label: 'One Fixed Time', value: 'One Fixed Time'},
   {label: 'Before Meal', value: 'Before Meal'},
   {label: 'Before Bed', value: 'Before Bed'},
+];
+
+export const getMedicine = [
+  {
+    name: '1 Glycomet 0.5 MG',
+    dis: '08:00 AM, Everyday before meal.',
+    isActive: false,
+  },
+  {
+    name: '2 Glycomet 0.5 MG',
+    dis: '08:00 AM, Everyday before meal.',
+    isActive: false,
+  },
+  {
+    name: '3 Glycomet 0.5 MG',
+    dis: '08:00 AM, Everyday before meal.',
+    isActive: false,
+  },
+  {
+    name: '4 Glycomet 0.5 MG',
+    dis: '08:00 AM, Everyday before meal.',
+    isActive: false,
+  },
+  {
+    name: '5 Glycomet 0.5 MG',
+    dis: '08:00 AM, Everyday before meal.',
+    isActive: false,
+  },
+  {
+    name: '6 Glycomet 0.5 MG',
+    dis: '08:00 AM, Everyday before meal.',
+    isActive: false,
+  },
+  {
+    name: '7 Glycomet 0.5 MG',
+    dis: '08:00 AM, Everyday before meal.',
+    isActive: false,
+  },
+  {
+    name: '8 Glycomet 0.5 MG',
+    dis: '08:00 AM, Everyday before meal.',
+    isActive: false,
+  },
+  {
+    name: '9 Glycomet 0.5 MG',
+    dis: '08:00 AM, Everyday before meal.',
+    isActive: false,
+  },
+  {
+    name: '10 Glycomet 0.5 MG',
+    dis: '08:00 AM, Everyday before meal.',
+    isActive: false,
+  },
 ];
