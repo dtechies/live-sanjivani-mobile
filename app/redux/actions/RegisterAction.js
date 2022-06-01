@@ -1,31 +1,19 @@
 import {BASE_URL} from 'config';
 import * as actions from '../Types';
+import {_registerUser} from 'services';
 
 export const registerUser = body => {
+  console.log('bansi..');
+  console.log('registerUser body := ', body);
   return dispatch => {
     dispatch({type: actions.REGISTER_USER});
-    let url = `${BASE_URL}/register-user`;
-
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-      .then(res => res.json())
+    return _registerUser(body)
       .then(response => {
-        // console.log('registerUser URL := ', url);
-        // console.log('registerUser body := ', body);
-        // console.log('registerUser Response := ', response);
-        if (response) {
-          return dispatch({
-            type: actions.REGISTER_USER,
-            payload: response,
-          });
-        } else {
-          return dispatch({type: actions.REGISTER_USER, payload: response});
-        }
+        console.log('registerUser Response := ', response);
+        return dispatch({
+          type: actions.REGISTER_USER,
+          payload: response,
+        });
       })
       .catch(error => {
         // console.log('registerUser Error Response :=\n', error);

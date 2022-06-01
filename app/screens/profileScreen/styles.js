@@ -4,6 +4,11 @@ export const container = () => ({
   flex: 1,
   justifyContent: 'center',
 });
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
 export const screenContainer = () => ({
   paddingHorizontal: size.moderateScale(20),
   paddingTop: size.moderateScale(20),

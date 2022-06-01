@@ -1,18 +1,67 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {SafeAreaView, Pressable, View, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Loader, Text, Screen, Header} from 'components';
+import moment from 'moment';
+import {Loader, Text, Screen, Header, Toast} from 'components';
 import {images} from 'theme';
 import * as styles from './styles';
+import {useDispatch, useSelector} from 'react-redux';
 import {MainProfileDetail} from 'json';
-export const ProfileScreen = () => {
-  const navigation = useNavigation();
-  const [isLoading, seIsLoading] = useState(false);
-  const [detailProfile, setDetailProfile] = useState(MainProfileDetail);
+import {loginUser, userData, getOtp} from 'redux-actions';
 
+export const ProfileScreen = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const [loading, setLoading] = useState(false);
+  const [currentTime, setCurrentTime] = useState(
+    new moment().format('YYYY-MM-DD'),
+  );
+  const [detailProfile, setDetailProfile] = useState(MainProfileDetail);
+  const toastRef = useRef();
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
+  const {userDetails = {}, age = ''} = useSelector(state => ({
+    userDetails: state.userDataReducer.userDataResponse.userData,
+    age: state.userDataReducer.userDataResponse.age,
+  }));
+  const onLogoutData = async () => {
+    setLoading(true);
+    const LogoutResponse = await dispatch(userData({login: false}));
+    const res = LogoutResponse.payload;
+    if (!res.login) {
+      setTimeout(() => {
+        navigation.navigate('authStackNavigation', {screen: 'loginScreen'});
+      }, 150);
+      setLoading(false);
+      toastMessage('Logout Successfully');
+    } else {
+      setLoading(false);
+      toastMessage('some Issue...please try again...');
+    }
+  };
+
+  useEffect(() => {
+    // console.log(userDetail.dob, 'dob', currentTime);
+    // var a = moment(userDetail.dob);
+    // var b = moment(currentTime);
+    // var years = b.diff(a, 'year');
+    // b.add(years, 'years');
+    // console.log('demo ==>', years + ' years ');
+    // console.log('UPDATE DOB ==>', userDetail.dob);
+    // dispatch(userData({userData: userDetail, age: years}));
+    console.log(': userData', userDetails);
+  }, []);
   return (
     <SafeAreaView style={styles.container()}>
-      {isLoading && <Loader />}
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <Header
         isColor={true}
         isClose={false}
@@ -23,7 +72,9 @@ export const ProfileScreen = () => {
         isHeading={true}
         isBlue={false}
         isCamera={false}
-        source={images.icPerson}
+        name={userDetails.first_name + ' ' + userDetails.last_name}
+        secName={age.toString() + " year's Old"}
+        source={{uri: ''}}
       />
       <Screen withScroll bounces={false} style={styles.screenContainer()}>
         <View style={styles.mainProfileStyle()}>
@@ -52,9 +103,7 @@ export const ProfileScreen = () => {
                     navigation.navigate('profileDetailScreen');
                   }
                   if (item.value == 'Logout') {
-                    navigation.navigate('authStackNavigation', {
-                      screen: 'loginScreen',
-                    });
+                    onLogoutData();
                   }
                 }}
                 style={

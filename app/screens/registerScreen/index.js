@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-
+import {useDispatch} from 'react-redux';
+import {loginUser, userData, registerUser} from 'redux-actions';
 import {
   Loader,
   Text,
@@ -12,11 +13,13 @@ import {
   Screen,
   InputBox,
   Header,
+  Toast,
 } from 'components';
 import {size, color} from 'theme';
 import * as styles from './styles';
-import {genderval, languageVal} from 'json';
+import {genderVal, languageVal} from 'json';
 export const RegisterScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
   const [isLoading, seIsLoading] = useState(false);
@@ -39,6 +42,11 @@ export const RegisterScreen = () => {
   const [genderErr, setGenderErr] = useState('');
   const [language, setLanguage] = useState('');
   const [languageErr, setLanguageErr] = useState('');
+  const [loading, setLoading] = useState(false);
+  const toastRef = useRef();
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
 
   const getCurrentDate = givenDate => {
     let day = givenDate.getDate();
@@ -50,38 +58,86 @@ export const RegisterScreen = () => {
     setDobErr('');
   };
 
+  const onRegisterData = async () => {
+    setLoading(true);
+    let dateForRequest = selectedDate.split('-');
+    const RegisterBody = {
+      first_name: firstNm,
+      last_name: lastNm,
+      gender: gender,
+      dob: `${dateForRequest[2]}-${dateForRequest[1]}-${dateForRequest[0]}`,
+      mob_no: phone,
+      email: email,
+      language: language,
+    };
+    console.log('RegisterBody ==>', RegisterBody);
+    const RegisterResponse = await dispatch(registerUser(RegisterBody));
+    const res = RegisterResponse.payload;
+    console.log('Register res ==>', res);
+    if (res.status) {
+      setLoading(false);
+      dispatch(userData({userData: res.data.user, login: true}));
+      console.log('Register response data ==>', res);
+      toastMessage(res.message);
+      setTimeout(() => {
+        navigation.navigate('loginScreen');
+      }, 150);
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+      // setOtpErr(res.message);
+    }
+  };
+
   const emailValidate = () => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (email === '') {
       setEmailErr('Please Enter Email Address');
+      return false;
     } else if (reg.test(email) === false) {
       setEmailErr('Invalid email');
+      return false;
     } else {
       setEmailErr('');
+      return true;
     }
   };
   const validation = () => {
+    let error = false;
     if (firstNm === '') {
       setFirstNmErr('Please Enter First Name');
+      error = true;
     }
     if (lastNm === '') {
       setLastNmErr('Please Enter Last Name');
+      error = true;
     }
     if (gender === '') {
       setGenderErr('Please select Gender');
+      error = true;
     }
     if (selectedDate === '') {
       setDobErr('Please select Date');
+      error = true;
     }
-    emailValidate();
+    let ans = emailValidate();
+    if (!ans) {
+      error = true;
+    }
     if (phone === '') {
       setPhoneErr('Please Enter Phone number');
+      error = true;
     } else if (phone.length < 10) {
       setPhoneErr('Invalid Phone number');
+      error = true;
     }
-
     if (language === '') {
       setLanguageErr('Please select Language');
+      error = true;
+    }
+
+    if (!error) {
+      onRegisterData();
     }
   };
 
@@ -90,7 +146,14 @@ export const RegisterScreen = () => {
   };
   return (
     <SafeAreaView style={styles.container()}>
-      {isLoading && <Loader />}
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <Header
         leftOnPress={() => {
           navigation.goBack();
@@ -136,7 +199,7 @@ export const RegisterScreen = () => {
         />
         {lastNmErr ? <Text style={styles.errorText()}>{lastNmErr}</Text> : null}
         <Dropdown
-          data={genderval}
+          data={genderVal}
           labelField="label"
           valueField="value"
           placeholder={'Gender'}
@@ -200,7 +263,7 @@ export const RegisterScreen = () => {
           onChangeText={text => {
             setEmail(text);
             setEmailErr('');
-            emailValidate();
+            // emailValidate();
           }}
           maxLength={45}
         />
@@ -268,15 +331,7 @@ export const RegisterScreen = () => {
           buttonText={styles.buttonTxt()}
           nameTx={'register_screen.next'}
           onPress={() => {
-            firstNm &&
-            lastNm &&
-            gender &&
-            selectedDate &&
-            email &&
-            phone.length == 10 &&
-            language
-              ? editProfileDetails()
-              : validation();
+            validation();
           }}
         />
       </Screen>
