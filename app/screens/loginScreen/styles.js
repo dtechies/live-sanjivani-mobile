@@ -5,6 +5,11 @@ export const container = () => ({
   alignItems: 'center',
   backgroundColor: color.themeBack,
 });
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
 export const inputMain = () => ({
   width: size.deviceWidth * 0.89,
   marginTop: size.moderateScale(10),

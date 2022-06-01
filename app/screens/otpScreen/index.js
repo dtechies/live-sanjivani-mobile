@@ -1,16 +1,24 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {View, Pressable, Image, SafeAreaView, TextInput} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import moment from 'moment';
 import {loginUser, userData, getOtp} from 'redux-actions';
-import {Loader, Text, Button, TitleBox, Screen, InputBox} from 'components';
+import {
+  Loader,
+  Text,
+  Button,
+  Toast,
+  TitleBox,
+  Screen,
+  InputBox,
+} from 'components';
 import {size, color, IcArrowNext, IcCrossArrow, images} from 'theme';
 import * as styles from './styles';
 
 export const OtpScreen = props => {
   const dispatch = useDispatch();
-
+  const toastRef = useRef();
   const [isRequest, setIsRequest] = useState(true);
   const [iscount, setIsCount] = useState(false);
   const navigation = useNavigation();
@@ -29,10 +37,19 @@ export const OtpScreen = props => {
   const [otpData, setOtpData] = useState();
   const [loading, setLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState(new moment().format('mm:ss'));
+  const [currentDate, setCurrentDate] = useState(
+    new moment().format('YYYY-MM-DD'),
+  );
 
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
+  // const {userDetail} = useSelector(state => ({
+  //   userDetail: state.userDataReducer.userDataResponse.userData,
+  // }));
   const onLoginPress = async () => {
-    let otpVal = firstDigit + secondDigit + thirdDigit + fourthDigit;
     setLoading(true);
+    let otpVal = firstDigit + secondDigit + thirdDigit + fourthDigit;
     const loginBody = {
       mob_no: otpData ? otpData?.mob_no : '',
       otp: otpData ? otpVal : '',
@@ -40,33 +57,41 @@ export const OtpScreen = props => {
     // console.log('loginBody ==>', loginBody);
     const loginResponse = await dispatch(loginUser(loginBody));
     const res = loginResponse.payload;
-    setLoading(false);
     // console.log('login res ==>', res);
     if (res.status) {
-      dispatch(userData({userData: res.data.user, login: true}));
-      console.log('login response data ==>', res);
-      // toastMessage('Login SuccessFully');
+      setLoading(false);
+      var a = moment(res.data.user.dob);
+      var b = moment(currentDate);
+
+      var years = b.diff(a, 'year');
+      b.add(years, 'years');
+
+      // dispatch(userData({userData: userDetail, age: years}));
+      dispatch(userData({userData: res.data.user, age: years, login: true}));
+      // console.log('login response data ==>', res);
+      toastMessage(res.message);
       setTimeout(() => {
         navigation.navigate('bottomStackNavigation');
       }, 150);
     } else {
       setLoading(false);
-      // toastMessage(res.message);
-      setOtpErr(res.message);
+      toastMessage(res.message);
+      // setOtpErr(res.message);
     }
   };
 
   const onGetOtp = async () => {
-    // setLoading(true);
-    console.log('number', otpData.mob_no);
+    setLoading(true);
     const getOtpBody = {
       mob_no: otpData ? otpData?.mob_no : '',
     };
-    console.log('getOtpBody ==>', getOtpBody);
+    // console.log('getOtpBody ==>', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     const res = getOtpResponse.payload;
-    console.log('getOtp res ==>', res);
     if (res.status) {
+      console.log('getOtp res ==>', res.data.otp);
+      setLoading(false);
+      toastMessage(res.message);
       setCounter(30);
       setOtpErr('');
       setFirstDigit('');
@@ -79,14 +104,12 @@ export const OtpScreen = props => {
       setExtra(extra + 1);
     } else {
       setLoading(false);
-      setOtpErr(res.message);
+      toastMessage(res.message);
     }
   };
 
   const requestNewOtp = () => {
     onGetOtp();
-    // setCounter(30);
-    // setIsRequest(true);
     setCounter(30);
     setOtpErr('');
     setFirstDigit('');
@@ -107,7 +130,6 @@ export const OtpScreen = props => {
           setCounter(counter - 1);
         }
         setCurrentTime(currentTime - 1);
-        console.log('currentTime ==> ', currentTime);
       }, 1000);
 
     if (counter == 0) {
@@ -121,23 +143,6 @@ export const OtpScreen = props => {
       console.log('params', props.route.params.otpValue);
       setOtpData(props.route.params.otpValue);
     }
-    // let time = moment(new Date()).format('mm:ss');
-    // console.log('time', time);
-    // var eventTime = '1366549200';
-    // var currentTime = '1366547400';
-    // console.log(currentTime, 'currentTime');
-    // var time = eventTime - currentTime;
-    // var duration = moment.duration(time * 1000, 'milliseconds');
-    // var interval = 1000;
-
-    // setInterval(function () {
-    //   duration = moment.duration(
-    //     duration.asMilliseconds() - interval,
-    //     'milliseconds',
-    //   );
-    //   let val = moment(duration.asMilliseconds()).format('H[h]:mm[m]:ss[s]');
-    //   console.log('value..', val);
-    // }, interval);
   }, []);
 
   const validation = () => {
@@ -147,12 +152,22 @@ export const OtpScreen = props => {
       thirdDigit == '' ||
       fourthDigit == ''
     ) {
-      setOtpErr('please Enter OTP...');
+      setOtpErr('Please Enter OTP...');
+    } else {
+      onLoginPress();
     }
   };
 
   return (
     <SafeAreaView style={styles.container()}>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <View style={styles.screenContainer()}>
         <View style={styles.imageView()}>
           <Image
@@ -260,10 +275,7 @@ export const OtpScreen = props => {
           buttonText={styles.btnContinueTxt()}
           nameTx={'otp_screen.continue'}
           onPress={() => {
-            firstDigit && secondDigit && thirdDigit && fourthDigit
-              ? navigation.navigate('bottomStackNavigation')
-              : validation();
-            // onLoginPress()
+            validation();
           }}
         />
         <View style={styles.optMain1()}>

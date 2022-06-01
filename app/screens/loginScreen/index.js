@@ -1,9 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {View, Pressable, Image, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {loginUser, userData, getOtp} from 'redux-actions';
-import {Loader, Text, Button, TitleBox, Screen, InputBox} from 'components';
+import {
+  Loader,
+  Text,
+  Button,
+  TitleBox,
+  Screen,
+  InputBox,
+  Toast,
+} from 'components';
 import {size, color, IcArrowNext, images} from 'theme';
 import * as styles from './styles';
 export const LoginScreen = () => {
@@ -11,45 +19,57 @@ export const LoginScreen = () => {
   const [subScreen, setsubScreen] = useState(false);
   const [mainScreen, setmainScreen] = useState(true);
   const [editable, setEditable] = useState(true);
-  const [number, setNumber] = useState('');
+  const [number, setNumber] = useState('7046892973');
   const [extra, setExtra] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [numberCorrect, setNumberCorrect] = useState('');
   const navigation = useNavigation();
+  const toastRef = useRef();
+
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
 
   const onGetOtp = async () => {
-    // setLoading(true);
-    // console.log('number', number);
+    setLoading(true);
     const getOtpBody = {
       mob_no: number,
     };
-    // console.log('getOtpBody ==>', getOtpBody);
-    // return;
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     const res = getOtpResponse.payload;
-    // setLoading(false);
-    // console.log('getOtp res ==>', res);
-    // return;
     if (res.status) {
-      // console.log('response data ==>', res.data.otp);
+      console.log('response data ==>', res.data);
+      setLoading(false);
+      toastMessage(res.message);
       setTimeout(() => {
         navigation.navigate('otpScreen', {
           otpValue: res.data,
         });
       }, 150);
-      // dispatch(userData({userData: res.data.user, login: true}));
-      // console.log('login response data ==>', res);
-      // toastMessage('Login SuccessFully');
-      // setTimeout(() => {
-      //   navigation.navigate('bottomStackNavigation');
-      // }, 300);
     } else {
-      // setLoading(false);
-      // toastMessage(res.message);
+      setLoading(false);
+      toastMessage(res.message);
     }
   };
 
+  const validateMobile = () => {
+    if (number.length == 10) {
+      setNumberCorrect('');
+      onGetOtp();
+    } else {
+      setNumberCorrect('Phone number should be equal to 10 digits');
+    }
+  };
   return (
     <SafeAreaView style={styles.container()}>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <View style={styles.imageView()}>
         <Image
           style={{
@@ -77,13 +97,7 @@ export const LoginScreen = () => {
           inputStyle={styles.inputTxt()}
           mainContainerStyle={styles.inputMain()}
           onRightIconPress={() => {
-            // onGetOtp();
-            if (number.length == 10) {
-              navigation.navigate('otpScreen');
-              setNumberCorrect('');
-            } else {
-              setNumberCorrect('Phone number should be equal to 10 digits');
-            }
+            validateMobile();
           }}
           defaultNumber={
             <Text
