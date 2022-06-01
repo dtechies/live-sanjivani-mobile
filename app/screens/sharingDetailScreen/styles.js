@@ -28,7 +28,7 @@ export const inputMainContainer = () => ({
   marginTop: size.moderateScale(15),
 });
 export const labelFieldText = () => ({
-  paddingLeft: size.moderateScale(5),
+  paddingLeft: size.moderateScale(10),
   fontSize: fontSize.small,
   fontFamily: fonts.latoRegular,
   color: color.black,

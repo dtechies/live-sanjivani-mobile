@@ -80,7 +80,7 @@ export const RegisterScreen = () => {
       console.log('Register response data ==>', res);
       toastMessage(res.message);
       setTimeout(() => {
-        navigation.navigate('loginScreen');
+        navigation.navigate('otpScreen');
       }, 150);
     } else {
       setLoading(false);
@@ -141,9 +141,9 @@ export const RegisterScreen = () => {
     }
   };
 
-  const editProfileDetails = () => {
-    navigation.goBack();
-  };
+  // const editProfileDetails = () => {
+  //   navigation.goBack();
+  // };
   return (
     <SafeAreaView style={styles.container()}>
       <Toast

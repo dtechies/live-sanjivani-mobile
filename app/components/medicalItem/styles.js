@@ -42,8 +42,10 @@ export const centerView = () => ({
   flex: 3,
 });
 export const centerLeftView = () => ({
-  flex: 1,
-  paddingLeft: size.moderateScale(5),
+  // flex: 1,
+  height: size.moderateScale(50),
+  width: size.moderateScale(50),
+  // paddingLeft: size.moderateScale(5),
 });
 export const flexDirectionStyle = () => ({
   flexDirection: 'row',

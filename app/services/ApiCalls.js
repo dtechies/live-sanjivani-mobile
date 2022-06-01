@@ -35,11 +35,17 @@ export const _registerUser = async payload => {
 
 export const _getMedicineReminderProfile = async token => {
   let {_api_calls} = HttpCalls;
-
   let headers = await headersData({
     type: 'multipart/form-data',
-    token: `Bearer ${token}`,
+    token: token,
   });
   // console.log('headers ==>', headers);
   return _api_calls('GET', '/get-medicine-reminder-profile', headers);
+};
+export const _getAllSubCategory = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  return _api_calls('GET', '/all-subcategory', headers);
 };
