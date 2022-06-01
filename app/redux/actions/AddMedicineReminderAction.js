@@ -1,33 +1,13 @@
 import {BASE_URL} from 'config';
 import * as actions from '../Types';
+import {_addMedicineReminder} from 'services';
 
-export const addMedicineReminder = (body, header) => {
-  const {token} = header;
-
+export const addMedicineReminder = body => {
   return dispatch => {
     dispatch({type: actions.ADD_MEDICINE_REMINDER});
-    let url = `${BASE_URL}/add-medicine-reminder`;
-
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
-      },
-      body: body,
-    })
-      .then(res => res.json())
+    return _addMedicineReminder(body)
       .then(response => {
-        // console.log('addMedicineReminder URL := ', url);
-        // console.log('addMedicineReminder body := ', body);
-        // console.log('addMedicineReminder header := ', header);
-        // console.log('addMedicineReminder Response := ', response);
         if (response) {
-          return dispatch({
-            type: actions.ADD_MEDICINE_REMINDER,
-            payload: response,
-          });
-        } else {
           return dispatch({
             type: actions.ADD_MEDICINE_REMINDER,
             payload: response,
