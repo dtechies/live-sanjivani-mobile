@@ -4,6 +4,11 @@ export const container = () => ({
   flex: 1,
   justifyContent: 'center',
 });
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
 export const screenContainer = () => ({
   paddingHorizontal: size.moderateScale(20),
   paddingTop: size.moderateScale(20),
@@ -16,7 +21,7 @@ export const titleTextContainer = () => ({
 export const inputStyle = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
-  color: color.blue,
+  color: color.blueTx,
   paddingHorizontal: size.moderateScale(5),
 });
 export const labelFieldText = () => ({
@@ -34,6 +39,7 @@ export const dropdown = () => ({
 });
 export const selectedOptionTextStyle = () => ({
   color: color.blueTx,
+  fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
 });
 export const separator = () => ({

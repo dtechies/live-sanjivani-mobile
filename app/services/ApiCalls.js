@@ -1,14 +1,15 @@
 import HttpCalls from './HttpCalls';
-
 import {headersData} from './Services';
-
+import {store, persistor} from './../redux';
+console.log('store,', store.getState().userDataReducer.userDataResponse);
+let token = store.getState().userDataReducer.userDataResponse.login
+  ? store.getState().userDataReducer.userDataResponse.userData.token
+  : '';
 export const _getAllCategory = async payload => {
   let {_api_calls} = HttpCalls;
-
   let headers = await headersData({
     type: 'multipart/form-data',
-    token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtb2Jfbm8iOiI3MDQ2ODkyOTczIiwidXNlcl9pZCI6MzcsImlhdCI6MTY1MzU2MTAzOSwiZXhwIjoxNjUzNjQ3NDM5fQ.n0tOFnS5ePZ3xJtBywER4f6JW-CkAHai5k05QeSzxWQ',
+    token: token,
   });
   return _api_calls('GET', '/all-category', headers);
 };
@@ -18,6 +19,18 @@ export const _getOTP = async payload => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({});
   return _api_calls('POST', '/get-OTP', headers, payload);
+};
+export const _userLogin = async payload => {
+  // console.log('_userLogin_payload ==> ', payload);
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({});
+  return _api_calls('POST', '/user-login', headers, payload);
+};
+export const _registerUser = async payload => {
+  // console.log('_registerUser_payload ==> ', payload);
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({});
+  return _api_calls('POST', '/register-user', headers, payload);
 };
 
 export const _getMedicineReminderProfile = async token => {

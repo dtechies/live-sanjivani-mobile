@@ -1,4 +1,4 @@
-export const genderval = [
+export const genderVal = [
   {label: 'Male', value: 'Male'},
   {label: 'Female', value: 'Female'},
 ];
