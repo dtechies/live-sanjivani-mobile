@@ -34,9 +34,11 @@ export const OtpScreen = props => {
   const refInputThird = useRef();
   const refInputFourth = useRef();
   const [counter, setCounter] = useState(30);
+  const [counterTimer, setCounterTimer] = useState(
+    new moment().add(32, 'seconds').format('X'),
+  );
   const [otpData, setOtpData] = useState();
   const [loading, setLoading] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new moment().format('mm:ss'));
   const [currentDate, setCurrentDate] = useState(
     new moment().format('YYYY-MM-DD'),
   );
@@ -122,22 +124,24 @@ export const OtpScreen = props => {
     setExtra(extra + 1);
   };
   useEffect(() => {
+    let timerDiff = counterTimer - new moment().format('X');
+    timerDiff = timerDiff > 0 ? timerDiff : '00';
     counter > 0 &&
       setTimeout(() => {
         if (counter <= 10) {
-          setCounter(`0${counter - 1}`);
+          setCounter(`0${timerDiff}`);
         } else {
-          setCounter(counter - 1);
+          setCounter(timerDiff);
         }
-        setCurrentTime(currentTime - 1);
       }, 1000);
 
-    if (counter == 0) {
+    if (counter <= 0) {
       setOtpErr('');
       setIsRequest(false);
       setIsCount(true);
     }
   }, [counter]);
+
   useEffect(() => {
     if (props.route.params) {
       console.log('params', props.route.params.otpValue);
