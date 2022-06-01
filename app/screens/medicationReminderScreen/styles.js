@@ -34,7 +34,7 @@ export const inputStyle = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
   color: color.blueTx,
-  paddingLeft: size.moderateScale(5),
+  paddingLeft: size.moderateScale(8),
 });
 export const dropdown = val => ({
   marginVertical: val == 1 ? size.moderateScale(0) : size.moderateScale(10),
