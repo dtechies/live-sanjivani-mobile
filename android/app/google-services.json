@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "834345542564",
+    "project_id": "livesanjivani-e363f",
+    "storage_bucket": "livesanjivani-e363f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:834345542564:android:e45570205cd49c034e9731",
+        "android_client_info": {
+          "package_name": "com.livesanjivani"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "834345542564-3f88rlnptql2bfe5gvjmca24nq1i8hn6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.livesanjivani",
+            "certificate_hash": "af67ea63b8bec1250200b442eabdd07a01335bea"
+          }
+        },
+        {
+          "client_id": "834345542564-gbs5rdqs4mng4l90jdegpsfqc9qn547h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE10L3sEGMb4qtouUWA810yIfFqZAtH8A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "834345542564-gbs5rdqs4mng4l90jdegpsfqc9qn547h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

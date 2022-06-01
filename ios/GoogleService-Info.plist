@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>834345542564-bolof79hfv05vdav85ere4mo25dcu18h.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.834345542564-bolof79hfv05vdav85ere4mo25dcu18h</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>834345542564-3f88rlnptql2bfe5gvjmca24nq1i8hn6.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDpDIf06KTIiK8sXCvNSjne9NhiluQ4Pk4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>834345542564</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.LiveSanjivani</string>
+	<key>PROJECT_ID</key>
+	<string>livesanjivani-e363f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>livesanjivani-e363f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:834345542564:ios:1044168ec93a459a4e9731</string>
+</dict>
+</plist>

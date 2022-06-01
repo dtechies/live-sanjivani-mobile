@@ -1,0 +1,21 @@
+{
+    "appName": "LiveSanjivani",
+    "roleName": "pinpointLambdaRolec1df51fa",
+    "cloudformationPolicyName": "cloudformationPolicyc1df51fa",
+    "cloudWatchPolicyName": "cloudWatchPolicyc1df51fa",
+    "pinpointPolicyName": "pinpointPolicyc1df51fa",
+    "authPolicyName": "pinpoint_amplify_c1df51fa",
+    "unauthPolicyName": "pinpoint_amplify_c1df51fa",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}

@@ -1,0 +1,42 @@
+{
+    "auth": {
+        "livesanjivaniafc66b11": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [],
+            "customAuth": false,
+            "frontendAuthConfig": {
+                "socialProviders": [],
+                "usernameAttributes": [],
+                "signupAttributes": [
+                    "EMAIL"
+                ],
+                "passwordProtectionSettings": {
+                    "passwordPolicyMinLength": 8,
+                    "passwordPolicyCharacters": []
+                },
+                "mfaConfiguration": "OFF",
+                "mfaTypes": [
+                    "SMS"
+                ],
+                "verificationMechanisms": [
+                    "EMAIL"
+                ]
+            }
+        }
+    },
+    "analytics": {
+        "LiveSanjivani": {
+            "service": "Pinpoint",
+            "providerPlugin": "awscloudformation"
+        }
+    },
+    "notifications": {
+        "LiveSanjivani": {
+            "service": "Pinpoint",
+            "channels": [
+                "FCM"
+            ]
+        }
+    }
+}
