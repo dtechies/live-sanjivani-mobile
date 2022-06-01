@@ -29,25 +29,11 @@ export const TodayScreen = () => {
   const [exitApp, setExitApp] = useState(0);
 
   const route = useRoute();
-  // console.log('route', route.name);
 
   const onEditMedicineReminderStatusPress = async index => {
-    console.log('item ==>', medicationData[index].status);
     medicationData[index].status = !medicationData[index].status;
     setExtra(extra + 1);
   };
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     const onBackPress = () => {
-  //       return true;
-  //     };
-
-  //     BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-  //     return () =>
-  //       BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-  //   }, []),
-  // );
   const backAction = () => {
     setTimeout(() => {
       setExitApp(0);

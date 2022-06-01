@@ -27,3 +27,4 @@ export * from './otherScreen';
 export * from './medicalJournalScreen';
 export * from './sharingDetailScreen';
 export * from './progressDetailScreen';
+export * from './medicationReminderList';

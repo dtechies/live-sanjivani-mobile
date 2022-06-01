@@ -16,9 +16,11 @@ function _post(url, headers, data) {
 
 function _get(url, headers) {
   const options = {method: 'GET', headers: headers.headers};
-  return fetch(url, options).then(r => {
-    return r.json();
-  });
+  return fetch(url, options)
+    .then(r => r.json())
+    .catch(e => {
+      console.log('KYAAAError', e);
+    });
 }
 
 function _delete(url, headers, data) {

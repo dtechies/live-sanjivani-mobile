@@ -27,7 +27,7 @@ export const MainProfileDetail = [
   },
   {
     label: '2',
-    value: 'Medication Reminder',
+    value: 'Medication Reminder List',
     svg: (
       <IcPills
         height={size.moderateScale(40)}
@@ -115,4 +115,15 @@ export const AddNavData = [
   {id: 6, value: 'Medications', selected: false},
   {id: 7, value: 'Appointments', selected: false},
   {id: 8, value: 'Symptoms Check', selected: false},
+];
+
+export const MedicalJournalListJson = [
+  {id: 1, date: '01/05/2022', time: '3.33 PM', description: 'Drink water'},
+  {
+    id: 2,
+    date: '22/02/2022',
+    time: '7.11 PM',
+    description: 'Eat only vegetables',
+  },
+  {id: 3, date: '01/09/2021', time: '2.00 PM', description: 'Walking'},
 ];

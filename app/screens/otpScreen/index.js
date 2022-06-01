@@ -262,7 +262,7 @@ export const OtpScreen = props => {
           }}
         />
         <View style={styles.optMain1()}>
-          <Text style={styles.labelEnterOtp()} tx={'otp_screen.enterOtp'} />
+          <Text />
           <Text style={styles.labelWait()} tx={'otp_screen.timerTxt'} />
         </View>
         <View style={styles.optMain1()}>

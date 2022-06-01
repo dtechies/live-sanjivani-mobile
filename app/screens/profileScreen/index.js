@@ -75,8 +75,8 @@ export const ProfileScreen = () => {
                   if (item.value == 'Appointments') {
                     navigation.navigate('appointmentReminderScreen');
                   }
-                  if (item.value == 'Medication Reminder') {
-                    navigation.navigate('medicationReminderScreen');
+                  if (item.value == 'Medication Reminder List') {
+                    navigation.navigate('medicationReminderList');
                   }
                   if (item.value == 'Symptom Checker') {
                     navigation.navigate('symptomsScreen');

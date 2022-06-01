@@ -101,7 +101,7 @@
     "gender": "Gender",
     "select_language": "Selected Language",
     "dob": "DOB",
-    "next": "Save",
+    "next": "Register",
     "title_register": "Lets Create Your Profile",
     "title": "Register New User"
   },
@@ -172,10 +172,17 @@
     "enterOtp": "Enter OTP",
     "request": "Request New OTP",
     "timerTxt": "Wait before requesting OTP again",
-    "login": "Login"
+    "login": "Back to Login"
   },
   "addDetails_Screen": {
     "save": "Save",
     "order": "Order with Prescription"
+  },
+  "medicalJournal_screen": {
+    "listAllJournal": "List Of All Journal"
+  },
+  "medicationReminderList_Screen": {
+    "title": "Medication Reminder List",
+    "myMedicineList": "My Medicine List"
   }
 }

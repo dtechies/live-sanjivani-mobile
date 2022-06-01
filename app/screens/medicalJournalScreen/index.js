@@ -18,7 +18,7 @@ import {
 } from 'components';
 import {size, color, images} from 'theme';
 import * as styles from './styles';
-import {dose, MainProfileDetail, DWMYData, AddNavData} from 'json';
+import {MedicalJournalListJson} from 'json';
 
 export const MedicalJournalScreen = props => {
   const navigation = useNavigation();
@@ -135,96 +135,115 @@ export const MedicalJournalScreen = props => {
         isCamera={false}
         text={title}
       />
-      <Screen withScroll bounces={false} style={styles.screenContainer()}>
-        <View style={styles.headingMain()}>
-          <View style={styles.cardDesign()}>
-            <View style={styles.circleView()} />
-            <Text style={styles.cardTxt()} text="Date" />
-            {showDate && (
-              <DateTimePickerModal
-                isVisible={showDate}
-                mode="date"
-                onConfirm={val => getCurrentDate(val)}
-                onCancel={() => {
-                  setShowDate(false);
-                  setExtra(extra + 1);
-                }}
-              />
-            )}
-          </View>
-          <View style={styles.cardDesign(1)}>
-            <View style={styles.circleView()} />
-            <Text style={styles.cardTxt()} text="Time" />
-            {showTime && (
-              <DateTimePickerModal
-                isVisible={showTime}
-                mode="time"
-                locale="en_GB"
-                onConfirm={val => getAppointmentTime(val)}
-                onCancel={() => {
-                  setShowTime(false);
-                  setExtra(extra + 1);
-                }}
-              />
-            )}
-          </View>
-        </View>
-        <View style={styles.headingMain()}>
-          <Pressable
-            style={styles.cardView()}
-            onPress={() => {
-              setShowDate(true);
-            }}>
-            <Text style={styles.cardTxt(1)} text={selectedDate} />
-          </Pressable>
 
-          <Pressable
-            style={styles.cardView(1)}
-            onPress={() => {
-              setShowTime(!showTime);
-            }}>
-            <Text style={styles.cardTxt(1)} text={selectedTime} />
-          </Pressable>
+      <View style={styles.headingMain()}>
+        <View style={styles.cardDesign()}>
+          <View style={styles.circleView()} />
+          <Text style={styles.cardTxt()} text="Date" />
+          {showDate && (
+            <DateTimePickerModal
+              isVisible={showDate}
+              mode="date"
+              onConfirm={val => getCurrentDate(val)}
+              onCancel={() => {
+                setShowDate(false);
+                setExtra(extra + 1);
+              }}
+            />
+          )}
         </View>
-        <View style={styles.headingMain()}>
-          {dateErr ? <Text style={styles.errorText()}>{dateErr}</Text> : null}
-          {timeErr ? (
-            <Text style={dateErr ? styles.errorText(1) : styles.errorText1(1)}>
-              {timeErr}
-            </Text>
-          ) : null}
+        <View style={styles.cardDesign(1)}>
+          <View style={styles.circleView()} />
+          <Text style={styles.cardTxt()} text="Time" />
+          {showTime && (
+            <DateTimePickerModal
+              isVisible={showTime}
+              mode="time"
+              locale="en_GB"
+              onConfirm={val => getAppointmentTime(val)}
+              onCancel={() => {
+                setShowTime(false);
+                setExtra(extra + 1);
+              }}
+            />
+          )}
         </View>
-        <View>
-          <View style={styles.headingMain(1)}>
-            <Text style={styles.cardTxt(2)} tx="addDetails_Screen.order" />
-          </View>
-          <InputBox
-            placeholderTextColor={color.blue}
-            mainContainerStyle={styles.inputMain()}
-            placeholder={'Type here'}
-            isRightSide={true}
-            inputStyle={styles.inputValue()}
-            onRightIconPress={() => {
-              modalRef.current.open();
-            }}
-            containerStyle={styles.mainContainerStyle()}
-          />
-        </View>
-        {imageDataErr ? (
-          <Text style={styles.errorText(2)}>{imageDataErr}</Text>
+      </View>
+      <View style={styles.headingMain()}>
+        <Pressable
+          style={styles.cardView()}
+          onPress={() => {
+            setShowDate(true);
+          }}>
+          <Text style={styles.cardTxt(1)} text={selectedDate} />
+        </Pressable>
+
+        <Pressable
+          style={styles.cardView(1)}
+          onPress={() => {
+            setShowTime(!showTime);
+          }}>
+          <Text style={styles.cardTxt(1)} text={selectedTime} />
+        </Pressable>
+      </View>
+      <View style={styles.headingMain()}>
+        {dateErr ? <Text style={styles.errorText()}>{dateErr}</Text> : null}
+        {timeErr ? (
+          <Text style={dateErr ? styles.errorText(1) : styles.errorText1(1)}>
+            {timeErr}
+          </Text>
         ) : null}
-        <View>
-          <Button
-            buttonStyle={styles.btnContinue()}
-            buttonText={styles.btnContinueTxt()}
-            nameTx={'addDetails_Screen.save'}
-            onPress={() => {
-              selectedDate && selectedTime && imageData
-                ? addMedicalJournal()
-                : validation();
-            }}
-          />
+      </View>
+      <View>
+        <View style={styles.headingMain(1)}>
+          <Text style={styles.cardTxt(2)} tx="addDetails_Screen.order" />
         </View>
+        <InputBox
+          placeholderTextColor={color.blue}
+          mainContainerStyle={styles.inputMain()}
+          placeholder={'Type here'}
+          isRightSide={true}
+          inputStyle={styles.inputValue()}
+          onRightIconPress={() => {
+            modalRef.current.open();
+          }}
+          containerStyle={styles.mainContainerStyle()}
+        />
+      </View>
+      {imageDataErr ? (
+        <Text style={styles.errorText(2)}>{imageDataErr}</Text>
+      ) : null}
+      <View>
+        <Button
+          buttonStyle={styles.btnContinue()}
+          buttonText={styles.btnContinueTxt()}
+          nameTx={'addDetails_Screen.save'}
+          onPress={() => {
+            selectedDate && selectedTime && imageData
+              ? addMedicalJournal()
+              : validation();
+          }}
+        />
+      </View>
+      <View style={styles.row()}>
+        <View style={styles.circleView()} />
+        <Text
+          style={styles.listJournalHeader()}
+          tx="medicalJournal_screen.listAllJournal"
+        />
+      </View>
+      <Screen style={styles.screenContainer()}>
+        {MedicalJournalListJson.map((item, index) => {
+          return (
+            <View style={styles.MedicalJournalListView()}>
+              <View style={styles.rowImage()}>
+                <Text style={styles.textTodayProgress()} text={item.date} />
+                <Text style={styles.textTodayProgress()} text={item.time} />
+              </View>
+              <Text style={styles.desTextStyle()} text={item.description} />
+            </View>
+          );
+        })}
       </Screen>
       <Portal>
         <Modalize
