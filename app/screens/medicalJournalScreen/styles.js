@@ -1,15 +1,14 @@
 import {color, size, fonts, fontSize} from 'theme';
 
 export const container = () => ({
-  flex: 1,
   justifyContent: 'center',
+  backgroundColor: color.themeBack,
   //
 });
 export const screenContainer = () => ({
   //   paddingHorizontal: size.moderateScale(20),
   // backgroundColor: 'red',
-  //   paddingTop: size.moderateScale(10),
-  backgroundColor: color.themeBack,
+  marginBottom: size.moderateScale(35),
 });
 //
 export const mainProfileStyle = () => ({
@@ -94,6 +93,13 @@ export const cardTxt = val => ({
   fontFamily: fonts.latoBold,
   color: color.headerBlue,
   marginLeft: size.moderateScale(val == 1 ? 0 : 7),
+});
+export const listJournalHeader = val => ({
+  fontSize: fontSize.medium,
+  fontFamily: fonts.latoBold,
+  color: color.headerBlue,
+  // marginLeft: size.moderateScale(25),
+  marginLeft: size.moderateScale(5),
 });
 export const circleView = () => ({
   height: size.moderateScale(13),
@@ -193,4 +199,37 @@ export const textSubmitButton = () => ({
   fontFamily: fonts.latoBold,
   color: color.white,
   fontSize: fontSize.small,
+});
+export const MedicalJournalListView = () => ({
+  paddingVertical: size.moderateScale(10),
+  paddingHorizontal: size.moderateScale(20),
+  borderRadius: size.moderateScale(10),
+  marginHorizontal: size.moderateScale(30),
+  backgroundColor: color.white,
+  marginVertical: size.moderateScale(5),
+  justifyContent: 'space-between',
+});
+export const row = () => ({
+  flexDirection: 'row',
+  marginLeft: size.moderateScale(30),
+  marginBottom: size.moderateScale(5),
+  alignItems: 'center',
+  // backgroundColor: 'red',
+});
+export const rowImage = () => ({
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+});
+export const textTodayProgress = () => ({
+  // paddingTop: size.moderateScale(10),
+  // paddingBottom: size.moderateScale(7),
+  fontFamily: fonts.latoBold,
+  color: color.steelBlue,
+  fontSize: fontSize.small,
+});
+export const desTextStyle = () => ({
+  paddingTop: size.moderateScale(10),
+  fontFamily: fonts.latoRegular,
+  color: color.dimGrey,
+  fontSize: fontSize.medium,
 });
