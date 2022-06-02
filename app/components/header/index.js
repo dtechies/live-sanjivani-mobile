@@ -116,7 +116,7 @@ export const Header = props => {
               style={styles.imgMain(
                 props.isCamera ? 3 : props.isLogoCenter ? 1 : 2,
               )}>
-              {console.log('Header image ==> ', props.source)}
+              {/* {console.log('Header image ==> ', props.source)} */}
               <Image
                 source={
                   props.source.uri == '' ? images.icPersonLogo : props.source
@@ -143,7 +143,7 @@ export const Header = props => {
                 style={styles.profileName(
                   props.isColor || props.isBlue ? 1 : 3,
                 )}>
-                {props.name ? props.name : 'UserName'}
+                {props.name ? props.name : ''}
               </Text>
               <Text
                 style={
@@ -153,7 +153,7 @@ export const Header = props => {
                         props.isColor || props.isBlue ? 1 : 3,
                       )
                 }>
-                {props.secName ? props.secName : 'User Age'}
+                {props.secName ? props.secName : ''}
               </Text>
               {/* {!props.isCamera && (
                 <Text

@@ -167,3 +167,6 @@ export const errorText = val => ({
   marginLeft: 23,
   marginBottom: 5,
 });
+export const changePhoneBtnStyle = val => ({
+  backgroundColor: val ? color.blue : color.dimGrey,
+});

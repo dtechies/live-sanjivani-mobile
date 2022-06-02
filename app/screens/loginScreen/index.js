@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {View, Pressable, Image, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {loginUser, userData, getOtp} from 'redux-actions';
+import {getOtp} from 'redux-actions';
 import {
   Loader,
   Text,
@@ -87,6 +87,7 @@ export const LoginScreen = () => {
           placeholder={'XXXXXXXXXX'}
           keyboardType={'phone-pad'}
           withButton={true}
+          btnName={'Request OTP'}
           maxLength={10}
           onChangeText={val => {
             // mobileNumberValidation(val);
