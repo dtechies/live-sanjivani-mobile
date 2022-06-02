@@ -26,13 +26,11 @@ export const OtpScreen = props => {
   const refInputFourth = useRef();
   const [counter, setCounter] = useState(30);
   const [counterTimer, setCounterTimer] = useState(
-    new moment().add(32, 'seconds').format('X'),
+    new moment().add(31, 'seconds').format('X'),
   );
+  const currentDate = new moment().format('YYYY-MM-DD');
   const [otpData, setOtpData] = useState();
   const [loading, setLoading] = useState(false);
-  const [currentDate, setCurrentDate] = useState(
-    new moment().format('YYYY-MM-DD'),
-  );
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -78,7 +76,7 @@ export const OtpScreen = props => {
       setLoading(false);
       toastMessage(res.message);
       setCounter(30);
-      setCounterTimer(new moment().add(32, 'seconds').format('X'));
+      setCounterTimer(new moment().add(31, 'seconds').format('X'));
       setOtpErr('');
       setFirstDigit('');
       setSecondDigit('');
@@ -96,20 +94,12 @@ export const OtpScreen = props => {
 
   const requestNewOtp = () => {
     onGetOtp();
-    // setCounter(30);
-    // setOtpErr('');
-    // setFirstDigit('');
-    // setSecondDigit('');
-    // setThirdDigit('');
-    // setFourthDigit('');
-    // setOtpErr('');
-    // setIsRequest(true);
-    // setIsCount(false);
-    // setExtra(extra + 1);
   };
+
   useEffect(() => {
     let timerDiff = counterTimer - new moment().format('X');
     timerDiff = timerDiff > 0 ? timerDiff : '00';
+    console.log('timerDiff', timerDiff);
     counter > 0 &&
       setTimeout(() => {
         if (counter <= 10) {
@@ -123,8 +113,11 @@ export const OtpScreen = props => {
       setOtpErr('');
       setIsRequest(false);
       setIsCount(true);
+    } else {
+      setIsRequest(true);
+      setIsCount(false);
     }
-  }, [counter]);
+  }, [counter, counterTimer]);
 
   useEffect(() => {
     if (props.route.params) {
