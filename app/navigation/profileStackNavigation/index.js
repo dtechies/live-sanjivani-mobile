@@ -11,12 +11,9 @@ import {
   AppointmentReminderScreen,
   LoginScreen,
   ProfileDetailScreen,
-<<<<<<< HEAD
   ViewMedicationScreen,
-=======
   MedicationReminderList,
   HelpSupportDetailsScreen,
->>>>>>> dc6adec68afc67ada736c6641fec33cb6e3ef425
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
