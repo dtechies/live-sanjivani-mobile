@@ -59,11 +59,11 @@ export const _addAppointmentReminderView = async () => {
   });
   // console.log('headers _addAppointmentReminderView ==>', headers);
   return _api_calls('GET', '/add-appointment-reminder-view', headers);
+};
 export const _getAllSubCategory = async () => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: token,
   });
   return _api_calls('GET', '/all-subcategory', headers);
-
 };
