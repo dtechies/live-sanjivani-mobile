@@ -80,7 +80,8 @@
     "strength": "Select Strength",
     "next": "Next",
     "take_picture": "Take Picture",
-    "upload_picture": "Upload Picture"
+    "upload_picture": "Upload Picture",
+    "reminderName": "Reminder Name"
   },
   "login_screen": {
     "number": "Enter Your Phone Number",
@@ -139,6 +140,7 @@
   },
   "ViewMedicationScreen": {
     "title": "Medication Reminder",
+    "medicationList": "Medication List",
     "SubTitle": "My Medicine",
     "todaysMedication": "Today's Medication",
     "save": "Save"

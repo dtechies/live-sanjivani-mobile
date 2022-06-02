@@ -54,6 +54,7 @@ export const dropdown = val => ({
 
 export const inputMainContainer = () => ({
   marginVertical: size.moderateScale(7),
+  textTransform: 'capitalize',
 });
 export const textDate = () => ({
   fontFamily: fonts.latoBold,
@@ -185,9 +186,13 @@ export const imageModelView = val => ({
   width: size.moderateScale(400),
   alignSelf: 'center',
 });
+
 export const searchedValueList = () => ({
+  marginTop: 2,
+  paddingVertical: size.moderateScale(10),
+  borderColor: color.white,
+  borderWidth: size.moderateScale(1),
+  paddingHorizontal: size.moderateScale(15),
   backgroundColor: color.white,
-  paddingVertical: size.moderateScale(15),
-  paddingHorizontal: size.moderateScale(5),
-  borderRadius: size.moderateScale(10),
+  borderRadius: 10,
 });

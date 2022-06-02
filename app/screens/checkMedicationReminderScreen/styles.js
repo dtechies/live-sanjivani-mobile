@@ -54,7 +54,7 @@ export const cardShort = val => ({
 export const button = val => ({
   width: size.deviceWidth * 0.85,
   alignSelf: 'center',
-  marginBottom: size.moderateScale(20),
+  marginTop: size.moderateScale(20),
 });
 export const buttonTxt = () => ({
   fontSize: fontSize.small,
