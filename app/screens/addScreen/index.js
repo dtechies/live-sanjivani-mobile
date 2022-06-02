@@ -45,7 +45,7 @@ export const AddScreen = props => {
     setExtra(extra + 1);
   };
   const getAllCategoryAndSubCategoryData = async () => {
-    setLoading(true);
+    // setLoading(true);
     const allCatResponse = await dispatch(getAllCategoryAndSubCategory());
     const res = allCatResponse;
     console.log('allCatResponse_NEW ==>', res);
@@ -57,23 +57,14 @@ export const AddScreen = props => {
     } else {
       setLoading(false);
       setShowSub(false);
-      toastMessage(res.message);
+      // toastMessage(res.message);
     }
   };
 
   useEffect(() => {
-    clearData();
     getAllCategoryAndSubCategoryData();
   }, []);
 
-  const validation = () => {
-    if (noteVal == ' ' || noteVal == null) {
-      setNoteValErr('Please Enter medical journal details');
-    } else {
-      setShow(true);
-      setShowTakeNote(false);
-    }
-  };
   return (
     <SafeAreaView style={styles.full()}>
       <Toast
@@ -101,6 +92,7 @@ export const AddScreen = props => {
             return (
               <Pressable
                 onPress={() => {
+                  clearData();
                   if (
                     item.name == 'Vitals' ||
                     item.name == 'Measurements' ||
@@ -115,41 +107,40 @@ export const AddScreen = props => {
                           });
                         }
                       });
-                      // clearData();
-                      // console.log('selected', data[index].selected);
                     }, 500);
                   }
                   if (item.name == 'Care giver') {
-                    clearData();
                     setTimeout(() => {
                       navigation.navigate('careGiver');
                     }, 500);
                   }
                   if (item.name == 'Appointments') {
-                    clearData();
                     setTimeout(() => {
                       navigation.navigate('appointmentReminderScreen');
                     }, 500);
                   }
                   if (item.name == 'Symptoms check') {
-                    clearData();
                     setTimeout(() => {
                       navigation.navigate('symptomsScreen');
                     }, 500);
                   }
                   if (item.name == 'Others') {
-                    clearData();
                     setTimeout(() => {
-                      navigation.navigate('otherScreen');
+                      allCategory.map(val => {
+                        if (val.name == item.name) {
+                          navigation.navigate('otherScreen', {
+                            title: item.name,
+                            sub: val.subcategories,
+                          });
+                        }
+                      });
                     }, 500);
                   }
                   if (item.name == 'Medication') {
-                    clearData();
                     setTimeout(() => {
                       navigation.navigate('medicationReminderScreen');
                     }, 500);
                   }
-                  clearData();
                   data[index].selected = !item.selected;
                   setExtra(extra + 1);
                 }}
@@ -167,7 +158,9 @@ export const AddScreen = props => {
           <View>
             <Pressable
               onPress={() => {
-                setShowTakeNote(!showTakeNote);
+                setTimeout(() => {
+                  navigation.navigate('medicalJournalScreen');
+                }, 500);
                 setShow(!show);
               }}
               style={styles.addNavStyle()}>
@@ -176,35 +169,6 @@ export const AddScreen = props => {
                 text={'Medical Journal (take notes)'}
               />
             </Pressable>
-            {showTakeNote && (
-              <View>
-                <InputBox
-                  value={noteVal}
-                  onChangeText={value => {
-                    setNoteVal(value);
-                    setNoteValErr('');
-                    setExtra(extra + 1);
-                  }}
-                  textAlignVertical="top"
-                  multiline={true}
-                  inputStyle={[styles.labelFieldText()]}
-                  mainContainerStyle={styles.inputMainContainer()}
-                  containerStyle={styles.showNote()}
-                  numberOfLines={10}
-                />
-                {noteValErr ? (
-                  <Text style={styles.errorText()}>{noteValErr}</Text>
-                ) : null}
-                <Button
-                  onPress={() => {
-                    validation();
-                  }}
-                  nameTx="appointment_reminder_screen.add"
-                  buttonStyle={styles.addButtonStyle()}
-                  buttonText={styles.textAddButton()}
-                />
-              </View>
-            )}
           </View>
         </View>
       </Screen>
