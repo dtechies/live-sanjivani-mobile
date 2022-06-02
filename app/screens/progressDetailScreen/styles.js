@@ -56,6 +56,12 @@ export const buttonTxt = () => ({
   fontFamily: fonts.latoBold,
   fontSize: fontSize.medium,
 });
+export const centerLeftView = () => ({
+  // flex: 1,
+  height: size.moderateScale(20),
+  width: size.moderateScale(20),
+  // paddingLeft: size.moderateScale(5),
+});
 export const mainDWMYStyle = () => ({
   flexDirection: 'row',
   flexWrap: 'wrap',

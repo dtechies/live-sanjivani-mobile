@@ -40,4 +40,5 @@ export const color = {
   strongBlue: 'rgba(7, 125,203,1)',
   steelBlue: 'rgba(12,68,146,1)',
   denim: 'rgba(27,91,181,1)',
+  midnightBlue: 'rgba(38,116,218,1)',
 };

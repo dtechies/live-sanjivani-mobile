@@ -22,18 +22,14 @@ import LinearGradient from 'react-native-linear-gradient';
 export const TodayScreen = () => {
   const [activeIndex, setActiveIndex] = useState([]);
   const [medicationData, setMedication] = useState(medicationReminder);
+  const [medicationTrue, setMedicationTrue] = useState(medicationReminder);
+  const [medicationUpcoming, setMedicationUpcoming] = useState('');
+  const [reminderList, setReminderList] = useState(reminderListData);
   const [extra, setExtra] = useState(0);
-  const [currentTime, setCurrentTime] = useState(new moment().format('hh:mm'));
-  const [currentAmTime, setCurrentAmTime] = useState(new moment().format('A'));
   const navigation = useNavigation();
   const [exitApp, setExitApp] = useState(0);
 
   const route = useRoute();
-
-  const onEditMedicineReminderStatusPress = async index => {
-    medicationData[index].status = !medicationData[index].status;
-    setExtra(extra + 1);
-  };
   const backAction = () => {
     setTimeout(() => {
       setExitApp(0);
@@ -52,24 +48,21 @@ export const TodayScreen = () => {
       backAction,
     );
     return () => route.name === 'todayScreen' && backHandler.remove();
-  });
-  useEffect(() => {
-    let secTimer = setInterval(() => {
-      setCurrentTime(new moment().format('hh:mm'));
-      setCurrentAmTime(new moment().format('A'));
-      setExtra(extra + 1);
-    }, 1000);
-    return () => clearInterval(secTimer);
-  }, []);
+  }, [exitApp]);
 
+  useEffect(() => {
+    let upcoming = medicationData.find(item => item.isDone === false);
+    setMedicationUpcoming(upcoming.decryption);
+    let tot = 0;
+    medicationData.map(val => {
+      if (val.status) {
+        tot = tot + 1;
+      }
+    });
+    setMedicationTrue(tot);
+  }, []);
   return (
     <SafeAreaView style={styles.container()}>
-      <Header
-        isColor={true}
-        isHeading={true}
-        isBlue={false}
-        title={'today_screen.medication_Reminder'}
-      />
       <Text style={styles.textHeaderName()} text={'Hi Ashish'} />
       <Text style={styles.textLanding()} tx={'today_screen.keep_it_up!'} />
       <Text
@@ -77,42 +70,40 @@ export const TodayScreen = () => {
         tx={'today_screen.you_are_on_the_right_track'}
       />
       <ScrollView>
-        <LinearGradient
-          colors={[color.denim, color.steelBlue]}
-          style={styles.circleTimeView()}>
-          <View style={styles.circleSecondView()}>
-            <View style={styles.circleThirdView()}>
-              <Text style={styles.timeStyle()} text={currentTime} />
-              <Text style={styles.timeAMStyle()} text={currentAmTime} />
-            </View>
-          </View>
-        </LinearGradient>
-
         <View style={styles.progressView()}>
           <View style={styles.row()}>
             <Text
               style={styles.textTodayProgress()}
               tx={'today_screen.today_progress'}
             />
-            <Text style={styles.textTodayProgress()} text={'2/3'} />
+            <Text
+              style={styles.textTodayProgress()}
+              text={medicationTrue + '/' + medicationData.length}
+            />
           </View>
           <View style={styles.rowImage()}>
-            <IcTrue />
-            <Image
-              source={images.icPath}
-              style={{width: size.moderateScale(128)}}
-            />
-            <IcTrue />
-            <Image
-              source={images.icPath}
-              style={{width: size.moderateScale(128)}}
-            />
-            <IcFalse />
+            {medicationData.map((item, index) => {
+              return (
+                <View style={styles.row(medicationData.length > index + 1)}>
+                  {item.isDone ? (
+                    item.status ? (
+                      <IcTrue />
+                    ) : (
+                      <IcFalse />
+                    )
+                  ) : (
+                    <View style={styles.upcomingCircle()}>
+                      <View style={styles.insideUpcomingCircle()}></View>
+                    </View>
+                  )}
+                  {medicationData.length > index + 1 && (
+                    <View style={styles.lineStyle(item.isDone)} />
+                  )}
+                </View>
+              );
+            })}
           </View>
-          <Text
-            style={styles.desTextStyle()}
-            text={'1 Glycomet 0.5 MG Tablet, Everyday before meal.'}
-          />
+          <Text style={styles.desTextStyle()} text={medicationUpcoming} />
         </View>
         <View style={styles.medicationView()}>
           <View style={styles.row()}>
@@ -120,16 +111,6 @@ export const TodayScreen = () => {
               style={styles.textTodayProgress()}
               tx={'today_screen.today_medication'}
             />
-            <Pressable
-              style={styles.squadBtnView()}
-              onPress={() => {
-                console.log('add symptom');
-              }}>
-              <IcBtnPlus
-                height={size.moderateScale(25)}
-                width={size.moderateScale(25)}
-              />
-            </Pressable>
           </View>
           {medicationData.map((item, index) => {
             const isActive = activeIndex.includes(item.id);
@@ -141,31 +122,72 @@ export const TodayScreen = () => {
                   <View style={styles.onlyRow()}>
                     <View style={styles.row()}>
                       <View style={styles.circleView()} />
-                      <Text style={styles.textTime()} text={item.date} />
+                      <Text
+                        style={styles.textTime()}
+                        text={item.user_selected_time}
+                      />
                     </View>
-
-                    <ToggleSwitch
-                      isOn={item.status}
-                      size={'small'}
-                      onToggle={val => {
-                        onEditMedicineReminderStatusPress(index);
-                      }}
-                    />
                   </View>
                 </View>
-                <Text style={styles.medicineName()} text={item.name} />
-                <Text style={styles.desTextStyle()} text={item.dec} />
+                <Text style={styles.medicineName()} text={item.ReminderName} />
+                <Text style={styles.desTextStyle()} text={item.decryption} />
                 <View style={styles.separator()} />
               </View>
             );
           })}
+        </View>
+        <View style={styles.medicationView()}>
+          <View style={styles.row()}>
+            <Text
+              style={styles.textTodayProgress()}
+              tx={'today_screen.today_appointment'}
+            />
+          </View>
+          {reminderList.map((item, index) => {
+            const isActive = activeIndex.includes(item.id);
+            return (
+              <View
+                style={styles.medicationCard()}
+                key={index + 'medicationData'}>
+                <View style={styles.row()}>
+                  <View style={styles.onlyRow()}>
+                    <View style={styles.row()}>
+                      <View style={styles.circleView()} />
+                      <Text style={styles.textTime()} text={item.time} />
+                    </View>
+                    <View style={styles.row()}>
+                      <View style={styles.circleDateView()} />
+                      <Text style={styles.textTime()} text={item.date} />
+                    </View>
+                  </View>
+                </View>
+                <Text style={styles.medicineName()} text={item.doctor} />
+                <Text style={styles.desTextStyle()} text={item.address} />
+                <View style={styles.separator()} />
+              </View>
+            );
+          })}
+        </View>
+        <View
+          style={{
+            backgroundColor: color.white,
+            paddingHorizontal: size.moderateScale(15),
+            paddingVertical: size.moderateScale(5),
+            marginHorizontal: size.moderateScale(20),
+            marginBottom: size.moderateScale(20),
+            borderRadius: size.moderateScale(10),
+          }}>
+          <Text
+            style={styles.medicineName()}
+            tx={'today_screen.tips_for_the_day'}
+          />
+          <Text style={styles.tipsTxt()} text={'Drink water'} />
         </View>
       </ScrollView>
 
       <Pressable
         style={styles.circleBtnView()}
         onPress={() => {
-          console.log('hiii');
           navigation.navigate('viewMedicationScreen');
         }}>
         <IcBtnPlus

@@ -1,10 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {View, SafeAreaView, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {MultiSelect} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
 import {getAllSubCategory} from 'redux-actions';
-import {Text, Screen, InputBox, Button, Header, MedicalItems} from 'components';
+import {
+  Text,
+  Screen,
+  InputBox,
+  Button,
+  Header,
+  MedicalItems,
+  Toast,
+  Loader,
+} from 'components';
 import {serviceListData, SharingData} from 'json';
 import {size, color, IcSearch, IcDown} from 'theme';
 import * as styles from './styles';
@@ -12,13 +21,12 @@ import * as styles from './styles';
 export const SharingScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const [isFocus, setIsFocus] = useState(false);
-  const [selected, setSelected] = useState([]);
-  const [allCategoryList, setAllCategoryList] = useState([]);
+  const toastRef = useRef();
   const [extra, setExtra] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const [sharingData, setSharingData] = useState(SharingData);
+  const [sharingDataErr, setSharingDataErr] = useState('');
   const [sharingDataList, setSharingDataList] = useState([]);
   const clearData = () => {
     sharingData.map((val, i) => {
@@ -26,51 +34,37 @@ export const SharingScreen = () => {
     });
     setExtra(extra + 1);
   };
-  const {token} = useSelector(state => ({
-    token: state.userDataReducer.userDataResponse.userData,
-  }));
+  // const {token} = useSelector(state => ({
+  //   token: state.userDataReducer.userDataResponse.userData,
+  // }));
   // console.log('user data ==>', token);
 
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-  const getAllCategoryData = async () => {
-    // setLoading(true);
-    const getAllCategoryDataHeader = {
-      token: token,
-    };
-    const getAllCategoryDataResponse = await dispatch(
-      getAllCategory(getAllCategoryDataHeader),
-    );
-    // console.log('getAllCategoryData header ==>>', getAllCategoryDataHeader);
-
-    const res = getAllCategoryDataResponse.payload;
-
-    // console.log('getAllCategoryData res ==>', res);
-    if (res.status) {
-      // toastMessage(res.message);
-      // console.log('getAllCategoryData List ==>', res.data);
-      // setLoading(false);
-      setAllCategoryList(res.data);
+  const validation = () => {
+    let data = sharingDataList.filter(val => val.selectedCard == true);
+    console.log(data.length, 'length...');
+    if (data.length == 0) {
+      setSharingDataErr('Please Select at least 1 Field');
     } else {
-      setLoading(false);
-      toastMessage(res.message);
+      setTimeout(() => {
+        navigation.navigate('sharingDetailScreen', {
+          selectedItems: data,
+        });
+      }, 100);
+      clearData();
     }
   };
+
   const onSendPdf = async () => {
-    // setLoading(true);
     const getSubCategoryDataHeader = {
       token: token,
     };
     const getSubCategoryDataResponse = await dispatch(
       getSubCategoryData(getSubCategoryDataHeader),
     );
-    // console.log('getSubCategoryData header==>>', getSubCategoryDataHeader);
-
     const res = getSubCategoryDataResponse.payload;
-
-    // console.log('getSubCategoryData res ==>', res);
-    // setLoading(false);
     if (res.status) {
       // toastMessage(res.message);
       // console.log('getSubCategoryData List ==>', res.data);
@@ -82,29 +76,17 @@ export const SharingScreen = () => {
   };
   const getAllSubCategoryData = async () => {
     setLoading(true);
-    console.log('is available..');
-    // console.log('loginBody ==>', loginBody);
     const SubCategoryResponse = await dispatch(getAllSubCategory());
-    console.log('bhavya', SubCategoryResponse);
     const res = SubCategoryResponse;
-    console.log('SubCategoryResponse res ==>', res);
+    // console.log('SubCategoryResponse res ==>', res);
     if (res.status) {
       setLoading(false);
-      // var a = moment(res.data.user.dob);
-      // var b = moment(currentDate);
-
-      // var years = b.diff(a, 'year');
-      // b.add(years, 'years');
-
-      // // dispatch(userData({userData: userDetail, age: years}));
-      // dispatch(userData({userData: res.data.user, age: years, login: true}));
-      console.log('login response data ==>', res.data);
+      // console.log('login response data ==>', res.data);
       setSharingDataList(res.data);
-      toastMessage(res.message);
+      // toastMessage(res.message);
     } else {
       setLoading(false);
       toastMessage(res.message);
-      // setOtpErr(res.message);
     }
   };
 
@@ -113,6 +95,14 @@ export const SharingScreen = () => {
   }, []);
   return (
     <SafeAreaView style={styles.container()}>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <Header isColor={true} isHeading={true} title={'sharing_screen.title'} />
 
       <Screen withScroll>
@@ -123,6 +113,7 @@ export const SharingScreen = () => {
               <MedicalItems
                 key={index.toString()}
                 onPress={() => {
+                  setSharingDataErr('');
                   sharingDataList[index].selectedCard = !item.selectedCard;
                   setExtra(extra + 1);
                 }}
@@ -136,19 +127,16 @@ export const SharingScreen = () => {
             );
           })}
         </View>
+        {sharingDataErr ? (
+          <Text style={styles.errorText()}>{sharingDataErr}</Text>
+        ) : null}
       </Screen>
       <Button
         buttonStyle={styles.button()}
         buttonText={styles.buttonTxt()}
         nameTx={'sharing_screen.shareItems'}
         onPress={() => {
-          let data = sharingDataList.filter(val => val.selectedCard == true);
-          setTimeout(() => {
-            navigation.navigate('sharingDetailScreen', {
-              selectedItems: data,
-            });
-          }, 100);
-          clearData();
+          validation();
         }}
       />
     </SafeAreaView>

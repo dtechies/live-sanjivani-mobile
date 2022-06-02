@@ -50,7 +50,7 @@ export const containerVal = () => ({
   borderRadius: size.moderateScale(10),
 });
 export const textValidation = () => ({
-  marginLeft: size.moderateScale(30),
+  marginLeft: size.moderateScale(150),
   marginBottom: size.moderateScale(3),
   fontFamily: fonts.latoRegular,
   fontSize: fontSize.verySmall,

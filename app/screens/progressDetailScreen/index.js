@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View, SafeAreaView, FlatList, Pressable} from 'react-native';
+import {View, SafeAreaView, FlatList, Pressable, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import {Text, Screen, Header} from 'components';
 import {serviceListData, DWMYData} from 'json';
-import {size, color} from 'theme';
+import {size, color, images} from 'theme';
 import * as styles from './styles';
 import {LineChart} from 'react-native-chart-kit';
 
@@ -135,13 +135,17 @@ export const ProgressDetailScreen = props => {
     }
     setExtra(extra + 1);
   };
-  const Icon = props.route.params && props.route.params.selectedItems.svg;
+  // const Icon = props.route.params && props.route.params.selectedItems.svg;
   useEffect(() => {
     if (props.route.params) {
+      console.log('props.route.params ==> ', props.route.params);
       setSharingData(props.route.params?.selectedItems);
       setExtra(extra + 1);
     }
   }, []);
+  const imageUrl = props.route.params
+    ? {uri: props.route.params.selectedItems.icon}
+    : images.icLogo;
   // useEffect(() => {
   //   console.log('sharingData', sharingData);
   //   // Icon = sharingData.svg;
@@ -157,7 +161,7 @@ export const ProgressDetailScreen = props => {
         isColor={true}
         isLeftArrow={true}
         isHeading={true}
-        // title={'progress_screen.progress'}
+        text={sharingData.name + ' Details'}
       />
       <Screen withScroll style={styles.screenView()}>
         {/* {sharingData.map((item, index) => { */}
@@ -170,7 +174,13 @@ export const ProgressDetailScreen = props => {
             text={sharingData.name}
           />
           <View style={styles.row()}>
-            <Icon height={20} width={20} fill={color.black} />
+            {/* <Icon height={20} width={20} fill={color.black} /> */}
+
+            <Image
+              resizeMode="cover"
+              source={imageUrl}
+              style={styles.centerLeftView()}
+            />
             <Text style={styles.textItemValue()} text={sharingData.value} />
             <Text style={styles.textItemUnit()} text={sharingData.unit} />
           </View>

@@ -20,52 +20,43 @@ export const CareGiver = () => {
   const [nickName, setNickName] = useState('');
   const [nickNameCorrect, setNickNameCorrect] = useState('');
 
-  const emailValidate = () => {
-    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (email === '') {
-      setEmailCorrect('Please Enter Email Address');
-    } else if (reg.test(email) === false) {
-      setEmailCorrect('Invalid email');
-    } else {
-      setEmailCorrect('');
-    }
-  };
-
-  const phoneValidate = () => {
-    if (phone === '') {
-      setPhoneCorrect('Please Enter Phone number');
-    } else if (phone.length < 10) {
-      setPhoneCorrect('Invalid Phone number');
-    } else {
-      setPhoneCorrect('');
-    }
-  };
-
   const validation = () => {
+    let error = false;
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (firstName === '') {
       setFirstNameCorrect('Please Enter First Name');
+      error = true;
     }
     if (lastName === '') {
       setLastNameCorrect('Please Enter Last Name');
+      error = true;
     }
     if (nickName === '') {
       setNickNameCorrect('Please select Gender');
+      error = true;
     }
     if (email === '') {
       setEmailCorrect('Please Enter Email Address');
+      error = true;
     } else if (reg.test(email) === false) {
       setEmailCorrect('Invalid email');
+      error = true;
     } else {
       setEmailCorrect('');
     }
     if (phone === '') {
       setPhoneCorrect('Please Enter Phone number');
+      error = true;
     } else if (phone.length < 10) {
       setPhoneCorrect('Invalid Phone number');
+      error = true;
     } else {
       setPhoneCorrect('');
       setExtra(extra + 1);
+    }
+
+    if (!error) {
+      navigation.goBack();
     }
   };
   return (
@@ -213,9 +204,7 @@ export const CareGiver = () => {
         buttonText={styles.buttonTxt()}
         nameTx={'careGiver_screen.save'}
         onPress={() => {
-          firstName && lastName && phone && email && nickName
-            ? navigation.goBack()
-            : validation();
+          validation();
         }}
       />
     </SafeAreaView>

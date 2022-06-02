@@ -30,6 +30,8 @@ export const InputBox = props => {
     leftIconName,
     isRightUnit,
     unit,
+    btnName,
+    buttonStyle,
   } = props;
 
   const {t} = useContext(LocalizationContext);
@@ -66,8 +68,9 @@ export const InputBox = props => {
           {withButton && (
             <Pressable
               onPress={() => onRightIconPress()}
-              style={styles.rightIconContainer()}>
-              <Text style={styles.btnTextRight()}>Request OTP</Text>
+              {...props}
+              style={[styles.rightIconContainer(), buttonStyle]}>
+              <Text style={styles.btnTextRight()}>{btnName}</Text>
             </Pressable>
           )}
           {rightIcon && (
