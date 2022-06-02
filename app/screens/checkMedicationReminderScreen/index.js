@@ -6,9 +6,8 @@ import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
 import {addMedicineReminder} from 'redux-actions';
 import {Loader, Text, Button, Header, Toast} from 'components';
-import {size, color, images, IcDot, IcBtnPlus} from 'theme';
+
 import * as styles from './styles';
-import {dose, MainProfileDetail, DWMYData, AddNavData} from 'json';
 
 export const CheckMedicationReminderScreen = props => {
   const navigation = useNavigation();
@@ -18,7 +17,7 @@ export const CheckMedicationReminderScreen = props => {
   const [isDateErr, seIsDateErr] = useState('');
   const [extra, setExtra] = useState(0);
   const [data, setData] = useState();
-
+  const param = props.route.params;
   const {token, userId} = useSelector(state => ({
     token: state.userDataReducer.userDataResponse.userData.token,
     userId: state.userDataReducer.userDataResponse.userData.id,
@@ -81,7 +80,7 @@ export const CheckMedicationReminderScreen = props => {
     formData.append('user_selected_time', data?.remindTime);
     formData.append('pills_remaining', data?.pills);
 
-    console.log('addMedicineReminder form data ==>', formData);
+    // console.log('addMedicineReminder form data ==>', formData);
     // return;
     const addMedicineReminderResponse = await dispatch(
       addMedicineReminder(formData),
@@ -100,9 +99,40 @@ export const CheckMedicationReminderScreen = props => {
     }
   };
   useEffect(() => {
-    if (props.route.params) {
-      // console.log('props', props.route.params);
-      setData(props.route.params);
+    if (param && param.fromViewMedication) {
+      // console.log('props', props.route.params.reminderData);
+      setData(props.route.params.reminderData);
+    }
+    //everyday
+    if (param.reminderData?.reminder_frequency == 'EveryDay') {
+      let newValue = days.map(i => {
+        i.isSelected = true;
+        return i;
+      });
+      setDays(newValue);
+    }
+    //alternateDay
+    if (param.reminderData?.reminder_frequency == 'Alternate Day') {
+      let date = moment(param.reminderData?.frequency_value, 'YYYY-MM-DD');
+      let dayName = date.format('dd');
+      // console.log('Alertnate daty name ==>', dayName);
+    }
+    //fixed date
+
+    if (param.reminderData?.reminder_frequency == 'Fixed date') {
+      let date = moment(param.reminderData?.frequency_value, 'YYYY-MM-DD');
+      let dayName = date.day();
+      // console.log('dayName', dayName);
+      let newValue = days.map((i, k) => {
+        // console.log('k', k);
+        if (k == 0 && k == dayName) {
+          i.isSelected = true;
+        } else if (k == dayName - 1) {
+          i.isSelected = true;
+        }
+        return i;
+      });
+      setDays(newValue);
     }
   }, []);
 
@@ -135,27 +165,26 @@ export const CheckMedicationReminderScreen = props => {
       <View style={styles.screenContainer()}>
         <View style={styles.cardFirst()}>
           <View style={styles.backHalf()}>
-            <Text style={styles.labelFieldText()} text={'Glycomet 0.5 MG'} />
-            <Text
-              style={styles.titleDetails()}
-              text={'1 Tablet Everyday before meal.'}
-            />
+            <Text style={styles.labelFieldText()}>
+              {data?.medicine_name} {data?.medicine_strength}{' '}
+              {data?.medicine_strength_unit}{' '}
+            </Text>
+            <Text style={styles.titleDetails()}>
+              {' '}
+              {data?.dose} {data?.medicine_form} {data?.reminder_time}
+            </Text>
           </View>
           <View style={styles.cardSecond()}>
             <View style={styles.dayMain()}>
               {days.map((val, i) => {
                 return (
-                  <Pressable
-                    onPress={() => {
-                      days[i].isSelected = !val.isSelected;
-                      setExtra(extra + 1);
-                    }}
+                  <View
                     style={styles.singleDay(val.isSelected)}
                     key={i.toString()}>
                     <Text style={styles.singleDayTxt(val.isSelected)}>
                       {val.date}
                     </Text>
-                  </Pressable>
+                  </View>
                 );
               })}
             </View>
@@ -166,16 +195,19 @@ export const CheckMedicationReminderScreen = props => {
                   setExtra(extra + 1);
                 }}
                 style={styles.cardShort()}>
-                <Text style={styles.startDateTitleTxt()} text={'Start Date'} />
-                <Text style={styles.startDateTxt()} text={remindFreqDate} />
+                <Text style={styles.startDateTitleTxt()} text={'Frequency'} />
+                <Text style={styles.startDateTxt()}>
+                  {data?.reminder_frequency}
+                </Text>
               </Pressable>
-              <View style={styles.cardShort(1)}>
-                <Text style={styles.startDateTitleTxt()} text={'Inventory'} />
-                <Text
-                  style={styles.startDateTxt()}
-                  text={'10/30 Tablets Left'}
-                />
-              </View>
+              {data?.medicine_form !== 'Drops' && (
+                <View style={styles.cardShort(1)}>
+                  <Text style={styles.startDateTitleTxt()} text={'Inventory'} />
+                  <Text style={styles.startDateTxt()}>
+                    {data?.pills_remaining} {data?.medicine_form} Left
+                  </Text>
+                </View>
+              )}
 
               {showDate && (
                 <DateTimePickerModal
@@ -195,15 +227,16 @@ export const CheckMedicationReminderScreen = props => {
           </View>
         </View>
       </View>
-
-      <Button
-        buttonStyle={styles.button()}
-        buttonText={styles.buttonTxt()}
-        nameTx={'ViewMedicationScreen.save'}
-        onPress={() => {
-          validation();
-        }}
-      />
+      {param.fromViewMedication ? null : (
+        <Button
+          buttonStyle={styles.button()}
+          buttonText={styles.buttonTxt()}
+          nameTx={'ViewMedicationScreen.save'}
+          onPress={() => {
+            onSave();
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 };

@@ -138,6 +138,7 @@
   },
   "ViewMedicationScreen": {
     "title": "Medication Reminder",
+    "medicationList": "Medication List",
     "SubTitle": "My Medicine",
     "todaysMedication": "Today's Medication",
     "save": "Save"

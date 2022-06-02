@@ -13,3 +13,4 @@ export * from './doctorDetails';
 export * from './starRating';
 export * from './header';
 export * from './toast';
+export * from './reminderCard';

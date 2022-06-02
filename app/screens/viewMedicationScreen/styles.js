@@ -13,6 +13,12 @@ export const mainProfileStyle = () => ({
   justifyContent: 'space-between',
   alignItems: 'center',
 });
+export const searchBarRowView = () => ({
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginVertical: size.moderateScale(10),
+});
 export const ViewTitle = () => ({
   fontSize: fontSize.veryLarge,
   color: color.blue,
@@ -74,10 +80,14 @@ export const mainInputStyle = () => ({
   shadowOffset: {height: 2, width: 0},
   shadowOpacity: 0.15,
   elevation: size.moderateScale(7),
-  height: size.moderateScale(45),
+  height: size.moderateScale(42),
+  width: size.deviceWidth * 0.7,
+  borderRadius: size.moderateScale(5),
 });
 export const headingMain = () => ({
-  margin: size.moderateScale(15),
+  // margin: size.moderateScale(15),
+  // marginTop: size.moderateScale(20),
+  marginBottom: size.moderateScale(10),
 });
 export const bottomStyle = () => ({
   paddingBottom: size.moderateScale(20),
@@ -87,4 +97,12 @@ export const noData = () => ({
   fontSize: fontSize.medium,
   fontFamily: fonts.latoBold,
   marginLeft: size.moderateScale(15),
+  textAlign: 'center',
+});
+export const shadow = () => ({
+  shadowColor: color.black,
+  shadowRadius: size.moderateScale(5),
+  shadowOffset: {height: 2, width: 0},
+  shadowOpacity: 0.15,
+  elevation: size.moderateScale(7),
 });

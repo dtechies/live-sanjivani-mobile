@@ -5,8 +5,8 @@ import {getMedicineReminderProfile} from 'redux-actions';
 
 import {useDispatch} from 'react-redux';
 
-import {Loader, Text, Screen, InputBox, Header} from 'components';
-import {size, color, images, IcDot, IcBtnPlus, SearchValNew} from 'theme';
+import {Loader, Text, Screen, InputBox, Header, ReminderCard} from 'components';
+import {size, color, IcBtnPlus, SearchValNew} from 'theme';
 import * as styles from './styles';
 import {getMedicine} from 'json';
 
@@ -14,10 +14,10 @@ export const ViewMedicationScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const toastRef = useRef();
-  const [isLoading, seIsLoading] = useState(false);
   const [extra, setExtra] = useState(0);
   const [searchText, setSearchText] = useState('');
   const [medicineReminderData, setMedicineReminderData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [medicine, setMedicine] = useState(getMedicine);
   const [loading, setLoading] = useState(false);
   const route = useRoute();
@@ -25,17 +25,17 @@ export const ViewMedicationScreen = () => {
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-
+  const reminderList =
+    filteredData.length > 0 ? filteredData : medicineReminderData;
   const onSearch = val => {
     setSearchText(val);
     let text = val.toLowerCase() || val.toUpperCase();
 
-    let FilteredValue = getMedicine.filter(item => {
-      return item.name.toLowerCase().match(text);
+    let FilteredValue = medicineReminderData.filter(item => {
+      return item.medicine_name.toLowerCase().match(text);
     });
 
-    // console.log('FilteredValue', FilteredValue);
-    setMedicine(FilteredValue);
+    setFilteredData(FilteredValue);
   };
   // const backAction = () => {
   //   setTimeout(() => {
@@ -65,13 +65,14 @@ export const ViewMedicationScreen = () => {
     );
     const res = getMedicineReminderProfileResponse.payload;
     // console.log('getMedicineReminderData res ==>', res);
-    setLoading(false);
     if (res.status) {
       // console.log(
       //   'getMedicineReminderData list ==>',
       //   res.data.MedicineReminderProfileData,
       // );
       setMedicineReminderData(res.data.MedicineReminderProfileData);
+      setFilteredData(res.data.MedicineReminderProfileData);
+      setLoading(false);
       setExtra(extra + 1);
       toastMessage(res.message);
 
@@ -88,13 +89,16 @@ export const ViewMedicationScreen = () => {
 
   return (
     <SafeAreaView style={styles.container()}>
-      {isLoading && <Loader />}
+      {loading && <Loader />}
       <Header
+        leftOnPress={() => {
+          navigation.goBack();
+        }}
         isColor={true}
         isClose={false}
         isLogo={false}
         isLongArrowLeft={false}
-        isLeftArrow={false}
+        isLeftArrow={true}
         isLogoCenter={false}
         isHeading={true}
         isBlue={false}
@@ -102,76 +106,66 @@ export const ViewMedicationScreen = () => {
         title={'ViewMedicationScreen.title'}
       />
       <View style={styles.screenContainer()}>
-        <View style={styles.mainProfileStyle()}>
-          <Text
-            tx={'ViewMedicationScreen.SubTitle'}
-            style={styles.ViewTitle()}
+        <View style={styles.searchBarRowView()}>
+          <InputBox
+            value={searchText}
+            onChangeText={val => {
+              onSearch(val);
+            }}
+            inputStyle={styles.buttonNew()}
+            leftIcon={true}
+            placeholderTextColor={color.blue}
+            containerStyle={styles.mainInputStyle()}
+            placeholder={'Search Medicine'}
+            leftIconName={
+              <SearchValNew
+                height={size.moderateScale(20)}
+                width={size.moderateScale(20)}
+                fill={color.blue}
+              />
+            }
           />
           <Pressable
+            style={styles.shadow()}
             onPress={() => {
               navigation.navigate('medicationReminderScreen');
             }}>
             <IcBtnPlus
-              height={size.moderateScale(66)}
-              width={size.moderateScale(66)}
+              height={size.moderateScale(65)}
+              width={size.moderateScale(65)}
             />
           </Pressable>
         </View>
-        <InputBox
-          value={searchText}
-          onChangeText={val => {
-            onSearch(val);
-          }}
-          inputStyle={styles.buttonNew()}
-          leftIcon={true}
-          placeholderTextColor={color.dimGray}
-          containerStyle={styles.mainInputStyle()}
-          placeholder={'Search Medicine'}
-          leftIconName={
-            <SearchValNew
-              height={size.moderateScale(20)}
-              width={size.moderateScale(20)}
-              fill={color.blue}
-            />
-          }
-        />
+
         <View style={styles.headingMain()}>
           <Text
-            tx={'ViewMedicationScreen.todaysMedication'}
+            tx={'ViewMedicationScreen.medicationList'}
             style={styles.ViewSubTitle()}
           />
         </View>
       </View>
       <Screen style={styles.screenContainer()}>
+        {filteredData.length == 0 && (
+          <Text style={styles.noData()}>No Records Found...</Text>
+        )}
         <View style={styles.bottomStyle()}>
-          {medicineReminderData.map((val, i) => {
+          {reminderList.map((val, i) => {
             return (
-              <Pressable
-                style={styles.cardMain(val.isActive)}
-                onPress={() => {
+              <ReminderCard
+                data={val}
+                onWholeCardPress={() =>
+                  navigation.navigate('checkMedicationReminderScreen', {
+                    reminderData: val,
+                    fromViewMedication: true,
+                  })
+                }
+                onTogglePress={() => {
                   medicineReminderData[i].isActive = !val.isActive;
                   setExtra(extra + 1);
                 }}
-                key={i + 'viewMedication'}>
-                <View style={styles.cardFirst()}>
-                  <IcDot
-                    height={size.moderateScale(12)}
-                    width={size.moderateScale(12)}
-                    fill={val.isActive ? color.darkBlue : color.blueLight}
-                  />
-                  <Text style={styles.cardHeading(val.isActive)}>
-                    {val?.medicine_strength} {val?.medicine_name} {val?.dose}
-                  </Text>
-                </View>
-                <View>
-                  <Text style={styles.cardText(val.isActive)}>{val.dis}</Text>
-                </View>
-              </Pressable>
+              />
             );
           })}
-          {medicine.length == 0 && (
-            <Text style={styles.noData()}>No Records Found...</Text>
-          )}
         </View>
       </Screen>
     </SafeAreaView>
