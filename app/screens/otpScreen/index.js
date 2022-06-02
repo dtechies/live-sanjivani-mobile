@@ -25,12 +25,12 @@ export const OtpScreen = props => {
   const refInputThird = useRef();
   const refInputFourth = useRef();
   const [counter, setCounter] = useState(30);
+  const [counterTimer, setCounterTimer] = useState(
+    new moment().add(31, 'seconds').format('X'),
+  );
+  const currentDate = new moment().format('YYYY-MM-DD');
   const [otpData, setOtpData] = useState();
   const [loading, setLoading] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new moment().format('mm:ss'));
-  const [currentDate, setCurrentDate] = useState(
-    new moment().format('YYYY-MM-DD'),
-  );
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -76,6 +76,7 @@ export const OtpScreen = props => {
       setLoading(false);
       toastMessage(res.message);
       setCounter(30);
+      setCounterTimer(new moment().add(31, 'seconds').format('X'));
       setOtpErr('');
       setFirstDigit('');
       setSecondDigit('');
@@ -93,37 +94,34 @@ export const OtpScreen = props => {
 
   const requestNewOtp = () => {
     onGetOtp();
-    setCounter(30);
-    setOtpErr('');
-    setFirstDigit('');
-    setSecondDigit('');
-    setThirdDigit('');
-    setFourthDigit('');
-    setOtpErr('');
-    setIsRequest(true);
-    setIsCount(false);
-    setExtra(extra + 1);
   };
+
   useEffect(() => {
+    let timerDiff = counterTimer - new moment().format('X');
+    timerDiff = timerDiff > 0 ? timerDiff : '00';
+    console.log('timerDiff', timerDiff);
     counter > 0 &&
       setTimeout(() => {
         if (counter <= 10) {
-          setCounter(`0${counter - 1}`);
+          setCounter(`0${timerDiff}`);
         } else {
-          setCounter(counter - 1);
+          setCounter(timerDiff);
         }
-        setCurrentTime(currentTime - 1);
       }, 1000);
 
-    if (counter == 0) {
+    if (counter <= 0) {
       setOtpErr('');
       setIsRequest(false);
       setIsCount(true);
+    } else {
+      setIsRequest(true);
+      setIsCount(false);
     }
-  }, [counter]);
+  }, [counter, counterTimer]);
+
   useEffect(() => {
     if (props.route.params) {
-      console.log('params', props.route.params.otpValue);
+      // console.log('params :OTPPP', props.route.params.otpValue);
       setOtpData(props.route.params.otpValue);
     }
   }, []);
