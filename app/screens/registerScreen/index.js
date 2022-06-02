@@ -70,17 +70,22 @@ export const RegisterScreen = () => {
       email: email,
       language: language,
     };
-    console.log('RegisterBody ==>', RegisterBody);
+    // console.log('RegisterBody ==>', RegisterBody);
     const RegisterResponse = await dispatch(registerUser(RegisterBody));
     const res = RegisterResponse.payload;
-    console.log('Register res ==>', res);
+    // console.log('Register res ==>', res);
     if (res.status) {
       setLoading(false);
       dispatch(userData({userData: res.data.user, login: true}));
-      console.log('Register response data ==>', res);
+      // console.log('Register response data ==>', res);
       toastMessage(res.message);
       setTimeout(() => {
-        navigation.navigate('otpScreen');
+        navigation.navigate('otpScreen', {
+          otpValue: {
+            mob_no: res.data.mob_no,
+            otp: res.data.otp,
+          },
+        });
       }, 150);
     } else {
       setLoading(false);

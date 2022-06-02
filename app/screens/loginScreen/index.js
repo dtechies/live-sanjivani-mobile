@@ -38,7 +38,7 @@ export const LoginScreen = () => {
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     const res = getOtpResponse.payload;
     if (res.status) {
-      console.log('response data ==>', res.data);
+      console.log('response data loginn ==>', res.data);
       setLoading(false);
       toastMessage(res.message);
       setTimeout(() => {
