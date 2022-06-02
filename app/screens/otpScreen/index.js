@@ -93,16 +93,16 @@ export const OtpScreen = props => {
 
   const requestNewOtp = () => {
     onGetOtp();
-    setCounter(30);
-    setOtpErr('');
-    setFirstDigit('');
-    setSecondDigit('');
-    setThirdDigit('');
-    setFourthDigit('');
-    setOtpErr('');
-    setIsRequest(true);
-    setIsCount(false);
-    setExtra(extra + 1);
+    // setCounter(30);
+    // setOtpErr('');
+    // setFirstDigit('');
+    // setSecondDigit('');
+    // setThirdDigit('');
+    // setFourthDigit('');
+    // setOtpErr('');
+    // setIsRequest(true);
+    // setIsCount(false);
+    // setExtra(extra + 1);
   };
   useEffect(() => {
     counter > 0 &&
@@ -121,9 +121,10 @@ export const OtpScreen = props => {
       setIsCount(true);
     }
   }, [counter]);
+
   useEffect(() => {
     if (props.route.params) {
-      console.log('params', props.route.params.otpValue);
+      // console.log('params :OTPPP', props.route.params.otpValue);
       setOtpData(props.route.params.otpValue);
     }
   }, []);

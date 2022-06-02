@@ -58,7 +58,7 @@ export const ProfileScreen = () => {
         isBlue={false}
         isCamera={false}
         name={
-          userDetails
+          userDetails != {}
             ? userDetails.first_name + ' ' + userDetails.last_name
             : 'UserName'
         }
