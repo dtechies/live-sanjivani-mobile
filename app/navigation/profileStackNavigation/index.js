@@ -11,6 +11,7 @@ import {
   AppointmentReminderScreen,
   LoginScreen,
   ProfileDetailScreen,
+  MedicationReminderList,
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
@@ -29,6 +30,10 @@ export const ProfileStackNavigation = () => {
       <Stack.Screen
         name="medicationReminderScreen"
         component={MedicationReminderScreen}
+      />
+      <Stack.Screen
+        name="medicationReminderList"
+        component={MedicationReminderList}
       />
       <Stack.Screen
         name="appointmentReminderScreen"

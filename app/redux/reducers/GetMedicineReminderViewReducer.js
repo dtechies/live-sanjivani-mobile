@@ -4,15 +4,15 @@ const initialState = {
   getMedicineDoctorDetailResponse: [],
 };
 
-const getMedicineDoctorDetailReducer = (state = initialState, action) => {
+const getMedicineReminderViewReducer = (state = initialState, action) => {
   const {type, payload} = action;
 
   switch (type) {
-    case Actions.GET_MEDICINE_DOCTOR_DETAIL:
+    case Actions.GET_MEDICINE_REMINDER_VIEW:
       return {...state, getMedicineDoctorDetailResponse: payload};
     default:
       return state;
   }
 };
 
-export default getMedicineDoctorDetailReducer;
+export default getMedicineReminderViewReducer;

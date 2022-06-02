@@ -14,6 +14,7 @@ export const SharingDetailScreen = props => {
   const [emailCorrect, setEmailCorrect] = useState('');
   const [extra, setExtra] = useState(0);
   const [sharingData, setSharingData] = useState([]);
+  const [sharingId, setSharingId] = useState('');
 
   const emailValidation = () => {
     {
@@ -30,9 +31,18 @@ export const SharingDetailScreen = props => {
   useEffect(() => {
     if (props.route.params.selectedItems) {
       setSharingData(props.route.params.selectedItems);
+      console.log(props.route.params.selectedItems);
       // setSharingData(selectedItems);
     }
+    const data = props.route.params.selectedItems;
+    const id = data.map(i => i.id);
+    // console.log(
+    //   'id',
+    //   data.map(i => i.id),
+    // );
+    setSharingId(id);
   }, []);
+
   return (
     <SafeAreaView style={styles.container()}>
       <Header
@@ -49,14 +59,16 @@ export const SharingDetailScreen = props => {
         <View style={styles.rowListView()}>
           {sharingData.map((item, index) => {
             let Icon = item.svg;
+            // console.log('item', item);
             return (
+              // <View></View>
               <MedicalItems
                 key={index.toString()}
                 containerStyle={styles.listViewStyle()}
                 nameFirst={item.value}
                 nameSecond={item.name}
                 nameThird={item.unit}
-                svgCardItems={<Icon />}
+                svgCardItems={item.icon}
                 isSelected={item.selectedCard}
               />
             );

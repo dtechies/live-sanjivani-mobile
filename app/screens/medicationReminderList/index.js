@@ -1,31 +1,32 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {getMedicineReminderProfile} from 'redux-actions';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {useDispatch} from 'react-redux';
-
-import {Loader, Text, Screen, InputBox, Header} from 'components';
-import {size, color, images, IcDot, IcBtnPlus, SearchValNew} from 'theme';
+import {Loader, Text, Screen, InputBox, Header, ToggleSwitch} from 'components';
+import {size, color, IcDot, IcBtnPlus, SearchValNew} from 'theme';
 import * as styles from './styles';
-import {getMedicine} from 'json';
+import {dose, MainProfileDetail, DWMYData, AddNavData, getMedicine} from 'json';
 
-export const ViewMedicationScreen = () => {
+export const MedicationReminderList = () => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const toastRef = useRef();
   const [isLoading, seIsLoading] = useState(false);
   const [extra, setExtra] = useState(0);
   const [searchText, setSearchText] = useState('');
-  const [medicineReminderData, setMedicineReminderData] = useState([]);
+  const [detailProfile, setDetailProfile] = useState(MainProfileDetail);
   const [medicine, setMedicine] = useState(getMedicine);
-  const [loading, setLoading] = useState(false);
+
+  const [exitApp, setExitApp] = useState(0);
   const route = useRoute();
+  // console.log('route', route.name);
 
-  const toastMessage = msg => {
-    toastRef.current.show(msg);
+  // const {token} = useSelector(state => ({
+  //   token: state.userDataReducer.userDataResponse.userData.token,
+  // }));
+  const onEditMedicineReminderStatusPress = async i => {
+    medicine[i].isActive = !medicine[i].isActive;
+    setExtra(extra + 1);
   };
-
   const onSearch = val => {
     setSearchText(val);
     let text = val.toLowerCase() || val.toUpperCase();
@@ -59,12 +60,19 @@ export const ViewMedicationScreen = () => {
   // });
   const getMedicineReminderData = async () => {
     setLoading(true);
-
+    const getMedicineReminderProfileHeader = {
+      token: token,
+    };
+    console.log(
+      'getMedicineReminderData ==>',
+      getMedicineReminderProfileHeader,
+    );
+    return;
     const getMedicineReminderProfileResponse = await dispatch(
-      getMedicineReminderProfile(),
+      getMedicineReminderProfile(getMedicineReminderProfileHeader),
     );
     const res = getMedicineReminderProfileResponse.payload;
-    // console.log('getMedicineReminderData res ==>', res);
+    console.log('getMedicineReminderData res ==>', res);
     setLoading(false);
     if (res.status) {
       // console.log(
@@ -82,29 +90,31 @@ export const ViewMedicationScreen = () => {
     }
   };
 
-  useEffect(() => {
-    getMedicineReminderData();
-  }, []);
+  // useEffect(() => {
+  //   getMedicineReminderData();
+  // }, []);
 
   return (
     <SafeAreaView style={styles.container()}>
       {isLoading && <Loader />}
       <Header
+        leftOnPress={() => {
+          navigation.goBack();
+        }}
         isColor={true}
         isClose={false}
         isLogo={false}
-        isLongArrowLeft={false}
-        isLeftArrow={false}
+        isLeftArrow={true}
         isLogoCenter={false}
         isHeading={true}
         isBlue={false}
         isCamera={false}
-        title={'ViewMedicationScreen.title'}
+        title={'medicationReminderList_Screen.title'}
       />
       <View style={styles.screenContainer()}>
         <View style={styles.mainProfileStyle()}>
           <Text
-            tx={'ViewMedicationScreen.SubTitle'}
+            tx={'medicationReminderList_Screen.myMedicineList'}
             style={styles.ViewTitle()}
           />
           <Pressable
@@ -135,38 +145,41 @@ export const ViewMedicationScreen = () => {
             />
           }
         />
-        <View style={styles.headingMain()}>
-          <Text
-            tx={'ViewMedicationScreen.todaysMedication'}
-            style={styles.ViewSubTitle()}
-          />
-        </View>
       </View>
       <Screen style={styles.screenContainer()}>
         <View style={styles.bottomStyle()}>
-          {medicineReminderData.map((val, i) => {
+          {medicine.map((val, i) => {
             return (
-              <Pressable
+              <Screen
                 style={styles.cardMain(val.isActive)}
-                onPress={() => {
-                  medicineReminderData[i].isActive = !val.isActive;
-                  setExtra(extra + 1);
-                }}
+                // onPress={() => {
+                //   medicine[i].isActive = !val.isActive;
+                //   setExtra(extra + 1);
+                // }}
                 key={i + 'viewMedication'}>
                 <View style={styles.cardFirst()}>
-                  <IcDot
-                    height={size.moderateScale(12)}
-                    width={size.moderateScale(12)}
-                    fill={val.isActive ? color.darkBlue : color.blueLight}
+                  <View style={styles.row()}>
+                    <IcDot
+                      height={size.moderateScale(12)}
+                      width={size.moderateScale(12)}
+                      fill={val.isActive ? color.darkBlue : color.blueLight}
+                    />
+                    <Text style={styles.cardHeading(val.isActive)}>
+                      {val.name}
+                    </Text>
+                  </View>
+                  <ToggleSwitch
+                    isOn={val.isActive}
+                    size={'small'}
+                    onToggle={val => {
+                      onEditMedicineReminderStatusPress(i);
+                    }}
                   />
-                  <Text style={styles.cardHeading(val.isActive)}>
-                    {val?.medicine_strength} {val?.medicine_name} {val?.dose}
-                  </Text>
                 </View>
                 <View>
                   <Text style={styles.cardText(val.isActive)}>{val.dis}</Text>
                 </View>
-              </Pressable>
+              </Screen>
             );
           })}
           {medicine.length == 0 && (
