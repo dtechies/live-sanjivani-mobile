@@ -95,6 +95,7 @@ export const OtpScreen = props => {
       setLoading(false);
       toastMessage(res.message);
       setCounter(30);
+      setCounterTimer(new moment().add(32, 'seconds').format('X'));
       setOtpErr('');
       setFirstDigit('');
       setSecondDigit('');
