@@ -36,7 +36,7 @@ export const AppointmentReminderScreen = animated => {
   const [showTime, setShowTime] = useState(false);
   const [showTimeReminder, setShowTimeReminder] = useState(false);
   const [selectedDate, setSelectedDate] = useState(
-    new moment().format('YYYY/MM/DD'),
+    new moment().format('D MMMM YYYY'),
   );
   const [selectedDateErr, setSelectedDateErr] = useState('');
   const [searchVal, setSearchVal] = useState('');
@@ -53,12 +53,16 @@ export const AppointmentReminderScreen = animated => {
   const [speciality, setSpeciality] = useState('');
   const [specialityErr, setSpecialityErr] = useState('');
   const popUpRef = useRef();
-
   const [doctorFilteredName, setDoctorFilteredName] = useState([]);
   const onOpenPopUp = () => {
     // alert('hiiii');
     popUpRef.current?.open();
   };
+
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
+
   const onClosePopUp = () => {
     popUpRef.current?.close();
   };
@@ -99,12 +103,20 @@ export const AppointmentReminderScreen = animated => {
   const onDoctorNameType = val => {
     setSearchVal(val);
     let text = val.toLowerCase();
+    let address = 'initial val...';
+    console.log('doctorData ==> ', doctorData);
     if (val.length >= 2) {
       let filteredName = doctorData.filter(item => {
-        console.log('item ==> ', item);
+        if (item.doctor_name.toLowerCase().match(text)) {
+          address = 'item.doctor_address';
+        }
         return item.doctor_name.toLowerCase().match(text);
       });
+
+      console.log('address ==> ', address);
       setDoctorFilteredName(filteredName);
+      setAddressOne(address);
+      setExtra(extra + 1);
     } else {
       setDoctorFilteredName([]);
     }
@@ -114,7 +126,7 @@ export const AppointmentReminderScreen = animated => {
     setLoading(true);
     const getOtpResponse = await dispatch(getAppointmentReminderAllDetail());
     const res = getOtpResponse;
-    console.log('getOtp res ==>', res.data.DoctorsData);
+    // console.log('getDoctorData res ==>', res);
     if (res.status) {
       setLoading(false);
       toastMessage(res.message);
@@ -160,10 +172,10 @@ export const AppointmentReminderScreen = animated => {
                 textSecondaryColor: color.turquoise,
                 borderColor: color.black,
               }}
-              current={moment(new Date()).format('YYYY-MM-DD')}
+              current={moment(new Date()).format('D MMMM YYYY')}
               // // selected={moment(new Date()).format('YYYY-MM-DD')}
               onSelectedChange={date => {
-                setSelectedDate(date);
+                setSelectedDate(moment(date).format('D MMMM YYYY'));
                 setSelectedDateErr('');
                 // setExtra(extra + 1);
               }}
