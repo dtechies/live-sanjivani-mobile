@@ -1,36 +1,30 @@
-import React, {useState, useEffect} from 'react';
-import {
-  SafeAreaView,
-  Pressable,
-  View,
-  ScrollView,
-  BackHandler,
-  Alert,
-  ToastAndroid,
-} from 'react-native';
+import React, {useState, useEffect, useRef} from 'react';
+import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import {getMedicineReminderProfile} from 'redux-actions';
+
+import {useDispatch} from 'react-redux';
 
 import {Loader, Text, Screen, InputBox, Header} from 'components';
 import {size, color, images, IcDot, IcBtnPlus, SearchValNew} from 'theme';
 import * as styles from './styles';
-import {dose, MainProfileDetail, DWMYData, AddNavData, getMedicine} from 'json';
+import {getMedicine} from 'json';
 
 export const ViewMedicationScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const toastRef = useRef();
   const [isLoading, seIsLoading] = useState(false);
   const [extra, setExtra] = useState(0);
   const [searchText, setSearchText] = useState('');
-  const [detailProfile, setDetailProfile] = useState(MainProfileDetail);
+  const [medicineReminderData, setMedicineReminderData] = useState([]);
   const [medicine, setMedicine] = useState(getMedicine);
-
-  const [exitApp, setExitApp] = useState(0);
+  const [loading, setLoading] = useState(false);
   const route = useRoute();
-  // console.log('route', route.name);
 
-  // const {token} = useSelector(state => ({
-  //   token: state.userDataReducer.userDataResponse.userData.token,
-  // }));
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
 
   const onSearch = val => {
     setSearchText(val);
@@ -65,19 +59,12 @@ export const ViewMedicationScreen = () => {
   // });
   const getMedicineReminderData = async () => {
     setLoading(true);
-    const getMedicineReminderProfileHeader = {
-      token: token,
-    };
-    console.log(
-      'getMedicineReminderData ==>',
-      getMedicineReminderProfileHeader,
-    );
-    return;
+
     const getMedicineReminderProfileResponse = await dispatch(
-      getMedicineReminderProfile(getMedicineReminderProfileHeader),
+      getMedicineReminderProfile(),
     );
     const res = getMedicineReminderProfileResponse.payload;
-    console.log('getMedicineReminderData res ==>', res);
+    // console.log('getMedicineReminderData res ==>', res);
     setLoading(false);
     if (res.status) {
       // console.log(
@@ -95,9 +82,9 @@ export const ViewMedicationScreen = () => {
     }
   };
 
-  // useEffect(() => {
-  //   getMedicineReminderData();
-  // }, []);
+  useEffect(() => {
+    getMedicineReminderData();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container()}>
@@ -157,12 +144,12 @@ export const ViewMedicationScreen = () => {
       </View>
       <Screen style={styles.screenContainer()}>
         <View style={styles.bottomStyle()}>
-          {medicine.map((val, i) => {
+          {medicineReminderData.map((val, i) => {
             return (
               <Pressable
                 style={styles.cardMain(val.isActive)}
                 onPress={() => {
-                  medicine[i].isActive = !val.isActive;
+                  medicineReminderData[i].isActive = !val.isActive;
                   setExtra(extra + 1);
                 }}
                 key={i + 'viewMedication'}>
@@ -173,7 +160,7 @@ export const ViewMedicationScreen = () => {
                     fill={val.isActive ? color.darkBlue : color.blueLight}
                   />
                   <Text style={styles.cardHeading(val.isActive)}>
-                    {val.name}
+                    {val?.medicine_strength} {val?.medicine_name} {val?.dose}
                   </Text>
                 </View>
                 <View>

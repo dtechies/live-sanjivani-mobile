@@ -1,13 +1,11 @@
 import * as Actions from '../Types';
 import {_getMedicineReminderProfile} from 'services';
 
-export const getMedicineReminderProfile = header => {
-  const {token} = header;
-
+export const getMedicineReminderProfile = () => {
   return dispatch => {
     dispatch({type: Actions.GET_MEDICINE_REMINDER_PROFILE});
     return (
-      _getMedicineReminderProfile(token)
+      _getMedicineReminderProfile()
         // fetch(url, {
         //   method: 'GET',
         //   headers: {

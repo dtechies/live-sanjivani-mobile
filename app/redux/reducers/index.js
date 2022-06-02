@@ -22,7 +22,7 @@ import getTipForDayReducer from './GetTipForDayReducer';
 import addMedicineReminderReducer from './AddMedicineReminderReducer';
 import getMedicineReminderProfileReducer from './GetMedicineReminderProfileReducer';
 import editMedicineReminderStatusReducer from './EditMedicineReminderStatusReducer';
-import getMedicineDoctorDetailReducer from './GetMedicineDoctorDetailReducer';
+import getMedicineReminderViewReducer from './GetMedicineReminderViewReducer';
 import getMedicineAllDetailReducer from './GetMedicineReminderAllDetailReducer';
 import getAppointmentReminderProfileReducer from './GetAppointmentReminderProfileReducer';
 import addAppointmentReminderReducer from './AddAppointmentReminderReducer';
@@ -54,7 +54,7 @@ const appReducer = combineReducers({
   addMedicineReminderReducer: addMedicineReminderReducer,
   getMedicineReminderProfileReducer: getMedicineReminderProfileReducer,
   editMedicineReminderStatusReducer: editMedicineReminderStatusReducer,
-  getMedicineDoctorDetailReducer: getMedicineDoctorDetailReducer,
+  getMedicineReminderViewReducer: getMedicineReminderViewReducer,
   getMedicineAllDetailReducer: getMedicineAllDetailReducer,
   getAppointmentReminderProfileReducer: getAppointmentReminderProfileReducer,
   addAppointmentReminderReducer: addAppointmentReminderReducer,

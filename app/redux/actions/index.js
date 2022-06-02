@@ -16,7 +16,7 @@ export * from './GetTipForDayAction';
 export * from './AddMedicineReminderAction';
 export * from './GetMedicineReminderProfileAction';
 export * from './EditMedicineReminderStatusAction';
-export * from './GetMedicineDoctorDetailAction';
+export * from './GetMedicineReminderViewAction';
 export * from './GetMedicineReminderAllDetailAction';
 export * from './GetAppointmentReminderProfileAction';
 export * from './EditAppointmentReminderStatusAction';
