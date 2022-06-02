@@ -120,10 +120,14 @@ export const inputStyle = () => ({
   color: color.blue,
   paddingLeft: size.moderateScale(5),
 });
+
 export const inputMainContainer = () => ({
   width: size.deviceWidth * 0.6,
   marginBottom: size.moderateScale(5),
   marginLeft: size.moderateScale(20),
+});
+export const containerStyle = () => ({
+  borderRadius: 5,
 });
 
 export const btnContainer = () => ({

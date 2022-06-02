@@ -12,6 +12,7 @@ import {
   LoginScreen,
   ProfileDetailScreen,
   MedicationReminderList,
+  HelpSupportDetailsScreen,
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
@@ -45,6 +46,10 @@ export const ProfileStackNavigation = () => {
       />
       <Stack.Screen name="symptomsScreen" component={SymptomsScreen} />
       <Stack.Screen name="loginScreen" component={LoginScreen} />
+      <Stack.Screen
+        name="helpSupportDetailsScreen"
+        component={HelpSupportDetailsScreen}
+      />
     </Stack.Navigator>
   );
 };

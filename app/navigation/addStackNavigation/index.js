@@ -11,6 +11,7 @@ import {
   OtherScreen,
   CareGiver,
   SymptomsScreen,
+  MedicalJournalScreen,
   AddDetailsScreen,
 } from 'screens';
 
@@ -40,6 +41,10 @@ export const AddStackNavigation = () => {
       <Stack.Screen name="progressScreen" component={ProgressScreen} />
       <Stack.Screen name="careGiver" component={CareGiver} />
       <Stack.Screen name="symptomsScreen" component={SymptomsScreen} />
+      <Stack.Screen
+        name="medicalJournalScreen"
+        component={MedicalJournalScreen}
+      />
     </Stack.Navigator>
   );
 };
