@@ -1,0 +1,28 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-livesanjivani-dev-170830-authRole",
+            "UnauthRoleArn": "arn:aws:iam::421841545520:role/amplify-livesanjivani-dev-170830-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::421841545520:role/amplify-livesanjivani-dev-170830-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "amplify-livesanjivani-dev-170830-deployment",
+            "UnauthRoleName": "amplify-livesanjivani-dev-170830-unauthRole",
+            "StackName": "amplify-livesanjivani-dev-170830",
+            "StackId": "arn:aws:cloudformation:us-east-2:421841545520:stack/amplify-livesanjivani-dev-170830/92bf1e80-c61e-11ec-bd4b-02a4f17c2150",
+            "AmplifyAppId": "d38nm5uhnkbm9c"
+        },
+        "categories": {
+            "auth": {
+                "livesanjivaniafc66b11": {},
+                "true": {}
+            },
+            "notifications": {
+                "Pinpoint": {
+                    "Name": "LiveSanjivani-dev",
+                    "Id": "40d19c669ab34e02bc1aff37f98d783e",
+                    "Region": "us-east-1"
+                }
+            }
+        }
+    }
+}
