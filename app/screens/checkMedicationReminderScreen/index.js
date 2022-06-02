@@ -27,12 +27,12 @@ export const CheckMedicationReminderScreen = props => {
     toastRef.current.show(msg);
   };
   const daysJson = [
+    {date: 'S', isSelected: false},
     {date: 'M', isSelected: false},
     {date: 'T', isSelected: false},
     {date: 'W', isSelected: false},
     {date: 'T', isSelected: false},
     {date: 'F', isSelected: false},
-    {date: 'S', isSelected: false},
     {date: 'S', isSelected: false},
   ];
   const [days, setDays] = useState(daysJson);
@@ -104,7 +104,11 @@ export const CheckMedicationReminderScreen = props => {
       setData(props.route.params.reminderData);
     }
     //everyday
-    if (param.reminderData?.reminder_frequency == 'EveryDay') {
+
+    if (
+      param.reminderData?.reminder_frequency == 'EveryDay' ||
+      param.reminderData?.reminder_frequency == 'Everyday'
+    ) {
       let newValue = days.map(i => {
         i.isSelected = true;
         return i;
@@ -112,22 +116,29 @@ export const CheckMedicationReminderScreen = props => {
       setDays(newValue);
     }
     //alternateDay
+
     if (param.reminderData?.reminder_frequency == 'Alternate Day') {
-      let date = moment(param.reminderData?.frequency_value, 'YYYY-MM-DD');
-      let dayName = date.format('dd');
-      // console.log('Alertnate daty name ==>', dayName);
+      let givenDate = moment(param.reminderData?.frequency_value, 'YYYY-MM-DD');
+      let date = givenDate.format('D');
+      let day = givenDate.day();
+      // console.log('date ==>', date);
+      // console.log('day ==>', day);
+      // console.log('Alertnate daty name ==>', day);
+      let newValue = days.map((i, k) => {
+        if (day) {
+          i.isSelected;
+        }
+        return i;
+      });
+      setDays(newValue);
     }
     //fixed date
 
     if (param.reminderData?.reminder_frequency == 'Fixed date') {
       let date = moment(param.reminderData?.frequency_value, 'YYYY-MM-DD');
       let dayName = date.day();
-      // console.log('dayName', dayName);
       let newValue = days.map((i, k) => {
-        // console.log('k', k);
-        if (k == 0 && k == dayName) {
-          i.isSelected = true;
-        } else if (k == dayName - 1) {
+        if (k == dayName) {
           i.isSelected = true;
         }
         return i;

@@ -161,7 +161,18 @@ export const ViewMedicationScreen = () => {
                 }
                 onTogglePress={() => {
                   medicineReminderData[i].isActive = !val.isActive;
-                  setExtra(extra + 1);
+
+                  setTimeout(() => {
+                    medicineReminderData.sort(function (x, y) {
+                      return x.isActive === y.isActive
+                        ? 0
+                        : x.isActive
+                        ? -1
+                        : 1;
+                    });
+                    setMedicineReminderData(medicineReminderData);
+                    setExtra(extra + 1);
+                  }, 500);
                 }}
               />
             );

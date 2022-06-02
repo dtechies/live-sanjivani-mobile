@@ -33,6 +33,8 @@ export const MedicationReminderScreen = () => {
   const [loading, setLoading] = useState(false);
   const [medicineReminderViewData, setMedicineReminderViewData] = useState();
   const [medicineValue, setMedicineValue] = useState('');
+  const [reminderName, setReminderName] = useState('');
+  const [reminderNameErr, setReminderNameErr] = useState('');
   const [medicineValueDefault, setMedicineValueDefault] = useState({
     label: 'Select Forms',
     value: 'Select Forms',
@@ -85,9 +87,9 @@ export const MedicationReminderScreen = () => {
     if (val.length == 0) {
       setDoctorFilteredName([]);
     }
-    setReferredBy(val);
     let text = val.toLowerCase() || val.toUpperCase();
     if (val.length >= 2) {
+      // setIsFocus(true);
       let filteredName = medicineReminderViewData.DoctorsData.filter(item => {
         return item.doctor_name.toLowerCase().match(text);
       });
@@ -183,6 +185,9 @@ export const MedicationReminderScreen = () => {
   };
 
   const validation = () => {
+    if (strength === '') {
+      setReminderNameErr('Enter Reminder Name');
+    }
     if (referredBy === '') {
       setReferredByErr('Enter doctor name');
     }
@@ -194,6 +199,11 @@ export const MedicationReminderScreen = () => {
     }
     if (medicineValue === '' || medicineValue === null) {
       setMedicineFormNameErr('Select medicine form');
+    }
+    if (medicineValue == 'Drops') {
+      setPillsErr('');
+      setRemindFrequencyValueErr('');
+      setMedicineStrengthErr('');
     }
     if (medicineStrength === '') {
       setMedicineStrengthErr('Enter medicine Strength');
@@ -219,6 +229,7 @@ export const MedicationReminderScreen = () => {
     if (pills === '') {
       setPillsErr('Enter Pills');
     }
+
     if (strength === '') {
       setStrengthErr('Enter Strength');
     }
@@ -257,36 +268,36 @@ export const MedicationReminderScreen = () => {
         bounces={false}
         style={styles.screenContainer()}>
         <InputBox
+          titleTx={'medication_reminder_screen.reminderName'}
+          titleStyle={styles.labelFieldText()}
+          placeholder={'Reminder Name'}
+          inputStyle={styles.inputStyle()}
+          placeholderTextColor={color.grayTxt}
+          value={reminderName}
+          mainContainerStyle={styles.inputMainContainer()}
+          onChangeText={val => {
+            setReminderName('val');
+            // setReferredBy(val);
+          }}
+        />
+        {reminderNameErr ? (
+          <Text style={styles.errorText()}>{reminderNameErr}</Text>
+        ) : null}
+        <InputBox
           titleTx={'medication_reminder_screen.referred_by'}
           titleStyle={styles.labelFieldText()}
-          placeholder={'Search By Name/Specality'}
+          placeholder={'Add your Provider/Specialist'}
           inputStyle={styles.inputStyle()}
           placeholderTextColor={color.grayTxt}
           value={referredBy}
           mainContainerStyle={styles.inputMainContainer()}
           onChangeText={val => {
-            onDoctorNameType(val);
-            // setReferredBy(val);
+            setReferredBy(val);
           }}
         />
         {referredByErr ? (
           <Text style={styles.errorText()}>{referredByErr}</Text>
         ) : null}
-        {doctorFilteredName.length > 0 &&
-          doctorFilteredName.map((item, index) => {
-            return (
-              <Pressable
-                style={styles.searchedValueList()}
-                onPress={() => {
-                  setReferredBy(item.doctor_name);
-                  setReferredByErr('');
-                  setDoctorFilteredName([]);
-                  setExtra(extra + 1);
-                }}>
-                <Text>{item.doctor_name}</Text>
-              </Pressable>
-            );
-          })}
         <InputBox
           titleTx={'medication_reminder_screen.name_of_medicine'}
           titleStyle={styles.labelFieldText()}
@@ -297,11 +308,26 @@ export const MedicationReminderScreen = () => {
           mainContainerStyle={styles.inputMainContainer()}
           onChangeText={val => {
             setName(val);
-
+            onDoctorNameType(val);
             setNameErr('');
           }}
         />
         {nameErr ? <Text style={styles.errorText()}>{nameErr}</Text> : null}
+        {doctorFilteredName.length > 0 &&
+          doctorFilteredName.map((item, index) => {
+            return (
+              <Pressable
+                style={styles.searchedValueList()}
+                onPress={() => {
+                  setName(item.doctor_name);
+                  setNameErr('');
+                  setDoctorFilteredName([]);
+                  setExtra(extra + 1);
+                }}>
+                <Text style={styles.medicineName()}>{item.doctor_name}</Text>
+              </Pressable>
+            );
+          })}
 
         <Pressable
           style={styles.imageView()}
@@ -403,58 +429,67 @@ export const MedicationReminderScreen = () => {
         {doseValueErr ? (
           <Text style={styles.errorText()}>{doseValueErr}</Text>
         ) : null}
+        {medicineValue != 'Drops' && (
+          <View>
+            <InputBox
+              titleTx={'medication_reminder_screen.strength'}
+              titleStyle={styles.labelFieldText()}
+              placeholder={'150'}
+              maxLength={3}
+              placeholderTextColor={color.grayTxt}
+              inputStyle={styles.inputStyle()}
+              value={strength}
+              mainContainerStyle={styles.inputMainContainer()}
+              onChangeText={val => {
+                setStrength(val);
 
-        <InputBox
-          titleTx={'medication_reminder_screen.strength'}
-          titleStyle={styles.labelFieldText()}
-          placeholder={'150'}
-          maxLength={3}
-          placeholderTextColor={color.grayTxt}
-          inputStyle={styles.inputStyle()}
-          value={strength}
-          mainContainerStyle={styles.inputMainContainer()}
-          onChangeText={val => {
-            setStrength(val);
-
-            setNameErr('');
-          }}
-        />
-        {nameErr ? <Text style={styles.errorText()}>{nameErr}</Text> : null}
-        <Dropdown
-          defaultValue={{unit: 'Select Strength', unit: 'Select Strength'}}
-          data={medicineReminderViewData?.MedicineStrengthData}
-          labelField="unit"
-          valueField="unit"
-          // placeholder={'Select Strength'}
-          dropdownPosition={'bottom'}
-          style={styles.dropdown()}
-          // placeholderStyle={styles.labelFieldText1()}
-          selectedTextStyle={styles.selectedOptionTextStyle()}
-          maxHeight={size.moderateScale(82)}
-          showsVerticalScrollIndicator={false}
-          containerStyle={styles.dropdownContainer()}
-          // value={unitValue}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          flatListProps={{
-            bounces: false,
-            ItemSeparatorComponent: () => {
-              return <View style={styles.separator()} />;
-            },
-          }}
-          onChange={item => {
-            setMedicineStrength(item.unit);
-            setMedicineStrengthErr('');
-            setIsFocus(false);
-          }}
-          renderItem={item => {
-            return (
-              <View style={styles.dropDownMain()}>
-                <Text text={item.unit} style={styles.InsideLabelFieldText()} />
-              </View>
-            );
-          }}
-        />
+                setNameErr('');
+              }}
+            />
+            {nameErr ? <Text style={styles.errorText()}>{nameErr}</Text> : null}
+            <Dropdown
+              defaultValue={{
+                unit: 'Select Strength',
+                unit: 'Select Strength',
+              }}
+              data={medicineReminderViewData?.MedicineStrengthData}
+              labelField="unit"
+              valueField="unit"
+              // placeholder={'Select Strength'}
+              dropdownPosition={'bottom'}
+              style={styles.dropdown()}
+              // placeholderStyle={styles.labelFieldText1()}
+              selectedTextStyle={styles.selectedOptionTextStyle()}
+              maxHeight={size.moderateScale(82)}
+              showsVerticalScrollIndicator={false}
+              containerStyle={styles.dropdownContainer()}
+              // value={unitValue}
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
+              flatListProps={{
+                bounces: false,
+                ItemSeparatorComponent: () => {
+                  return <View style={styles.separator()} />;
+                },
+              }}
+              onChange={item => {
+                setMedicineStrength(item.unit);
+                setMedicineStrengthErr('');
+                setIsFocus(false);
+              }}
+              renderItem={item => {
+                return (
+                  <View style={styles.dropDownMain()}>
+                    <Text
+                      text={item.unit}
+                      style={styles.InsideLabelFieldText()}
+                    />
+                  </View>
+                );
+              }}
+            />
+          </View>
+        )}
         {medicineStrengthErr ? (
           <Text style={styles.errorText()}>{medicineStrengthErr}</Text>
         ) : null}
@@ -488,11 +523,6 @@ export const MedicationReminderScreen = () => {
           onChange={item => {
             setRemindFrequencyValue(item.name);
             setRemindFreqDate('Select a Date');
-            // if (item.value == 'EveryDay') {
-            //   setRemindFrequencyValueErr('');
-            // } else {
-            //   setRemindFrequencyValueErr('Select a Date');
-            // }
             setIsFocus(false);
           }}
           renderItem={item => {
@@ -594,20 +624,24 @@ export const MedicationReminderScreen = () => {
             />
           </>
         )}
-        <InputBox
-          titleTx={'medication_reminder_screen.pill_remaining'}
-          titleStyle={styles.labelFieldText()}
-          placeholder={'0'}
-          inputStyle={styles.inputStyle()}
-          placeholderTextColor={color.grayTxt}
-          value={pills}
-          mainContainerStyle={styles.inputMainContainer()}
-          onChangeText={val => {
-            setPills(val);
-            setPillsErr('');
-            setExtra(extra + 1);
-          }}
-        />
+        {medicineValue != 'Drops' && (
+          <>
+            <InputBox
+              titleTx={'medication_reminder_screen.pill_remaining'}
+              titleStyle={styles.labelFieldText()}
+              placeholder={'0'}
+              inputStyle={styles.inputStyle()}
+              placeholderTextColor={color.grayTxt}
+              value={pills}
+              mainContainerStyle={styles.inputMainContainer()}
+              onChangeText={val => {
+                setPills(val);
+                setPillsErr('');
+                setExtra(extra + 1);
+              }}
+            />
+          </>
+        )}
         {pillsErr ? <Text style={styles.errorText(1)}>{pillsErr}</Text> : null}
         <Button
           buttonStyle={styles.button()}
@@ -617,7 +651,6 @@ export const MedicationReminderScreen = () => {
             referredBy &&
             name &&
             medicineValue &&
-            medicineStrength &&
             doseValue &&
             remindFrequencyValue &&
             remindFreqDate &&
