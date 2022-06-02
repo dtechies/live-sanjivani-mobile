@@ -1,16 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {
-  SafeAreaView,
-  Pressable,
-  View,
-  ScrollView,
-  TextInput,
-} from 'react-native';
+import {SafeAreaView, Pressable, View, TextInput, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-// import {Dropdown} from 'react-native-element-dropdown';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
-
 import {
   Loader,
   Text,
@@ -97,10 +88,15 @@ export const AddDetailsScreen = props => {
           return (
             <View style={styles.container1()} key={i + 'addDetails'}>
               <View style={styles.icon()}>
-                <Icon
+                {/* <Icon
                   height={size.moderateScale(45)}
                   width={size.moderateScale(45)}
                   fill={color.turquoiseNew}
+                /> */}
+                <Image
+                  source={val.icon}
+                  height={size.moderateScale(45)}
+                  width={size.moderateScale(45)}
                 />
               </View>
               <View style={styles.textMain()}>
@@ -120,20 +116,26 @@ export const AddDetailsScreen = props => {
                     }}
                   /> */}
                   <View style={styles.cardItem1()}>
-                    <TextInput
-                      ref={refsFocus}
-                      value={unit}
-                      keyboardType={'number-pad'}
-                      style={styles.cardItemInputBoxMain()}
-                      onChangeText={val => {
-                        setUnit(val);
-                      }}
-                    />
                     <Pressable
                       onPress={() => {
                         refsFocus.current.focus();
-                      }}>
-                      <Text style={styles.cardItemInputBoxText()}>
+                      }}
+                      style={styles.mainCardView()}>
+                      <TextInput
+                        ref={refsFocus}
+                        value={unit}
+                        keyboardType={'number-pad'}
+                        style={styles.cardItemInputBoxMain()}
+                        onChangeText={val => {
+                          setUnit(val);
+                        }}
+                        maxLength={4}
+                      />
+                      <Text
+                        style={styles.cardItemInputBoxText()}
+                        onPress={() => {
+                          refsFocus.current.focus();
+                        }}>
                         {val.unit}
                       </Text>
                     </Pressable>
@@ -152,23 +154,26 @@ export const AddDetailsScreen = props => {
                 //   }}
                 // />
                 <View style={styles.cardItem1()}>
-                  <TextInput
-                    ref={refsFocus1}
-                    value={unit1}
-                    keyboardType={'number-pad'}
-                    style={styles.cardItemInputBoxMain()}
-                    onChangeText={val => {
-                      setUnit1(val);
-                    }}
-                  />
                   <Pressable
                     onPress={() => {
                       refsFocus1.current.focus();
-                    }}>
+                    }}
+                    style={styles.mainCardView()}>
+                    <TextInput
+                      ref={refsFocus1}
+                      value={unit1}
+                      keyboardType={'number-pad'}
+                      style={styles.cardItemInputBoxMain()}
+                      onChangeText={val => {
+                        setUnit1(val);
+                      }}
+                      maxLength={4}
+                    />
                     <Text
-                      style={styles.cardItemInputBoxText(
-                        val.unit == 'Kg' ? 2 : 1,
-                      )}>
+                      style={styles.cardItemInputBoxText()}
+                      onPress={() => {
+                        refsFocus1.current.focus();
+                      }}>
                       {val.unit}
                     </Text>
                   </Pressable>
@@ -186,20 +191,23 @@ export const AddDetailsScreen = props => {
                 //   }}
                 // />
                 <View style={styles.cardItem1()}>
-                  <TextInput
-                    ref={refsFocus2}
-                    value={unit2}
-                    keyboardType={'number-pad'}
-                    style={styles.cardItemInputBoxMain()}
-                    onChangeText={val => {
-                      setUnit2(val);
-                    }}
-                  />
                   <Pressable
                     onPress={() => {
                       refsFocus2.current.focus();
-                    }}>
-                    <Text style={styles.cardItemInputBoxText(2)}>
+                    }}
+                    style={styles.mainCardView()}>
+                    <TextInput
+                      ref={refsFocus2}
+                      value={unit2}
+                      keyboardType={'number-pad'}
+                      style={styles.cardItemInputBoxMain()}
+                      onChangeText={val => {
+                        setUnit2(val);
+                      }}
+                      maxLength={4}
+                    />
+
+                    <Text style={styles.cardItemInputBoxText()}>
                       {val.unit}
                     </Text>
                   </Pressable>
@@ -217,20 +225,23 @@ export const AddDetailsScreen = props => {
                 //   }}
                 // />
                 <View style={styles.cardItem1()}>
-                  <TextInput
-                    ref={refsFocus3}
-                    value={unit3}
-                    keyboardType={'number-pad'}
-                    style={styles.cardItemInputBoxMain()}
-                    onChangeText={val => {
-                      setUnit3(val);
-                    }}
-                  />
                   <Pressable
                     onPress={() => {
                       refsFocus3.current.focus();
-                    }}>
-                    <Text style={styles.cardItemInputBoxText(2)}>
+                    }}
+                    style={styles.mainCardView()}>
+                    <TextInput
+                      ref={refsFocus3}
+                      value={unit3}
+                      keyboardType={'number-pad'}
+                      style={styles.cardItemInputBoxMain()}
+                      onChangeText={val => {
+                        setUnit3(val);
+                      }}
+                      maxLength={4}
+                    />
+
+                    <Text style={styles.cardItemInputBoxText()}>
                       {val.unit}
                     </Text>
                   </Pressable>
@@ -248,20 +259,22 @@ export const AddDetailsScreen = props => {
                 //   }}
                 // />
                 <View style={styles.cardItem1()}>
-                  <TextInput
-                    ref={refsFocus4}
-                    value={unit4}
-                    keyboardType={'number-pad'}
-                    style={styles.cardItemInputBoxMain(3)}
-                    onChangeText={val => {
-                      setUnit4(val);
-                    }}
-                  />
                   <Pressable
                     onPress={() => {
                       refsFocus4.current.focus();
-                    }}>
-                    <Text style={styles.cardItemInputBoxText(3)}>
+                    }}
+                    style={styles.mainCardView()}>
+                    <TextInput
+                      ref={refsFocus4}
+                      value={unit4}
+                      keyboardType={'number-pad'}
+                      style={styles.cardItemInputBoxMain()}
+                      onChangeText={val => {
+                        setUnit4(val);
+                      }}
+                      maxLength={4}
+                    />
+                    <Text style={styles.cardItemInputBoxText()}>
                       {val.unit}
                     </Text>
                   </Pressable>
@@ -279,20 +292,22 @@ export const AddDetailsScreen = props => {
                 //   }}
                 // />
                 <View style={styles.cardItem1()}>
-                  <TextInput
-                    ref={refsFocus5}
-                    value={unit5}
-                    keyboardType={'number-pad'}
-                    style={styles.cardItemInputBoxMain(3)}
-                    onChangeText={val => {
-                      setUnit5(val);
-                    }}
-                  />
                   <Pressable
                     onPress={() => {
                       refsFocus5.current.focus();
-                    }}>
-                    <Text style={styles.cardItemInputBoxText(3)}>
+                    }}
+                    style={styles.mainCardView()}>
+                    <TextInput
+                      ref={refsFocus5}
+                      value={unit5}
+                      keyboardType={'number-pad'}
+                      style={styles.cardItemInputBoxMain()}
+                      onChangeText={val => {
+                        setUnit5(val);
+                      }}
+                      maxLength={4}
+                    />
+                    <Text style={styles.cardItemInputBoxText()}>
                       {val.unit}
                     </Text>
                   </Pressable>

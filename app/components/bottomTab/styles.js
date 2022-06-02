@@ -1,10 +1,9 @@
 import {color, fonts, fontSize, size} from 'theme';
 export const container = () => ({
-  paddingHorizontal: size.moderateScale(15),
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  minHeight: size.moderateScale(70),
+  height: size.moderateScale(70),
   backgroundColor: color.blueBtn,
 });
 export const textLabel = active => ({
@@ -14,6 +13,9 @@ export const textLabel = active => ({
   textTransform: 'capitalize',
   marginTop: size.moderateScale(5),
 });
-export const iconView = () => ({
+export const iconClick = () => ({
+  flex: 1,
+  height: '100%',
   alignItems: 'center',
+  justifyContent: 'center',
 });

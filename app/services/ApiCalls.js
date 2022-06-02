@@ -35,7 +35,6 @@ export const _registerUser = async payload => {
 
 export const _getMedicineReminderProfile = async () => {
   let {_api_calls} = HttpCalls;
-
   let headers = await headersData({
     token: `${token}`,
   });
@@ -58,6 +57,31 @@ export const _addMedicineReminder = async payload => {
     type: 'multipart/form-data',
     token: `${token}`,
   });
-  // console.log('_addMedicineReminder headers ==>', headers);
   return _api_calls('POST', '/add-medicine-reminder', headers, payload);
+};
+// console.log('_addMedicineReminder headers ==>', headers);
+export const _getAllCategoryAndSubCategory = async () => {
+  let {_api_calls} = HttpCalls;
+
+  let headers = await headersData({
+    token: token,
+  });
+  // console.log('headers ==>', headers);
+  return _api_calls('GET', '/all_cat_subcategory', headers);
+};
+export const _addAppointmentReminderView = async () => {
+  let {_api_calls} = HttpCalls;
+
+  let headers = await headersData({
+    token: token,
+  });
+  // console.log('headers _addAppointmentReminderView ==>', headers);
+  return _api_calls('GET', '/add-appointment-reminder-view', headers);
+};
+export const _getAllSubCategory = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  return _api_calls('GET', '/all-subcategory', headers);
 };

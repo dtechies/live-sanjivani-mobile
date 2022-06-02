@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {View, SafeAreaView, FlatList} from 'react-native';
+import {View, SafeAreaView, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {MultiSelect} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
-import {getAllCategory, getSubCategoryData} from 'redux-actions';
+import {getAllSubCategory} from 'redux-actions';
 import {Text, Screen, InputBox, Button, Header, MedicalItems} from 'components';
 import {serviceListData, SharingData} from 'json';
 import {size, color, IcSearch, IcDown} from 'theme';
@@ -11,11 +11,15 @@ import * as styles from './styles';
 
 export const SharingScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [isFocus, setIsFocus] = useState(false);
   const [selected, setSelected] = useState([]);
   const [allCategoryList, setAllCategoryList] = useState([]);
   const [extra, setExtra] = useState(0);
+  const [loading, setLoading] = useState(false);
+
   const [sharingData, setSharingData] = useState(SharingData);
+  const [sharingDataList, setSharingDataList] = useState([]);
   const clearData = () => {
     sharingData.map((val, i) => {
       sharingData[i].selectedCard = false;
@@ -25,7 +29,7 @@ export const SharingScreen = () => {
   const {token} = useSelector(state => ({
     token: state.userDataReducer.userDataResponse.userData,
   }));
-  console.log('user data ==>', token);
+  // console.log('user data ==>', token);
 
   const toastMessage = msg => {
     toastRef.current.show(msg);
@@ -76,8 +80,36 @@ export const SharingScreen = () => {
       // toastMessage(res.message);
     }
   };
+  const getAllSubCategoryData = async () => {
+    setLoading(true);
+    console.log('is available..');
+    // console.log('loginBody ==>', loginBody);
+    const SubCategoryResponse = await dispatch(getAllSubCategory());
+    console.log('bhavya', SubCategoryResponse);
+    const res = SubCategoryResponse;
+    console.log('SubCategoryResponse res ==>', res);
+    if (res.status) {
+      setLoading(false);
+      // var a = moment(res.data.user.dob);
+      // var b = moment(currentDate);
+
+      // var years = b.diff(a, 'year');
+      // b.add(years, 'years');
+
+      // // dispatch(userData({userData: userDetail, age: years}));
+      // dispatch(userData({userData: res.data.user, age: years, login: true}));
+      console.log('login response data ==>', res.data);
+      setSharingDataList(res.data);
+      toastMessage(res.message);
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+      // setOtpErr(res.message);
+    }
+  };
+
   useEffect(() => {
-    getAllCategoryData();
+    getAllSubCategoryData();
   }, []);
   return (
     <SafeAreaView style={styles.container()}>
@@ -85,20 +117,20 @@ export const SharingScreen = () => {
 
       <Screen withScroll>
         <View style={styles.row()}>
-          {sharingData.map((item, index) => {
+          {sharingDataList.map((item, index) => {
             let Icon = item.svg;
             return (
               <MedicalItems
                 key={index.toString()}
                 onPress={() => {
-                  sharingData[index].selectedCard = !item.selectedCard;
+                  sharingDataList[index].selectedCard = !item.selectedCard;
                   setExtra(extra + 1);
                 }}
                 containerStyle={styles.listViewStyle()}
                 nameFirst={item.value}
                 nameSecond={item.name}
                 nameThird={item.unit}
-                svgCardItems={<Icon />}
+                svgCardItems={item.icon}
                 isSelected={item.selectedCard}
               />
             );
@@ -110,7 +142,7 @@ export const SharingScreen = () => {
         buttonText={styles.buttonTxt()}
         nameTx={'sharing_screen.shareItems'}
         onPress={() => {
-          let data = sharingData.filter(val => val.selectedCard == true);
+          let data = sharingDataList.filter(val => val.selectedCard == true);
           setTimeout(() => {
             navigation.navigate('sharingDetailScreen', {
               selectedItems: data,
