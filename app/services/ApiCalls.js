@@ -93,3 +93,11 @@ export const _getHelpSupportData = async () => {
   console.log('headers _getHelpSupportData ==>', headers);
   return _api_calls('GET', '/get-helpsupport-data', headers);
 };
+export const _addSubcategory = async payload => {
+  // console.log('_addSubcategory_payload ==> ', payload);
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  return _api_calls('POST', '/add-subcategory-value', headers, payload);
+};

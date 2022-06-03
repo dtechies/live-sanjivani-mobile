@@ -32,7 +32,7 @@ export const CareGiver = () => {
       error = true;
     }
     if (nickName === '') {
-      setNickNameCorrect('Please select Gender');
+      setNickNameCorrect('Please select NickName');
       error = true;
     }
     if (email === '') {

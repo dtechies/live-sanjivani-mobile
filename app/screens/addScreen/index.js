@@ -61,17 +61,7 @@ export const AddScreen = props => {
         opacity={0.9}
       />
       {loading && <Loader />}
-      <Header
-        isColor={true}
-        isClose={false}
-        isLogo={false}
-        isLongArrowLeft={false}
-        isLogoCenter={false}
-        isHeading={true}
-        isBlue={false}
-        isCamera={false}
-        title={'add_screen.title'}
-      />
+      <Header isColor={true} isHeading={true} title={'add_screen.title'} />
       <Screen withScroll style={styles.container()}>
         <View style={styles.mainCard()}>
           {data.map((item, index) => {

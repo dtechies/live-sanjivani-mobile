@@ -1,37 +1,69 @@
 import React, {useState, useRef} from 'react';
 import {SafeAreaView, Pressable, View, TextInput, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Loader, Text, Button, Screen, Header} from 'components';
+import {useDispatch} from 'react-redux';
+import {AddSubcategory} from 'redux-actions';
+import {Loader, Text, Button, Screen, Header, Toast} from 'components';
 import {size} from 'theme';
 import * as styles from './styles';
 
 export const AddDetailsScreen = props => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const toastRef = useRef();
+  const [extra, setExtra] = useState(0);
   const [isLoading, seIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [thisArray, setThisArray] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState(
     props.route.params ? props.route.params.title : '',
   );
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
   const [subCategory, setSubCategory] = useState(
     props.route.params ? props.route.params.sub : [],
   );
-  // const refsFocus4 = useRef(null);
-
+  const refsFocus4 = useRef();
   const validation = () => {
     if (thisArray.length == 0) {
-      setIsError('Please Fill At least 1 Filed...');
+      setIsError('Please Fill At least 1 Filled...');
     } else {
+      refsFocus4.current.clear();
       saveData();
     }
   };
 
-  const saveData = () => {
-    navigation.goBack();
+  const saveData = async () => {
+    setLoading(true);
+    const subCategoryBody = {
+      subcategory_data: thisArray,
+    };
+    // console.log('subCategoryBody ==>', subCategoryBody);
+    const allCatResponse = await dispatch(AddSubcategory(subCategoryBody));
+    const res = allCatResponse;
+    // console.log('subCategoryBody res ==>', res);
+    if (res.payload.status) {
+      setLoading(false);
+      toastMessage(res.payload.message);
+      setThisArray([]);
+      setExtra(extra + 1);
+    } else {
+      setLoading(false);
+      toastMessage(res.payload.message);
+    }
   };
   return (
     <SafeAreaView style={styles.container()}>
-      {isLoading && <Loader />}
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <Header
         leftOnPress={() => {
           navigation.goBack();
@@ -64,13 +96,16 @@ export const AddDetailsScreen = props => {
                       // }}
                       style={styles.mainCardView()}>
                       <TextInput
-                        // ref={refsFocus4}
+                        ref={refsFocus4}
                         keyboardType={'number-pad'}
                         style={styles.cardItemInputBoxMain()}
                         onChangeText={v => {
                           let indexK = -1;
                           if (thisArray.length == 0) {
-                            thisArray.push({subcategory_id: val.id, value: v});
+                            thisArray.push({
+                              subcategory_id: val.id,
+                              value: v,
+                            });
                           } else {
                             thisArray.map((j, k) => {
                               if (j.subcategory_id === val.id) {
@@ -89,6 +124,7 @@ export const AddDetailsScreen = props => {
                           setThisArray(thisArray);
                           console.log('thisArray', thisArray);
                           setIsError('');
+                          setExtra(extra + 1);
                         }}
                         maxLength={4}
                       />
