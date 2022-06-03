@@ -1,19 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {
-  View,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  Image,
-  BackHandler,
-} from 'react-native';
-import moment from 'moment';
-import {Text, FabMenu, Header, ToggleSwitch} from 'components';
-import {size, color, IcBtnPlus, images, IcFalse, IcTrue} from 'theme';
+import {View, SafeAreaView, ScrollView, BackHandler} from 'react-native';
+// import moment from 'moment';
+import {Text, FabMenu} from 'components';
+import {size, color, IcFalse, IcTrue} from 'theme';
 import {reminderListData, medicationReminder} from 'json';
 import * as styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import LinearGradient from 'react-native-linear-gradient';
+// import LinearGradient from 'react-native-linear-gradient';
 
 export const TodayScreen = () => {
   const [activeIndex, setActiveIndex] = useState([]);
