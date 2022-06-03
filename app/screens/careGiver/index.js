@@ -134,7 +134,6 @@ export const CareGiver = () => {
                 setFirstNameCorrect('');
               }}
               maxLength={15}
-              mainContainerStyle={styles.inputMain()}
               inputStyle={styles.inputTextStyle()}
               containerStyle={styles.containerVal()}
             />
@@ -159,7 +158,6 @@ export const CareGiver = () => {
                 setExtra(extra + 1);
               }}
               maxLength={15}
-              mainContainerStyle={styles.inputMain()}
               inputStyle={styles.inputTextStyle()}
               containerStyle={styles.containerVal()}
             />
@@ -185,7 +183,6 @@ export const CareGiver = () => {
               }}
               maxLength={10}
               keyboardType={'number-pad'}
-              mainContainerStyle={styles.inputMain()}
               inputStyle={styles.inputTextStyle()}
               containerStyle={styles.containerVal()}
             />
@@ -211,7 +208,6 @@ export const CareGiver = () => {
               }}
               // maxLength={20}
               keyboardType={'email-address'}
-              mainContainerStyle={styles.inputMain()}
               inputStyle={styles.inputTextStyle()}
               containerStyle={styles.containerVal()}
             />
@@ -236,7 +232,6 @@ export const CareGiver = () => {
                 setExtra(extra + 1);
               }}
               maxLength={30}
-              mainContainerStyle={styles.inputMain()}
               inputStyle={styles.inputTextStyle()}
               containerStyle={styles.containerVal()}
             />

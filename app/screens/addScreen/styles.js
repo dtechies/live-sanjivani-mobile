@@ -12,7 +12,7 @@ export const container = () => ({
   flex: 1,
   backgroundColor: color.themeBack,
   paddingTop: size.moderateScale(10),
-  paddingHorizontal: size.moderateScale(15),
+  paddingHorizontal: size.moderateScale(20),
 });
 export const listView = () => ({
   backgroundColor: color.ghostWhite,
@@ -94,15 +94,11 @@ export const addNavStyle = val => ({
   paddingHorizontal: size.moderateScale(10),
   paddingVertical: size.moderateScale(15),
   marginBottom: size.moderateScale(5),
-  width: size.deviceWidth * 0.92,
   shadowColor: color.black,
   shadowRadius: size.moderateScale(2),
   shadowOffset: {height: 5, width: 0},
   shadowOpacity: 0.05,
   elevation: size.moderateScale(2),
-  // borderWidth: 1,
-  // borderColor: color.white,
-  // backgroundColor: 'red',
 });
 export const labelAddStyle = val => ({
   fontSize: fontSize.medium,

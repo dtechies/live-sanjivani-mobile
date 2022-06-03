@@ -90,6 +90,7 @@ export const _getHelpSupportData = async () => {
   console.log('headers _getHelpSupportData ==>', headers);
   return _api_calls('GET', '/get-helpsupport-data', headers);
 };
+
 export const _addSubcategory = async payload => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({

@@ -73,7 +73,7 @@ export const ProfileScreen = () => {
                 key={i.toString()}
                 onPress={() => {
                   if (item.value == 'My Appointments') {
-                    navigation.navigate('appointmentReminderScreen');
+                    navigation.navigate('myAppointments');
                   }
                   if (item.value == 'My Medication') {
                     navigation.navigate('viewMedicationScreen');

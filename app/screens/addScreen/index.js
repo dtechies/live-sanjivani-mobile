@@ -67,6 +67,7 @@ export const AddScreen = () => {
             return (
               <Pressable
                 onPress={() => {
+                  console.log('Asdas');
                   clearData();
                   if (
                     item.name == 'Vitals' ||
@@ -104,6 +105,11 @@ export const AddScreen = () => {
                   if (item.name == 'Symptoms check') {
                     setTimeout(() => {
                       navigation.navigate('symptomsScreen');
+                    }, 500);
+                  }
+                  if (item.name == 'Medical Journal') {
+                    setTimeout(() => {
+                      navigation.navigate('medicalJournalScreen');
                     }, 500);
                   }
                   if (item.name == 'Others') {
@@ -144,20 +150,6 @@ export const AddScreen = () => {
               </Pressable>
             );
           })}
-          <View>
-            <Pressable
-              onPress={() => {
-                setTimeout(() => {
-                  navigation.navigate('medicalJournalScreen');
-                }, 500);
-              }}
-              style={styles.addNavStyle()}>
-              <Text
-                style={styles.labelAddStyle()}
-                text={'Medical Journal (take notes)'}
-              />
-            </Pressable>
-          </View>
         </View>
       </Screen>
     </SafeAreaView>
