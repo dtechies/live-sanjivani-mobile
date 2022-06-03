@@ -92,6 +92,7 @@ export const AddScreen = props => {
             return (
               <Pressable
                 onPress={() => {
+                  console.log('Asdas');
                   clearData();
                   if (
                     item.name == 'Vitals' ||
