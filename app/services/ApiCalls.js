@@ -105,3 +105,11 @@ export const _addCareGiver = async payload => {
   });
   return _api_calls('POST', '/add-user-CareGiver', headers, payload);
 };
+export const _editProfileDetails = async payload => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    type: 'multipart/form-data',
+    token: token,
+  });
+  return _api_calls('POST', '/add-edit-user-profile', headers, payload);
+};

@@ -8,14 +8,16 @@ export const AddCareGiver = body => {
     return _addCareGiver(body)
       .then(response => {
         // console.log('AddCareGiver Response := ', response);
-        return dispatch({
+        dispatch({
           type: actions.ADD_CAREGIVER,
           payload: response,
         });
+        return response;
       })
       .catch(error => {
         // console.log('AddCareGiver Error Response :=\n', error);
         dispatch({type: actions.ADD_CAREGIVER, payload: error});
+        return error;
       });
   };
 };
