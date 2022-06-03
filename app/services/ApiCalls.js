@@ -98,6 +98,31 @@ export const _addSubcategory = async payload => {
   });
   return _api_calls('POST', '/add-subcategory-value', headers, payload);
 };
+export const _getAppointmentReminder = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  // console.log('headers ==>', headers);
+  return _api_calls('GET', '/get-appointment-reminder-profile', headers);
+};
+export const _userFavoritesList = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  // console.log('headers ==>', headers);
+  return _api_calls('GET', '/user-favorites-list', headers);
+};
+
+export const _addUserFavorites = async payload => {
+  // console.log('_getOTP_payload ==> ', payload);
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  return _api_calls('POST', '/add-user-favorites', headers, payload);
+};
 export const _addCareGiver = async payload => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({

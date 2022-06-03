@@ -1,21 +1,19 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, SafeAreaView, Image} from 'react-native';
+import {View, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {MultiSelect} from 'react-native-element-dropdown';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {getAllSubCategory} from 'redux-actions';
 import {
   Text,
   Screen,
-  InputBox,
   Button,
   Header,
   MedicalItems,
   Toast,
   Loader,
 } from 'components';
-import {serviceListData, SharingData} from 'json';
-import {size, color, IcSearch, IcDown} from 'theme';
+import {SharingData} from 'json';
+
 import * as styles from './styles';
 
 export const SharingScreen = () => {
@@ -78,7 +76,7 @@ export const SharingScreen = () => {
     setLoading(true);
     const SubCategoryResponse = await dispatch(getAllSubCategory());
     const res = SubCategoryResponse;
-    console.log('SubCategoryResponse res ==>', res);
+    // console.log('SubCategoryResponse res ==>', res);
     if (res.status) {
       setLoading(false);
       // console.log('login response data ==>', res.data);
@@ -108,7 +106,6 @@ export const SharingScreen = () => {
       <Screen withScroll>
         <View style={styles.row()}>
           {sharingDataList.map((item, index) => {
-            let Icon = item.svg;
             return (
               <MedicalItems
                 key={index.toString()}
