@@ -52,8 +52,9 @@ export const containerVal = () => ({
 });
 export const textValidation = () => ({
   marginLeft: size.moderateScale(150),
-  marginBottom: size.moderateScale(3),
+  marginBottom: size.moderateScale(10),
   fontFamily: fonts.latoRegular,
-  fontSize: fontSize.verySmall,
+  fontSize: fontSize.small,
   color: color.red,
+  marginTop: size.moderateScale(-3),
 });

@@ -21,3 +21,9 @@ export const mainView = () => ({
   flex: 1,
   height: size.deviceHeight * 0.77,
 });
+export const noData = () => ({
+  paddingVertical: size.moderateScale(10),
+  fontFamily: fonts.latoBold,
+  color: color.blueCard,
+  fontSize: fontSize.medium,
+});

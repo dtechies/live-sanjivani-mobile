@@ -454,7 +454,9 @@ export const OtherScreen = props => {
         {subCategory &&
           subCategory.map((value, i) => {
             return (
-              <View style={styles.headingFirst(i == 0 ? 1 : 0)}>
+              <View
+                style={styles.headingFirst(i == 0 ? 1 : 0)}
+                key={i + 'subCategory'}>
                 <View style={styles.headOne()}>
                   <Image source={value.icon} height={25} width={25} />
                   <Text style={styles.headingTxt()}>{value.name}</Text>
