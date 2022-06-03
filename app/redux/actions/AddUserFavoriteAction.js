@@ -1,39 +1,24 @@
-import {BASE_URL} from 'config';
 import * as actions from '../Types';
+import {_addUserFavorites} from 'services';
 
-export const addUserFavorite = (body, header) => {
-  const {token} = header;
-
+export const addUserFavorite = body => {
   return dispatch => {
     dispatch({type: actions.ADD_USER_FAVORITE});
-    let url = `${BASE_URL}/add-user-favorites`;
-
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(body),
-    })
-      .then(res => res.json())
+    return _addUserFavorites(body)
       .then(response => {
-        // console.log('addUserFavorite URL := ', url);
-        // console.log('addUserFavorite header := ', header);
-        // console.log('addUserFavorite body := ', body);
-        // console.log('addUserFavorite Response := ', response);
+        console.log('addUserFavorite Response := ', response);
         if (response) {
-          return dispatch({
+          dispatch({
             type: actions.ADD_USER_FAVORITE,
             payload: response,
           });
-        } else {
-          return dispatch({type: actions.ADD_USER_FAVORITE, payload: response});
+          return response;
         }
       })
       .catch(error => {
-        // console.log('addUserFavorite Error Response :=\n', error);
+        console.log('addUserFavorite Error Response :=\n', error);
         dispatch({type: actions.ADD_USER_FAVORITE, payload: error});
+        return error;
       });
   };
 };
