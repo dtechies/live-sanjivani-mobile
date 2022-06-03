@@ -144,12 +144,24 @@ export const circleBtnView = () => ({
   alignItems: 'center',
   justifyContent: 'center',
   width: size.moderateScale(50),
-  position: 'absolute',
-  bottom: size.moderateScale(20),
-  right: size.moderateScale(10),
+  // position: 'absolute',
+  // bottom: size.moderateScale(20),
+  // right: size.moderateScale(10),
   height: size.moderateScale(50),
   paddingTop: size.moderateScale(5),
   borderRadius: 100,
+  zIndex: 10,
+  elevation: 6,
+});
+export const demoView = () => ({
+  position: 'absolute',
+  bottom: size.moderateScale(20),
+  right: size.moderateScale(10),
+  // maxHeight: size.moderateScale(150),
+  // maxWidth: size.moderateScale(200),
+  // minWidth: size.moderateScale(50),
+  // minHeight: size.moderateScale(50),
+  zIndex: 10,
 });
 export const squadBtnView = () => ({
   borderWidth: 1,
@@ -215,4 +227,14 @@ export const circleThirdView = () => ({
   borderRadius: size.moderateScale(150),
   borderWidth: size.moderateScale(1),
   borderColor: color.steelBlue,
+});
+export const plusMenu = () => ({
+  backgroundColor: 'white',
+  position: 'absolute',
+  height: size.moderateScale(150),
+  width: size.moderateScale(200),
+  bottom: size.moderateScale(20),
+  right: size.moderateScale(10),
+  borderRadius: size.moderateScale(25),
+  elevation: 5,
 });
