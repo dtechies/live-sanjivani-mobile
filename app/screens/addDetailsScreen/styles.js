@@ -137,3 +137,11 @@ export const errorText = val => ({
   marginTop: size.moderateScale(5),
   marginBottom: size.moderateScale(5),
 });
+export const errorTxt = () => ({
+  color: color.blueCard,
+  fontFamily: fonts.latoBold,
+  fontSize: fontSize.medium,
+});
+export const textMsgMain = val => ({
+  padding: size.moderateScale(25),
+});

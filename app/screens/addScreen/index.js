@@ -1,36 +1,22 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {View, Pressable, SafeAreaView} from 'react-native';
-import {
-  Text,
-  Screen,
-  InputBox,
-  Button,
-  Header,
-  Toast,
-  Loader,
-} from 'components';
+import {Text, Screen, Header, Toast, Loader} from 'components';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {getAllCategoryAndSubCategory} from 'redux-actions';
-import {size, color, IcPlus, IcBack} from 'theme';
-import {addServiceData, AddNavData} from 'json';
+import {color, IcBack} from 'theme';
+import {addServiceData} from 'json';
 import * as styles from './styles';
 
 export const AddScreen = props => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const toastRef = useRef();
-  const [activeIndex, setActiveIndex] = useState(null);
   const [extra, setExtra] = useState(0);
-  const [noteVal, setNoteVal] = useState(null);
-  const [noteValErr, setNoteValErr] = useState('');
-  const [showTakeNote, setShowTakeNote] = useState(false);
   const [show, setShow] = useState(true);
   const [showSub, setShowSub] = useState(false);
   const [loading, setLoading] = useState(false);
   const [allCategory, setAllCategory] = useState([]);
-
-  const params = props.route.params && props.route.params.showType;
   const [data, setData] = useState(addServiceData);
   const toastMessage = msg => {
     toastRef.current.show(msg);
@@ -48,7 +34,7 @@ export const AddScreen = props => {
     // setLoading(true);
     const allCatResponse = await dispatch(getAllCategoryAndSubCategory());
     const res = allCatResponse;
-    console.log('allCatResponse_NEW ==>', res);
+    // console.log('allCatResponse_NEW ==>', res);
     if (res.status) {
       setLoading(false);
       setShowSub(true);
@@ -57,7 +43,7 @@ export const AddScreen = props => {
     } else {
       setLoading(false);
       setShowSub(false);
-      // toastMessage(res.message);
+      toastMessage(res.message);
     }
   };
 
@@ -99,14 +85,21 @@ export const AddScreen = props => {
                     item.name == 'Activity'
                   ) {
                     setTimeout(() => {
-                      allCategory.map(val => {
-                        if (val.name == item.name) {
-                          navigation.navigate('addDetailsScreen', {
-                            title: item.name,
-                            sub: val.subcategories,
-                          });
-                        }
-                      });
+                      if (allCategory.length != 0) {
+                        allCategory.map(val => {
+                          if (val.name == item.name) {
+                            navigation.navigate('addDetailsScreen', {
+                              title: item.name,
+                              sub: val.subcategories,
+                            });
+                          }
+                        });
+                      } else {
+                        navigation.navigate('addDetailsScreen', {
+                          title: item.name,
+                          sub: [],
+                        });
+                      }
                     }, 500);
                   }
                   if (item.name == 'Care giver') {
@@ -126,14 +119,21 @@ export const AddScreen = props => {
                   }
                   if (item.name == 'Others') {
                     setTimeout(() => {
-                      allCategory.map(val => {
-                        if (val.name == item.name) {
-                          navigation.navigate('otherScreen', {
-                            title: item.name,
-                            sub: val.subcategories,
-                          });
-                        }
-                      });
+                      if (allCategory.length != 0) {
+                        allCategory.map(val => {
+                          if (val.name == item.name) {
+                            navigation.navigate('otherScreen', {
+                              title: item.name,
+                              sub: val.subcategories,
+                            });
+                          }
+                        });
+                      } else {
+                        navigation.navigate('otherScreen', {
+                          title: item.name,
+                          sub: [],
+                        });
+                      }
                     }, 500);
                   }
                   if (item.name == 'Medication') {

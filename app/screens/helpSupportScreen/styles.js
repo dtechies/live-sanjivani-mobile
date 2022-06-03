@@ -52,3 +52,9 @@ export const dashView = () => ({
   marginTop: size.moderateScale(20),
   marginBottom: size.moderateScale(10),
 });
+export const noData = () => ({
+  padding: size.moderateScale(5),
+  fontFamily: fonts.latoBold,
+  color: color.blueCard,
+  fontSize: fontSize.medium,
+});
