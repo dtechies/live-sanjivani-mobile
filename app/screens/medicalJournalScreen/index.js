@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {SafeAreaView, Pressable, View, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Dropdown} from 'react-native-element-dropdown';
+// import {Dropdown} from 'react-native-element-dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Modalize} from 'react-native-modalize';

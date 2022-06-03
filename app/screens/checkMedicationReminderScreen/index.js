@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {SafeAreaView, Pressable, View, ScrollView} from 'react-native';
+import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';

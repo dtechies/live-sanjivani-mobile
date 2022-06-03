@@ -2,11 +2,11 @@ import React, {useState, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Loader, Text, Screen, Header, Toast} from 'components';
-import {images} from 'theme';
+// import {images} from 'theme';
 import * as styles from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {MainProfileDetail} from 'json';
-import {userData, getOtp} from 'redux-actions';
+import {userData} from 'redux-actions';
 
 export const ProfileScreen = () => {
   const dispatch = useDispatch();

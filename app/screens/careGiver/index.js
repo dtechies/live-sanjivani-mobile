@@ -1,24 +1,57 @@
-import React, {useState} from 'react';
-import {View, Pressable, SafeAreaView} from 'react-native';
+import React, {useState, useRef, useEffect} from 'react';
+import {View, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
-import {Text, Button, Header, InputBox, Screen} from 'components';
+import {useDispatch, useSelector} from 'react-redux';
+import {AddCareGiver, userData} from 'redux-actions';
+import {
+  Text,
+  Button,
+  Header,
+  InputBox,
+  Screen,
+  Toast,
+  Loader,
+} from 'components';
 import * as styles from './styles';
 
 export const CareGiver = () => {
   const navigation = useNavigation();
-
+  const dispatch = useDispatch();
+  const toastRef = useRef();
   const [extra, setExtra] = useState(0);
   const [firstName, setFirstName] = useState('');
   const [firstNameCorrect, setFirstNameCorrect] = useState('');
   const [lastName, setLastName] = useState('');
   const [lastNameCorrect, setLastNameCorrect] = useState('');
   const [phone, setPhone] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [phoneCorrect, setPhoneCorrect] = useState('');
   const [email, setEmail] = useState('');
   const [emailCorrect, setEmailCorrect] = useState('');
   const [nickName, setNickName] = useState('');
   const [nickNameCorrect, setNickNameCorrect] = useState('');
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
+  const {userDataResponse} = useSelector(state => ({
+    userDataResponse: state.userDataReducer.userDataResponse,
+  }));
+
+  useEffect(() => {
+    // console.log('userData ==>', userDataResponse);
+    if (userDataResponse.careGiver) {
+      setFirstName(userDataResponse.careGiver.first_name);
+      setLastName(userDataResponse.careGiver.last_name);
+      setPhone(userDataResponse.careGiver.contact_no);
+      setEmail(userDataResponse.careGiver.email);
+      setNickName(userDataResponse.careGiver.nick_name);
+      setIsEdit(false);
+      setExtra(extra + 1);
+    } else {
+      setIsEdit(true);
+    }
+  }, []);
 
   const validation = () => {
     let error = false;
@@ -56,11 +89,53 @@ export const CareGiver = () => {
     }
 
     if (!error) {
-      navigation.goBack();
+      saveData();
     }
   };
+
+  const saveData = async () => {
+    setLoading(true);
+    const addCaregiverBody = {
+      first_name: firstName,
+      last_name: lastName,
+      contact_no: phone,
+      email: email,
+      nick_name: nickName,
+    };
+    // console.log('addCaregiverBody ==>', addCaregiverBody);
+    const AddCareGiverResponse = await dispatch(AddCareGiver(addCaregiverBody));
+    const res = AddCareGiverResponse;
+    // console.log('addCaregiverBody res ==>', res);
+    if (res.status) {
+      setLoading(false);
+      toastMessage(res.message);
+      dispatch(
+        userData({
+          userData: userDataResponse.userData,
+          age: userDataResponse.age,
+          login: userDataResponse.login,
+          careGiver: addCaregiverBody,
+        }),
+      );
+      setTimeout(() => {
+        navigation.navigate('addScreen');
+      }, 150);
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container()}>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <Header
         leftOnPress={() => {
           navigation.goBack();
@@ -89,6 +164,7 @@ export const CareGiver = () => {
               maxLength={15}
               inputStyle={styles.inputTextStyle()}
               containerStyle={styles.containerVal()}
+              editable={isEdit}
             />
           </View>
         </View>
@@ -105,6 +181,7 @@ export const CareGiver = () => {
           <View style={styles.rightViewStyle()}>
             <InputBox
               value={lastName}
+              editable={isEdit}
               onChangeText={val => {
                 setLastName(val);
                 setLastNameCorrect('');
@@ -129,6 +206,7 @@ export const CareGiver = () => {
           <View style={styles.rightViewStyle()}>
             <InputBox
               value={phone}
+              editable={isEdit}
               onChangeText={val => {
                 setPhone(val);
                 setPhoneCorrect('');
@@ -154,12 +232,12 @@ export const CareGiver = () => {
           <View style={styles.rightViewStyle()}>
             <InputBox
               value={email}
+              editable={isEdit}
               onChangeText={val => {
                 setEmail(val);
                 setEmailCorrect('');
                 setExtra(extra + 1);
               }}
-              // maxLength={20}
               keyboardType={'email-address'}
               inputStyle={styles.inputTextStyle()}
               containerStyle={styles.containerVal()}
@@ -179,6 +257,7 @@ export const CareGiver = () => {
           <View style={styles.rightViewStyle()}>
             <InputBox
               value={nickName}
+              editable={isEdit}
               onChangeText={val => {
                 setNickName(val);
                 setNickNameCorrect('');
@@ -194,14 +273,16 @@ export const CareGiver = () => {
           <Text style={styles.textValidation()} text={nickNameCorrect} />
         ) : null}
       </Screen>
-      <Button
-        buttonStyle={styles.button()}
-        buttonText={styles.buttonTxt()}
-        nameTx={'careGiver_screen.save'}
-        onPress={() => {
-          validation();
-        }}
-      />
+      {isEdit && (
+        <Button
+          buttonStyle={styles.button()}
+          buttonText={styles.buttonTxt()}
+          nameTx={'careGiver_screen.save'}
+          onPress={() => {
+            validation();
+          }}
+        />
+      )}
     </SafeAreaView>
   );
 };
