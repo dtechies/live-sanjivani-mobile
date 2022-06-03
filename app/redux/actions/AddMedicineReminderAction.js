@@ -1,4 +1,3 @@
-import {BASE_URL} from 'config';
 import * as actions from '../Types';
 import {_addMedicineReminder} from 'services';
 

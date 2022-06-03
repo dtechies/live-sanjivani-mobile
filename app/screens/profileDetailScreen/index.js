@@ -2,16 +2,15 @@ import React, {useState, useRef, useEffect} from 'react';
 import 'react-native-gesture-handler';
 import {SafeAreaView, View, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-// import {Dropdown} from 'react-native-element-dropdown';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
 import {useDispatch, useSelector} from 'react-redux';
-import {getOtp} from 'redux-actions';
+import {getOtp, editUserProfile} from 'redux-actions';
 import {Text, Button, Screen, InputBox, Header} from 'components';
-import {size, color, IcSearch, IcEdit, images} from 'theme';
+import {size, color, IcEdit, images} from 'theme';
 import * as styles from './styles';
 import {genderVal, languageVal} from 'json';
 
@@ -114,6 +113,7 @@ export const ProfileDetailScreen = () => {
       image.imageName = imgPathSubstr;
       modalRef.current.close();
       setImageData(image);
+
       setImageDataErr('');
     });
   };
@@ -181,8 +181,39 @@ export const ProfileDetailScreen = () => {
       setImageDataErr('Please Upload / take image...');
     }
   };
-  const editProfileDetails = () => {
-    navigation.goBack();
+  const editProfileDetails = async () => {
+    setLoading(true);
+    let formData = new FormData();
+    formData.append('first_name', firstNm);
+    formData.append('last_name', lastNm);
+    formData.append('gender', gender);
+    formData.append('image', {
+      uri: imageData.path,
+      name: imageData.imageName,
+      type: imageData.mime,
+    });
+    formData.append('dob', dob);
+    formData.append('email', email);
+    formData.append('mob_no', phone);
+    formData.append('language', language);
+    formData.append('otp', '6666');
+    console.log('editProfileDetails form data ==>', formData);
+    return;
+    const addMedicineReminderResponse = await dispatch(
+      addMedicineReminder(formData),
+    );
+    setLoading(false);
+    const res = addMedicineReminderResponse.payload;
+    // console.log('addMedicineReminder Res ==>', res);
+
+    if (res.status) {
+      // console.log('addMedicineReminder List ==>', res);
+      toastMessage(res.message);
+      navigation.navigate('todayScreen');
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+    }
   };
 
   return (

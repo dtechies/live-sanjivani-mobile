@@ -15,4 +15,5 @@ export * from './header';
 export * from './toast';
 export * from './fabMenu';
 export * from './reminderCard';
+export * from './alertModal';
 export * from './appointmentCart';

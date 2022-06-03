@@ -2,7 +2,9 @@ import {View, Pressable, Image} from 'react-native';
 import React from 'react';
 import * as styles from './styles';
 import {Text} from '../';
-import {color, IcSelected, images} from 'theme';
+import {color, IcSelected, size} from 'theme';
+import {SvgUri} from 'react-native-svg';
+
 export const MedicalItems = props => {
   const {
     containerStyle,
@@ -18,16 +20,16 @@ export const MedicalItems = props => {
     nameThirdTx,
     nameThird,
   } = props;
-  const imageUrl = svgCardItems ? {uri: svgCardItems} : images.icLogo;
+  // const imageUrl = svgCardItems ? {uri: svgCardItems} : images.icLogo;
   return (
     <Pressable style={[styles.container(), containerStyle]} onPress={onPress}>
       <View style={styles.flexOne()}></View>
       <View style={styles.centerView()}>
         {/* <View style={styles.centerLeftView()}>{svgCardItems}</View> */}
-        <Image
-          resizeMode="cover"
-          source={imageUrl}
-          style={styles.centerLeftView()}
+        <SvgUri
+          height={size.moderateScale(35)}
+          width={size.moderateScale(35)}
+          uri={svgCardItems}
         />
         <View style={styles.centerRightView()}>
           <View style={styles.flexDirectionStyle()}>

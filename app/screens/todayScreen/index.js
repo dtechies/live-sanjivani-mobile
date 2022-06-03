@@ -14,7 +14,6 @@ export const TodayScreen = () => {
   const [medicationTrue, setMedicationTrue] = useState(medicationReminder);
   const [medicationUpcoming, setMedicationUpcoming] = useState('');
   const [reminderList, setReminderList] = useState(reminderListData);
-  const [extra, setExtra] = useState(0);
   const navigation = useNavigation();
   const [exitApp, setExitApp] = useState(0);
 
