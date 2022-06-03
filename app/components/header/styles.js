@@ -33,7 +33,7 @@ export const profileInfoMain = val => ({
   // backgroundColor: 'red',
 });
 export const leftIconDes = val => ({
-  paddingHorizontal: size.moderateScale(20),
+  paddingLeft: size.moderateScale(20),
   paddingVertical: size.moderateScale(25),
 });
 

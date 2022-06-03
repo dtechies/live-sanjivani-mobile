@@ -19,7 +19,7 @@ function _get(url, headers) {
   return fetch(url, options)
     .then(r => r.json())
     .catch(e => {
-      console.log('KYAAAError', e);
+      // console.log('KYAAAError', e);
     });
 }
 

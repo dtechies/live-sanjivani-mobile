@@ -27,6 +27,7 @@ export const ViewMedicationScreen = () => {
   };
   const reminderList =
     filteredData.length > 0 ? filteredData : medicineReminderData;
+
   const onSearch = val => {
     setSearchText(val);
     let text = val.toLowerCase() || val.toUpperCase();
@@ -34,51 +35,26 @@ export const ViewMedicationScreen = () => {
     let FilteredValue = medicineReminderData.filter(item => {
       return item.medicine_name.toLowerCase().match(text);
     });
-
+    FilteredValue.length == 0 && FilteredValue.push({value: 'null'});
     setFilteredData(FilteredValue);
   };
-  // const backAction = () => {
-  //   setTimeout(() => {
-  //     setExitApp(0);
-  //   }, 2000); // 2 seconds to tap second-time
 
-  //   if (exitApp === 0) {
-  //     setExitApp(exitApp + 1);
-  //   } else if (exitApp === 1) {
-  //     BackHandler.exitApp();
-  //   }
-  //   return true;
-  // };
-  // useEffect(() => {
-  //   // console.log('navigation', navigation);
-  //   const backHandler = BackHandler.addEventListener(
-  //     'hardwareBackPress',
-  //     backAction,
-  //   );
-  //   return () => route.name === 'viewMedicationScreen' && backHandler.remove();
-  // });
   const getMedicineReminderData = async () => {
-    setLoading(true);
+    // setLoading(true);
 
     const getMedicineReminderProfileResponse = await dispatch(
       getMedicineReminderProfile(),
     );
+    // console.log(getMedicineReminderProfileResponse);
     const res = getMedicineReminderProfileResponse.payload;
-    // console.log('getMedicineReminderData res ==>', res);
     if (res.status) {
-      // console.log(
-      //   'getMedicineReminderData list ==>',
-      //   res.data.MedicineReminderProfileData,
-      // );
       setMedicineReminderData(res.data.MedicineReminderProfileData);
       setFilteredData(res.data.MedicineReminderProfileData);
-      setLoading(false);
+      // setLoading(false);
       setExtra(extra + 1);
       toastMessage(res.message);
-
-      // setReminderOption(res.data);
     } else {
-      setLoading(false);
+      setLoading(true);
       toastMessage(res.message);
     }
   };
@@ -150,6 +126,9 @@ export const ViewMedicationScreen = () => {
         )}
         <View style={styles.bottomStyle()}>
           {reminderList.map((val, i) => {
+            if (val.value == 'null') {
+              return <Text style={styles.noData()}>No Records Found...</Text>;
+            }
             return (
               <ReminderCard
                 data={val}
