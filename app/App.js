@@ -1,5 +1,5 @@
 import React, {useState, useMemo, createContext, useEffect} from 'react';
-import {View, LogBox} from 'react-native';
+import {LogBox} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import * as RNLocalize from 'react-native-localize';
@@ -70,7 +70,7 @@ const App = () => {
           let notif = notifReceivedEvent.getNotification();
           // console.log('WILL SHOW');
 
-          // console.log('notif ==>', notif);
+          console.log('notif ==>', notif);
 
           // FOR DIRECTLY RECIEVE IT WITHOUT ALERTA
           notifReceivedEvent.complete(notif);
@@ -91,14 +91,23 @@ const App = () => {
           //   },
           // };
 
-          // Alert.alert('Complete notification?', 'Test', [button1, button2], {
-          //   cancelable: true,
-          // });
+          // Alert.alert(
+          //   'Complete notification?',
+          //   'Test1111',
+          //   [button1, button2],
+          //   {
+          //     cancelable: true,
+          //   },
+          // );
         },
       );
       // setNotificationWillShowInForegroundHandler
       OneSignal.setNotificationOpenedHandler(notification => {
+        // alert(`${notification.notification.title}`);
         // console.log('OneSignal: notification opened:', notification);
+      });
+      OneSignal.promptForPushNotificationsWithUserResponse(notification => {
+        // console.log('prompt', notification);
       });
       OneSignal.setInAppMessageClickHandler(event => {
         // console.log('OneSignal IAM clicked:', event);
