@@ -1,34 +1,20 @@
-import {BASE_URL} from 'config';
 import * as Actions from '../Types';
+import {_getAppointmentReminder} from 'services';
 
-export const getAppointmentReminderProfile = header => {
-  const {token} = header;
-
+export const getAppointmentReminderProfile = () => {
   return dispatch => {
     dispatch({type: Actions.GET_APPOINTMENT_REMINDER_PROFILE});
-    let url = `${BASE_URL}/get-appointment-reminder-profile`;
-    return fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => res.json())
+    return _getAppointmentReminder()
       .then(response => {
         // console.log('getAppointmentReminderProfile URL := ', url);
         // console.log('getAppointmentReminderProfile header := ', header);
-        // console.log('getAppointmentReminderProfile Response := ', response);
+        console.log('getAppointmentReminderProfile Response := ', response);
         if (response) {
-          return dispatch({
+          dispatch({
             type: Actions.GET_APPOINTMENT_REMINDER_PROFILE,
             payload: response,
           });
-        } else {
-          return dispatch({
-            type: Actions.GET_APPOINTMENT_REMINDER_PROFILE,
-            payload: response,
-          });
+          return response;
         }
       })
       .catch(error => {
@@ -40,6 +26,7 @@ export const getAppointmentReminderProfile = header => {
           type: Actions.GET_APPOINTMENT_REMINDER_PROFILE,
           payload: error,
         });
+        return error;
       });
   };
 };

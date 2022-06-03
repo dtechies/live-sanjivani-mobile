@@ -19,13 +19,13 @@ export const placeholderStyle = () => ({
   fontSize: fontSize.mediumSec,
 });
 export const labelTextStyle = () => ({
-  paddingLeft: size.moderateScale(30),
+  // paddingLeft: size.moderateScale(19),
   fontFamily: fonts.latoBold,
   color: color.blueTx,
   fontSize: fontSize.medium,
 });
 export const inputMain = () => ({
-  width: size.deviceWidth * 0.55,
+  // width: size.deviceWidth * 0.55,
 });
 export const inputTextStyle = () => ({
   fontSize: fontSize.medium,
@@ -36,6 +36,7 @@ export const inputTextStyle = () => ({
 export const mainViewStyle = val => ({
   flexDirection: 'row',
   marginVertical: size.moderateScale(5),
+  marginHorizontal: size.moderateScale(19),
   marginTop: val == 1 ? size.moderateScale(20) : 0,
 });
 export const leftViewStyle = () => ({
