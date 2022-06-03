@@ -145,6 +145,13 @@
     "todaysMedication": "Today's Medication",
     "save": "Save"
   },
+  "myAppointments_screen": {
+    "title": "Appointment Reminder",
+    "appointmentList": "Appointment List",
+    "SubTitle": "My Medicine",
+    "todaysAppointments": "Today's Medication",
+    "save": "Save"
+  },
   "CheckMedicationReminderScreen": {
     "title": "Add Medicine Reminder"
   },

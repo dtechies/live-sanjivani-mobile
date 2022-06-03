@@ -38,15 +38,15 @@ export const Header = props => {
           <Pressable onPress={props.leftOnPress} style={styles.leftIconDes()}>
             {props.isLeftArrow && (
               <IcLeftShort
-                width={10}
-                height={18}
+                width={size.moderateScale(10)}
+                height={size.moderateScale(18)}
                 fill={props.isColor || props.isBlue ? color.white : color.black}
               />
             )}
             {props.isLongArrowLeft && (
               <IcLeftArrow
-                width={21}
-                height={15}
+                width={size.moderateScale(21)}
+                height={size.moderateScale(15)}
                 fill={props.isColor || props.isBlue ? color.white : color.blue}
               />
             )}
@@ -84,8 +84,8 @@ export const Header = props => {
               console.log('Profile Icon Clicked...');
             }}>
             <IcProfileLogo
-              width={26}
-              height={26}
+              width={size.moderateScale(26)}
+              height={size.moderateScale(26)}
               fill={props.isColor || props.isBlue ? color.white : color.black}
             />
           </Pressable>
@@ -96,8 +96,8 @@ export const Header = props => {
               console.log('Profile Icon Clicked...');
             }}>
             <IcCrossArrow
-              width={11}
-              height={11}
+              width={size.moderateScale(11)}
+              height={size.moderateScale(11)}
               fill={props.isColor || props.isBlue ? color.white : color.blue}
             />
           </Pressable>

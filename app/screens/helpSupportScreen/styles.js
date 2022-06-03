@@ -2,7 +2,7 @@ import {color, size, fontSize, fonts} from 'theme';
 
 export const container = () => ({
   flex: 1,
-  paddingHorizontal: size.moderateScale(25),
+  paddingHorizontal: size.moderateScale(20),
   backgroundColor: color.themeBack,
 });
 export const full = () => ({

@@ -78,7 +78,7 @@ export const SharingScreen = () => {
     setLoading(true);
     const SubCategoryResponse = await dispatch(getAllSubCategory());
     const res = SubCategoryResponse;
-    // console.log('SubCategoryResponse res ==>', res);
+    console.log('SubCategoryResponse res ==>', res);
     if (res.status) {
       setLoading(false);
       // console.log('login response data ==>', res.data);

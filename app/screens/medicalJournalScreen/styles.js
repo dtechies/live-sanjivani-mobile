@@ -6,8 +6,6 @@ export const container = () => ({
   //
 });
 export const screenContainer = () => ({
-  //   paddingHorizontal: size.moderateScale(20),
-  // backgroundColor: 'red',
   marginBottom: size.moderateScale(35),
 });
 //
@@ -33,9 +31,6 @@ export const profileText = () => ({
   textAlign: 'center',
   paddingTop: size.moderateScale(5),
 });
-
-//
-// import {color, fontSize, size} from 'theme';
 
 export const container1 = () => ({
   width: size.deviceWidth * 1,
@@ -82,9 +77,10 @@ export const btnContinueTxt = () => ({
   fontFamily: fonts.latoRegular,
 });
 export const cardDesign = val => ({
+  flex: 1,
   marginTop: size.moderateScale(10),
-  marginHorizontal: size.moderateScale(val == 1 ? size.moderateScale(102) : 0),
   marginBottom: size.moderateScale(5),
+  marginLeft: val == 1 ? size.moderateScale(40) : size.moderateScale(0),
   flexDirection: 'row',
   alignItems: 'center',
 });
@@ -98,7 +94,6 @@ export const listJournalHeader = val => ({
   fontSize: fontSize.medium,
   fontFamily: fonts.latoBold,
   color: color.headerBlue,
-  // marginLeft: size.moderateScale(25),
   marginLeft: size.moderateScale(5),
 });
 export const circleView = () => ({
@@ -109,26 +104,26 @@ export const circleView = () => ({
 });
 export const headingMain = val => ({
   flexDirection: 'row',
-  marginHorizontal: size.moderateScale(30),
+  marginHorizontal: size.moderateScale(13),
   marginTop: val == 1 ? size.moderateScale(20) : size.moderateScale(10),
-  // backgroundColor: 'red',
-  // justifyContent: 'space-between',
+});
+export const dateTimeCardStyle = () => ({
+  flexDirection: 'row',
+  marginHorizontal: size.moderateScale(20),
+  justifyContent: 'space-between',
 });
 export const errorText = val => ({
   color: color.red,
   fontFamily: fonts.latoRegular,
   fontSize: fontSize.small,
-  // marginRight: val == 0 ? 50 : 0,
   marginLeft:
-    val == 1 ? size.moderateScale(45) : val == 2 ? size.moderateScale(30) : 0,
+    val == 1 ? size.moderateScale(0) : val == 2 ? size.moderateScale(21) : 0,
 });
 export const errorText1 = val => ({
   color: color.red,
   fontFamily: fonts.latoRegular,
   fontSize: fontSize.small,
-  // marginRight: val == 0 ? 50 : 0,
-  marginLeft:
-    val == 1 ? size.moderateScale(170) : val == 2 ? size.moderateScale(30) : 0,
+  marginRight: size.moderateScale(23),
 });
 export const cardView = val => ({
   backgroundColor: color.white,
@@ -141,10 +136,10 @@ export const cardView = val => ({
   paddingHorizontal: size.moderateScale(28),
   borderRadius: size.moderateScale(5),
   marginLeft: val == 1 ? size.moderateScale(10) : 0,
-  width: val == 1 ? size.deviceWidth * 0.39 : size.deviceWidth * 0.42,
+  width: size.deviceWidth * 0.39,
 });
 export const inputMain = () => ({
-  width: size.deviceWidth * 0.85,
+  width: size.deviceWidth * 0.89,
   alignSelf: 'center',
   margin: size.moderateScale(10),
   shadowColor: color.black,
@@ -204,25 +199,22 @@ export const MedicalJournalListView = () => ({
   paddingVertical: size.moderateScale(10),
   paddingHorizontal: size.moderateScale(20),
   borderRadius: size.moderateScale(10),
-  marginHorizontal: size.moderateScale(30),
+  marginHorizontal: size.moderateScale(21),
   backgroundColor: color.white,
   marginVertical: size.moderateScale(5),
   justifyContent: 'space-between',
 });
 export const row = () => ({
   flexDirection: 'row',
-  marginLeft: size.moderateScale(30),
+  marginLeft: size.moderateScale(21),
   marginBottom: size.moderateScale(5),
   alignItems: 'center',
-  // backgroundColor: 'red',
 });
 export const rowImage = () => ({
   flexDirection: 'row',
   justifyContent: 'space-between',
 });
 export const textTodayProgress = () => ({
-  // paddingTop: size.moderateScale(10),
-  // paddingBottom: size.moderateScale(7),
   fontFamily: fonts.latoBold,
   color: color.steelBlue,
   fontSize: fontSize.small,

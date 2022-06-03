@@ -125,6 +125,11 @@ export const AddScreen = props => {
                       navigation.navigate('symptomsScreen');
                     }, 500);
                   }
+                  if (item.name == 'Medical Journal') {
+                    setTimeout(() => {
+                      navigation.navigate('medicalJournalScreen');
+                    }, 500);
+                  }
                   if (item.name == 'Others') {
                     setTimeout(() => {
                       allCategory.map(val => {
@@ -156,21 +161,6 @@ export const AddScreen = props => {
               </Pressable>
             );
           })}
-          <View>
-            <Pressable
-              onPress={() => {
-                setTimeout(() => {
-                  navigation.navigate('medicalJournalScreen');
-                }, 500);
-                setShow(!show);
-              }}
-              style={styles.addNavStyle()}>
-              <Text
-                style={styles.labelAddStyle()}
-                text={'Medical Journal (take notes)'}
-              />
-            </Pressable>
-          </View>
         </View>
       </Screen>
     </SafeAreaView>

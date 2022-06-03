@@ -93,3 +93,19 @@ export const _getHelpSupportData = async () => {
   console.log('headers _getHelpSupportData ==>', headers);
   return _api_calls('GET', '/get-helpsupport-data', headers);
 };
+// export const _get_appointment_reminder = async () => {
+//   let {_api_calls} = HttpCalls;
+//   let headers = await headersData({
+//     token: token,
+//   });
+//   console.log('headers _get_appointment_reminder ==>', headers);
+//   return _api_calls('GET', '/get-appointment-reminder-profile', headers);
+// };
+export const _getAppointmentReminder = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  // console.log('headers ==>', headers);
+  return _api_calls('GET', '/get-appointment-reminder-profile', headers);
+};
