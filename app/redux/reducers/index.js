@@ -30,6 +30,7 @@ import getAppointmentReminderAllDetailReducer from './GetAppointmentReminderAllD
 import getSubCategoryDataReducer from './getSubCategoryDataReducer';
 import getOtpReducer from './GetOtpReducer';
 import addSubcategoryReducer from './AddSubcategoryReducer';
+import addCareGiverReducer from './AddCareGiverReducer';
 
 const persistConfig = {
   key: 'root',
@@ -64,6 +65,7 @@ const appReducer = combineReducers({
   getSubCategoryDataReducer: getSubCategoryDataReducer,
   getOtpReducer: getOtpReducer,
   addSubcategoryReducer: addSubcategoryReducer,
+  addCareGiverReducer: addCareGiverReducer,
 });
 
 const rootReducer = (state, action) => {

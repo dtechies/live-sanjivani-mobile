@@ -25,3 +25,4 @@ export * from './GetAppointmentReminderAllDetailAction';
 export * from './GetSubCategoryDataAction';
 export * from './GetOtpAction';
 export * from './AddSubcategoryAction';
+export * from './AddCareGiverAction';

@@ -8,12 +8,11 @@ import {color, IcBack} from 'theme';
 import {addServiceData} from 'json';
 import * as styles from './styles';
 
-export const AddScreen = props => {
+export const AddScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const toastRef = useRef();
   const [extra, setExtra] = useState(0);
-  const [show, setShow] = useState(true);
   const [showSub, setShowSub] = useState(false);
   const [loading, setLoading] = useState(false);
   const [allCategory, setAllCategory] = useState([]);
@@ -151,7 +150,6 @@ export const AddScreen = props => {
                 setTimeout(() => {
                   navigation.navigate('medicalJournalScreen');
                 }, 500);
-                setShow(!show);
               }}
               style={styles.addNavStyle()}>
               <Text
