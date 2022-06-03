@@ -80,7 +80,8 @@
     "strength": "Select Strength",
     "next": "Next",
     "take_picture": "Take Picture",
-    "upload_picture": "Upload Picture"
+    "upload_picture": "Upload Picture",
+    "reminderName": "Reminder Name"
   },
   "login_screen": {
     "number": "Enter Your Phone Number",
@@ -123,7 +124,8 @@
     "keep_it_up!": "Keep It Up!",
     "you_are_on_the_right_track": "You are on the right track",
     "today_progress": "Today's Progress",
-    "today_medication": "Today's Medication"
+    "today_medication": "Today's Medication",
+    "today_appointment": "Today's Appointment"
   },
   "select_service_screen": {
     "title_select_service": "Select Services",
@@ -138,8 +140,16 @@
   },
   "ViewMedicationScreen": {
     "title": "Medication Reminder",
+    "medicationList": "Medication List",
     "SubTitle": "My Medicine",
     "todaysMedication": "Today's Medication",
+    "save": "Save"
+  },
+  "myAppointments_screen": {
+    "title": "Appointment Reminder",
+    "appointmentList": "Appointment List",
+    "SubTitle": "My Medicine",
+    "todaysAppointments": "Today's Medication",
     "save": "Save"
   },
   "CheckMedicationReminderScreen": {

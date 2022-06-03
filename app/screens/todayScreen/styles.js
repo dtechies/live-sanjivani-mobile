@@ -29,8 +29,8 @@ export const textTodayProgress = () => ({
 export const textTime = () => ({
   paddingLeft: size.moderateScale(7),
   fontFamily: fonts.latoRegular,
-  color: color.steelBlue,
-  fontSize: fontSize.verySmall,
+  color: color.midnightBlue,
+  fontSize: fontSize.smallText,
 });
 export const timeStyle = () => ({
   fontFamily: fonts.latoBold,
@@ -61,6 +61,13 @@ export const medicineName = () => ({
   paddingBottom: size.moderateScale(7),
   fontFamily: fonts.latoBold,
   color: color.steelBlue,
+  fontSize: fontSize.medium,
+});
+export const tipsTxt = () => ({
+  paddingTop: size.moderateScale(10),
+  paddingBottom: size.moderateScale(7),
+  fontFamily: fonts.latoRegular,
+  color: color.dimGrey,
   fontSize: fontSize.medium,
 });
 
@@ -101,14 +108,18 @@ export const backgroundBtn = () => ({
   right: size.moderateScale(15),
 });
 
-export const row = () => ({
+export const row = isFlex => ({
   flexDirection: 'row',
   // backgroundColor: 'red',
+  alignItems: 'center',
   justifyContent: 'space-between',
+  flex: isFlex ? 1 : 0,
 });
 export const rowImage = () => ({
   flexDirection: 'row',
   alignItems: 'center',
+  // justifyContent: 'space-between',
+  flex: 1,
   // backgroundColor: 'red',
 });
 export const medicationCard = () => ({
@@ -176,57 +187,42 @@ export const squadBtnView = () => ({
   borderRadius: 50,
 });
 export const circleView = () => ({
-  height: size.moderateScale(13),
-  width: size.moderateScale(13),
-  backgroundColor: color.steelBlue,
+  height: size.moderateScale(12),
+  width: size.moderateScale(12),
+  backgroundColor: color.midnightBlue,
+  borderRadius: size.moderateScale(50),
+});
+export const circleDateView = () => ({
+  height: size.moderateScale(12),
+  width: size.moderateScale(12),
+  marginLeft: size.moderateScale(10),
+  backgroundColor: color.midnightBlue,
   borderRadius: size.moderateScale(50),
 });
 
 export const separator = () => ({
-  backgroundColor: color.darkGrey,
+  backgroundColor: color.midnightBlue,
   height: size.moderateScale(1),
 });
-export const circleTimeView = () => ({
-  alignSelf: 'center',
-  // backgroundColor: color.denim,
-  // width: size.deviceWidth * 0.8,
-  // height: size.deviceHeight * 0.3,
-  marginVertical: size.moderateScale(15),
-  paddingVertical: size.moderateScale(1),
-  paddingHorizontal: size.moderateScale(15),
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: size.moderateScale(150),
-  borderWidth: size.moderateScale(15),
-  borderColor: color.strongBlue,
+export const insideUpcomingCircle = () => ({
+  height: size.moderateScale(4),
+  width: size.moderateScale(4),
+  borderRadius: 2,
+  backgroundColor: color.white,
 });
-export const circleSecondView = () => ({
-  alignSelf: 'center',
-  // width: size.deviceWidth * 0.8,
-  // height: size.deviceHeight * 0.3,
-  marginVertical: size.moderateScale(15),
-  paddingVertical: size.moderateScale(15),
-  paddingHorizontal: size.moderateScale(15),
+export const upcomingCircle = () => ({
+  height: size.moderateScale(12),
+  width: size.moderateScale(12),
+  borderRadius: size.moderateScale(6),
+  backgroundColor: color.dimGrey,
   alignItems: 'center',
   justifyContent: 'center',
-  borderRadius: size.moderateScale(150),
-  borderWidth: size.moderateScale(1),
-  borderColor: color.starColor,
-  borderStyle: 'dotted',
 });
-export const circleThirdView = () => ({
-  alignSelf: 'center',
-  backgroundColor: color.steelBlue,
-  // width: size.deviceWidth * 0.8,
-  // height: size.deviceHeight * 0.3,
-  // marginVertical: size.moderateScale(15),
-  paddingVertical: size.moderateScale(50),
-  paddingHorizontal: size.moderateScale(40),
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: size.moderateScale(150),
-  borderWidth: size.moderateScale(1),
-  borderColor: color.steelBlue,
+export const lineStyle = isDone => ({
+  borderBottomWidth: 1,
+  borderBottomColor: isDone ? color.blue : color.dimGrey,
+  borderStyle: 'dashed',
+  flex: 1,
 });
 export const plusMenu = () => ({
   backgroundColor: 'white',

@@ -7,6 +7,7 @@ import {
   AppointmentReminderScreen,
   LoginScreen,
   HelpSupportScreen,
+  HelpSupportDetailsScreen,
   RegisterScreen,
   SelectServiceScreen,
   ViewMedicationScreen,
@@ -30,6 +31,10 @@ export const HomeStackNavigation = () => {
       <Stack.Screen name="loginScreen" component={LoginScreen} />
       <Stack.Screen name="registerScreen" component={RegisterScreen} />
       <Stack.Screen name="HelpSupportScreen" component={HelpSupportScreen} />
+      {/* <Stack.Screen
+        name="helpSupportDetailsScreen"
+        component={HelpSupportDetailsScreen}
+      /> */}
       <Stack.Screen
         name="medicationReminderScreen"
         component={MedicationReminderScreen}

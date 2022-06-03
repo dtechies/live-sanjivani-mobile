@@ -85,3 +85,19 @@ export const _getAllSubCategory = async () => {
   });
   return _api_calls('GET', '/all-subcategory', headers);
 };
+export const _getHelpSupportData = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  console.log('headers _getHelpSupportData ==>', headers);
+  return _api_calls('GET', '/get-helpsupport-data', headers);
+};
+
+export const _addSubcategory = async payload => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  return _api_calls('POST', '/add-subcategory-value', headers, payload);
+};

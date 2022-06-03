@@ -7,7 +7,13 @@ import LottieView from 'lottie-react-native';
 export const Loader = () => {
   return (
     <View style={styles.container()}>
-      <LottieView speed={1.5} source={lottieIcons.loader} autoPlay loop />
+      <LottieView
+        speed={1.5}
+        source={lottieIcons.loader}
+        autoPlay
+        loop
+        autoSize
+      />
     </View>
   );
 };

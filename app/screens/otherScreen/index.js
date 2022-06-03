@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, Pressable, View, ScrollView} from 'react-native';
+import {SafeAreaView, Pressable, View, ScrollView, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 // import {Dropdown} from 'react-native-element-dropdown';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
@@ -59,6 +59,7 @@ export const OtherScreen = props => {
 
   useEffect(() => {
     if (props.route.params) {
+      console.log('props.route.params ==> ', props.route.params);
       setTitle(props.route.params.title);
       setSubCategory(props.route.params.sub);
       setExtra(extra + 1);
@@ -157,7 +158,7 @@ export const OtherScreen = props => {
         text={title}
       />
       <Screen withScroll bounces={false} style={styles.screenContainer()}>
-        <View style={styles.headingFirst(1)}>
+        {/* <View style={styles.headingFirst(1)}>
           <View style={styles.headOne(1)}>
             <IcOtherIcon1 fill={color.turquoiseNew} />
             <Text style={styles.headingTxt()}>Allegies</Text>
@@ -171,7 +172,8 @@ export const OtherScreen = props => {
               // placeholderTextColor={color.grayTxt}
               isShadow={true}
               value={element}
-              onChange={e => {
+              containerStyle={styles.containerStyle()}
+              onChangeText={e => {
                 setElement(e.value);
                 setExtra(extra + 1);
                 validation();
@@ -190,7 +192,8 @@ export const OtherScreen = props => {
               placeholderTextColor={color.grayTxt}
               isShadow={true}
               value={reaction}
-              onChange={e => {
+              containerStyle={styles.containerStyle()}
+              onChangeText={e => {
                 setReaction(e.value);
                 setExtra(extra + 1);
                 validation();
@@ -209,7 +212,8 @@ export const OtherScreen = props => {
               placeholderTextColor={color.grayTxt}
               isShadow={true}
               value={severity}
-              onChange={e => {
+              containerStyle={styles.containerStyle()}
+              onChangeText={e => {
                 setSeverity(e.value);
                 setExtra(extra + 1);
                 validation();
@@ -278,7 +282,7 @@ export const OtherScreen = props => {
                   return <View style={styles.separator()} />;
                 },
               }}
-              onChange={item => {
+              onChangeText={item => {
                 setDoseValue(item.value);
                 setIsFocus(false);
               }}
@@ -321,7 +325,7 @@ export const OtherScreen = props => {
                   return <View style={styles.separator()} />;
                 },
               }}
-              onChange={item => {
+              onChangeText={item => {
                 setStartOfCycleVal(item.value);
                 setIsFocus(false);
               }}
@@ -354,9 +358,10 @@ export const OtherScreen = props => {
               mainContainerStyle={styles.inputMainContainer()}
               placeholderTextColor={color.grayTxt}
               isShadow={true}
+              containerStyle={styles.containerStyle()}
               keyboardType="numeric"
               value={drink}
-              onChange={val => {
+              onChangeText={val => {
                 setDrink(val);
               }}
             />
@@ -375,6 +380,7 @@ export const OtherScreen = props => {
               mainContainerStyle={styles.inputMainContainer()}
               placeholderTextColor={color.grayTxt}
               isShadow={true}
+              containerStyle={styles.containerStyle()}
             />
           </View>
         </View>
@@ -407,7 +413,7 @@ export const OtherScreen = props => {
                   return <View style={styles.separator()} />;
                 },
               }}
-              onChange={item => {
+              onChangeText={item => {
                 setProtectionVal(item.value);
                 setIsFocus(false);
               }}
@@ -437,14 +443,42 @@ export const OtherScreen = props => {
               mainContainerStyle={styles.inputMainContainer()}
               placeholderTextColor={color.grayTxt}
               isShadow={true}
+              containerStyle={styles.containerStyle()}
               value={toothbrushing}
-              onChange={e => {
+              onChangeText={e => {
                 setToothbrushing(e.value);
               }}
             />
           </View>
-        </View>
-
+        </View> */}
+        {subCategory &&
+          subCategory.map((value, i) => {
+            return (
+              <View
+                style={styles.headingFirst(i == 0 ? 1 : 0)}
+                key={i + 'subCategory'}>
+                <View style={styles.headOne()}>
+                  <Image source={value.icon} height={25} width={25} />
+                  <Text style={styles.headingTxt()}>{value.name}</Text>
+                </View>
+                {/* <View style={styles.itemListMain()}>
+                  <Text style={styles.itemListTxt(1)}>Toothbrushing</Text>
+                  <InputBox
+                    placeholder={'Ex: 2 Times a Day'}
+                    inputStyle={styles.inputStyle()}
+                    mainContainerStyle={styles.inputMainContainer()}
+                    placeholderTextColor={color.grayTxt}
+                    isShadow={true}
+                    containerStyle={styles.containerStyle()}
+                    value={toothbrushing}
+                    onChangeText={e => {
+                      setToothbrushing(e.value);
+                    }}
+                  />
+                </View> */}
+              </View>
+            );
+          })}
         <View style={styles.btnContainer()}>
           <Button
             buttonStyle={styles.btnContinue()}

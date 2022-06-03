@@ -15,7 +15,7 @@ import {
 export const MainProfileDetail = [
   {
     label: '1',
-    value: 'Appointments',
+    value: 'My Appointments',
     svg: (
       <IcAppointment
         height={size.moderateScale(40)}
@@ -27,7 +27,7 @@ export const MainProfileDetail = [
   },
   {
     label: '2',
-    value: 'Medication Reminder List',
+    value: 'My Medication',
     svg: (
       <IcPills
         height={size.moderateScale(40)}

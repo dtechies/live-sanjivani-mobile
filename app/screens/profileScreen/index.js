@@ -72,11 +72,11 @@ export const ProfileScreen = () => {
               <Pressable
                 key={i.toString()}
                 onPress={() => {
-                  if (item.value == 'Appointments') {
-                    navigation.navigate('appointmentReminderScreen');
+                  if (item.value == 'My Appointments') {
+                    navigation.navigate('myAppointments');
                   }
-                  if (item.value == 'Medication Reminder List') {
-                    navigation.navigate('medicationReminderList');
+                  if (item.value == 'My Medication') {
+                    navigation.navigate('viewMedicationScreen');
                   }
                   if (item.value == 'Symptom Checker') {
                     navigation.navigate('symptomsScreen');

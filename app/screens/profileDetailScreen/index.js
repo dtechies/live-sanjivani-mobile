@@ -1,13 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import 'react-native-gesture-handler';
-import {
-  SafeAreaView,
-  View,
-  Pressable,
-  ScrollView,
-  TextInput,
-  Image,
-} from 'react-native';
+import {SafeAreaView, View, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 // import {Dropdown} from 'react-native-element-dropdown';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
@@ -16,29 +9,14 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
 import {useDispatch, useSelector} from 'react-redux';
-
-import {
-  Loader,
-  Text,
-  Button,
-  TitleBox,
-  Screen,
-  InputBox,
-  Header,
-} from 'components';
+import {getOtp} from 'redux-actions';
+import {Text, Button, Screen, InputBox, Header} from 'components';
 import {size, color, IcSearch, IcEdit, images} from 'theme';
 import * as styles from './styles';
-import {
-  medicineForm,
-  dose,
-  measurementUnit,
-  reminderFrequency,
-  reminderTime,
-  genderVal,
-  languageVal,
-} from 'json';
+import {genderVal, languageVal} from 'json';
 
 export const ProfileDetailScreen = () => {
+  const dispatch = useDispatch();
   const {userDetails = {}, age = ''} = useSelector(state => ({
     userDetails: state.userDataReducer.userDataResponse.userData,
     age: state.userDataReducer.userDataResponse.age,
@@ -51,6 +29,7 @@ export const ProfileDetailScreen = () => {
   const [dobErr, setDobErr] = useState('');
   const [email, setEmail] = useState(userDetails.email);
   const [emailErr, setEmailErr] = useState('');
+  const [changeBtn, setChangeBtn] = useState('Change');
   const [phone, setPhone] = useState(userDetails.mob_no);
   const [phoneErr, setPhoneErr] = useState('');
   const [gender, setGender] = useState(userDetails.gender);
@@ -67,17 +46,44 @@ export const ProfileDetailScreen = () => {
   const [languageErr, setLanguageErr] = useState('');
   const [extra, setExtra] = useState(0);
   const [isEditable, setIsEditable] = useState(false);
+  const [isEditablePhone, setIsEditablePhone] = useState(false);
   const [imageData, setImageData] = useState('');
   const [imageDataErr, setImageDataErr] = useState('');
   const navigation = useNavigation();
   const [isFocus, setIsFocus] = useState(false);
   const [showDate, setShowDate] = useState(false);
-
-  useEffect(() => {
-    console.log('userDetails ==> ', userDetails);
-  }, []);
+  const [otp, setOtp] = useState(false);
+  const [otpValue, setOtpValue] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const modalRef = useRef();
+  const toastRef = useRef();
+
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
+
+  const onGetOtp = async () => {
+    setLoading(true);
+    const getOtpBody = {
+      mob_no: phone,
+    };
+    const getOtpResponse = await dispatch(getOtp(getOtpBody));
+    const res = getOtpResponse.payload;
+    if (res.status) {
+      console.log('response data ==>', res.data);
+      setLoading(false);
+      toastMessage(res.message);
+      // setTimeout(() => {
+      //   navigation.navigate('otpScreen', {
+      //     otpValue: res.data,
+      //   });
+      // }, 150);
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+    }
+  };
 
   const uploadFromGallery = () => {
     ImagePicker.openPicker({
@@ -167,13 +173,6 @@ export const ProfileDetailScreen = () => {
     }
     validateEmail(email);
     validatePhone(phone);
-    // if (email === '') {
-    //   setEmailErr('Please Enter Email Address');
-    // }
-    // const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    // if (reg.test(email) === false) {
-    //   setEmailErr('Enter valid email');
-    // }
 
     if (language === '') {
       setLanguageErr('Please select Language');
@@ -206,10 +205,9 @@ export const ProfileDetailScreen = () => {
         isBlue={false}
         isCamera={true}
         title={'ProfileDetailScreen.title'}
-        name={firstNm + ' ' + lastNm}
-        secName={email}
+        // secName={email}
       />
-      <Screen withScroll style={styles.screenContainer()}>
+      <Screen style={styles.screenContainer()}>
         <View style={styles.settingMain()}>
           <Text
             style={styles.editText()}
@@ -231,6 +229,8 @@ export const ProfileDetailScreen = () => {
               style={styles.editIcon()}
               onPress={() => {
                 setIsEditable(false);
+                setIsEditablePhone(false);
+                setChangeBtn('Change');
                 setExtra(extra + 1);
               }}>
               <Text style={styles.editText()} tx="ProfileDetailScreen.Back" />
@@ -365,18 +365,48 @@ export const ProfileDetailScreen = () => {
           {emailErr ? <Text style={styles.errorText()}>{emailErr}</Text> : null}
           <InputBox
             mainContainerStyle={styles.inputMain()}
-            inputStyle={styles.button(isEditable)}
+            inputStyle={styles.button(isEditablePhone)}
             value={phone}
             onChangeText={text => {
               setPhone(text);
               validatePhone(text);
               setExtra(extra + 1);
             }}
+            withButton={true}
+            btnName={changeBtn}
+            disabled={isEditable ? false : true}
+            onRightIconPress={() => {
+              setIsEditablePhone(true);
+              setChangeBtn('Send OTP');
+              setExtra(extra + 1);
+              if (changeBtn == 'Send OTP') {
+                if (phone.length == 10) {
+                  setOtp(true);
+                  onGetOtp();
+                } else {
+                  setPhoneErr('Invalid Phone number');
+                }
+              }
+            }}
+            buttonStyle={styles.changePhoneBtnStyle(isEditable)}
             maxLength={10}
             keyboardType="numeric"
-            editable={isEditable}
+            editable={isEditablePhone}
           />
           {phoneErr ? <Text style={styles.errorText()}>{phoneErr}</Text> : null}
+          {otp && (
+            <InputBox
+              placeholder={'Enter OTP'}
+              mainContainerStyle={styles.inputMain()}
+              inputStyle={styles.button(isEditable)}
+              maxLength={4}
+              keyboardType="numeric"
+              onChangeText={text => {
+                setOtpValue(text);
+              }}
+              editable={isEditable}
+            />
+          )}
           {!isEditable && (
             <InputBox
               mainContainerStyle={styles.inputMain()}

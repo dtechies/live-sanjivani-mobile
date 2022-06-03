@@ -4,6 +4,11 @@ export const container = () => ({
   flex: 1,
   justifyContent: 'center',
 });
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
 export const screenContainer = () => ({
   backgroundColor: color.themeBack,
 });
@@ -90,12 +95,12 @@ export const cardText = () => ({
   color: color.grayTxt,
   backgroundColor: 'green',
 });
-export const btnContinue = () => ({
+export const btnContinue = val => ({
   alignSelf: 'center',
   marginVertical: size.deviceHeight * 0.02,
   width: size.deviceWidth * 0.89,
-  backgroundColor: color.blueBtn,
-  borderColor: color.blueBtn,
+  backgroundColor: val == 1 ? color.darkGrey : color.blueBtn,
+  borderColor: val == 1 ? color.darkGrey : color.blueBtn,
   borderRadius: size.moderateScale(5),
   shadowColor: color.black,
   shadowOffset: {width: 0, height: 2},
@@ -108,60 +113,6 @@ export const btnContinueTxt = () => ({
   color: color.white,
   fontSize: fontSize.medium,
   fontFamily: fonts.latoRegular,
-});
-//drop down
-export const labelFieldText = () => ({
-  fontSize: fontSize.small,
-  color: color.grayTxt,
-  fontFamily: fonts.segoeUIBold,
-  marginLeft: size.moderateScale(10),
-});
-export const dropdown = () => ({
-  width: size.deviceWidth * 0.3,
-  alignItems: 'flex-start',
-  backgroundColor: color.white,
-  // marginHorizontal: size.moderateScale(5),
-  marginVertical: size.moderateScale(5),
-  paddingVertical: size.moderateScale(5),
-  borderWidth: 1,
-  borderColor: color.white,
-  borderRadius: size.moderateScale(10),
-  shadowColor: color.black,
-  shadowRadius: size.moderateScale(5),
-  shadowOffset: {height: 3, width: 0},
-  shadowOpacity: 0.2,
-  elevation: size.moderateScale(10),
-  justifyContent: 'space-between',
-  paddingRight: size.moderateScale(10),
-});
-export const selectedOptionTextStyle = () => ({
-  color: color.grayTxt,
-  fontFamily: fonts.latoBold,
-  fontSize: fontSize.small,
-  marginLeft: size.moderateScale(10),
-  textTransform: 'capitalize',
-});
-export const dropDownMain = () => ({
-  borderBottomLeftRadius: size.moderateScale(10),
-  borderBottomRightRadius: size.moderateScale(10),
-  borderTopLeftRadius: size.moderateScale(10),
-  borderTopRightRadius: size.moderateScale(10),
-});
-
-export const dropdownContainer = () => ({
-  borderRadius: size.moderateScale(10),
-  borderWidth: 1,
-  backgroundColor: color.white,
-  marginTop: size.moderateScale(10),
-  // borderColor: 'red',
-  // backgroundColor: 'green',
-  // borderBottomLeftRadius: size.moderateScale(10),
-  // borderBottomRightRadius: size.moderateScale(10),
-  // backgroundColor: 'red',
-});
-export const separator = () => ({
-  backgroundColor: color.borderBlue,
-  // height: size.moderateScale(1),
 });
 export const InsideLabelFieldText = () => ({
   fontSize: fontSize.small,
@@ -187,8 +138,15 @@ export const errorText = val => ({
   color: color.red,
   fontFamily: fonts.latoRegular,
   fontSize: fontSize.small,
-  // marginRight: val == 0 ? 50 : 0,
-  marginLeft: 10,
-  marginTop: 5,
-  marginBottom: 15,
+  marginLeft: size.moderateScale(10),
+  marginTop: size.moderateScale(5),
+  marginBottom: size.moderateScale(5),
+});
+export const errorTxt = () => ({
+  color: color.blueCard,
+  fontFamily: fonts.latoBold,
+  fontSize: fontSize.medium,
+});
+export const textMsgMain = val => ({
+  padding: size.moderateScale(25),
 });

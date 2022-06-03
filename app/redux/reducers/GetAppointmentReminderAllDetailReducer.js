@@ -11,7 +11,7 @@ const getAppointmentReminderAllDetailReducer = (
   const {type, payload} = action;
 
   switch (type) {
-    case Actions.GET_APPOINTMENT_REMINDER_PROFILE:
+    case Actions.ADD_APPOINTMENT_REMINDER_ALL_DETAIL:
       return {...state, getAppointmentReminderAllDetailResponse: payload};
     default:
       return state;

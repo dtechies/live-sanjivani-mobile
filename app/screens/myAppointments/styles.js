@@ -100,6 +100,7 @@ export const noData = () => ({
   textAlign: 'center',
 });
 export const shadow = () => ({
+  marginLeft: size.moderateScale(15),
   shadowColor: color.black,
   shadowRadius: size.moderateScale(5),
   shadowOffset: {height: 2, width: 0},

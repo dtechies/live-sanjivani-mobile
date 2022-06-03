@@ -1,38 +1,21 @@
-import {BASE_URL} from 'config';
-import * as Actions from '../Types';
-export const getHelpSupport = header => {
-  const {token} = header;
+import * as actions from '../Types';
+import {_getHelpSupportData} from 'services';
 
+export const getHelpSupport = () => {
   return dispatch => {
-    dispatch({type: Actions.GET_HELP_SUPPORT});
-    let url = `${BASE_URL}/get-helpsupport-data`;
-    return fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(res => res.json())
+    dispatch({type: actions.GET_HELP_SUPPORT});
+    return _getHelpSupportData()
       .then(response => {
-        // console.log('getHelpSupport URL := ', url);
-        // console.log('getHelpSupport Header := ', header);
-        // console.log('getHelpSupport Response := ', response);
-        if (response) {
-          return dispatch({
-            type: Actions.GET_HELP_SUPPORT,
-            payload: response,
-          });
-        } else {
-          return dispatch({
-            type: Actions.GET_HELP_SUPPORT,
-            payload: response,
-          });
-        }
+        dispatch({
+          type: actions.GET_HELP_SUPPORT,
+          payload: response,
+        });
+        return response;
       })
       .catch(error => {
-        // console.log('getHelpSupport Action Error Response :=\n', error);
-        dispatch({type: Actions.GET_HELP_SUPPORT, payload: error});
+        // console.log('getOtp Error Response :=\n', error);
+        dispatch({type: actions.GET_HELP_SUPPORT, payload: error});
+        return error;
       });
   };
 };

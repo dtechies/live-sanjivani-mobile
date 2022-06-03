@@ -28,3 +28,5 @@ export * from './medicalJournalScreen';
 export * from './sharingDetailScreen';
 export * from './progressDetailScreen';
 export * from './medicationReminderList';
+export * from './helpSupportDetailsScreen';
+export * from './myAppointments';
