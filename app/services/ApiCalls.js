@@ -13,7 +13,6 @@ export const _getAllCategory = async payload => {
   });
   return _api_calls('GET', '/all-category', headers);
 };
-
 export const _getOTP = async payload => {
   // console.log('_getOTP_payload ==> ', payload);
   let {_api_calls} = HttpCalls;
@@ -32,7 +31,6 @@ export const _registerUser = async payload => {
   let headers = await headersData({});
   return _api_calls('POST', '/register-user', headers, payload);
 };
-
 export const _getMedicineReminderProfile = async () => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
@@ -59,7 +57,6 @@ export const _addMedicineReminder = async payload => {
   });
   return _api_calls('POST', '/add-medicine-reminder', headers, payload);
 };
-// console.log('_addMedicineReminder headers ==>', headers);
 export const _getAllCategoryAndSubCategory = async () => {
   let {_api_calls} = HttpCalls;
 
@@ -92,4 +89,27 @@ export const _getHelpSupportData = async () => {
   });
   console.log('headers _getHelpSupportData ==>', headers);
   return _api_calls('GET', '/get-helpsupport-data', headers);
+};
+
+export const _addSubcategory = async payload => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  return _api_calls('POST', '/add-subcategory-value', headers, payload);
+};
+export const _addCareGiver = async payload => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  return _api_calls('POST', '/add-user-CareGiver', headers, payload);
+};
+export const _editProfileDetails = async payload => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    type: 'multipart/form-data',
+    token: token,
+  });
+  return _api_calls('POST', '/add-edit-user-profile', headers, payload);
 };

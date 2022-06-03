@@ -4,6 +4,11 @@ export const container = () => ({
   flex: 1,
   justifyContent: 'center',
 });
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
 export const screenContainer = () => ({
   backgroundColor: color.themeBack,
 });
@@ -136,4 +141,12 @@ export const errorText = val => ({
   marginLeft: size.moderateScale(10),
   marginTop: size.moderateScale(5),
   marginBottom: size.moderateScale(5),
+});
+export const errorTxt = () => ({
+  color: color.blueCard,
+  fontFamily: fonts.latoBold,
+  fontSize: fontSize.medium,
+});
+export const textMsgMain = val => ({
+  padding: size.moderateScale(25),
 });

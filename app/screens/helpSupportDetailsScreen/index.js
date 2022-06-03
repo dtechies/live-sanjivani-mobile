@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native';
-import {Screen, Header, Toast, Loader} from 'components';
+import {Screen, Header, Toast, Loader, Text} from 'components';
 import {useNavigation} from '@react-navigation/native';
 import {WebView} from 'react-native-webview';
 
@@ -17,11 +17,6 @@ export const HelpSupportDetailsScreen = props => {
   const [description, setDescription] = useState(
     props.route.params ? props.route.params.description : '',
   );
-  const [extra, setExtra] = useState(0);
-
-  const toastMessage = msg => {
-    toastRef.current.show(msg);
-  };
   return (
     <SafeAreaView style={styles.full()}>
       <Toast
@@ -42,14 +37,17 @@ export const HelpSupportDetailsScreen = props => {
         text={title}
       />
       <Screen style={styles.container()} showsVerticalScrollIndicator={false}>
-        {/* <View style={styles.mainView()}> */}
-        <WebView
-          originWhitelist={['*']}
-          source={{html: description}}
-          style={styles.mainView()}
-        />
-        {/* <WebView originWhitelist={['*']} source={{html: description}} /> */}
-        {/* </View> */}
+        {description != '' ? (
+          <WebView
+            originWhitelist={['*']}
+            source={{
+              html: description,
+            }}
+            style={styles.mainView()}
+          />
+        ) : (
+          <Text style={styles.noData()}>Records Not Found... </Text>
+        )}
       </Screen>
     </SafeAreaView>
   );

@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {SafeAreaView, Pressable, View, ScrollView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Dropdown} from 'react-native-element-dropdown';
+// import {Dropdown} from 'react-native-element-dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Modalize} from 'react-native-modalize';
@@ -125,18 +125,12 @@ export const MedicalJournalScreen = props => {
           navigation.goBack();
         }}
         isColor={true}
-        isClose={false}
-        isLogo={false}
-        isLongArrowLeft={false}
         isLeftArrow={true}
-        isLogoCenter={false}
         isHeading={true}
-        isBlue={false}
-        isCamera={false}
         text={title}
       />
 
-      <View style={styles.headingMain()}>
+      <View style={styles.dateTimeCardStyle()}>
         <View style={styles.cardDesign()}>
           <View style={styles.circleView()} />
           <Text style={styles.cardTxt()} text="Date" />
@@ -169,7 +163,7 @@ export const MedicalJournalScreen = props => {
           )}
         </View>
       </View>
-      <View style={styles.headingMain()}>
+      <View style={styles.dateTimeCardStyle()}>
         <Pressable
           style={styles.cardView()}
           onPress={() => {
@@ -177,7 +171,6 @@ export const MedicalJournalScreen = props => {
           }}>
           <Text style={styles.cardTxt(1)} text={selectedDate} />
         </Pressable>
-
         <Pressable
           style={styles.cardView(1)}
           onPress={() => {
@@ -186,13 +179,13 @@ export const MedicalJournalScreen = props => {
           <Text style={styles.cardTxt(1)} text={selectedTime} />
         </Pressable>
       </View>
-      <View style={styles.headingMain()}>
+
+      {/* <View style={styles.headingMain()}> */}
+
+      {/* </View> */}
+      <View style={styles.dateTimeCardStyle()}>
         {dateErr ? <Text style={styles.errorText()}>{dateErr}</Text> : null}
-        {timeErr ? (
-          <Text style={dateErr ? styles.errorText(1) : styles.errorText1(1)}>
-            {timeErr}
-          </Text>
-        ) : null}
+        {timeErr ? <Text style={styles.errorText1()}>{timeErr}</Text> : null}
       </View>
       <View>
         <View style={styles.headingMain(1)}>

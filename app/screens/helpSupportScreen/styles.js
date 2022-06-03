@@ -2,7 +2,7 @@ import {color, size, fontSize, fonts} from 'theme';
 
 export const container = () => ({
   flex: 1,
-  paddingHorizontal: size.moderateScale(25),
+  paddingHorizontal: size.moderateScale(20),
   backgroundColor: color.themeBack,
 });
 export const full = () => ({
@@ -51,4 +51,10 @@ export const supportSubcategoriesView = () => ({
 export const dashView = () => ({
   marginTop: size.moderateScale(20),
   marginBottom: size.moderateScale(10),
+});
+export const noData = () => ({
+  padding: size.moderateScale(5),
+  fontFamily: fonts.latoBold,
+  color: color.blueCard,
+  fontSize: fontSize.medium,
 });
