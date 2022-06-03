@@ -9,7 +9,7 @@ export const textItemToShare = () => ({
   fontFamily: fonts.latoBold,
   color: color.black,
   marginTop: size.moderateScale(20),
-  paddingHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(23),
 });
 export const textItemToShareDetail = () => ({
   fontSize: fontSize.small,
@@ -24,7 +24,7 @@ export const textInputTitle = () => ({
   fontSize: fontSize.small,
 });
 export const inputMainContainer = () => ({
-  marginHorizontal: size.moderateScale(15),
+  marginHorizontal: size.moderateScale(20),
   marginTop: size.moderateScale(15),
 });
 export const labelFieldText = () => ({
@@ -37,7 +37,7 @@ export const row = () => ({
   flexDirection: 'row',
   justifyContent: 'space-around',
   marginTop: size.moderateScale(10),
-  marginHorizontal: size.moderateScale(12),
+  marginHorizontal: size.moderateScale(17),
 });
 export const addButtonStyle = () => ({
   margin: size.moderateScale(3),

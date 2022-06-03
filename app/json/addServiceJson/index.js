@@ -141,7 +141,7 @@ export const addServiceData = [
   },
   {
     name: 'Appointments',
-    serviceSlug: 'medication',
+    serviceSlug: 'appointments',
     navigateScreen: 'appointmentReminderScreen',
     subCategory: [],
   },
@@ -149,6 +149,12 @@ export const addServiceData = [
     name: 'Symptoms check',
     serviceSlug: 'symptoms',
     navigateScreen: 'symptomsScreen',
+    subCategory: [],
+  },
+  {
+    name: 'Medical Journal',
+    serviceSlug: 'medical journal',
+    navigateScreen: 'medicalJournalScreen',
     subCategory: [],
   },
 ];

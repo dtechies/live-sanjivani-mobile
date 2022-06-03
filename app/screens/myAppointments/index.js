@@ -1,24 +1,29 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {getMedicineReminderProfile} from 'redux-actions';
+import {getAppointmentReminderProfile} from 'redux-actions';
 
 import {useDispatch} from 'react-redux';
 
-import {Loader, Text, Screen, InputBox, Header, ReminderCard} from 'components';
+import {
+  Loader,
+  Text,
+  Screen,
+  InputBox,
+  Header,
+  AppointmentCard,
+} from 'components';
 import {size, color, IcBtnPlus, SearchValNew} from 'theme';
 import * as styles from './styles';
-import {getMedicine} from 'json';
 
-export const ViewMedicationScreen = () => {
+export const MyAppointments = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const toastRef = useRef();
   const [extra, setExtra] = useState(0);
   const [searchText, setSearchText] = useState('');
-  const [medicineReminderData, setMedicineReminderData] = useState([]);
+  const [appointmentReminderData, setAppointmentReminderData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [medicine, setMedicine] = useState(getMedicine);
   const [loading, setLoading] = useState(false);
   const route = useRoute();
 
@@ -26,30 +31,41 @@ export const ViewMedicationScreen = () => {
     toastRef.current.show(msg);
   };
   const reminderList =
-    filteredData.length > 0 ? filteredData : medicineReminderData;
+    filteredData.length > 0 ? filteredData : appointmentReminderData;
 
   const onSearch = val => {
     setSearchText(val);
     let text = val.toLowerCase() || val.toUpperCase();
 
-    let FilteredValue = medicineReminderData.filter(item => {
+    let FilteredValue = appointmentReminderData.filter(item => {
       return item.medicine_name.toLowerCase().match(text);
     });
     FilteredValue.length == 0 && FilteredValue.push({value: 'null'});
     setFilteredData(FilteredValue);
   };
 
-  const getMedicineReminderData = async () => {
+  const getAppointmentReminderData = async () => {
     // setLoading(true);
 
-    const getMedicineReminderProfileResponse = await dispatch(
-      getMedicineReminderProfile(),
+    const getAppointmentReminderProfileResponse = await dispatch(
+      getAppointmentReminderProfile(),
     );
-    // console.log(getMedicineReminderProfileResponse);
-    const res = getMedicineReminderProfileResponse.payload;
-    if (res.status) {
-      setMedicineReminderData(res.data.MedicineReminderProfileData);
-      setFilteredData(res.data.MedicineReminderProfileData);
+    console.log(
+      'getAppointmentReminderProfile',
+      getAppointmentReminderProfileResponse,
+    );
+    // const res =
+    //   getAppointmentReminderProfileResponse.data.AppointmentReminderProfileData;
+    // console.log('res', res);
+    if (getAppointmentReminderProfileResponse.status) {
+      setAppointmentReminderData(
+        getAppointmentReminderProfileResponse.data
+          .AppointmentReminderProfileData,
+      );
+      setFilteredData(
+        getAppointmentReminderProfileResponse.data
+          .AppointmentReminderProfileData,
+      );
       // setLoading(false);
       setExtra(extra + 1);
       toastMessage(res.message);
@@ -60,7 +76,7 @@ export const ViewMedicationScreen = () => {
   };
 
   useEffect(() => {
-    getMedicineReminderData();
+    getAppointmentReminderData();
   }, []);
 
   return (
@@ -79,7 +95,7 @@ export const ViewMedicationScreen = () => {
         isHeading={true}
         isBlue={false}
         isCamera={false}
-        title={'ViewMedicationScreen.title'}
+        title={'myAppointments_screen.title'}
       />
       <View style={styles.screenContainer()}>
         <View style={styles.searchBarRowView()}>
@@ -92,7 +108,7 @@ export const ViewMedicationScreen = () => {
             leftIcon={true}
             placeholderTextColor={color.dimGrey}
             containerStyle={styles.mainInputStyle()}
-            placeholder={'Search Medicine'}
+            placeholder={'Search Appointment'}
             leftIconName={
               <SearchValNew
                 height={size.moderateScale(20)}
@@ -104,7 +120,7 @@ export const ViewMedicationScreen = () => {
           <Pressable
             style={styles.shadow()}
             onPress={() => {
-              navigation.navigate('medicationReminderScreen');
+              navigation.navigate('appointmentReminderScreen');
             }}>
             <IcBtnPlus
               height={size.moderateScale(65)}
@@ -115,7 +131,7 @@ export const ViewMedicationScreen = () => {
 
         <View style={styles.headingMain()}>
           <Text
-            tx={'ViewMedicationScreen.medicationList'}
+            tx={'myAppointments_screen.appointmentList'}
             style={styles.ViewSubTitle()}
           />
         </View>
@@ -130,30 +146,50 @@ export const ViewMedicationScreen = () => {
               return <Text style={styles.noData()}>No Records Found...</Text>;
             }
             return (
-              <ReminderCard
+              <AppointmentCard
                 data={val}
-                onWholeCardPress={() =>
-                  navigation.navigate('checkMedicationReminderScreen', {
-                    reminderData: val,
-                    fromViewMedication: true,
-                  })
-                }
+                onWholeCardPress={() => console.log('hiii')}
+                time={val.user_selected_time}
+                date={val.date}
+                address={val.address1}
+                doctor={'Docter name Empty'}
                 onTogglePress={() => {
-                  medicineReminderData[i].isActive = !val.isActive;
+                  reminderList[i].status = !val.status;
 
                   setTimeout(() => {
-                    medicineReminderData.sort(function (x, y) {
-                      return x.isActive === y.isActive
-                        ? 0
-                        : x.isActive
-                        ? -1
-                        : 1;
+                    reminderList.sort(function (x, y) {
+                      return x.status === y.status ? 0 : x.status ? -1 : 1;
                     });
-                    setMedicineReminderData(medicineReminderData);
+                    setAppointmentReminderData(reminderList);
                     setExtra(extra + 1);
                   }, 500);
                 }}
               />
+              // <ReminderCard
+              //   data={val}
+              //   onWholeCardPress={() =>
+              //     navigation.navigate('checkMedicationReminderScreen', {
+              //       reminderData: val,
+              //       fromViewMedication: true,
+              //     })
+              //   }
+              //   onTogglePress={() => {
+              //     medicineReminderData[i].isActive = !val.isActive;
+
+              //     setTimeout(() => {
+              //       medicineReminderData.sort(function (x, y) {
+              //         return x.isActive === y.isActive
+              //           ? 0
+              //           : x.isActive
+              //           ? -1
+              //           : 1;
+              //       });
+              //       setMedicineReminderData(medicineReminderData);
+              //       setExtra(extra + 1);
+              //     }, 500);
+              //   }
+              // }
+              // />
             );
           })}
         </View>
