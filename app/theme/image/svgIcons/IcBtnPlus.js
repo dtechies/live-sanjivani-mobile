@@ -31,7 +31,7 @@ export function BtnPlus(props) {
             id="Ellipse_78-2"
             x="24"
             y="24"
-            fill="#077dcb"
+            fill={props.fill ? props.fill : '#077dcb'}
             r="24"
             transform="translate(9 6)"
             data-name="Ellipse 78"

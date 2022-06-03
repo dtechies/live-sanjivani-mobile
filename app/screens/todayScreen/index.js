@@ -1,18 +1,12 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {
-  View,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  BackHandler,
-} from 'react-native';
-
-import {Text} from 'components';
-import {size, color, IcBtnPlus, IcFalse, IcTrue} from 'theme';
+import React, {useState, useEffect} from 'react';
+import {View, SafeAreaView, ScrollView, BackHandler} from 'react-native';
+// import moment from 'moment';
+import {Text, FabMenu} from 'components';
+import {size, color, IcFalse, IcTrue} from 'theme';
 import {reminderListData, medicationReminder} from 'json';
 import * as styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import LinearGradient from 'react-native-linear-gradient';
+// import LinearGradient from 'react-native-linear-gradient';
 
 export const TodayScreen = () => {
   const [activeIndex, setActiveIndex] = useState([]);
@@ -178,17 +172,10 @@ export const TodayScreen = () => {
           <Text style={styles.tipsTxt()} text={'Drink water'} />
         </View>
       </ScrollView>
-
-      <Pressable
-        style={styles.circleBtnView()}
-        onPress={() => {
-          navigation.navigate('viewMedicationScreen');
-        }}>
-        <IcBtnPlus
-          height={size.moderateScale(69)}
-          width={size.moderateScale(69)}
-        />
-      </Pressable>
+      <FabMenu
+        addReminder={() => navigation.navigate('medicationReminderScreen')}
+        addAppointment={() => navigation.navigate('appointmentReminderScreen')}
+      />
     </SafeAreaView>
   );
 };
