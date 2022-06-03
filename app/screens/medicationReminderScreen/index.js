@@ -276,7 +276,7 @@ export const MedicationReminderScreen = () => {
           value={reminderName}
           mainContainerStyle={styles.inputMainContainer()}
           onChangeText={val => {
-            setReminderName('val');
+            setReminderName(val);
             // setReferredBy(val);
           }}
         />
