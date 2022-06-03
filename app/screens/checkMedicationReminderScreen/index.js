@@ -125,11 +125,13 @@ export const CheckMedicationReminderScreen = props => {
       // console.log('day ==>', day);
       // console.log('Alertnate daty name ==>', day);
       let newValue = days.map((i, k) => {
-        if (day) {
-          i.isSelected;
+        if (day == k) {
+          i.isSelected = true;
+          day = day + 2;
         }
         return i;
       });
+      console.log('Days daty name ==>', newValue);
       setDays(newValue);
     }
     //fixed date
