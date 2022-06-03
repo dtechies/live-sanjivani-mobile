@@ -14,4 +14,5 @@ export * from './starRating';
 export * from './header';
 export * from './toast';
 export * from './reminderCard';
+export * from './alertModal';
 export * from './appointmentCart';

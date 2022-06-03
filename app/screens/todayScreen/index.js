@@ -4,19 +4,14 @@ import {
   Pressable,
   SafeAreaView,
   ScrollView,
-  Image,
   BackHandler,
 } from 'react-native';
-import moment from 'moment';
-import {Text, TitleBox, Screen, Header, ToggleSwitch} from 'components';
-import {size, color, IcDelete, IcBtnPlus, images, IcFalse, IcTrue} from 'theme';
+
+import {Text} from 'components';
+import {size, color, IcBtnPlus, IcFalse, IcTrue} from 'theme';
 import {reminderListData, medicationReminder} from 'json';
 import * as styles from './styles';
-import {
-  useNavigation,
-  useFocusEffect,
-  useRoute,
-} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const TodayScreen = () => {
@@ -25,7 +20,6 @@ export const TodayScreen = () => {
   const [medicationTrue, setMedicationTrue] = useState(medicationReminder);
   const [medicationUpcoming, setMedicationUpcoming] = useState('');
   const [reminderList, setReminderList] = useState(reminderListData);
-  const [extra, setExtra] = useState(0);
   const navigation = useNavigation();
   const [exitApp, setExitApp] = useState(0);
 
