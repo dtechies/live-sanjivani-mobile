@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useDispatch} from 'react-redux';
-import {loginUser, userData, registerUser} from 'redux-actions';
+import {userData, registerUser} from 'redux-actions';
 import {
   Loader,
   Text,
@@ -22,17 +22,14 @@ export const RegisterScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
-  const [isLoading, seIsLoading] = useState(false);
-  const [value, setValue] = useState(null);
+  // const [isLoading, seIsLoading] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [showDate, setShowDate] = useState(false);
-  const [editable, setEditable] = useState(false);
   const [firstNm, setFirstNm] = useState('');
   const [firstNmErr, setFirstNmErr] = useState('');
   const [lastNm, setLastNm] = useState('');
   const [lastNmErr, setLastNmErr] = useState('');
-  const [dob, setDob] = useState('');
   const [dobErr, setDobErr] = useState('');
   const [email, setEmail] = useState('');
   const [emailErr, setEmailErr] = useState('');

@@ -12,7 +12,7 @@ import {
   LoginScreen,
   ProfileDetailScreen,
   ViewMedicationScreen,
-  MedicationReminderList,
+  CheckMedicationReminderScreen,
   HelpSupportDetailsScreen,
   MyAppointments,
 } from 'screens';
@@ -51,6 +51,10 @@ export const ProfileStackNavigation = () => {
       <Stack.Screen
         name="helpSupportDetailsScreen"
         component={HelpSupportDetailsScreen}
+      />
+      <Stack.Screen
+        name="checkMedicationReminderScreen"
+        component={CheckMedicationReminderScreen}
       />
       <Stack.Screen name="myAppointments" component={MyAppointments} />
     </Stack.Navigator>

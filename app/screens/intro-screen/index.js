@@ -1,13 +1,5 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {
-  View,
-  SafeAreaView,
-  ScrollView,
-  Image,
-  ImageBackground,
-  BackHandler,
-  Alert,
-} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {View, SafeAreaView, ScrollView, Image, BackHandler} from 'react-native';
 
 import {
   useNavigation,
@@ -23,7 +15,6 @@ export const IntroScreen = () => {
   const scrollRef = useRef(null);
   const navigation = useNavigation();
   const [active, setActive] = useState(0);
-  const [exitApp, setExitApp] = useState(0);
   const route = useRoute();
   console.log('route', route.name);
   const loginPress = () => {

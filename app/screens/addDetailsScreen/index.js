@@ -49,6 +49,9 @@ export const AddDetailsScreen = props => {
       toastMessage(res.payload.message);
       setThisArray([]);
       setExtra(extra + 1);
+      setTimeout(() => {
+        navigation.navigate('addScreen');
+      }, 150);
     } else {
       setLoading(false);
       toastMessage(res.payload.message);
