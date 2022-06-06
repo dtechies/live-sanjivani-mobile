@@ -14,6 +14,7 @@ export const ProfileScreen = () => {
   const [loading, setLoading] = useState(false);
   const [detailProfile, setDetailProfile] = useState(MainProfileDetail);
   const toastRef = useRef();
+  const [extra, setExtra] = useState(0);
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -37,6 +38,16 @@ export const ProfileScreen = () => {
     }
   };
 
+  const clearData = () => {
+    detailProfile.map((val, i) => {
+      detailProfile[i].selectedCard = false;
+    });
+    MainProfileDetail.map((val, i) => {
+      MainProfileDetail[i].selectedCard = false;
+    });
+    setExtra(extra + 1);
+  };
+
   return (
     <SafeAreaView style={styles.container()}>
       <Toast
@@ -49,14 +60,8 @@ export const ProfileScreen = () => {
       {loading && <Loader />}
       <Header
         isColor={true}
-        isClose={false}
-        isLogo={false}
-        isLongArrowLeft={false}
-        isLeftArrow={false}
         isLogoCenter={true}
         isHeading={true}
-        isBlue={false}
-        isCamera={false}
         name={
           userDetails != {}
             ? userDetails.first_name + ' ' + userDetails.last_name
@@ -72,35 +77,55 @@ export const ProfileScreen = () => {
               <Pressable
                 key={i.toString()}
                 onPress={() => {
+                  clearData();
                   if (item.value == 'My Appointments') {
-                    navigation.navigate('myAppointments');
+                    setTimeout(() => {
+                      navigation.navigate('myAppointments');
+                    }, 500);
                   }
                   if (item.value == 'My Medication') {
-                    navigation.navigate('viewMedicationScreen');
+                    setTimeout(() => {
+                      navigation.navigate('viewMedicationScreen');
+                    }, 500);
                   }
                   if (item.value == 'Symptom Checker') {
-                    navigation.navigate('symptomsScreen');
+                    setTimeout(() => {
+                      navigation.navigate('symptomsScreen');
+                    }, 500);
                   }
                   if (item.value == 'Medical Journal') {
-                    navigation.navigate('medicalJournalScreen');
+                    setTimeout(() => {
+                      navigation.navigate('medicalJournalScreen');
+                    }, 500);
                   }
                   if (item.value == 'Help') {
-                    navigation.navigate('HelpSupportScreen');
+                    setTimeout(() => {
+                      navigation.navigate('HelpSupportScreen');
+                    }, 500);
                   }
                   if (item.value == 'Account Settings') {
-                    navigation.navigate('profileDetailScreen');
+                    setTimeout(() => {
+                      navigation.navigate('profileDetailScreen');
+                    }, 500);
                   }
                   if (item.value == 'Logout') {
-                    onLogoutData();
+                    setTimeout(() => {
+                      onLogoutData();
+                    }, 500);
                   }
+                  item.selectedCard = !item.selectedCard;
+                  setExtra(extra + 1);
                 }}
                 style={
                   item.value == 'Logout'
-                    ? styles.subProfileStyle(1)
-                    : styles.subProfileStyle()
+                    ? styles.subProfileStyle(1, item.selectedCard)
+                    : styles.subProfileStyle(0, item.selectedCard)
                 }>
                 {item.svg}
-                <Text text={item.value} style={styles.profileText()} />
+                <Text
+                  text={item.value}
+                  style={styles.profileText(item.selectedCard)}
+                />
               </Pressable>
             );
           })}

@@ -226,7 +226,7 @@ export const MedicalJournalScreen = props => {
         />
       </View>
       <Screen style={styles.screenContainer()}>
-        {MedicalJournalListJson.map((item, index) => {
+        {MedicalJournalListJson.map(item => {
           return (
             <View style={styles.MedicalJournalListView()}>
               <View style={styles.rowImage()}>

@@ -9,6 +9,7 @@ export const fontSize = {
   mediumLarge: size.moderateScale(17),
   mediumLargeSec: size.moderateScale(18),
   large: size.moderateScale(20),
+  largeNew: size.moderateScale(21),
   mediumLarge: size.moderateScale(20),
   veryLarge: size.moderateScale(24),
   largeLogo: size.moderateScale(30),

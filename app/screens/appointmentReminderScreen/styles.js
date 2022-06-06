@@ -14,6 +14,12 @@ export const full = () => ({
   flex: 1,
   backgroundColor: color.themeBack,
 });
+export const separator = () => ({
+  marginVertical: size.moderateScale(10),
+  backgroundColor: color.grayIcon,
+  height: size.moderateScale(1),
+  width: size.deviceWidth * 0.65,
+});
 export const mainView = () => ({
   marginTop: size.moderateScale(15),
   marginBottom: size.moderateScale(15),
@@ -67,14 +73,15 @@ export const titleStyle = () => ({
 });
 export const crossSvgStyle = () => ({
   alignSelf: 'flex-end',
-  padding: size.moderateScale(10),
+  padding: size.moderateScale(13),
+  paddingBottom: size.moderateScale(10),
 });
 export const addButtonStyle = () => ({
   paddingVertical: size.moderateScale(10),
   width: size.deviceWidth * 0.89,
   alignSelf: 'center',
   backgroundColor: color.blueBtn,
-  marginBottom: size.moderateScale(10),
+  marginVertical: size.moderateScale(10),
 });
 export const btnModel = () => ({
   marginTop: size.moderateScale(15),
@@ -82,11 +89,13 @@ export const btnModel = () => ({
   alignSelf: 'center',
   borderColor: color.turquoise,
   backgroundColor: color.turquoise,
+  borderRadius: size.moderateScale(5),
+  marginBottom: size.moderateScale(10),
 });
 export const textAddButton = () => ({
   fontFamily: fonts.latoRegular,
   color: color.white,
-  fontSize: fontSize.medium,
+  fontSize: fontSize.small,
 });
 export const dataPickerStyle = () => ({
   backgroundColor: color.white,
@@ -121,19 +130,27 @@ export const inputTxt = () => ({
 });
 export const txtConfirm = () => ({
   paddingTop: size.moderateScale(5),
-  fontSize: fontSize.large,
+  fontSize: fontSize.mediumLargeSec,
   fontFamily: fonts.latoBold,
   color: color.headerBlue,
 });
 export const txtDoctor = () => ({
-  paddingTop: size.moderateScale(5),
+  paddingBottom: size.moderateScale(10),
+  paddingTop: size.moderateScale(20),
   fontSize: fontSize.medium,
   fontFamily: fonts.latoBold,
   color: color.black,
 });
 export const txtDate = () => ({
-  paddingTop: size.moderateScale(10),
-  fontSize: fontSize.large,
+  // paddingTop: size.moderateScale(10),
+  fontSize: fontSize.largeNew,
+  fontFamily: fonts.latoRegular,
+  color: color.black,
+  // backgroundColor: 'red',
+});
+export const txtDate1 = () => ({
+  paddingTop: size.moderateScale(5),
+  fontSize: fontSize.veryLarge,
   fontFamily: fonts.latoBold,
   color: color.black,
 });
@@ -148,7 +165,7 @@ export const modalStyle = () => ({
   backgroundColor: 'transparent',
   shadowColor: 'transparent',
   marginTop: size.deviceHeight * 0.3,
-  width: size.deviceWidth * 0.7,
+  width: size.deviceWidth * 0.75,
   borderRadius: size.moderateScale(10),
 });
 export const modelize_view = () => ({

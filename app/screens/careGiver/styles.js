@@ -33,7 +33,7 @@ export const inputMain = () => ({
   // width: size.deviceWidth * 0.55,
 });
 export const inputTextStyle = () => ({
-  fontSize: fontSize.medium,
+  fontSize: fontSize.small,
   fontFamily: fonts.latoRegular,
   color: color.blueTx,
   paddingLeft: size.moderateScale(9),

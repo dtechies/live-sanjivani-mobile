@@ -20,8 +20,8 @@ export const mainProfileStyle = () => ({
   justifyContent: 'space-between',
   paddingHorizontal: size.moderateScale(20),
 });
-export const subProfileStyle = val => ({
-  backgroundColor: color.white,
+export const subProfileStyle = (val, selected) => ({
+  backgroundColor: selected ? color.blue : color.white,
   height: size.moderateScale(110),
   width: size.moderateScale(125),
   borderRadius: size.moderateScale(10),
@@ -33,10 +33,10 @@ export const subProfileStyle = val => ({
   shadowOpacity: 0.09,
   elevation: size.moderateScale(10),
 });
-export const profileText = () => ({
+export const profileText = selected => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
-  color: color.blueTx,
+  color: selected ? color.white : color.blueTx,
   textAlign: 'center',
   paddingTop: size.moderateScale(5),
 });

@@ -1,7 +1,7 @@
 import HttpCalls from './HttpCalls';
 import {headersData} from './Services';
 import {store, persistor} from './../redux';
-// console.log('store,', store.getState().userDataReducer.userDataResponse);
+console.log('store,', store.getState().userDataReducer.userDataResponse);
 let token = store.getState().userDataReducer.userDataResponse.login
   ? store.getState().userDataReducer.userDataResponse.userData.token
   : '';
@@ -63,7 +63,7 @@ export const _getAllCategoryAndSubCategory = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers ==>', headers);
+  // console.log('headers ==> Bansi..', headers, token);
   return _api_calls('GET', '/all_cat_subcategory', headers);
 };
 export const _addAppointmentReminderView = async () => {
@@ -136,5 +136,5 @@ export const _editProfileDetails = async payload => {
     type: 'multipart/form-data',
     token: token,
   });
-  return _api_calls('POST', '/add-edit-user-profile', headers, payload);
+  return _api_calls('POST', '/edit-user-profile', headers, payload);
 };
