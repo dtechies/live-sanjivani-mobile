@@ -31,14 +31,18 @@ export const LoginScreen = () => {
   };
 
   const onGetOtp = async () => {
+    console.log('hiiii');
     setLoading(true);
     const getOtpBody = {
       mob_no: number,
     };
+    console.log('otp', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
+    // console.log('getOtpResponse', getOtpResponse);
     const res = getOtpResponse.payload;
+    // console.log('res', res);
     if (res.status) {
-      console.log('response data loginn ==>', res.data);
+      // console.log('response data loginn ==>', res.data);
       setLoading(false);
       toastMessage(res.message);
       setTimeout(() => {

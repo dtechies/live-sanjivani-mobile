@@ -44,7 +44,7 @@ export const OtpScreen = props => {
     // console.log('loginBody ==>', loginBody);
     const loginResponse = await dispatch(loginUser(loginBody));
     const res = loginResponse.payload;
-    // console.log('login res ==>', res);
+    console.log('login res ==>', res);
     if (res.status) {
       var a = moment(res.data.user.dob);
       var b = moment(currentDate);

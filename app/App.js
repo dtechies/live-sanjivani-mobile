@@ -47,7 +47,7 @@ const App = () => {
           let notif = notifReceivedEvent.getNotification();
           // console.log('WILL SHOW');
 
-          console.log('notif ==>', notif);
+          // console.log('notif ==>', notif);
 
           // FOR DIRECTLY RECIEVE IT WITHOUT ALERTA
           notifReceivedEvent.complete(notif);

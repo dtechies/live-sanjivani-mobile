@@ -125,7 +125,7 @@ export const AddDetailsScreen = props => {
                             }
                           }
                           setThisArray(thisArray);
-                          console.log('thisArray', thisArray);
+                          // console.log('thisArray', thisArray);
                           setIsError('');
                           setExtra(extra + 1);
                         }}
