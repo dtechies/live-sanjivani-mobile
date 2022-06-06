@@ -81,7 +81,7 @@ export const Header = props => {
         {props.isProfile && (
           <Pressable
             onPress={() => {
-              console.log('Profile Icon Clicked...');
+              // console.log('Profile Icon Clicked...');
             }}>
             <IcProfileLogo
               width={size.moderateScale(26)}
@@ -93,7 +93,7 @@ export const Header = props => {
         {props.isClose && (
           <Pressable
             onPress={() => {
-              console.log('Profile Icon Clicked...');
+              // console.log('Profile Icon Clicked...');
             }}>
             <IcCrossArrow
               width={size.moderateScale(11)}

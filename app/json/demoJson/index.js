@@ -77,7 +77,7 @@ export const MainProfileDetail = [
     label: '6',
     value: 'Help',
     svg: (
-      <IcJournal
+      <IcHelp
         height={size.moderateScale(40)}
         width={size.moderateScale(40)}
         fill={color.blue}
@@ -89,7 +89,7 @@ export const MainProfileDetail = [
     label: '7',
     value: 'Logout',
     svg: (
-      <IcHelp
+      <IcLogout
         height={size.moderateScale(40)}
         width={size.moderateScale(40)}
         fill={color.blue}

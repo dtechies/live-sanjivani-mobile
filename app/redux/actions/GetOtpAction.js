@@ -2,7 +2,7 @@ import * as actions from '../Types';
 import {_getOTP} from 'services';
 
 export const getOtp = body => {
-  console.log('getOtp body := ', body);
+  // console.log('getOtp body := ', body);
   return dispatch => {
     dispatch({type: actions.GET_OTP});
     return _getOTP(body)
