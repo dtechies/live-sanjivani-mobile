@@ -104,7 +104,7 @@ export const AppointmentReminderScreen = animated => {
     setSearchVal(val);
     let text = val.toLowerCase();
     let address = 'initial val...';
-    console.log('doctorData ==> ', doctorData);
+    // console.log('doctorData ==> ', doctorData);
     if (val.length >= 2) {
       let filteredName = doctorData.filter(item => {
         if (item.doctor_name.toLowerCase().match(text)) {
@@ -113,7 +113,7 @@ export const AppointmentReminderScreen = animated => {
         return item.doctor_name.toLowerCase().match(text);
       });
 
-      console.log('address ==> ', address);
+      // console.log('address ==> ', address);
       setDoctorFilteredName(filteredName);
       setAddressOne(address);
       setExtra(extra + 1);
@@ -172,8 +172,8 @@ export const AppointmentReminderScreen = animated => {
                 textSecondaryColor: color.turquoise,
                 borderColor: color.black,
               }}
-              current={moment(new Date()).format('D MMMM YYYY')}
-              // // selected={moment(new Date()).format('YYYY-MM-DD')}
+              current={moment(new Date()).format('YYYY-MM-DD')}
+              selected={moment(new Date()).format('YYYY-MM-DD')}
               onSelectedChange={date => {
                 setSelectedDate(moment(date).format('D MMMM YYYY'));
                 setSelectedDateErr('');

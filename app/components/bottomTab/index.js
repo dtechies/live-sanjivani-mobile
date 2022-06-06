@@ -33,7 +33,7 @@ export const BottomTab = props => {
         } else if (r.name === 'Progress') {
           Icon = IcProgress;
         } else if (r.name === 'Sharing') {
-          Icon = IcProfile;
+          Icon = IcSharing;
         } else if (r.name === 'Add') {
           Icon = IcPlus;
         } else if (r.name === 'Profile') {

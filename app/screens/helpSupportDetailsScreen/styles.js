@@ -18,7 +18,7 @@ export const mainView = () => ({
   marginTop: size.moderateScale(20),
   backgroundColor: color.themeBack,
   //   marginBottom: size.moderateScale(15),
-  flex: 1,
+  // flex: 1,
   height: size.deviceHeight * 0.77,
 });
 export const noData = () => ({
