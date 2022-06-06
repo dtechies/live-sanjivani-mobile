@@ -31,7 +31,7 @@ export const SharingDetailScreen = props => {
   useEffect(() => {
     if (props.route.params.selectedItems) {
       setSharingData(props.route.params.selectedItems);
-      console.log(props.route.params.selectedItems);
+      // console.log(props.route.params.selectedItems);
       // setSharingData(selectedItems);
     }
     const data = props.route.params.selectedItems;

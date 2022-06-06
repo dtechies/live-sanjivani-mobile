@@ -100,7 +100,7 @@ export const OtpScreen = props => {
   useEffect(() => {
     let timerDiff = counterTimer - new moment().format('X');
     timerDiff = timerDiff > 0 ? timerDiff : '00';
-    console.log('timerDiff', timerDiff);
+    // console.log('timerDiff', timerDiff);
     counter > 0 &&
       setTimeout(() => {
         if (counter <= 10) {

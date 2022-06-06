@@ -62,7 +62,7 @@ export const _getAllCategoryAndSubCategory = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers ==>', headers);
+  // console.log('headers ==> Bansi..', headers, token);
   return _api_calls('GET', '/all_cat_subcategory', headers);
 };
 export const _addAppointmentReminderView = async () => {
@@ -136,5 +136,5 @@ export const _editProfileDetails = async payload => {
     type: 'multipart/form-data',
     token: token,
   });
-  return _api_calls('POST', '/add-edit-user-profile', headers, payload);
+  return _api_calls('POST', '/edit-user-profile', headers, payload);
 };

@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {getAllCategoryAndSubCategory} from 'redux-actions';
 import {color, IcBack} from 'theme';
-import {addServiceData} from 'json';
+import {AddNavData} from 'json';
 import * as styles from './styles';
 
 export const AddScreen = () => {
@@ -13,10 +13,9 @@ export const AddScreen = () => {
   const navigation = useNavigation();
   const toastRef = useRef();
   const [extra, setExtra] = useState(0);
-  const [showSub, setShowSub] = useState(false);
   const [loading, setLoading] = useState(false);
   const [allCategory, setAllCategory] = useState([]);
-  const [data, setData] = useState(addServiceData);
+  const [data, setData] = useState(AddNavData);
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -24,8 +23,8 @@ export const AddScreen = () => {
     data.map((val, i) => {
       data[i].selected = false;
     });
-    addServiceData.map((val, i) => {
-      addServiceData[i].selected = false;
+    AddNavData.map((val, i) => {
+      AddNavData[i].selected = false;
     });
     setExtra(extra + 1);
   };
@@ -33,16 +32,17 @@ export const AddScreen = () => {
     // setLoading(true);
     const allCatResponse = await dispatch(getAllCategoryAndSubCategory());
     const res = allCatResponse;
-    // console.log('allCatResponse_NEW ==>', res);
-    if (res.status) {
-      setLoading(false);
-      setShowSub(true);
-      setAllCategory(res.data.categoryData);
-      setExtra(extra + 1);
+    console.log('allCatResponse_NEW ==>', res);
+    if (res != undefined) {
+      if (res.status) {
+        setLoading(false);
+        setAllCategory(res.data.categoryData);
+        setExtra(extra + 1);
+      }
     } else {
       setLoading(false);
-      setShowSub(false);
-      toastMessage(res.message);
+      setAllCategory([]);
+      toastMessage('Invalid data...');
     }
   };
 
@@ -141,7 +141,8 @@ export const AddScreen = () => {
                 }}
                 style={styles.addNavStyle(item.selected)}
                 key={index + 'addMedication'}
-                disabled={!showSub}>
+                // disabled={!showSub}
+              >
                 <Text
                   text={item.name}
                   style={styles.labelAddStyle(item.selected)}

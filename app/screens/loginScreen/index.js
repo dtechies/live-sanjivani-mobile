@@ -31,12 +31,12 @@ export const LoginScreen = () => {
   };
 
   const onGetOtp = async () => {
-    console.log('hiiii');
+    // console.log('hiiii');
     setLoading(true);
     const getOtpBody = {
       mob_no: number,
     };
-    console.log('otp', getOtpBody);
+    // console.log('otp', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     // console.log('getOtpResponse', getOtpResponse);
     const res = getOtpResponse.payload;

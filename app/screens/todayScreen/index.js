@@ -83,7 +83,9 @@ export const TodayScreen = () => {
           <View style={styles.rowImage()}>
             {medicationData.map((item, index) => {
               return (
-                <View style={styles.row(medicationData.length > index + 1)}>
+                <View
+                  style={styles.row(medicationData.length > index + 1)}
+                  key={index + 'medicationData'}>
                   {item.isDone ? (
                     item.status ? (
                       <IcTrue />

@@ -13,7 +13,7 @@ export const IntroScreen = () => {
   const navigation = useNavigation();
   const [active, setActive] = useState(0);
   const route = useRoute();
-  console.log('route', route.name);
+  // console.log('route', route.name);
   const loginPress = () => {
     if (active < 2) {
       setActive(active + 1);

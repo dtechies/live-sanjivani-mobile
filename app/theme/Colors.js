@@ -41,4 +41,6 @@ export const color = {
   steelBlue: 'rgba(12,68,146,1)',
   denim: 'rgba(27,91,181,1)',
   midnightBlue: 'rgba(38,116,218,1)',
+  modelColor: 'rgba(28,28,28,1)',
+  modelTxtColor: 'rgba(3,3,3,1)',
 };

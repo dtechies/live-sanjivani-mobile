@@ -36,7 +36,7 @@ export const AppointmentReminderScreen = animated => {
   const [showTime, setShowTime] = useState(false);
   const [showTimeReminder, setShowTimeReminder] = useState(false);
   const [selectedDate, setSelectedDate] = useState(
-    new moment().format('D MMMM YYYY'),
+    new moment().format('Do MMMM YYYY'),
   );
   const [selectedDateErr, setSelectedDateErr] = useState('');
   const [searchVal, setSearchVal] = useState('');
@@ -68,17 +68,33 @@ export const AppointmentReminderScreen = animated => {
   };
   const getAppointmentTime = givenTime => {
     var hours = givenTime.getHours();
+    var m = givenTime.getMinutes();
     var ampm = hours >= 12 ? 'PM' : 'AM';
-    let newDate = givenTime.toTimeString().slice(0, 5);
-    setSelectedTime(newDate);
+    var h = hours;
+    if (h >= 12) {
+      h = hours - 12;
+    }
+    if (h == 0) {
+      h = 12;
+    }
+    m = m < 10 ? '0' + m : m;
+    setSelectedTime(`${h}:${m} ${ampm}`);
     setSelectedTimeErr('');
     setShowTime(false);
   };
   const getReminderTime = givenTime => {
     var hours = givenTime.getHours();
+    var m = givenTime.getMinutes();
     var ampm = hours >= 12 ? 'PM' : 'AM';
-    let newDate = givenTime.toTimeString().slice(0, 5);
-    setReminderTime(newDate);
+    var h = hours;
+    if (h >= 12) {
+      h = hours - 12;
+    }
+    if (h == 0) {
+      h = 12;
+    }
+    m = m < 10 ? '0' + m : m;
+    setReminderTime(`${h}:${m} ${ampm}`);
     setSelectedTimeErrSecond('');
     setShowTimeReminder(false);
   };
@@ -123,17 +139,17 @@ export const AppointmentReminderScreen = animated => {
   };
 
   const onGetDoctorDetails = async () => {
-    setLoading(true);
+    // setLoading(true);
     const getOtpResponse = await dispatch(getAppointmentReminderAllDetail());
     const res = getOtpResponse;
     // console.log('getDoctorData res ==>', res);
     if (res.status) {
-      setLoading(false);
-      toastMessage(res.message);
+      // setLoading(false);
+      // toastMessage(res.message);
       setDoctorData(res.data.DoctorsData);
       setExtra(extra + 1);
     } else {
-      setLoading(false);
+      // setLoading(false);
       toastMessage(res.message);
     }
   };
@@ -175,7 +191,7 @@ export const AppointmentReminderScreen = animated => {
               current={moment(new Date()).format('YYYY-MM-DD')}
               selected={moment(new Date()).format('YYYY-MM-DD')}
               onSelectedChange={date => {
-                setSelectedDate(moment(date).format('D MMMM YYYY'));
+                setSelectedDate(moment(date).format('Do MMMM YYYY'));
                 setSelectedDateErr('');
                 // setExtra(extra + 1);
               }}
@@ -271,7 +287,7 @@ export const AppointmentReminderScreen = animated => {
             <Text style={styles.textValidation()} text={searchValErr} />
           ) : null}
           {doctorFilteredName.length > 0 &&
-            doctorFilteredName.map((item, index) => {
+            doctorFilteredName.map(item => {
               return (
                 <Pressable
                   style={styles.searchedValueList()}
@@ -329,7 +345,7 @@ export const AppointmentReminderScreen = animated => {
               <Pressable
                 onPress={() => onClosePopUp()}
                 style={styles.crossSvgStyle()}>
-                <IcCrossArrow width={13} height={13} fill={color.grayIcon} />
+                <IcCrossArrow width={18} height={18} fill={color.grayIcon} />
               </Pressable>
 
               <Text
@@ -340,16 +356,11 @@ export const AppointmentReminderScreen = animated => {
                 tx={'appointment_reminder_screen.yourAppointmentWillBeginAt'}
                 style={styles.txtBegin()}
               />
-              <Text text={'On 6th May 2017'} style={styles.txtDate()} />
-              <Text text={'9:00 PM'} style={styles.txtDate()} />
-              <Text
-                text={'Dr.Mital Gal - Dentist'}
-                style={styles.txtDoctor()}
-              />
-              <Text
-                text={'Shivaji Nagar,Pune 3 Km'}
-                style={styles.txtBegin()}
-              />
+              <View style={styles.separator()}></View>
+              <Text text={`On ${selectedDate}`} style={styles.txtDate()} />
+              <Text text={`${selectedTime}`} style={styles.txtDate1()} />
+              <Text text={`Dr. ${searchVal}`} style={styles.txtDoctor()} />
+              <Text text={`${addressOne}`} style={styles.txtBegin()} />
               <Button
                 nameTx="appointment_reminder_screen.confirm"
                 buttonStyle={styles.btnModel()}
@@ -366,9 +377,7 @@ export const AppointmentReminderScreen = animated => {
         buttonText={styles.textAddButton()}
         onPress={() => {
           selectedDate && searchVal && addressOne
-            ? // selectedTime == 'Time' &&
-              // reminderTime == 'Time'
-              onOpenPopUp()
+            ? onOpenPopUp()
             : validation();
         }}
       />

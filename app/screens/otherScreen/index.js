@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, View, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {SvgUri} from 'react-native-svg';
 // import {Dropdown} from 'react-native-element-dropdown';
 // import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 // import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -19,6 +20,7 @@ import {Loader, Text, Button, Screen, InputBox, Header} from 'components';
 //   IcOtherIcon6,
 // } from 'theme';
 import * as styles from './styles';
+import {size} from 'theme';
 // import {menstruation, startOfCycle, protection} from 'json';
 
 export const OtherScreen = props => {
@@ -59,7 +61,7 @@ export const OtherScreen = props => {
 
   useEffect(() => {
     if (props.route.params) {
-      console.log('props.route.params ==> ', props.route.params);
+      // console.log('props.route.params ==> ', props.route.params);
       setTitle(props.route.params.title);
       setSubCategory(props.route.params.sub);
       setExtra(extra + 1);
@@ -165,7 +167,11 @@ export const OtherScreen = props => {
                 style={styles.headingFirst(i == 0 ? 1 : 0)}
                 key={i + 'subCategory'}>
                 <View style={styles.headOne()}>
-                  <Image source={value.icon} height={25} width={25} />
+                  <SvgUri
+                    height={size.moderateScale(25)}
+                    width={size.moderateScale(25)}
+                    uri={value.icon}
+                  />
                   <Text style={styles.headingTxt()}>{value.name}</Text>
                 </View>
                 {/* <View style={styles.itemListMain()}>

@@ -3,6 +3,7 @@ import {SafeAreaView, Pressable, View, TextInput, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {AddSubcategory} from 'redux-actions';
+import {SvgUri} from 'react-native-svg';
 import {Loader, Text, Button, Screen, Header, Toast} from 'components';
 import {size} from 'theme';
 import * as styles from './styles';
@@ -83,10 +84,10 @@ export const AddDetailsScreen = props => {
               return (
                 <View style={styles.container1()} key={i + 'addDetails'}>
                   <View style={styles.icon()}>
-                    <Image
-                      source={val.icon}
+                    <SvgUri
                       height={size.moderateScale(45)}
                       width={size.moderateScale(45)}
+                      uri={val.icon}
                     />
                   </View>
                   <View style={styles.textMain()}>
