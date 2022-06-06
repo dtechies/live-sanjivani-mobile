@@ -97,6 +97,7 @@ export const BottomStackNavigation = props => {
   return (
     <View style={{flex: 1}}>
       <Tab.Navigator
+        initialRouteName="Today"
         screenOptions={{
           headerShown: false,
         }}

@@ -46,16 +46,17 @@ export const OtpScreen = props => {
     const res = loginResponse.payload;
     console.log('login res ==>', res);
     if (res.status) {
-      setLoading(false);
       var a = moment(res.data.user.dob);
       var b = moment(currentDate);
       var years = b.diff(a, 'year');
       b.add(years, 'years');
-      dispatch(userData({userData: res.data.user, age: years, login: true}));
-      // console.log('login response data ==>', res);
-      toastMessage(res.message);
+      await dispatch(
+        userData({userData: res.data.user, age: years, login: true}),
+      );
+      // toastMessage(res.message);
       setTimeout(() => {
-        navigation.navigate('bottomStackNavigation', {screen: 'Today'});
+        navigation.navigate('bottomStackNavigation');
+        setLoading(false);
       }, 150);
     } else {
       setLoading(false);

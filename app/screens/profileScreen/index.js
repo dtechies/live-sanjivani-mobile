@@ -6,7 +6,7 @@ import {Loader, Text, Screen, Header, Toast} from 'components';
 import * as styles from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {MainProfileDetail} from 'json';
-import {userData} from 'redux-actions';
+import {userLogOut, userData} from 'redux-actions';
 
 export const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -14,27 +14,15 @@ export const ProfileScreen = () => {
   const [loading, setLoading] = useState(false);
   const [detailProfile, setDetailProfile] = useState(MainProfileDetail);
   const toastRef = useRef();
-  const toastMessage = msg => {
-    toastRef.current.show(msg);
-  };
   const {userDetails = {}, age = ''} = useSelector(state => ({
     userDetails: state.userDataReducer.userDataResponse.userData,
     age: state.userDataReducer.userDataResponse.age,
   }));
+
   const onLogoutData = async () => {
-    setLoading(true);
-    const LogoutResponse = await dispatch(userData({login: false}));
-    const res = LogoutResponse.payload;
-    if (!res.login) {
-      setTimeout(() => {
-        navigation.navigate('authStackNavigation', {screen: 'loginScreen'});
-      }, 150);
-      setLoading(false);
-      toastMessage('Logout Successfully');
-    } else {
-      setLoading(false);
-      toastMessage('some Issue Please try again...');
-    }
+    await dispatch(userLogOut());
+    await dispatch(userData({login: false}));
+    navigation.navigate('authStackNavigation', {screen: 'loginScreen'});
   };
 
   return (

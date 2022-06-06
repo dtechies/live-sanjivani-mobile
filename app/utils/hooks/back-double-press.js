@@ -5,14 +5,16 @@ import {Platform, BackHandler, ToastAndroid} from 'react-native';
 export const ExecuteOnlyOnAndroid = props => {
   const {message} = props;
   const [exitApp, setExitApp] = useState(0);
+  const [extra, setExtra] = useState(0);
   const backAction = () => {
     setTimeout(() => {
       setExitApp(0);
+      setExtra(extra + 1);
     }, 2000); // 2 seconds to tap second-time
 
     if (exitApp === 0) {
-      setExitApp(exitApp + 1);
-
+      setExitApp(1);
+      setExtra(extra + 1);
       ToastAndroid.show(message, ToastAndroid.SHORT);
     } else if (exitApp === 1) {
       BackHandler.exitApp();
@@ -25,7 +27,7 @@ export const ExecuteOnlyOnAndroid = props => {
       backAction,
     );
     return () => backHandler.remove();
-  });
+  }, []);
   return <></>;
 };
 

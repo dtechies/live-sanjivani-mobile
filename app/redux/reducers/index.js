@@ -32,6 +32,7 @@ import getOtpReducer from './GetOtpReducer';
 import addSubcategoryReducer from './AddSubcategoryReducer';
 import addCareGiverReducer from './AddCareGiverReducer';
 import editUserProfileReducer from './EditUserProfileReducer';
+import userLogOutReducer from './UserLogoutReducer';
 
 const persistConfig = {
   key: 'root',
@@ -68,16 +69,15 @@ const appReducer = combineReducers({
   addSubcategoryReducer: addSubcategoryReducer,
   addCareGiverReducer: addCareGiverReducer,
   editUserProfileReducer: editUserProfileReducer,
+  userLogOutReducer: userLogOutReducer,
 });
-
 const rootReducer = (state, action) => {
-  // console.log('ACTIONS', action);
-
   // Clear all data in redux store to initial.
-  // if (action.type === 'USER_LOGOUT') {
-  //   AsyncStorage.removeItem('persist:root');
-  // }
+  if (action.type === 'USER_LOGOUT') {
+    AsyncStorage.removeItem('persist:root');
 
+    return appReducer(undefined, action);
+  }
   return appReducer(state, action);
 };
 
