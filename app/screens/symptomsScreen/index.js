@@ -28,7 +28,6 @@ export const SymptomsScreen = () => {
     setSearchText(val);
     let text = val.toLowerCase() || val.toUpperCase();
     let FilteredValue = symptomChecker.filter(item => {
-      console.log('item', item);
       return item.name.toLowerCase().match(text);
     });
     setSymChecker(FilteredValue);

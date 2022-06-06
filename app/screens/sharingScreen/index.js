@@ -42,7 +42,7 @@ export const SharingScreen = () => {
   };
   const validation = () => {
     let data = sharingDataList.filter(val => val.selectedCard == true);
-    console.log(data.length, 'length...');
+    // console.log(data.length, 'length...');
     if (data.length == 0) {
       setSharingDataErr('Please Select at least 1 Field');
     } else {

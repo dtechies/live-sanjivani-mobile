@@ -138,7 +138,7 @@ export const ProgressDetailScreen = props => {
   // const Icon = props.route.params && props.route.params.selectedItems.svg;
   useEffect(() => {
     if (props.route.params) {
-      console.log('props.route.params ==> ', props.route.params);
+      // console.log('props.route.params ==> ', props.route.params);
       setSharingData(props.route.params?.selectedItems);
       setExtra(extra + 1);
     }

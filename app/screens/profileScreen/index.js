@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Loader, Text, Screen, Header, Toast} from 'components';
-// import {images} from 'theme';
+import {size, color} from 'theme';
 import * as styles from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {MainProfileDetail} from 'json';
@@ -73,6 +73,7 @@ export const ProfileScreen = () => {
       <Screen withScroll bounces={false} style={styles.screenContainer()}>
         <View style={styles.mainProfileStyle()}>
           {detailProfile.map((item, i) => {
+            let ICON = item.svg;
             return (
               <Pressable
                 key={i.toString()}
@@ -121,7 +122,11 @@ export const ProfileScreen = () => {
                     ? styles.subProfileStyle(1, item.selectedCard)
                     : styles.subProfileStyle(0, item.selectedCard)
                 }>
-                {item.svg}
+                <ICON
+                  height={size.moderateScale(40)}
+                  width={size.moderateScale(40)}
+                  fill={item.selectedCard ? color.white : color.blue}
+                />
                 <Text
                   text={item.value}
                   style={styles.profileText(item.selectedCard)}

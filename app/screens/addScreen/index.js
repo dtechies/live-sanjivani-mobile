@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {getAllCategoryAndSubCategory} from 'redux-actions';
 import {color, IcBack} from 'theme';
-import {addServiceData} from 'json';
+import {AddNavData} from 'json';
 import * as styles from './styles';
 
 export const AddScreen = () => {
@@ -15,7 +15,7 @@ export const AddScreen = () => {
   const [extra, setExtra] = useState(0);
   const [loading, setLoading] = useState(false);
   const [allCategory, setAllCategory] = useState([]);
-  const [data, setData] = useState(addServiceData);
+  const [data, setData] = useState(AddNavData);
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -23,8 +23,8 @@ export const AddScreen = () => {
     data.map((val, i) => {
       data[i].selected = false;
     });
-    addServiceData.map((val, i) => {
-      addServiceData[i].selected = false;
+    AddNavData.map((val, i) => {
+      AddNavData[i].selected = false;
     });
     setExtra(extra + 1);
   };

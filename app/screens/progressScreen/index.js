@@ -29,7 +29,7 @@ export const ProgressScreen = () => {
   };
 
   useEffect(() => {
-    console.log('favItem', favItem);
+    // console.log('favItem', favItem);
   }, [favItem]);
 
   const toastMessage = msg => {
@@ -61,7 +61,7 @@ export const ProgressScreen = () => {
     };
     const SubCategoryResponse = await dispatch(addUserFavorite(fevUserBody));
     const res = SubCategoryResponse;
-    console.log('addUserFavoriteData res RESSS==>', res);
+    // console.log('addUserFavoriteData res RESSS==>', res);
     if (res.status) {
       setLoading(false);
       toastMessage(res.message);

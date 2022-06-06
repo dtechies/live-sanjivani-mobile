@@ -61,7 +61,7 @@ export const OtherScreen = props => {
 
   useEffect(() => {
     if (props.route.params) {
-      console.log('props.route.params ==> ', props.route.params);
+      // console.log('props.route.params ==> ', props.route.params);
       setTitle(props.route.params.title);
       setSubCategory(props.route.params.sub);
       setExtra(extra + 1);
