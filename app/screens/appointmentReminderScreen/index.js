@@ -17,7 +17,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import DatePicker from 'react-native-modern-datepicker';
 import {
-  IcSearch,
+  IcAddress,
   color,
   size,
   IcCalendar,
@@ -300,7 +300,7 @@ export const AppointmentReminderScreen = animated => {
             inputStyle={styles.inputTxt()}
             leftIcon={true}
             leftIconName={
-              <SearchValNew
+              <IcAddress
                 height={size.moderateScale(20)}
                 width={size.moderateScale(20)}
                 fill={color.blue}

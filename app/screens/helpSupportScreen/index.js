@@ -35,7 +35,7 @@ export const HelpSupportScreen = () => {
       });
       setHelpSupport(support);
       let disclosures = data.filter(val => {
-        return val.type == 'Discolours';
+        return val.type == 'Disclosures';
       });
       setHelpDisclosures(disclosures);
       setExtra(extra + 1);

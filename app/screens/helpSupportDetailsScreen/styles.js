@@ -1,7 +1,7 @@
 import {color, size, fontSize, fonts} from 'theme';
 
 export const container = () => ({
-  flex: 1,
+  // flex: 1,
   paddingHorizontal: size.moderateScale(25),
   backgroundColor: color.themeBack,
 });
@@ -19,7 +19,7 @@ export const mainView = () => ({
   backgroundColor: color.themeBack,
   //   marginBottom: size.moderateScale(15),
   // flex: 1,
-  height: size.deviceHeight * 0.77,
+  height: size.deviceHeight * 0.72,
 });
 export const noData = () => ({
   paddingVertical: size.moderateScale(10),
