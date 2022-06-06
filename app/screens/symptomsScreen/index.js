@@ -157,7 +157,7 @@ export const SymptomsScreen = () => {
       <Pressable
         style={styles.circleBtnView()}
         onPress={() => {
-          console.log('add symptom');
+          // console.log('add symptom');
         }}>
         <IcBtnPlus
           height={size.moderateScale(69)}

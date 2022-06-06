@@ -74,6 +74,7 @@ import {OtherIcon3} from './image/svgIcons/OtherIcon3';
 import {OtherIcon4} from './image/svgIcons/OtherIcon4';
 import {OtherIcon5} from './image/svgIcons/OtherIcon5';
 import {OtherIcon6} from './image/svgIcons/OtherIcon6';
+import {Address} from './image/svgIcons/IcAddress';
 
 export const IcWeb = props => (
   <Web height={props.height} width={props.width} fill={props.fill} />
@@ -297,4 +298,7 @@ export const IcOtherIcon5 = props => (
 );
 export const IcOtherIcon6 = props => (
   <OtherIcon6 height={props.height} width={props.width} fill={props.fill} />
+);
+export const IcAddress = props => (
+  <Address height={props.height} width={props.width} fill={props.fill} />
 );

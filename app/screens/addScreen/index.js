@@ -67,6 +67,7 @@ export const AddScreen = () => {
             return (
               <Pressable
                 onPress={() => {
+                  // console.log('Asdas');
                   clearData();
                   if (
                     item.name == 'Vitals' ||

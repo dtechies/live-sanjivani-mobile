@@ -63,10 +63,10 @@ export const MedicationReminderList = () => {
     const getMedicineReminderProfileHeader = {
       token: token,
     };
-    console.log(
-      'getMedicineReminderData ==>',
-      getMedicineReminderProfileHeader,
-    );
+    // console.log(
+    //   'getMedicineReminderData ==>',
+    //   getMedicineReminderProfileHeader,
+    // );
     return;
     const getMedicineReminderProfileResponse = await dispatch(
       getMedicineReminderProfile(getMedicineReminderProfileHeader),

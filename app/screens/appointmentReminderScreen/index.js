@@ -17,7 +17,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import DatePicker from 'react-native-modern-datepicker';
 import {
-  IcSearch,
+  IcAddress,
   color,
   size,
   IcCalendar,
@@ -120,7 +120,7 @@ export const AppointmentReminderScreen = animated => {
     setSearchVal(val);
     let text = val.toLowerCase();
     let address = 'initial val...';
-    console.log('doctorData ==> ', doctorData);
+    // console.log('doctorData ==> ', doctorData);
     if (val.length >= 2) {
       let filteredName = doctorData.filter(item => {
         if (item.doctor_name.toLowerCase().match(text)) {
@@ -129,7 +129,7 @@ export const AppointmentReminderScreen = animated => {
         return item.doctor_name.toLowerCase().match(text);
       });
 
-      console.log('address ==> ', address);
+      // console.log('address ==> ', address);
       setDoctorFilteredName(filteredName);
       setAddressOne(address);
       setExtra(extra + 1);
@@ -316,7 +316,7 @@ export const AppointmentReminderScreen = animated => {
             inputStyle={styles.inputTxt()}
             leftIcon={true}
             leftIconName={
-              <SearchValNew
+              <IcAddress
                 height={size.moderateScale(20)}
                 width={size.moderateScale(20)}
                 fill={color.blue}
