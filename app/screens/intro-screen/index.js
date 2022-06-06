@@ -1,15 +1,12 @@
 import React, {useState, useRef} from 'react';
-import {View, SafeAreaView, ScrollView, Image, BackHandler} from 'react-native';
+import {View, SafeAreaView, ScrollView, Image} from 'react-native';
 
-import {
-  useNavigation,
-  useRoute,
-  useFocusEffect,
-} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {color, size} from 'theme';
 import {images, IcIntro1, IcIntro2, IcIntro3, IcSplashColor} from 'theme';
 import {Button, Text} from 'components';
 import styles from './styles';
+import {useDoubleBackPressExit} from 'utils';
 
 export const IntroScreen = () => {
   const scrollRef = useRef(null);
@@ -38,18 +35,7 @@ export const IntroScreen = () => {
     );
     setActive(active);
   };
-  useFocusEffect(
-    React.useCallback(() => {
-      const onBackPress = () => {
-        return true;
-      };
-
-      BackHandler.addEventListener('hardwareBackPress', onBackPress);
-
-      return () =>
-        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
-    }, []),
-  );
+  useDoubleBackPressExit();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.mainView}>
