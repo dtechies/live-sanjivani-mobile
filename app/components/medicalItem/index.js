@@ -24,7 +24,7 @@ export const MedicalItems = props => {
   const [imgXml, setImgXml] = React.useState('<svg></svg>');
   const getImgXml = async () => {
     const xml = await (await fetch(svgCardItems)).text();
-    console.log('hello ==L>', xml);
+    // console.log('hello ==L>', xml);
     setImgXml(xml);
   };
   React.useEffect(() => {

@@ -16,7 +16,7 @@ export const ProgressScreen = () => {
   const dispatch = useDispatch();
   const toastRef = useRef();
   const [extra, setExtra] = useState(0);
-  const [favItem, setFavItem] = useState([]);
+  const [favItem, setFavItem] = useState('');
   const [first, setFirst] = useState(true);
   const [loading, setLoading] = useState(false);
   const [progressData, setProgressData] = useState([]);
@@ -54,14 +54,16 @@ export const ProgressScreen = () => {
       // setOtpErr(res.message);
     }
   };
-  const addUserFavoriteData = async () => {
-    setLoading(true);
+  const addUserFavoriteData = async dataId => {
+    // setLoading(true);
     const fevUserBody = {
-      subcategory_id: favItem,
+      subcategory_id: dataId,
     };
+    setExtra(extra + 1);
+    console.log('fevUserBody', fevUserBody);
     const SubCategoryResponse = await dispatch(addUserFavorite(fevUserBody));
     const res = SubCategoryResponse;
-    console.log('addUserFavoriteData res RESSS==>', res);
+    console.log('addUserFavoriteData res Res==>', res);
     if (res.status) {
       setLoading(false);
       toastMessage(res.message);
@@ -103,7 +105,7 @@ export const ProgressScreen = () => {
     getAllSubCategoryData();
     getUserFavoriteListData();
     // addUserFavoriteData();
-  }, []);
+  }, [favItem]);
 
   return (
     <SafeAreaView style={styles.container()}>
@@ -258,16 +260,17 @@ export const ProgressScreen = () => {
       </Screen>
       {first && (
         <View>
-          {favoriteData.length >= 1 && (
-            <Button
-              buttonStyle={styles.button()}
-              buttonText={styles.buttonTxt()}
-              nameTx={'progress_screen.selectFav'}
-              onPress={() => {
-                setFirst(false);
-              }}
-            />
-          )}
+          <Button
+            buttonStyle={styles.button()}
+            buttonText={styles.buttonTxt()}
+            nameTx={'progress_screen.selectFav'}
+            onPress={() => {
+              setFirst(false);
+              // getAllSubCategoryData();
+              // getUserFavoriteListData();
+              // addUserFavoriteData();
+            }}
+          />
         </View>
       )}
       {!first && (
@@ -284,8 +287,9 @@ export const ProgressScreen = () => {
             clearData();
             setExtra(extra + 1);
             setTimeout(() => {
-              addUserFavoriteData();
-            }, 150);
+              addUserFavoriteData(dataId);
+              setExtra(extra + 1);
+            }, 500);
           }}
         />
       )}
