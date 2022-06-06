@@ -1,5 +1,5 @@
 import React, {useState, useMemo, createContext, useEffect} from 'react';
-import {LogBox} from 'react-native';
+import {LogBox, Alert, BackHandler, Platform} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import * as RNLocalize from 'react-native-localize';
@@ -8,7 +8,6 @@ import i18n from 'i18n-js';
 
 import {store, persistor} from './redux';
 import {MainStackNavigation} from './navigation';
-import DoubleTapToClose from './utils/hooks/back-double-press';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 import OneSignal from 'react-native-onesignal';
@@ -27,28 +26,6 @@ const App = () => {
   );
 
   LogBox.ignoreAllLogs();
-
-  // useEffect(() => {
-  //   const unsubscribe = messaging().onMessage(async remoteMessage => {
-  //     // when in foreground state
-  //     console.log('foreground onMessage ==>', remoteMessage);
-  //     // when use @aws-amplify/pushnotification
-  //     // sendLocalNotification({
-  //     //   title: remoteMessage.data.title || '',
-  //     //   message: remoteMessage.data.message || '',
-  //     // });
-  //     // when use react-native-push-notification
-  //     // sendLocalNotification({
-  //     //   title: remoteMessage.notification.title || '',
-  //     //   message: remoteMessage.notification.body || '',
-  //     // });
-  //   });
-
-  //   return unsubscribe;
-  // }, []);
-  // useEffect(() => {
-  //   getFcmToken();
-  // }, []);
 
   //OneSignal Init Code
   OneSignal.setAppId('3b7300ff-2be3-46f8-ad6a-5473e664b134');
@@ -136,7 +113,6 @@ const App = () => {
           {/* <View style={{flex: 1}}> */}
           <GestureHandlerRootView style={{flex: 1}}>
             <Host>
-              <DoubleTapToClose />
               <MainStackNavigation />
             </Host>
           </GestureHandlerRootView>

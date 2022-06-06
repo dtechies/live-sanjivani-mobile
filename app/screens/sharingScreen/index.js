@@ -1,8 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {View, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {getAllSubCategory} from 'redux-actions';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAllSubCategory, getSubCategoryData} from 'redux-actions';
 import {
   Text,
   Screen,
@@ -32,11 +32,10 @@ export const SharingScreen = () => {
     });
     setExtra(extra + 1);
   };
-  // const {token} = useSelector(state => ({
-  //   token: state.userDataReducer.userDataResponse.userData,
-  // }));
+  const {token} = useSelector(state => ({
+    token: state.userDataReducer.userDataResponse.userData,
+  }));
   // console.log('user data ==>', token);
-
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };

@@ -8,7 +8,6 @@ let token = store.getState().userDataReducer.userDataResponse.login
 export const _getAllCategory = async payload => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
-    type: 'multipart/form-data',
     token: token,
   });
   return _api_calls('GET', '/all-category', headers);
