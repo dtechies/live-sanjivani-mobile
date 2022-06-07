@@ -7,30 +7,31 @@ import {ToggleSwitch} from '../switch';
 
 export const ReminderCard = props => {
   const {onTogglePress, onWholeCardPress, data} = props;
+  // console.log('datatatat=', data);
   return (
     <Pressable
       onPress={() => onWholeCardPress && onWholeCardPress()}
-      style={styles.cardMain(data.isActive)}>
+      style={styles.cardMain(data.status)}>
       <View style={styles.cardFirst()}>
         <View style={styles.row()}>
           <IcDot
             height={size.moderateScale(12)}
             width={size.moderateScale(12)}
-            fill={data.isActive ? color.darkBlue : color.blueLight}
+            fill={data.status ? color.darkBlue : color.blueLight}
           />
-          <Text style={styles.cardHeading(data.isActive)}>
+          <Text style={styles.cardHeading(data.status)}>
             {data?.dose} {data?.medicine_name} {data?.medicine_strength}{' '}
             {data?.medicine_strength_unit}
           </Text>
         </View>
         <ToggleSwitch
-          isOn={data.isActive}
+          isOn={data.status}
           size={'small'}
           onToggle={() => onTogglePress && onTogglePress()}
         />
       </View>
       <View>
-        <Text style={styles.cardText(data.isActive)}>
+        <Text style={styles.cardText(data.status)}>
           {data?.user_selected_time}
           {',  '} {data?.reminder_time}
         </Text>
