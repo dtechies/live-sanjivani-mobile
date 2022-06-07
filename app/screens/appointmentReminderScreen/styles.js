@@ -67,6 +67,17 @@ export const textTimeDate = () => ({
   color: color.turquoise,
   fontSize: fontSize.small,
 });
+export const searchTitle = () => ({
+  fontFamily: fonts.latoRegular,
+  color: color.black,
+  fontSize: fontSize.small,
+  fontWeight: 'bold',
+});
+export const searchDis = () => ({
+  fontFamily: fonts.latoRegular,
+  color: color.black,
+  fontSize: fontSize.small,
+});
 export const titleStyle = () => ({
   marginTop: size.moderateScale(10),
   marginHorizontal: size.moderateScale(30),
@@ -122,11 +133,35 @@ export const inputMain = val => ({
   width: size.deviceWidth * 0.89,
   // marginBottom: size.moderateScale(15),
   marginTop: val != 1 ? size.moderateScale(10) : 15,
+  color: color.black,
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoRegular,
 });
 export const inputTxt = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoRegular,
   color: color.black,
+});
+export const searchPlacesInputTxt = () => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoRegular,
+  color: color.black,
+  width: size.deviceWidth * 0.89,
+  paddingRight: size.moderateScale(15),
+});
+export const searchPlacesTxt = () => ({
+  justifyContent: 'center',
+  paddingLeft: size.moderateScale(15),
+  paddingVertical: 0,
+  paddingHorizontal: 0,
+  overflow: 'hidden',
+  paddingBottom: 0,
+  flex: 1,
+  flexDirection: 'row',
+  // alignItems: 'center',
+  backgroundColor: color.white,
+  borderRadius: size.moderateScale(10),
+  marginTop: size.moderateScale(10),
 });
 export const txtConfirm = () => ({
   paddingTop: size.moderateScale(5),
@@ -190,4 +225,36 @@ export const searchedValueList = () => ({
   paddingHorizontal: size.moderateScale(15),
   backgroundColor: color.white,
   borderRadius: 10,
+});
+export const googleStyle = () => ({
+  textInputContainer: {
+    backgroundColor: color.white,
+    // paddingLeft: 15,
+    borderRadius: 30,
+    borderWidth: 1,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+    borderColor: color.black,
+    overflow: 'hidden',
+    paddingBottom: 0,
+    justifyContent: 'center',
+    zIndex: 20,
+    color: 'black',
+  },
+  textInput: {
+    flex: 2,
+    // color: color.black,
+    fontSize: 12,
+    fontFamily: 'Roboto-Medium',
+    padding: 0,
+    marginBottom: 0,
+    alignSelf: 'center',
+    color: 'black',
+  },
+  predefinedPlacesDescription: {
+    color: '#1faadb',
+  },
+  description: {
+    color: 'black',
+  },
 });

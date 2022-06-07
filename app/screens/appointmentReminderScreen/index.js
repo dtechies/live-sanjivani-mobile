@@ -28,9 +28,11 @@ import {
 import * as styles from './styles';
 import {Portal} from 'react-native-portalize';
 import {Modalize} from 'react-native-modalize';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 export const AppointmentReminderScreen = animated => {
   const dispatch = useDispatch();
   const toastRef = useRef();
+  const searchInputRef = useRef();
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
   const [showTime, setShowTime] = useState(false);
@@ -156,6 +158,19 @@ export const AppointmentReminderScreen = animated => {
   useEffect(() => {
     onGetDoctorDetails();
   }, []);
+
+  const onChangeSearchText = e => {
+    console.log('SU AAVE CHE', e);
+    setAddressOne(e);
+  };
+
+  const renderRow = row => {
+    return (
+      <View>
+        <Text style={{color: 'black'}}>{row.description}</Text>
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.full()}>
@@ -305,7 +320,7 @@ export const AppointmentReminderScreen = animated => {
                 </Pressable>
               );
             })}
-          <InputBox
+          {/* <InputBox
             value={addressOne}
             onChangeText={value => {
               setAddressOne(value);
@@ -324,7 +339,90 @@ export const AppointmentReminderScreen = animated => {
             }
             placeholder={'Address'}
             placeholderTextColor={color.black}
+          /> */}
+          {/* <View style={styles.searchPlacesTxt()}>
+            <View
+              style={{
+                height: size.moderateScale(50),
+                justifyContent: 'center',
+              }}>
+              <IcAddress
+                height={size.moderateScale(20)}
+                width={size.moderateScale(20)}
+                fill={color.blue}
+              />
+            </View>
+            <GooglePlacesAutocomplete
+              placeholder="search location"
+              // minLength={2}
+              query={{
+                key: 'AIzaSyDjtilqk6uyj1gDV1lEdyhuFUu9mwobOSw',
+                language: 'en',
+                types: 'geocode',
+              }}
+              fetchDetails={true}
+              returnKeyType={'search'}
+              listViewDisplayed="auto"
+              renderDescription={row => console.log(row)}
+              predefinedPlacesAlwaysVisible={true}
+              onPress={(data, details = null) => {
+                console.log('details', details);
+                setAddressOne(details.formatted_address);
+              }}
+              onFail={error => console.error(error)}
+              getDefaultValue={() => ''}
+              // textInputProps={{
+              //   InputComp: InputBox,
+              //   value: addressOne,
+              //   onChangeText: onChangeSearchText,
+              //   style: styles.searchPlacesInputTxt(),
+              //   placeholder: 'Search address',
+              //   placeholderTextColor: color.dimGrey,
+              //   errorStyle: {color: 'red'},
+              // }}
+              styles={{
+                textInputContainer: styles.searchPlacesTxt(),
+                textInput: {color: 'black'},
+                textInputContainer: {color: 'black'},
+              }}
+              // renderRow={rowData => {
+              //   const title = rowData.structured_formatting.main_text;
+              //   const address = rowData.structured_formatting.secondary_text;
+              //   return (
+              //     <View>
+              //       <Text style={styles.searchTitle()}>{title}</Text>
+              //       <Text style={styles.searchDis()}>{address}</Text>
+              //     </View>
+              //   );
+              // }}
+            />
+          </View> */}
+
+          <GooglePlacesAutocomplete
+            // ref={placesAutocompleteRef}
+            placeholder="search location"
+            minLength={2}
+            autoFocus={true}
+            query={{
+              key: 'AIzaSyDjtilqk6uyj1gDV1lEdyhuFUu9mwobOSw',
+              language: 'en',
+              types: 'geocode',
+            }}
+            fetchDetails={true}
+            returnKeyType={'search'}
+            listViewDisplayed="auto"
+            renderDescription={row => renderRow(row)}
+            predefinedPlacesAlwaysVisible={true}
+            onPress={(data, details = null) => console.log(details)}
+            getDefaultValue={() => ''}
+            // styles={{
+            //   textInputContainer: styles.searchPlacesTxt(),
+            //   textInput: {color: 'black'},
+            // }}
+            // renderRightButton={() => <SearchBtn />}
+            styles={styles.googleStyle()}
           />
+
           {addressOneErr ? (
             <Text style={styles.textValidation()} text={addressOneErr} />
           ) : null}

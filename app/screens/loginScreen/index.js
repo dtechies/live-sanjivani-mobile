@@ -40,7 +40,7 @@ export const LoginScreen = () => {
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     // console.log('getOtpResponse', getOtpResponse);
     const res = getOtpResponse.payload;
-    // console.log('res', res);
+    console.log('res', res);
     if (res.status) {
       // console.log('response data login ==>', res.data);
       setLoading(false);

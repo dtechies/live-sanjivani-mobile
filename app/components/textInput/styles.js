@@ -32,6 +32,7 @@ export const inputContainer = (v1, v2) => ({
   fontSize: fontSize.small,
   padding: 0,
   margin: 0,
+  color: color.black,
 });
 export const titleTextStyle = () => ({
   color: color.blueTx,
