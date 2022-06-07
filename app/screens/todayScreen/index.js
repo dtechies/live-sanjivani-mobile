@@ -12,6 +12,7 @@ import {size, color, IcFalse, IcTrue} from 'theme';
 import {reminderListData, medicationReminder} from 'json';
 import * as styles from './styles';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {useDoubleBackPressExit} from 'utils';
 // import LinearGradient from 'react-native-linear-gradient';
 export const TodayScreen = () => {
   const [activeIndex, setActiveIndex] = useState([]);
@@ -21,33 +22,35 @@ export const TodayScreen = () => {
   const [reminderList, setReminderList] = useState(reminderListData);
   const navigation = useNavigation();
 
-  let currentCount = 0;
-  useFocusEffect(
-    useCallback(() => {
-      const backPressHandler = () => {
-        if (currentCount < 1) {
-          currentCount += 1;
-          ToastAndroid.show(
-            'Tap back again to exit the App',
-            ToastAndroid.SHORT,
-          );
-          return true;
-        } else {
-          BackHandler.exitApp();
-          // return true;
-        }
-        setTimeout(() => {
-          currentCount = 0;
-        }, 2000);
-        return true;
-      };
+  useDoubleBackPressExit();
 
-      BackHandler.addEventListener('hardwareBackPress', backPressHandler);
+  // let currentCount = 0;
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     const backPressHandler = () => {
+  //       if (currentCount < 1) {
+  //         currentCount += 1;
+  //         ToastAndroid.show(
+  //           'Tap back again to exit the App',
+  //           ToastAndroid.SHORT,
+  //         );
+  //         return true;
+  //       } else {
+  //         BackHandler.exitApp();
+  //         // return true;
+  //       }
+  //       setTimeout(() => {
+  //         currentCount = 0;
+  //       }, 2000);
+  //       return true;
+  //     };
 
-      return () =>
-        BackHandler.removeEventListener('hardwareBackPress', backPressHandler);
-    }, []),
-  );
+  //     BackHandler.addEventListener('hardwareBackPress', backPressHandler);
+
+  //     return () =>
+  //       BackHandler.removeEventListener('hardwareBackPress', backPressHandler);
+  //   }, []),
+  // );
 
   useEffect(() => {
     let upcoming = medicationData.find(item => item.isDone === false);
