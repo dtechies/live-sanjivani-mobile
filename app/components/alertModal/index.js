@@ -13,7 +13,7 @@ export const AlertModal = props => {
   return (
     <View style={styles.container()}>
       <View style={styles.cardStyle()}>
-        {data?.notification_type == 'appointment' ? (
+        {data?.type == 'appointment' ? (
           <Pressable
             onPress={() => closeModal()}
             style={styles.closeIconStyle()}>
@@ -24,14 +24,19 @@ export const AlertModal = props => {
             />
           </Pressable>
         ) : null}
-        <Text style={styles.textTitle()} onPress={() => closeModal()}>
-          {data?.title ? data.title : 'Title not found'}
+        <Text style={styles.textDate()} onPress={() => closeModal()}>
+          {data?.frequency_value}
         </Text>
         <Text style={styles.textTitle()} onPress={() => closeModal()}>
-          {data ? data.message : 'Message not found'}
+          {data?.reminder_name && data.reminder_name}
+        </Text>
+        <Text style={styles.textDescription()} onPress={() => closeModal()}>
+          {data?.dose} {data?.medicine_name} {data?.medicine_strength}{' '}
+          {data?.medicine_strength_unit} {data?.medicine_form} {', '}
+          {data?.frequency_value} {data?.reminder_time}
         </Text>
 
-        {data?.notification_type == 'reminder' ? (
+        {data?.type == 'reminder' ? (
           <View style={styles.rowView()}>
             <Button
               onPress={() => closeModal()}

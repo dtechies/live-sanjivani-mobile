@@ -138,3 +138,10 @@ export const _editProfileDetails = async payload => {
   });
   return _api_calls('POST', '/edit-user-profile', headers, payload);
 };
+export const _editMedicineReminderStatus = async payload => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  return _api_calls('POST', '/edit-medicine-reminder-status', headers, payload);
+};
