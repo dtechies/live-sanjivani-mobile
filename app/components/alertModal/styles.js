@@ -9,12 +9,23 @@ export const container = () => ({
   paddingHorizontal: size.moderateScale(10),
   justifyContent: 'center',
 });
+export const textDate = () => ({
+  fontFamily: fonts.latoRegular,
+  color: color.midnightBlue,
+  fontSize: fontSize.smallText,
+});
 export const textTitle = () => ({
   paddingTop: size.moderateScale(5),
   fontSize: fontSize.medium,
   fontFamily: fonts.latoBold,
   color: color.borderBlue,
   textTransform: 'capitalize',
+});
+export const textDescription = () => ({
+  marginVertical: size.moderateScale(5),
+  fontFamily: fonts.latoRegular,
+  color: color.dimGrey,
+  fontSize: fontSize.verySmall,
 });
 export const cardStyle = () => ({
   backgroundColor: color.white,

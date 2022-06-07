@@ -129,13 +129,10 @@ export const selectedDateStyle = () => ({
   fontWeight: 'bold',
   color: color.white,
 });
-export const inputMain = val => ({
+export const inputMain = () => ({
   width: size.deviceWidth * 0.89,
   // marginBottom: size.moderateScale(15),
-  marginTop: val != 1 ? size.moderateScale(10) : 15,
-  color: color.black,
-  fontSize: fontSize.small,
-  fontFamily: fonts.latoRegular,
+  marginTop: size.moderateScale(10),
 });
 export const inputTxt = () => ({
   fontSize: fontSize.small,

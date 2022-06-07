@@ -27,3 +27,17 @@ export const buttonTxt = () => ({
   fontFamily: fonts.latoBold,
   fontSize: fontSize.medium,
 });
+export const errorText = val => ({
+  color: color.red,
+  fontFamily: fonts.latoRegular,
+  fontSize: fontSize.small,
+  marginLeft: size.moderateScale(10),
+  marginTop: size.moderateScale(5),
+  marginBottom: size.moderateScale(5),
+});
+export const noData = () => ({
+  color: color.blueCard,
+  fontSize: fontSize.medium,
+  fontFamily: fonts.latoBold,
+  alignSelf: 'center',
+});

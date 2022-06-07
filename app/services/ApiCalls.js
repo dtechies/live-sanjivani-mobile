@@ -1,7 +1,7 @@
 import HttpCalls from './HttpCalls';
 import {headersData} from './Services';
 import {store, persistor} from './../redux';
-// console.log('store,', store.getState().userDataReducer.userDataResponse);
+console.log('store,', store.getState().userDataReducer.userDataResponse);
 let token = store.getState().userDataReducer.userDataResponse.login
   ? store.getState().userDataReducer.userDataResponse.userData.token
   : '';
@@ -137,4 +137,30 @@ export const _editProfileDetails = async payload => {
     token: token,
   });
   return _api_calls('POST', '/edit-user-profile', headers, payload);
+};
+export const _addAppointmentReminder = async payload => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    type: 'multipart/form-data',
+    token: token,
+  });
+  console.log('token', token);
+  console.log('payload', payload);
+  return _api_calls('POST', '/add-appointment-reminder', headers, payload);
+};
+export const _getUserFavSubCategoryPdf = async payload => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    type: 'multipart/form-data',
+    token: token,
+  });
+  console.log('token', token);
+  console.log('payload', payload);
+  return _api_calls('POST', '/get-user-favSubCategories-pdf', headers, payload);
+export const _editMedicineReminderStatus = async payload => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  return _api_calls('POST', '/edit-medicine-reminder-status', headers, payload);
 };
