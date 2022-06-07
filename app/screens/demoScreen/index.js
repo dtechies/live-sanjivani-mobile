@@ -408,43 +408,6 @@ export const DemoScreen = () => {
               })}
             </View>
 
-            {/* <View> */}
-            {/* {[...Array(9)].map((val, i) => {
-              return (
-                <View>
-                  <AddItem />
-                </View>
-              );
-            })} */}
-            {/* </View> */}
-
-            {/* <View>
-              {docDetails.map((val, i) => {
-                return (
-                  <View>
-                    <DocDetails item={val} isSelected={false} />
-                  </View>
-                );
-              })}
-            </View> */}
-
-            {/* <View
-              style={{
-                margin: 50,
-                alignItems: 'center',
-              }}>
-              <Text style={{fontSize: 30, color: '#000'}}>
-                Single user Details
-              </Text>
-              {singleDoc.map((val, i) => {
-                return (
-                  <View>
-                    <DocDetails item={val} isSelected={true} />
-                  </View>
-                );
-              })}
-            </View> */}
-            {/* <View style={styles.cardDesign()}> */}
             {symChecker.map((val, i) => {
               return (
                 <Pressable

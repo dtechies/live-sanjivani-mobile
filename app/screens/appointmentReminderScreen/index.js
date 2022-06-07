@@ -2,12 +2,15 @@ import React, {useState, useRef, useEffect} from 'react';
 import {View, Pressable, SafeAreaView} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useDispatch} from 'react-redux';
+import {store} from '../../redux';
 import moment from 'moment';
-import {getAppointmentReminderAllDetail} from 'redux-actions';
+import {
+  getAppointmentReminderAllDetail,
+  addAppointmentReminder,
+} from 'redux-actions';
 import {
   Text,
   Screen,
-  TitleBox,
   InputBox,
   Button,
   Header,
@@ -16,15 +19,7 @@ import {
 } from 'components';
 import {useNavigation} from '@react-navigation/native';
 import DatePicker from 'react-native-modern-datepicker';
-import {
-  IcAddress,
-  color,
-  size,
-  IcCalendar,
-  IcDown,
-  SearchValNew,
-  IcCrossArrow,
-} from 'theme';
+import {IcAddress, color, size, SearchValNew, IcCrossArrow} from 'theme';
 import * as styles from './styles';
 import {Portal} from 'react-native-portalize';
 import {Modalize} from 'react-native-modalize';
@@ -47,13 +42,13 @@ export const AppointmentReminderScreen = animated => {
   const [selectedTimeErr, setSelectedTimeErr] = useState('');
   const [reminderTime, setReminderTime] = useState('Time');
   const [selectedTimeErrSecond, setSelectedTimeErrSecond] = useState('');
+  const [userId, setUserId] = useState('');
 
   const [doctorData, setDoctorData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [speciality, setSpeciality] = useState('');
-  const [specialityErr, setSpecialityErr] = useState('');
   const popUpRef = useRef();
   const [doctorFilteredName, setDoctorFilteredName] = useState([]);
+
   const onOpenPopUp = () => {
     // alert('hiiii');
     popUpRef.current?.open();
@@ -139,22 +134,55 @@ export const AppointmentReminderScreen = animated => {
   };
 
   const onGetDoctorDetails = async () => {
-    // setLoading(true);
+    setLoading(true);
     const getOtpResponse = await dispatch(getAppointmentReminderAllDetail());
     const res = getOtpResponse;
     // console.log('getDoctorData res ==>', res);
     if (res.status) {
-      // setLoading(false);
-      // toastMessage(res.message);
+      setLoading(false);
+      toastMessage(res.message);
       setDoctorData(res.data.DoctorsData);
       setExtra(extra + 1);
     } else {
-      // setLoading(false);
+      setLoading(false);
       toastMessage(res.message);
     }
   };
+
+  const addAppointmentData = async () => {
+    setLoading(true);
+    // console.log('dataId', dataId);
+    let formData = new FormData();
+    formData.append('doctor_name', searchVal);
+    formData.append('date', selectedDate);
+    formData.append('doctor_address', addressOne);
+    formData.append('user_selected_time', selectedTime);
+    formData.append('user_id', userId);
+    formData.append('reminder_time', reminderTime);
+
+    setExtra(extra + 1);
+    // console.log('fevUserBody', fevUserBody);
+    const SubCategoryResponse = await dispatch(
+      addAppointmentReminder(formData),
+    );
+    const res = SubCategoryResponse;
+    // console.log('addUserFavoriteData res RESSS==>', res);
+
+    if (res.status) {
+      setLoading(false);
+      toastMessage(res.message);
+      setExtra(extra + 1);
+      onClosePopUp();
+      navigation.goBack();
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+    }
+  };
+
   useEffect(() => {
     onGetDoctorDetails();
+    setUserId(store.getState().userDataReducer.userDataResponse.userData.id);
   }, []);
 
   return (
@@ -297,7 +325,6 @@ export const AppointmentReminderScreen = animated => {
                     setExtra(extra + 1);
                     // setSpeciality(item.speciality);
                     setSearchValErr('');
-                    setSpecialityErr('');
                     setDoctorFilteredName([]);
                     // Keyboard.dismiss;
                   }}>
@@ -312,7 +339,7 @@ export const AppointmentReminderScreen = animated => {
               setAddressOneErr('');
               setExtra(extra + 1);
             }}
-            mainContainerStyle={styles.inputMain(1)}
+            mainContainerStyle={styles.inputMain()}
             inputStyle={styles.inputTxt()}
             leftIcon={true}
             leftIconName={
@@ -365,7 +392,9 @@ export const AppointmentReminderScreen = animated => {
                 nameTx="appointment_reminder_screen.confirm"
                 buttonStyle={styles.btnModel()}
                 buttonText={styles.textAddButton()}
-                onPress={() => navigation.goBack()}
+                onPress={() => {
+                  addAppointmentData();
+                }}
               />
             </View>
           </Modalize>
