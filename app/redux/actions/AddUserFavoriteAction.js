@@ -6,7 +6,7 @@ export const addUserFavorite = body => {
     dispatch({type: actions.ADD_USER_FAVORITE});
     return _addUserFavorites(body)
       .then(response => {
-        console.log('addUserFavorite Response := ', response);
+        // console.log('addUserFavorite Response := ', response);
         if (response) {
           dispatch({
             type: actions.ADD_USER_FAVORITE,
@@ -16,7 +16,7 @@ export const addUserFavorite = body => {
         }
       })
       .catch(error => {
-        console.log('addUserFavorite Error Response :=\n', error);
+        // console.log('addUserFavorite Error Response :=\n', error);
         dispatch({type: actions.ADD_USER_FAVORITE, payload: error});
         return error;
       });

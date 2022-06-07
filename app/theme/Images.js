@@ -3,7 +3,6 @@ export const images = {
   icLogo: require('./image/images/logo.png'),
   icClick: require('./image/images/clickImg.png'),
   icSplash: require('./image/images/splash.png'),
-  icDoc: require('./image/images/doc.png'),
   icPerson: require('./image/images/profilePerson.jpeg'),
   icPersonLogo: require('./image/images/profileLogo.png'),
   icBack: require('./image/images/backLogo.png'),

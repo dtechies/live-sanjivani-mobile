@@ -1,8 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {View, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {getAllSubCategory, getSubCategoryData} from 'redux-actions';
+import {useDispatch} from 'react-redux';
+import {getAllSubCategory} from 'redux-actions';
 import {
   Text,
   Screen,
@@ -32,10 +32,6 @@ export const SharingScreen = () => {
     });
     setExtra(extra + 1);
   };
-  const {token} = useSelector(state => ({
-    token: state.userDataReducer.userDataResponse.userData,
-  }));
-  // console.log('user data ==>', token);
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -54,23 +50,6 @@ export const SharingScreen = () => {
     }
   };
 
-  const onSendPdf = async () => {
-    const getSubCategoryDataHeader = {
-      token: token,
-    };
-    const getSubCategoryDataResponse = await dispatch(
-      getSubCategoryData(getSubCategoryDataHeader),
-    );
-    const res = getSubCategoryDataResponse.payload;
-    if (res.status) {
-      // toastMessage(res.message);
-      // console.log('getSubCategoryData List ==>', res.data);
-      // setAllCategoryList(res.data);
-    } else {
-      // setLoading(false);
-      // toastMessage(res.message);
-    }
-  };
   const getAllSubCategoryData = async () => {
     setLoading(true);
     const SubCategoryResponse = await dispatch(getAllSubCategory());

@@ -23,6 +23,12 @@ export const TextSecondTxt = () => ({
   color: color.dimGrey,
   fontFamily: fonts.latoRegular,
 });
+export const TextUnitTxt = () => ({
+  paddingLeft: size.moderateScale(5),
+  fontSize: fontSize.medium,
+  color: color.dimGrey,
+  fontFamily: fonts.latoRegular,
+});
 
 export const svgView = () => ({
   paddingRight: size.moderateScale(5),
