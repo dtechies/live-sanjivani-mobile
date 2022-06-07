@@ -1,7 +1,7 @@
 import HttpCalls from './HttpCalls';
 import {headersData} from './Services';
 import {store, persistor} from './../redux';
-// console.log('store,', store.getState().userDataReducer.userDataResponse);
+console.log('store,', store.getState().userDataReducer.userDataResponse);
 let token = store.getState().userDataReducer.userDataResponse.login
   ? store.getState().userDataReducer.userDataResponse.userData.token
   : '';

@@ -62,18 +62,6 @@ export const DWMYData = [
   {id: 4, value: 'Y', selected: false},
 ];
 
-export const AddNavData = [
-  {id: 1, name: 'Vitals', selected: true},
-  {id: 2, name: 'Measurements', selected: false},
-  {id: 3, name: 'Activity', selected: false},
-  {id: 4, name: 'Others', selected: false},
-  {id: 5, name: 'Care Giver', selected: false},
-  {id: 6, name: 'Medications', selected: false},
-  {id: 7, name: 'Appointments', selected: false},
-  {id: 8, name: 'Symptoms Check', selected: false},
-  {id: 9, name: 'Medical Journal', selected: false},
-];
-
 export const MedicalJournalListJson = [
   {id: 1, date: '01/05/2022', time: '3.33 PM', description: 'Drink water'},
   {
