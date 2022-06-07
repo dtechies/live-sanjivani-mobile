@@ -34,12 +34,12 @@ export const BottomStackNavigation = props => {
           //   notificationReceivedEvent,
           // );
           let notification = notificationReceivedEvent.getNotification();
-          // console.log('notification ', notification);
           let notificationData = notification.additionalData;
-          const obj = {notificationData};
+          const obj = notificationData;
           let isEmptyObject = Object.keys(obj).length > 0;
           // console.log('isEmptyObject', isEmptyObject); //
-          if (!isEmptyObject) {
+          // console.log('ShowInForeground notification Data ', notificationData);
+          if (isEmptyObject) {
             closeModal(true);
             setNotificationData(notificationData);
           }
@@ -56,19 +56,19 @@ export const BottomStackNavigation = props => {
         const obj = {notificationData};
         let isEmptyObject = Object.keys(obj).length > 0;
 
-        if (!isEmptyObject) {
+        // console.log('notification open handler', notificationData);
+        if (isEmptyObject) {
           closeModal(true);
           setNotificationData(notificationData);
         }
-        // console.log('notification open handler', notificationData);
       });
       OneSignal.setInAppMessageClickHandler(notification => {
-        // console.log(' bottom setInAppMessageClickHandler:', notification);
         let notificationData = notification.notification.additionalData;
+        // console.log(' bottom setInAppMessageClickHandler:', notificationData);
         const obj = {notificationData};
         let isEmptyObject = Object.keys(obj).length > 0;
 
-        if (!isEmptyObject) {
+        if (isEmptyObject) {
           closeModal(true);
           setNotificationData(notificationData);
         }

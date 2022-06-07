@@ -86,10 +86,10 @@ const App = () => {
         // alert(`${notification.notification.title}`);
         // console.log('OneSignal: notification opened:', notification);
         let notificationData = notification.notification.additionalData;
-        const obj = {notificationData};
+        const obj = notificationData;
         let isEmptyObject = Object.keys(obj).length > 0;
 
-        if (!isEmptyObject) {
+        if (isEmptyObject) {
           closeModal(true);
           setNotificationData(notificationData);
         }
