@@ -77,6 +77,7 @@ export const labelFieldText = () => ({
   color: color.blue,
   marginHorizontal: size.moderateScale(57),
   marginTop: size.moderateScale(25),
+  textTransform: 'capitalize',
 });
 export const titleDetails = () => ({
   fontSize: fontSize.smallText,
@@ -135,4 +136,40 @@ export const errorText = val => ({
   marginLeft: 15,
   marginTop: 5,
   marginBottom: 15,
+});
+
+// medicine description card
+
+export const medicineDescriptionCard = () => ({
+  padding: size.moderateScale(15),
+  marginTop: size.moderateScale(30),
+  backgroundColor: color.white,
+  borderWidth: size.moderateScale(1),
+  borderColor: color.white,
+  borderRadius: size.moderateScale(10),
+  marginHorizontal: size.moderateScale(15),
+  shadowColor: color.black,
+  shadowRadius: size.moderateScale(3),
+  shadowOffset: {height: size.moderateScale(3), width: 0},
+  shadowOpacity: 0.12,
+  elevation: size.moderateScale(5),
+});
+export const rowView = () => ({
+  flexDirection: 'row',
+  marginBottom: size.moderateScale(5),
+});
+export const title = () => ({
+  fontSize: fontSize.medium,
+  fontFamily: fonts.latoBold,
+  color: color.blue,
+  width: size.deviceWidth * 0.25,
+  textTransform: 'capitalize',
+});
+export const description = () => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoRegular,
+  color: color.blueCard,
+  textTransform: 'capitalize',
+  flex: 1,
+  marginLeft: size.moderateScale(10),
 });

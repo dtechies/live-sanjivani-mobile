@@ -1,11 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {View, SafeAreaView, FlatList} from 'react-native';
+import {View, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {MultiSelect} from 'react-native-element-dropdown';
 
 import {Text, Screen, InputBox, Button, Header, MedicalItems} from 'components';
-import {serviceListData} from 'json';
-import {size, color, IcSearch, IcDown, SearchValNew} from 'theme';
+import {color} from 'theme';
 import * as styles from './styles';
 
 export const SharingDetailScreen = props => {

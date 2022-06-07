@@ -41,7 +41,7 @@ export const OtpScreen = props => {
       mob_no: otpData ? otpData?.mob_no : '',
       otp: otpData ? otpVal : '',
     };
-    // console.log('loginBody ==>', loginBody);
+    console.log('loginBody ==>', loginBody);
     const loginResponse = await dispatch(loginUser(loginBody));
     const res = loginResponse.payload;
     console.log('login res ==>', res);
@@ -65,12 +65,14 @@ export const OtpScreen = props => {
   };
 
   const onGetOtp = async () => {
+    console.log('getOtpBody ==>');
     setLoading(true);
     const getOtpBody = {
       mob_no: otpData ? otpData?.mob_no : '',
     };
-    // console.log('getOtpBody ==>', getOtpBody);
+    console.log('getOtpBody ==>', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
+    console.log('getOtpBody ==>', getOtpResponse);
     const res = getOtpResponse.payload;
     if (res.status) {
       console.log('getOtp res ==>', res.data.otp);

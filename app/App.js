@@ -9,13 +9,16 @@ import i18n from 'i18n-js';
 import {store, persistor} from './redux';
 import {MainStackNavigation} from './navigation';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {AlertModal} from 'components';
 
 import OneSignal from 'react-native-onesignal';
 export const LocalizationContext = createContext();
 
 const App = () => {
   const [locale, setLocale] = useState(RNLocalize.locale);
-
+  const [isModalOpen, closeModal] = useState(false);
+  const [playerId, setPlayerId] = useState('');
+  const [notificationData, setNotificationData] = useState();
   const localizationContext = useMemo(
     () => ({
       t: (scope, options) => i18n.t(scope, {locale, ...options}),
@@ -31,9 +34,9 @@ const App = () => {
   OneSignal.setAppId('3b7300ff-2be3-46f8-ad6a-5473e664b134');
   OneSignal.setLogLevel(6, 0);
   OneSignal.setRequiresUserPrivacyConsent(false);
-  OneSignal.promptForPushNotificationsWithUserResponse(response => {
-    // console.log('Prompt response:', response);
-  });
+  // OneSignal.promptForPushNotificationsWithUserResponse(response => {
+  //   // console.log('Prompt response:', response);
+  // });
   //END OneSignal Init Code
 
   useEffect(() => {
@@ -82,6 +85,14 @@ const App = () => {
       OneSignal.setNotificationOpenedHandler(notification => {
         // alert(`${notification.notification.title}`);
         // console.log('OneSignal: notification opened:', notification);
+        let notificationData = notification.notification.additionalData;
+        const obj = notificationData;
+        let isEmptyObject = Object.keys(obj).length > 0;
+
+        if (isEmptyObject) {
+          closeModal(true);
+          setNotificationData(notificationData);
+        }
       });
       OneSignal.promptForPushNotificationsWithUserResponse(notification => {
         // console.log('prompt', notification);
@@ -100,6 +111,8 @@ const App = () => {
       });
 
       const deviceState = await OneSignal.getDeviceState();
+      setPlayerId(deviceState.userId);
+      // await deviceState();
       // console.log('deviceState', deviceState);
       // console.log('userId / player id ==> ', deviceState.userId);
     };
@@ -114,6 +127,13 @@ const App = () => {
           <GestureHandlerRootView style={{flex: 1}}>
             <Host>
               <MainStackNavigation />
+              {isModalOpen && (
+                <AlertModal
+                  closeModal={() => closeModal(false)}
+                  data={notificationData}
+                  title={'abdul'}
+                />
+              )}
             </Host>
           </GestureHandlerRootView>
           {/* </View> */}

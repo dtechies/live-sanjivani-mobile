@@ -21,35 +21,35 @@ export const MedicalItems = props => {
     nameThird,
   } = props;
   // const imageUrl = svgCardItems ? {uri: svgCardItems} : images.icLogo;
-  const [imgXml, setImgXml] = React.useState('<svg></svg>');
-  const getImgXml = async () => {
-    const xml = await (await fetch(svgCardItems)).text();
-    // console.log('hello ==L>', xml);
-    setImgXml(xml);
-  };
-  React.useEffect(() => {
-    getImgXml();
-  }, []);
+  // const [imgXml, setImgXml] = React.useState('<svg></svg>');
+  // const getImgXml = async () => {
+  //   const xml = await (await fetch(svgCardItems)).text();
+  //   setImgXml(xml);
+  //   return xml;
+  // };
+  // React.useEffect(() => {
+  //   getImgXml();
+  // }, []);
 
   return (
     <Pressable style={[styles.container(), containerStyle]} onPress={onPress}>
       <View style={styles.flexOne()}></View>
       <View style={styles.centerView()}>
         {/* <View style={styles.centerLeftView()}>{svgCardItems}</View> */}
-        {/* <SvgUri
+        <SvgUri
           height={size.moderateScale(35)}
           width={size.moderateScale(35)}
-          color={'red'}
+          // color={'red'}
           uri={svgCardItems}
-        /> */}
-        <SvgXml
+        />
+        {/* <SvgXml
           xml={imgXml}
           // .replace(/fill="#[0-9a-f]{6}"/g, `fill="${color.turquoiseNew}"`)
           // .replace(/stroke="#[0-9a-f]{6}"/g, `stroke="${'green'}"`)
 
           height={size.moderateScale(35)}
           width={size.moderateScale(35)}
-        />
+        /> */}
         <View style={styles.centerRightView()}>
           <View style={styles.flexDirectionStyle()}>
             <Text
@@ -58,7 +58,7 @@ export const MedicalItems = props => {
               tx={nameFirstTx}
             />
             <Text
-              style={[styles.TextFirstTxt(), textFirstStyle]}
+              style={[styles.TextUnitTxt(), textFirstStyle]}
               text={' ' + nameThird ? nameThird : ''}
               tx={nameThirdTx}
             />

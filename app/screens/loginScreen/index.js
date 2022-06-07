@@ -42,7 +42,7 @@ export const LoginScreen = () => {
     const res = getOtpResponse.payload;
     console.log('res', res);
     if (res.status) {
-      // console.log('response data loginn ==>', res.data);
+      console.log('response data loginn ==>', res.data);
       setLoading(false);
       toastMessage(res.message);
       setTimeout(() => {
@@ -123,7 +123,7 @@ export const LoginScreen = () => {
           nameTx={'login_screen.register_new_user'}
           onPress={() => navigation.navigate('registerScreen')}
         />
-        <Pressable onPress={() => console.log('bhavya')}>
+        <Pressable onPress={() => {}}>
           <Text style={styles.labelOrTxt()} tx={'login_screen.learnMore'} />
         </Pressable>
       </View>

@@ -61,24 +61,24 @@ export const CheckMedicationReminderScreen = props => {
   const onSave = async () => {
     setLoading(true);
     let formData = new FormData();
-    formData.append('user_id', userId.toString());
+    formData.append('user_id', userId);
+    formData.append('reminder_name', data?.reminder_name);
     formData.append('doctor_name', data?.referredBy);
-    formData.append('speciality', 'Physician');
     formData.append('medicine_image', {
       uri: data?.imageUpload.path,
       name: data?.imageUpload.imageName,
       type: data?.imageUpload.mime,
     });
-    formData.append('medicine_name', data?.medicineName);
-    formData.append('medicine_form', data?.medicineForm);
+    formData.append('medicine_name', data?.medicine_name);
+    formData.append('medicine_form', data?.medicine_form);
     formData.append('dose', data.dose);
-    formData.append('medicine_strength', data.strength);
-    formData.append('medicine_strength_unit', data?.strengthUnit);
-    formData.append('reminder_frequency', data?.remindFrequencyValue);
-    formData.append('frequency_value', data?.remindFreqDate);
-    formData.append('reminder_time', data?.remindTimeValue);
-    formData.append('user_selected_time', data?.remindTime);
-    formData.append('pills_remaining', data?.pills);
+    formData.append('medicine_strength', data.medicine_strength);
+    formData.append('medicine_strength_unit', data?.medicine_strength_unit);
+    formData.append('reminder_frequency', data?.reminder_frequency);
+    formData.append('frequency_value', data?.frequency_value);
+    formData.append('reminder_time', data?.reminder_time);
+    formData.append('user_selected_time', data?.user_selected_time);
+    formData.append('pills_remaining', data?.pills_remaining);
 
     // console.log('addMedicineReminder form data ==>', formData);
     // return;
@@ -92,7 +92,7 @@ export const CheckMedicationReminderScreen = props => {
     if (res.status) {
       // console.log('addMedicineReminder List ==>', res);
       toastMessage(res.message);
-      navigation.navigate('todayScreen');
+      navigation.navigate('viewMedicationScreen');
     } else {
       setLoading(false);
       toastMessage(res.message);
@@ -100,14 +100,19 @@ export const CheckMedicationReminderScreen = props => {
   };
   useEffect(() => {
     if (param && param.fromViewMedication) {
-      // console.log('props', props.route.params.reminderData);
+      // console.log('props fromViewMedication', props.route.params.reminderData);
       setData(props.route.params.reminderData);
+    } else if (param) {
+      // console.log('props', props.route.params);
+      setData(props.route.params);
     }
     //everyday
-
+    let reminderFrequencyValue = param.reminderData
+      ? param.reminderData?.reminder_frequency
+      : param?.reminder_frequency;
     if (
-      param.reminderData?.reminder_frequency == 'EveryDay' ||
-      param.reminderData?.reminder_frequency == 'Everyday'
+      reminderFrequencyValue == 'EveryDay' ||
+      reminderFrequencyValue == 'Everyday'
     ) {
       let newValue = days.map(i => {
         i.isSelected = true;
@@ -117,9 +122,15 @@ export const CheckMedicationReminderScreen = props => {
     }
     //alternateDay
 
-    if (param.reminderData?.reminder_frequency == 'Alternate Day') {
-      let givenDate = moment(param.reminderData?.frequency_value, 'YYYY-MM-DD');
-      let date = givenDate.format('D');
+    if (
+      reminderFrequencyValue == 'Alternate Day' ||
+      reminderFrequencyValue == 'Alternate day'
+    ) {
+      let dateValue = param.reminderData
+        ? param.reminderData?.frequency_value
+        : param?.frequency_value;
+      let givenDate = moment(dateValue, 'YYYY-MM-DD');
+      // let date = givenDate.format('D');
       let day = givenDate.day();
       // console.log('date ==>', date);
       // console.log('day ==>', day);
@@ -131,13 +142,18 @@ export const CheckMedicationReminderScreen = props => {
         }
         return i;
       });
-      console.log('Days daty name ==>', newValue);
+      // console.log('Days daty name ==>', newValue);
       setDays(newValue);
     }
     //fixed date
-
-    if (param.reminderData?.reminder_frequency == 'Fixed date') {
-      let date = moment(param.reminderData?.frequency_value, 'YYYY-MM-DD');
+    if (
+      reminderFrequencyValue == 'Fixed date' ||
+      reminderFrequencyValue == 'Fixed Date'
+    ) {
+      let dateValue = param.reminderData
+        ? param.reminderData?.frequency_value
+        : param?.frequency_value;
+      let date = moment(dateValue, 'YYYY-MM-DD');
       let dayName = date.day();
       let newValue = days.map((i, k) => {
         if (k == dayName) {
@@ -213,7 +229,7 @@ export const CheckMedicationReminderScreen = props => {
                   {data?.reminder_frequency}
                 </Text>
               </Pressable>
-              {data?.medicine_form !== 'Drops' && (
+              {data?.medicine_form !== 'Drop' && (
                 <View style={styles.cardShort(1)}>
                   <Text style={styles.startDateTitleTxt()} text={'Inventory'} />
                   <Text style={styles.startDateTxt()}>
@@ -240,6 +256,64 @@ export const CheckMedicationReminderScreen = props => {
           </View>
         </View>
       </View>
+
+      {param.medicineFilteredValue.length > 0 &&
+        param.medicineFilteredValue.map((item, index) => {
+          return (
+            <View style={styles.medicineDescriptionCard()}>
+              <View style={styles.rowView()}>
+                <Text
+                  style={styles.title()}
+                  tx={'CheckMedicationReminderScreen.name'}
+                />
+                <Text text={':'} />
+                <Text numberOfLines={2} style={styles.description()}>
+                  {item.name}
+                </Text>
+              </View>
+              <View style={styles.rowView()}>
+                <Text
+                  style={styles.title()}
+                  tx={'CheckMedicationReminderScreen.benefit'}
+                />
+                <Text text={':'} />
+                <Text numberOfLines={2} style={styles.description()}>
+                  {item.benefits}
+                </Text>
+              </View>
+              <View style={styles.rowView()}>
+                <Text
+                  style={styles.title()}
+                  tx={'CheckMedicationReminderScreen.safetyAdvice'}
+                />
+                <Text text={':'} />
+                <Text numberOfLines={2} style={styles.description()}>
+                  {item.safety_advice}
+                </Text>
+              </View>
+              <View style={styles.rowView()}>
+                <Text
+                  style={styles.title()}
+                  tx={'CheckMedicationReminderScreen.sideEffects'}
+                />
+                <Text text={':'} />
+                <Text numberOfLines={2} style={styles.description()}>
+                  {item.side_effects}
+                </Text>
+              </View>
+              <View style={styles.rowView()}>
+                <Text
+                  style={styles.title()}
+                  tx={'CheckMedicationReminderScreen.use'}
+                />
+                <Text text={':'} />
+                <Text numberOfLines={2} style={styles.description()}>
+                  {item.use}
+                </Text>
+              </View>
+            </View>
+          );
+        })}
       {param.fromViewMedication ? null : (
         <Button
           buttonStyle={styles.button()}

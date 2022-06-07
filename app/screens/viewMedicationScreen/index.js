@@ -1,14 +1,16 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
-import {getMedicineReminderProfile} from 'redux-actions';
+import {useNavigation} from '@react-navigation/native';
+import {
+  getMedicineReminderProfile,
+  editMedicineReminderStatus,
+} from 'redux-actions';
 
 import {useDispatch} from 'react-redux';
 
 import {Loader, Text, Screen, InputBox, Header, ReminderCard} from 'components';
 import {size, color, IcBtnPlus, SearchValNew} from 'theme';
 import * as styles from './styles';
-import {getMedicine} from 'json';
 
 export const ViewMedicationScreen = () => {
   const navigation = useNavigation();
@@ -18,9 +20,7 @@ export const ViewMedicationScreen = () => {
   const [searchText, setSearchText] = useState('');
   const [medicineReminderData, setMedicineReminderData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [medicine, setMedicine] = useState(getMedicine);
   const [loading, setLoading] = useState(false);
-  const route = useRoute();
 
   const toastMessage = msg => {
     toastRef.current.show(msg);
@@ -45,17 +45,50 @@ export const ViewMedicationScreen = () => {
     const getMedicineReminderProfileResponse = await dispatch(
       getMedicineReminderProfile(),
     );
-    // console.log(getMedicineReminderProfileResponse);
+    // console.log(
+    //   'getMedicineReminderProfileResponse ==>',
+    //   getMedicineReminderProfileResponse,
+    // );
     const res = getMedicineReminderProfileResponse.payload;
     if (res.status) {
-      setMedicineReminderData(res.data.MedicineReminderProfileData);
+      let data = res.data.MedicineReminderProfileData;
+
+      const trueFirst = data.sort((x, y) => {
+        let demo = x.status === y.status;
+        return demo ? 0 : x.status ? -1 : 1;
+      });
+      // console.log('trueFirst', trueFirst);
+      setMedicineReminderData(trueFirst);
+      // console.log(
+      //   'get medicine reminder api response ==>',
+      //   res.data.MedicineReminderProfileData,
+      // );
       setFilteredData(res.data.MedicineReminderProfileData);
       // setLoading(false);
+      toastMessage(res.message);
       setExtra(extra + 1);
-      toastMessage(res.message);
     } else {
-      setLoading(true);
+      setLoading(false);
       toastMessage(res.message);
+    }
+  };
+  const updateReminderStatus = async val => {
+    setLoading(true);
+
+    const editMedicineReminderStatusBody = {
+      id: val?.id,
+      status: val.status == true ? false : true,
+    };
+    const editMedicineReminderStatusResponse = await dispatch(
+      editMedicineReminderStatus(editMedicineReminderStatusBody),
+    );
+    const res = editMedicineReminderStatusResponse.payload;
+    if (res.status) {
+      setLoading(false);
+      getMedicineReminderData();
+    } else {
+      setLoading(false);
+      setExtra(extra + 1);
     }
   };
 
@@ -139,19 +172,7 @@ export const ViewMedicationScreen = () => {
                   })
                 }
                 onTogglePress={() => {
-                  medicineReminderData[i].isActive = !val.isActive;
-
-                  setTimeout(() => {
-                    medicineReminderData.sort(function (x, y) {
-                      return x.isActive === y.isActive
-                        ? 0
-                        : x.isActive
-                        ? -1
-                        : 1;
-                    });
-                    setMedicineReminderData(medicineReminderData);
-                    setExtra(extra + 1);
-                  }, 500);
+                  updateReminderStatus(val);
                 }}
               />
             );
