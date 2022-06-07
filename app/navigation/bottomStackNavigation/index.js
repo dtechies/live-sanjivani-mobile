@@ -15,28 +15,36 @@ const Tab = createBottomTabNavigator();
 export const BottomStackNavigation = props => {
   const [isModalOpen, closeModal] = useState(false);
   const [notificationData, setNotificationData] = useState();
+  const [playerId, setPlayerId] = useState('');
+
   //OneSignal Init Code
   OneSignal.setAppId('3b7300ff-2be3-46f8-ad6a-5473e664b134');
   OneSignal.setLogLevel(6, 0);
   OneSignal.setRequiresUserPrivacyConsent(false);
-  OneSignal.promptForPushNotificationsWithUserResponse(response => {
-    // console.log('Prompt response:', response);
-  });
+  // OneSignal.promptForPushNotificationsWithUserResponse(response => {
+  //   // console.log('Prompt response:', response);
+  // });
   //END OneSignal Init Code
   useEffect(() => {
     const ONESIGNAL = async () => {
       OneSignal.setNotificationWillShowInForegroundHandler(
-        notifReceivedEvent => {
+        notificationReceivedEvent => {
           // console.log(
           //   'Bottom navigation OneSignal: notification will show in foreground:',
-          //   notifReceivedEvent,
+          //   notificationReceivedEvent,
           // );
-          let notif = notifReceivedEvent.getNotification();
-          // console.log('WILL SHOW');
-          setNotificationData(notif);
-          closeModal(true);
-          // console.log('Bottom navigation notif ==>', notif);
-          notifReceivedEvent.complete(notif);
+          let notification = notificationReceivedEvent.getNotification();
+          // console.log('notification ', notification);
+          let notificationData = notification.additionalData;
+          const obj = {notificationData};
+          let isEmptyObject = Object.keys(obj).length === 0;
+
+          // console.log('isEmptyObject', isEmptyObject); //
+          if (isEmptyObject === false) {
+            closeModal(true);
+            setNotificationData(notificationData);
+          }
+          notificationReceivedEvent.complete(notification);
         },
       );
       // setNotificationWillShowInForegroundHandler
@@ -45,18 +53,31 @@ export const BottomStackNavigation = props => {
         //   'Bottom navigation OneSignal: notification opened:',
         //   notification,
         // );
-        setNotificationData(notification.notification);
-        closeModal(true);
+        let notificationData = notification.notification.additionalData;
+        const obj = {notificationData};
+        let isEmptyObject = Object.keys(obj).length === 0;
+
+        if (isEmptyObject === false) {
+          closeModal(true);
+          setNotificationData(notificationData);
+        }
+        // console.log('notification open handler', notificationData);
       });
       OneSignal.setInAppMessageClickHandler(notification => {
         // console.log(' bottom setInAppMessageClickHandler:', notification);
-        setNotificationData(notification.notification);
-        closeModal(true);
+        let notificationData = notification.notification.additionalData;
+        const obj = {notificationData};
+        let isEmptyObject = Object.keys(obj).length === 0;
+
+        if (isEmptyObject === false) {
+          closeModal(true);
+          setNotificationData(notificationData);
+        }
       });
       OneSignal.promptForPushNotificationsWithUserResponse(notification => {
         // console.log('Bottom navigation prompt', notification);
-        setNotificationData(notification);
-        closeModal(true);
+        // notification && closeModal(true);
+        // setNotificationData(notification);
       });
       OneSignal.setInAppMessageClickHandler(event => {
         // console.log('bottom OneSignal IAM clicked:', event);
@@ -71,7 +92,9 @@ export const BottomStackNavigation = props => {
         // console.log('bottom OneSignal: permission changed:', event);
       });
 
-      // const deviceState = await OneSignal.getDeviceState();
+      const deviceState = await OneSignal.getDeviceState();
+      setPlayerId(deviceState.userId);
+
       // console.log('Bottom navigation deviceState', deviceState);
       // console.log(
       //   'Bottom navigation userId / player id ==> ',

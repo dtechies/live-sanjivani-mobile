@@ -53,3 +53,6 @@ export const rowView = () => ({
   alignItems: 'center',
   marginTop: size.moderateScale(10),
 });
+export const closeIconStyle = () => ({
+  alignSelf: 'flex-end',
+});
