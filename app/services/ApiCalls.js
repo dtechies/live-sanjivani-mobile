@@ -91,6 +91,15 @@ export const _getHelpSupportData = async () => {
   return _api_calls('GET', '/get-helpsupport-data', headers);
 };
 
+export const _getUserProfileData = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  // console.log('headers _getUserProfileData ==>', headers);
+  return _api_calls('GET', '/get-user-profile-data', headers);
+};
+
 export const _addSubcategory = async payload => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
@@ -136,6 +145,9 @@ export const _editProfileDetails = async payload => {
     type: 'multipart/form-data',
     token: token,
   });
+  console.log('_editProfileDetails_token ==> ', token);
+  console.log('_editProfileDetails_payload ==> ', payload);
+  console.log('_editProfileDetails_header ==> ', headers);
   return _api_calls('POST', '/edit-user-profile', headers, payload);
 };
 export const _addAppointmentReminder = async payload => {
@@ -157,6 +169,7 @@ export const _getUserFavSubCategoryPdf = async payload => {
   console.log('token', token);
   console.log('payload', payload);
   return _api_calls('POST', '/get-user-favSubCategories-pdf', headers, payload);
+};
 export const _editMedicineReminderStatus = async payload => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({

@@ -10,6 +10,7 @@ import {
 import {Text, FabMenu} from 'components';
 import {size, color, IcFalse, IcTrue} from 'theme';
 import {reminderListData, medicationReminder} from 'json';
+import {useDispatch, useSelector} from 'react-redux';
 import * as styles from './styles';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {useDoubleBackPressExit} from 'utils';

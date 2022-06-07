@@ -30,7 +30,6 @@ export const profileInfoMain = val => ({
   flexDirection: val == 2 ? 'column' : 'row',
   alignItems: 'center',
   justifyContent: val == 2 ? 'center' : 'flex-start',
-  // backgroundColor: 'red',
 });
 export const leftIconDes = val => ({
   paddingLeft: size.moderateScale(20),
@@ -58,6 +57,9 @@ export const profileInfo1 = val => ({
   marginLeft:
     val == 4 ? 0 : val == 3 ? size.moderateScale(1) : size.moderateScale(0),
   marginBottom: size.moderateScale(20),
+});
+export const propInfo = () => ({
+  marginBottom: size.moderateScale(10),
 });
 export const profileName = val => ({
   fontSize: fontSize.medium,

@@ -35,14 +35,14 @@ export const AddScreen = () => {
     console.log('allCatResponse_NEW ==>', res);
     if (res != undefined) {
       if (res.status) {
-        setLoading(false);
+        // setLoading(false);
         setAllCategory(res.data.categoryData);
         setExtra(extra + 1);
       }
     } else {
-      setLoading(false);
+      // setLoading(false);
       setAllCategory([]);
-      toastMessage('Invalid data...');
+      // toastMessage('Invalid data...');
     }
   };
 
@@ -92,7 +92,7 @@ export const AddScreen = () => {
                       }
                     }, 500);
                   }
-                  if (item.name == 'Care giver') {
+                  if (item.name == 'Care Giver') {
                     setTimeout(() => {
                       navigation.navigate('careGiver');
                     }, 500);
@@ -102,7 +102,7 @@ export const AddScreen = () => {
                       navigation.navigate('appointmentReminderScreen');
                     }, 500);
                   }
-                  if (item.name == 'Symptoms check') {
+                  if (item.name == 'Symptoms Check') {
                     setTimeout(() => {
                       navigation.navigate('symptomsScreen');
                     }, 500);
@@ -131,7 +131,7 @@ export const AddScreen = () => {
                       }
                     }, 500);
                   }
-                  if (item.name == 'Medication') {
+                  if (item.name == 'Medications') {
                     setTimeout(() => {
                       navigation.navigate('medicationReminderScreen');
                     }, 500);

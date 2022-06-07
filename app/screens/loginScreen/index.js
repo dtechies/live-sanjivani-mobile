@@ -38,9 +38,9 @@ export const LoginScreen = () => {
     };
     // console.log('otp', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    console.log('getOtpResponse', getOtpResponse);
+    console.log('getOtpResponse ====', getOtpResponse);
     const res = getOtpResponse.payload;
-    // console.log('res', res.data);
+    console.log('res', res);
     if (res.status) {
       console.log('response data loginn ==>', res.data);
       setLoading(false);

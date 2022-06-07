@@ -59,7 +59,7 @@ export const ProfileScreen = () => {
             : 'UserName'
         }
         secName={age.toString() + " year's Old"}
-        source={{uri: ''}}
+        source={{uri: userDetails.image ? userDetails.image : ''}}
       />
       <Screen withScroll bounces={false} style={styles.screenContainer()}>
         <View style={styles.mainProfileStyle()}>

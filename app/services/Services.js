@@ -7,7 +7,7 @@ import HttpCalls from './HttpCalls';
 // };
 
 export const headersData = async params => {
-  // console.log('headersData params ==>', params);
+  console.log('headersData params ==>', params);
 
   return {
     headers: {
