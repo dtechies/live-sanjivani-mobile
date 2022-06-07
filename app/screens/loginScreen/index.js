@@ -123,7 +123,7 @@ export const LoginScreen = () => {
           nameTx={'login_screen.register_new_user'}
           onPress={() => navigation.navigate('registerScreen')}
         />
-        <Pressable onPress={() => console.log('bhavya')}>
+        <Pressable onPress={() => {}}>
           <Text style={styles.labelOrTxt()} tx={'login_screen.learnMore'} />
         </Pressable>
       </View>

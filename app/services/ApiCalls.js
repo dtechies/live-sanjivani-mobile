@@ -157,4 +157,10 @@ export const _getUserFavSubCategoryPdf = async payload => {
   console.log('token', token);
   console.log('payload', payload);
   return _api_calls('POST', '/get-user-favSubCategories-pdf', headers, payload);
+export const _editMedicineReminderStatus = async payload => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  return _api_calls('POST', '/edit-medicine-reminder-status', headers, payload);
 };
