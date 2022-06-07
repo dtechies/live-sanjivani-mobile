@@ -1,5 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import 'react-native-gesture-handler';
+import moment from 'moment';
 import {SafeAreaView, View, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
@@ -8,15 +9,28 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
 import {useDispatch, useSelector} from 'react-redux';
-import {getOtp, editUserProfile} from 'redux-actions';
-import {Text, Button, Screen, InputBox, Header} from 'components';
+import {getOtp, getUserProfile, editUserProfile, userData} from 'redux-actions';
+import {
+  Text,
+  Button,
+  Screen,
+  InputBox,
+  Header,
+  Toast,
+  Loader,
+} from 'components';
 import {size, color, IcEdit, images} from 'theme';
 import * as styles from './styles';
 import {genderVal, languageVal} from 'json';
 
 export const ProfileDetailScreen = () => {
   const dispatch = useDispatch();
-  const {userDetails = {}, age = ''} = useSelector(state => ({
+  const {
+    userDetails = {},
+    age = '',
+    userStore,
+  } = useSelector(state => ({
+    userStore: state.userDataReducer.userDataResponse,
     userDetails: state.userDataReducer.userDataResponse.userData,
     age: state.userDataReducer.userDataResponse.age,
   }));
@@ -46,7 +60,10 @@ export const ProfileDetailScreen = () => {
   const [extra, setExtra] = useState(0);
   const [isEditable, setIsEditable] = useState(false);
   const [isEditablePhone, setIsEditablePhone] = useState(false);
-  const [imageData, setImageData] = useState('');
+  const [imageData, setImageData] = useState({
+    path: userDetails.image ? userDetails.image : '',
+  });
+  const [isImageData, setIsImageData] = useState(false);
   const [imageDataErr, setImageDataErr] = useState('');
   const navigation = useNavigation();
   const [isFocus, setIsFocus] = useState(false);
@@ -54,6 +71,7 @@ export const ProfileDetailScreen = () => {
   const [otp, setOtp] = useState(false);
   const [otpValue, setOtpValue] = useState('');
   const [loading, setLoading] = useState(false);
+  const currentDate = new moment().format('YYYY-MM-DD');
 
   const modalRef = useRef();
   const toastRef = useRef();
@@ -73,16 +91,50 @@ export const ProfileDetailScreen = () => {
       console.log('response data ==>', res.data);
       setLoading(false);
       toastMessage(res.message);
-      // setTimeout(() => {
-      //   navigation.navigate('otpScreen', {
-      //     otpValue: res.data,
-      //   });
-      // }, 150);
     } else {
       setLoading(false);
       toastMessage(res.message);
     }
   };
+  // const getUserProfileData = async () => {
+  //   // setLoading(true);
+  //   const getOtpResponse = await dispatch(getUserProfile());
+  //   const res = getOtpResponse;
+  //   if (res.status) {
+  //     console.log(
+  //       'getUserProfileData response data ==>',
+  //       res.data.UserProfileData.image,
+  //     );
+  //     setFirstNm(res.data.UserProfileData.first_name);
+  //     setLastNm(res.data.UserProfileData.last_name);
+  //     setDob(res.data.UserProfileData.dob);
+  //     setEmail(res.data.UserProfileData.email);
+  //     setPhone(res.data.UserProfileData.mob_no);
+  //     setGender(res.data.UserProfileData.gender);
+  //     setGenderDefault({
+  //       label: res.data.UserProfileData.gender,
+  //       value: res.data.UserProfileData.gender,
+  //     });
+  //     setLanguage(res.data.UserProfileData.language);
+  //     setLanguageDefault({
+  //       label: res.data.UserProfileData.language,
+  //       value: res.data.UserProfileData.language,
+  //     });
+  //     // console.log(
+  //     //   'res.data.UserProfileData.image ==> ',
+  //     //   res.data.UserProfileData.image,
+  //     // );
+  //     setImageData({path: res.data.UserProfileData.image});
+  //     setExtra(extra + 1);
+  //   } else {
+  //     // setLoading(false);
+  //     // toastMessage(res.message);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getUserProfileData();
+  // }, []);
 
   const uploadFromGallery = () => {
     ImagePicker.openPicker({
@@ -95,7 +147,9 @@ export const ProfileDetailScreen = () => {
       var imgPathSubstr = image.path.substring(imgPathIndex + 1);
       image.imageName = imgPathSubstr;
       modalRef.current.close();
+      console.log('image ==> ', image);
       setImageData(image);
+      setIsImageData(true);
       setImageDataErr('');
       setExtra(extra + 1);
     });
@@ -113,8 +167,9 @@ export const ProfileDetailScreen = () => {
       image.imageName = imgPathSubstr;
       modalRef.current.close();
       setImageData(image);
-
+      setIsImageData(true);
       setImageDataErr('');
+      setExtra(extra + 1);
     });
   };
   const getCurrentDate = givenDate => {
@@ -126,90 +181,107 @@ export const ProfileDetailScreen = () => {
     setDobErr('');
     setShowDate(false);
   };
-  const validateFirstNm = firstNm => {
-    if (firstNm === '') {
-      setFirstNmErr('Please Enter First Name');
-    } else {
-      setFirstNmErr('');
-    }
-  };
-  const validateLastNm = lastNm => {
-    if (lastNm === '') {
-      setLastNmErr('Please Enter Last Name');
-    } else {
-      setLastNmErr('');
-    }
-  };
-  const validatePhone = phone => {
-    if (phone === '') {
-      setPhoneErr('Please Enter Phone number');
-    } else if (phone.length < 10) {
-      setPhoneErr('Invalid Phone number');
-    } else {
-      setPhoneErr('');
-    }
-  };
-  const validateEmail = email => {
-    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if (email === '') {
-      setEmailErr('Please Enter Email Address');
-    } else if (reg.test(email) === false) {
-      setEmailErr('Invalid email');
-    } else {
-      setEmailErr('');
-    }
-  };
   const validation = () => {
-    validateFirstNm(firstNm);
-    validateLastNm(lastNm);
+    let error = false;
+    if (firstNm === '') {
+      error = true;
+      setFirstNmErr('Please Enter First Name');
+    }
     if (lastNm === '') {
+      error = true;
+      setLastNmErr('Please Enter Last Name');
+    }
+    if (lastNm === '') {
+      error = true;
       setLastNmErr('Please Enter Last Name');
     }
     if (gender === '') {
+      error = true;
       setGenderErr('Please select Gender');
     }
     if (dob === '') {
+      error = true;
       setDobErr('Please select Date');
     }
-    validateEmail(email);
-    validatePhone(phone);
-
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (email === '') {
+      error = true;
+      setEmailErr('Please Enter Email Address');
+    } else if (reg.test(email) === false) {
+      error = true;
+      setEmailErr('Invalid email');
+    }
+    if (phone === '') {
+      error = true;
+      setPhoneErr('Please Enter Phone number');
+    } else if (phone.length < 10) {
+      error = true;
+      setPhoneErr('Invalid Phone number');
+    }
+    if (otp) {
+      if (otpValue == '') {
+        error = true;
+        setPhoneErr('Enter OTP Value');
+      } else if (otpValue.length != 4) {
+        error = true;
+        setPhoneErr('Enter 4 Digit OTP Number');
+      }
+    }
     if (language === '') {
+      error = true;
       setLanguageErr('Please select Language');
     }
-    if (imageData === null) {
-      setImageDataErr('Please Upload / take image...');
+
+    if (!error) {
+      editProfileDetails();
     }
   };
   const editProfileDetails = async () => {
     setLoading(true);
+    // console.log('isEditablePhone ==> ', isEditablePhone);
     let formData = new FormData();
     formData.append('first_name', firstNm);
     formData.append('last_name', lastNm);
     formData.append('gender', gender);
-    formData.append('image', {
-      uri: imageData.path,
-      name: imageData.imageName,
-      type: imageData.mime,
-    });
+    if (isImageData) {
+      formData.append('image', {
+        uri: imageData.path,
+        name: imageData.imageName,
+        type: imageData.mime,
+      });
+    }
     formData.append('dob', dob);
     formData.append('email', email);
-    formData.append('mob_no', phone);
+    if (otp) {
+      formData.append('mob_no', phone);
+      formData.append('otp', otpValue);
+    }
     formData.append('language', language);
-    formData.append('otp', '6666');
-    console.log('editProfileDetails form data ==>', formData);
-    return;
-    const addMedicineReminderResponse = await dispatch(
-      addMedicineReminder(formData),
-    );
-    setLoading(false);
-    const res = addMedicineReminderResponse.payload;
-    // console.log('addMedicineReminder Res ==>', res);
+
+    console.log('formData', formData);
+
+    const EditUserProfileResponse = await dispatch(editUserProfile(formData));
+    const res = EditUserProfileResponse;
+    console.log('EditUserProfileResponse Res ==>', res);
 
     if (res.status) {
-      // console.log('addMedicineReminder List ==>', res);
+      setLoading(false);
       toastMessage(res.message);
-      navigation.navigate('todayScreen');
+      setIsEditable(false);
+      setOtpValue('');
+      setOtp(false);
+      setIsEditablePhone(false);
+      // getUserProfileData();
+      setExtra(extra + 1);
+      res.data.token = userStore.userData.token;
+      userStore.userData = res.data;
+      // console.log('response RES  data :- ', res.data);
+
+      var a = moment(res.data.dob);
+      var b = moment(currentDate);
+      var years = b.diff(a, 'year');
+
+      await dispatch(userData({userData: res.data, age: years, login: true}));
     } else {
       setLoading(false);
       toastMessage(res.message);
@@ -218,6 +290,14 @@ export const ProfileDetailScreen = () => {
 
   return (
     <SafeAreaView>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <Header
         leftOnPress={() => {
           navigation.goBack();
@@ -227,14 +307,13 @@ export const ProfileDetailScreen = () => {
         }}
         source={{uri: imageData && imageData?.path}}
         isColor={true}
-        isClose={false}
-        isLogo={false}
+        isLogo={true}
         isLongArrowLeft={false}
         isLeftArrow={true}
         isLogoCenter={true}
         isHeading={true}
-        isBlue={false}
         isCamera={true}
+        isEditDetails={true}
         title={'ProfileDetailScreen.title'}
         // secName={email}
       />
@@ -275,7 +354,7 @@ export const ProfileDetailScreen = () => {
             value={firstNm}
             onChangeText={text => {
               setFirstNm(text);
-              validateFirstNm(text);
+              setFirstNmErr('');
               setExtra(extra + 1);
             }}
             editable={isEditable}
@@ -289,7 +368,7 @@ export const ProfileDetailScreen = () => {
             value={lastNm}
             onChangeText={text => {
               setLastNm(text);
-              validateLastNm(text);
+              setLastNmErr('');
               setExtra(extra + 1);
             }}
             editable={isEditable}
@@ -374,6 +453,7 @@ export const ProfileDetailScreen = () => {
             <DateTimePickerModal
               isVisible={showDate}
               mode="date"
+              date={dob ? new Date(dob) : new Date()}
               onConfirm={val => getCurrentDate(val)}
               onCancel={() => {
                 setShowDate(false);
@@ -387,7 +467,7 @@ export const ProfileDetailScreen = () => {
             value={email}
             onChangeText={text => {
               setEmail(text);
-              validateEmail(text);
+              setEmailErr('');
               setExtra(extra + 1);
             }}
             editable={isEditable}
@@ -400,7 +480,7 @@ export const ProfileDetailScreen = () => {
             value={phone}
             onChangeText={text => {
               setPhone(text);
-              validatePhone(text);
+              setPhoneErr('');
               setExtra(extra + 1);
             }}
             withButton={true}
@@ -424,13 +504,13 @@ export const ProfileDetailScreen = () => {
             keyboardType="numeric"
             editable={isEditablePhone}
           />
-          {phoneErr ? <Text style={styles.errorText()}>{phoneErr}</Text> : null}
           {otp && (
             <InputBox
               placeholder={'Enter OTP'}
               mainContainerStyle={styles.inputMain()}
               inputStyle={styles.button(isEditable)}
               maxLength={4}
+              value={otpValue}
               keyboardType="numeric"
               onChangeText={text => {
                 setOtpValue(text);
@@ -438,6 +518,7 @@ export const ProfileDetailScreen = () => {
               editable={isEditable}
             />
           )}
+          {phoneErr ? <Text style={styles.errorText()}>{phoneErr}</Text> : null}
           {!isEditable && (
             <InputBox
               mainContainerStyle={styles.inputMain()}
@@ -495,15 +576,7 @@ export const ProfileDetailScreen = () => {
               buttonText={styles.buttonTxt()}
               nameTx={'ProfileDetailScreen.Save'}
               onPress={() => {
-                firstNm &&
-                lastNm &&
-                gender &&
-                dob &&
-                email &&
-                phone.length == 10 &&
-                language
-                  ? editProfileDetails()
-                  : validation();
+                validation();
                 // navigation.goBack();
               }}
             />

@@ -1,7 +1,10 @@
 import HttpCalls from './HttpCalls';
 import {headersData} from './Services';
 import {store, persistor} from './../redux';
-console.log('store,', store.getState().userDataReducer.userDataResponse);
+console.log(
+  'store,',
+  store.getState().userDataReducer.userDataResponse.userData.token,
+);
 let token = store.getState().userDataReducer.userDataResponse.login
   ? store.getState().userDataReducer.userDataResponse.userData.token
   : '';
@@ -91,6 +94,15 @@ export const _getHelpSupportData = async () => {
   return _api_calls('GET', '/get-helpsupport-data', headers);
 };
 
+export const _getUserProfileData = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  // console.log('headers _getUserProfileData ==>', headers);
+  return _api_calls('GET', '/get-user-profile-data', headers);
+};
+
 export const _addSubcategory = async payload => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
@@ -136,5 +148,8 @@ export const _editProfileDetails = async payload => {
     type: 'multipart/form-data',
     token: token,
   });
+  console.log('_editProfileDetails_token ==> ', token);
+  console.log('_editProfileDetails_payload ==> ', payload);
+  console.log('_editProfileDetails_header ==> ', headers);
   return _api_calls('POST', '/edit-user-profile', headers, payload);
 };

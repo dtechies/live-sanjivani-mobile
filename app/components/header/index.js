@@ -112,12 +112,12 @@ export const Header = props => {
             style={styles.imgMain(
               props.isCamera ? 3 : props.isLogoCenter ? 1 : 2,
             )}>
-            {/* {console.log('Header image ==> ', props.source)} */}
+            {console.log('Header image ==> ', props.source.uri)}
             <Image
               source={
                 props.source.uri == '' ? images.icPersonLogo : props.source
               }
-              style={styles.imgSize(props.isLogo ? 2 : 1)}
+              style={styles.imgSize(1)}
             />
           </View>
           {props.isCamera && (
@@ -132,9 +132,11 @@ export const Header = props => {
             </View>
           )}
           <View
-            style={styles.profileInfo1(
-              props.isCamera ? 3 : props.isLogoCenter ? 2 : 1,
-            )}>
+            style={
+              props.isEditDetails
+                ? styles.propInfo()
+                : styles.profileInfo1(props.isLogoCenter ? 2 : 1)
+            }>
             <Text
               style={styles.profileName(props.isColor || props.isBlue ? 1 : 3)}>
               {props.name ? props.name : ''}

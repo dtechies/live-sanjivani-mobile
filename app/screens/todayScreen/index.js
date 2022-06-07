@@ -10,6 +10,7 @@ import {
 import {Text, FabMenu} from 'components';
 import {size, color, IcFalse, IcTrue} from 'theme';
 import {reminderListData, medicationReminder} from 'json';
+import {useDispatch, useSelector} from 'react-redux';
 import * as styles from './styles';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 // import LinearGradient from 'react-native-linear-gradient';
@@ -20,7 +21,10 @@ export const TodayScreen = () => {
   const [medicationUpcoming, setMedicationUpcoming] = useState('');
   const [reminderList, setReminderList] = useState(reminderListData);
   const navigation = useNavigation();
-
+  const {userDetails = {}} = useSelector(state => ({
+    userDetails: state.userDataReducer.userDataResponse.userData,
+  }));
+  console.log('userData ==>', userDetails);
   let currentCount = 0;
   useFocusEffect(
     useCallback(() => {
