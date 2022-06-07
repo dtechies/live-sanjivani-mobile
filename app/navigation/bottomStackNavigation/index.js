@@ -37,10 +37,9 @@ export const BottomStackNavigation = props => {
           // console.log('notification ', notification);
           let notificationData = notification.additionalData;
           const obj = {notificationData};
-          let isEmptyObject = Object.keys(obj).length === 0;
-
+          let isEmptyObject = Object.keys(obj).length > 0;
           // console.log('isEmptyObject', isEmptyObject); //
-          if (isEmptyObject === false) {
+          if (!isEmptyObject) {
             closeModal(true);
             setNotificationData(notificationData);
           }
@@ -55,9 +54,9 @@ export const BottomStackNavigation = props => {
         // );
         let notificationData = notification.notification.additionalData;
         const obj = {notificationData};
-        let isEmptyObject = Object.keys(obj).length === 0;
+        let isEmptyObject = Object.keys(obj).length > 0;
 
-        if (isEmptyObject === false) {
+        if (!isEmptyObject) {
           closeModal(true);
           setNotificationData(notificationData);
         }
@@ -67,9 +66,9 @@ export const BottomStackNavigation = props => {
         // console.log(' bottom setInAppMessageClickHandler:', notification);
         let notificationData = notification.notification.additionalData;
         const obj = {notificationData};
-        let isEmptyObject = Object.keys(obj).length === 0;
+        let isEmptyObject = Object.keys(obj).length > 0;
 
-        if (isEmptyObject === false) {
+        if (!isEmptyObject) {
           closeModal(true);
           setNotificationData(notificationData);
         }

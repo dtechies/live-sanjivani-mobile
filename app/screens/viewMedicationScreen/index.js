@@ -68,7 +68,7 @@ export const ViewMedicationScreen = () => {
       toastMessage(res.message);
       setExtra(extra + 1);
     } else {
-      setLoading(true);
+      setLoading(false);
       toastMessage(res.message);
     }
   };
@@ -84,8 +84,8 @@ export const ViewMedicationScreen = () => {
     );
     const res = editMedicineReminderStatusResponse.payload;
     if (res.status) {
-      getMedicineReminderData();
       setLoading(false);
+      getMedicineReminderData();
     } else {
       setLoading(false);
       setExtra(extra + 1);

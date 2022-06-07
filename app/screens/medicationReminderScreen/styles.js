@@ -165,6 +165,11 @@ export const errorText = val => ({
   marginTop: val == 1 ? 5 : -5,
   marginBottom: size.moderateScale(15),
 });
+export const medicineName = () => ({
+  color: color.red,
+  fontFamily: fonts.latoRegular,
+  fontSize: fontSize.small,
+});
 export const imageView = val => ({
   marginTop: size.moderateScale(8),
   marginBottom: size.moderateScale(10),
@@ -195,4 +200,8 @@ export const searchedValueList = () => ({
   paddingHorizontal: size.moderateScale(15),
   backgroundColor: color.white,
   borderRadius: 10,
+});
+
+export const crossIconView = () => ({
+  alignSelf: 'flex-end',
 });

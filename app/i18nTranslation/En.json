@@ -153,7 +153,12 @@
     "save": "Save"
   },
   "CheckMedicationReminderScreen": {
-    "title": "Add Medicine Reminder"
+    "title": "Add Medicine Reminder",
+    "name": "Name",
+    "benefit": "Benefit",
+    "safetyAdvice": "Safety Advice",
+    "sideEffects": "Side Effects",
+    "use": "Use"
   },
   "careGiver_screen": {
     "title": "Care Giver",
