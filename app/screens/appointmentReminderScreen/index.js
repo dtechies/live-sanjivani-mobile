@@ -51,7 +51,8 @@ export const AppointmentReminderScreen = animated => {
   const [loading, setLoading] = useState(false);
   const popUpRef = useRef();
   const [doctorFilteredName, setDoctorFilteredName] = useState([]);
-
+  const [currentDate, setCurrentDate] = useState(new Date());
+  // const [selectedDate, setSelectedDate] = useState(new Date());
   const onOpenPopUp = () => {
     // alert('hiiii');
     popUpRef.current?.open();
@@ -187,10 +188,25 @@ export const AppointmentReminderScreen = animated => {
     onGetDoctorDetails();
     setUserId(store.getState().userDataReducer.userDataResponse.userData.id);
   }, []);
+  useEffect(() => {
+    let currentDateValue = new Date();
+    let day =
+      currentDateValue.getDate() > 9
+        ? currentDateValue.getDate()
+        : `0${currentDateValue.getDate()}`;
+    let month =
+      currentDateValue.getMonth() + 1 > 9
+        ? currentDateValue.getMonth() + 1
+        : `0${currentDateValue.getMonth() + 1}`;
+    let year = currentDateValue.getFullYear();
+    let newDate = year + '-' + month + '-' + day;
+    setCurrentDate(newDate);
+  }, []);
 
-  const onChangeSearchText = e => {
-    setAddressOne(e);
-  };
+  // const onChangeSearchText = e => {
+  //   console.log('SU AAVE CHE', e);
+  //   setAddressOne(e);
+  // };
 
   const renderRow = row => {
     return (
@@ -240,6 +256,7 @@ export const AppointmentReminderScreen = animated => {
               }}
               mode="calendar"
               minuteInterval={30}
+              minimumDate={currentDate}
               style={styles.calenderMain_view()}
             />
           </View>
@@ -266,7 +283,19 @@ export const AppointmentReminderScreen = animated => {
                 isVisible={showTime}
                 mode="time"
                 locale="en_GB"
-                onConfirm={val => getAppointmentTime(val)}
+                onConfirm={val => {
+                  if (
+                    new Date(val).toDateString() === new Date().toDateString()
+                  ) {
+                    if (new Date(val).getTime() > new Date().getTime()) {
+                      getAppointmentTime(val);
+                    } else {
+                      alert('Please Select Future Time');
+                    }
+                  } else {
+                    getAppointmentTime(val);
+                  }
+                }}
                 onCancel={() => {
                   setShowTime(false);
                   setExtra(extra + 1);
@@ -292,7 +321,20 @@ export const AppointmentReminderScreen = animated => {
                 isVisible={showTimeReminder}
                 mode="time"
                 locale="en_GB"
-                onConfirm={val => getReminderTime(val)}
+                minimumDate={new Date()}
+                onConfirm={val => {
+                  if (
+                    new Date(val).toDateString() === new Date().toDateString()
+                  ) {
+                    if (new Date(val).getTime() > new Date().getTime()) {
+                      getReminderTime(val);
+                    } else {
+                      alert('Please Select Future Time');
+                    }
+                  } else {
+                    getReminderTime(val);
+                  }
+                }}
                 onCancel={() => {
                   setShowTimeReminder(false);
                   setExtra(extra + 1);
@@ -429,9 +471,7 @@ export const AppointmentReminderScreen = animated => {
             minLength={2}
             autoFocus={true}
             query={{
-              // key: 'AIzaSyCYV4DmQ9JtvmR1jQ6rPSbLlPceRc_5qLI',
-              // key: 'AIzaSyBm1a7GUXngk3vzhzmxronDeDSqr_9drZk',
-              key: 'AIzaSyDjtilqk6uyj1gDV1lEdyhuFUu9mwobOSw', //belboy
+              key: 'AIzaSyCYV4DmQ9JtvmR1jQ6rPSbLlPceRc_5qLI',
               language: 'en',
               types: 'geocode',
             }}
@@ -440,6 +480,7 @@ export const AppointmentReminderScreen = animated => {
             listViewDisplayed="auto"
             onFail={object => console.log(object)}
             renderDescription={row => renderRow(row)}
+            onFail={error => console.error(error)}
             predefinedPlacesAlwaysVisible={true}
             onPress={(data, details = null) => {
               console.log('details :', details);

@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Loader, Text, Screen, Header, Toast} from 'components';
@@ -6,7 +6,7 @@ import {size, color} from 'theme';
 import * as styles from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {MainProfileDetail} from 'json';
-import {userLogOut, userData} from 'redux-actions';
+import {userLogOut, userData, addEditPlayerId} from 'redux-actions';
 
 export const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -23,10 +23,24 @@ export const ProfileScreen = () => {
     age: state.userDataReducer.userDataResponse.age,
   }));
 
+  const removePlayerId = async () => {
+    const removePlayerIdBody = {
+      player_id: null,
+    };
+    const removePlayerIdResponse = await dispatch(
+      addEditPlayerId(removePlayerIdBody),
+    );
+    const res = removePlayerIdResponse.payload;
+    if (res.status) {
+      await dispatch(userLogOut());
+      await dispatch(userData({login: false}));
+      navigation.navigate('authStackNavigation', {screen: 'loginScreen'});
+    } else {
+      toastMessage(res.message);
+    }
+  };
   const onLogoutData = async () => {
-    await dispatch(userLogOut());
-    await dispatch(userData({login: false}));
-    navigation.navigate('authStackNavigation', {screen: 'loginScreen'});
+    removePlayerId();
   };
 
   const clearData = () => {

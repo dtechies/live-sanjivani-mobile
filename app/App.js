@@ -17,7 +17,7 @@ export const LocalizationContext = createContext();
 const App = () => {
   const [locale, setLocale] = useState(RNLocalize.locale);
   const [isModalOpen, closeModal] = useState(false);
-  const [playerId, setPlayerId] = useState('');
+
   const [notificationData, setNotificationData] = useState();
   const localizationContext = useMemo(
     () => ({
@@ -38,7 +38,6 @@ const App = () => {
   //   // console.log('Prompt response:', response);
   // });
   //END OneSignal Init Code
-
   useEffect(() => {
     const ONESIGNAL = async () => {
       OneSignal.setNotificationWillShowInForegroundHandler(
@@ -111,10 +110,6 @@ const App = () => {
       });
 
       const deviceState = await OneSignal.getDeviceState();
-      setPlayerId(deviceState.userId);
-      // await deviceState();
-      // console.log('deviceState', deviceState);
-      // console.log('userId / player id ==> ', deviceState.userId);
     };
     ONESIGNAL();
   }, []);
