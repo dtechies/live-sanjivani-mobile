@@ -3,46 +3,33 @@ import {View, Pressable, Image, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {getOtp} from 'redux-actions';
-import {
-  Loader,
-  Text,
-  Button,
-  TitleBox,
-  Screen,
-  InputBox,
-  Toast,
-} from 'components';
-import {size, color, IcArrowNext, images} from 'theme';
+import {Loader, Text, Button, InputBox, Toast} from 'components';
+import {size, images} from 'theme';
 import * as styles from './styles';
 export const LoginScreen = () => {
   const dispatch = useDispatch();
-  const [subScreen, setsubScreen] = useState(false);
-  const [mainScreen, setmainScreen] = useState(true);
-  const [editable, setEditable] = useState(true);
+  const navigation = useNavigation();
   const [number, setNumber] = useState('7046892973');
   const [extra, setExtra] = useState(0);
   const [loading, setLoading] = useState(false);
   const [numberCorrect, setNumberCorrect] = useState('');
-  const navigation = useNavigation();
   const toastRef = useRef();
 
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-
   const onGetOtp = async () => {
-    // console.log('hiiii');
     setLoading(true);
     const getOtpBody = {
       mob_no: number,
     };
     // console.log('otp', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    console.log('getOtpResponse ====', getOtpResponse);
+    // console.log('getOtpResponse ====', getOtpResponse);
     const res = getOtpResponse.payload;
-    console.log('res', res);
+    // console.log('res', res);
     if (res.status) {
-      console.log('response data loginn ==>', res.data);
+      // console.log('response data loginn ==>', res.data);
       setLoading(false);
       toastMessage(res.message);
       setTimeout(() => {

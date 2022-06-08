@@ -21,13 +21,14 @@ import {useNavigation} from '@react-navigation/native';
 import DatePicker from 'react-native-modern-datepicker';
 import {IcAddress, color, size, SearchValNew, IcCrossArrow} from 'theme';
 import * as styles from './styles';
+import {GOOGLE_API_KEY} from 'config';
 import {Portal} from 'react-native-portalize';
 import {Modalize} from 'react-native-modalize';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 export const AppointmentReminderScreen = animated => {
   const dispatch = useDispatch();
   const toastRef = useRef();
-  const searchInputRef = useRef();
+  const placesAutocompleteRef = useRef();
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
   const [showTime, setShowTime] = useState(false);
@@ -50,7 +51,8 @@ export const AppointmentReminderScreen = animated => {
   const [loading, setLoading] = useState(false);
   const popUpRef = useRef();
   const [doctorFilteredName, setDoctorFilteredName] = useState([]);
-
+  const [currentDate, setCurrentDate] = useState(new Date());
+  // const [selectedDate, setSelectedDate] = useState(new Date());
   const onOpenPopUp = () => {
     // alert('hiiii');
     popUpRef.current?.open();
@@ -186,11 +188,25 @@ export const AppointmentReminderScreen = animated => {
     onGetDoctorDetails();
     setUserId(store.getState().userDataReducer.userDataResponse.userData.id);
   }, []);
+  useEffect(() => {
+    let currentDateValue = new Date();
+    let day =
+      currentDateValue.getDate() > 9
+        ? currentDateValue.getDate()
+        : `0${currentDateValue.getDate()}`;
+    let month =
+      currentDateValue.getMonth() + 1 > 9
+        ? currentDateValue.getMonth() + 1
+        : `0${currentDateValue.getMonth() + 1}`;
+    let year = currentDateValue.getFullYear();
+    let newDate = year + '-' + month + '-' + day;
+    setCurrentDate(newDate);
+  }, []);
 
-  const onChangeSearchText = e => {
-    console.log('SU AAVE CHE', e);
-    setAddressOne(e);
-  };
+  // const onChangeSearchText = e => {
+  //   console.log('SU AAVE CHE', e);
+  //   setAddressOne(e);
+  // };
 
   const renderRow = row => {
     return (
@@ -240,6 +256,7 @@ export const AppointmentReminderScreen = animated => {
               }}
               mode="calendar"
               minuteInterval={30}
+              minimumDate={currentDate}
               style={styles.calenderMain_view()}
             />
           </View>
@@ -266,7 +283,19 @@ export const AppointmentReminderScreen = animated => {
                 isVisible={showTime}
                 mode="time"
                 locale="en_GB"
-                onConfirm={val => getAppointmentTime(val)}
+                onConfirm={val => {
+                  if (
+                    new Date(val).toDateString() === new Date().toDateString()
+                  ) {
+                    if (new Date(val).getTime() > new Date().getTime()) {
+                      getAppointmentTime(val);
+                    } else {
+                      alert('Please Select Future Time');
+                    }
+                  } else {
+                    getAppointmentTime(val);
+                  }
+                }}
                 onCancel={() => {
                   setShowTime(false);
                   setExtra(extra + 1);
@@ -292,7 +321,20 @@ export const AppointmentReminderScreen = animated => {
                 isVisible={showTimeReminder}
                 mode="time"
                 locale="en_GB"
-                onConfirm={val => getReminderTime(val)}
+                minimumDate={new Date()}
+                onConfirm={val => {
+                  if (
+                    new Date(val).toDateString() === new Date().toDateString()
+                  ) {
+                    if (new Date(val).getTime() > new Date().getTime()) {
+                      getReminderTime(val);
+                    } else {
+                      alert('Please Select Future Time');
+                    }
+                  } else {
+                    getReminderTime(val);
+                  }
+                }}
                 onCancel={() => {
                   setShowTimeReminder(false);
                   setExtra(extra + 1);
@@ -367,7 +409,7 @@ export const AppointmentReminderScreen = animated => {
             placeholder={'Address'}
             placeholderTextColor={color.black}
           /> */}
-          {/* <View style={styles.searchPlacesTxt()}>
+          <View style={styles.searchPlacesTxt()}>
             <View
               style={{
                 height: size.moderateScale(50),
@@ -380,13 +422,10 @@ export const AppointmentReminderScreen = animated => {
               />
             </View>
             <GooglePlacesAutocomplete
+              ref={placesAutocompleteRef}
               placeholder="search location"
               // minLength={2}
-              query={{
-                key: 'AIzaSyDjtilqk6uyj1gDV1lEdyhuFUu9mwobOSw',
-                language: 'en',
-                types: 'geocode',
-              }}
+              query={GOOGLE_API_KEY}
               fetchDetails={true}
               returnKeyType={'search'}
               listViewDisplayed="auto"
@@ -394,53 +433,61 @@ export const AppointmentReminderScreen = animated => {
               predefinedPlacesAlwaysVisible={true}
               onPress={(data, details = null) => {
                 console.log('details', details);
+                placesAutocompleteRef.current.setAddressText(
+                  details.formatted_address,
+                );
                 setAddressOne(details.formatted_address);
               }}
               onFail={error => console.error(error)}
               getDefaultValue={() => ''}
-              // textInputProps={{
-              //   InputComp: InputBox,
-              //   value: addressOne,
-              //   onChangeText: onChangeSearchText,
-              //   style: styles.searchPlacesInputTxt(),
-              //   placeholder: 'Search address',
-              //   placeholderTextColor: color.dimGrey,
-              //   errorStyle: {color: 'red'},
-              // }}
-              styles={{
-                textInputContainer: styles.searchPlacesTxt(),
-                textInput: {color: 'black'},
-                textInputContainer: {color: 'black'},
+              textInputProps={{
+                InputComp: InputBox,
+                value: addressOne,
+                onChangeText: onChangeSearchText,
+                style: styles.searchPlacesInputTxt(),
+                placeholder: 'Search address...',
+                placeholderTextColor: color.dimGrey,
+                errorStyle: {color: 'red'},
               }}
-              // renderRow={rowData => {
-              //   const title = rowData.structured_formatting.main_text;
-              //   const address = rowData.structured_formatting.secondary_text;
-              //   return (
-              //     <View>
-              //       <Text style={styles.searchTitle()}>{title}</Text>
-              //       <Text style={styles.searchDis()}>{address}</Text>
-              //     </View>
-              //   );
-              // }}
+              styles={{
+                textInput: {color: 'black'},
+              }}
+              renderRow={rowData => {
+                const title = rowData.structured_formatting.main_text;
+                const address = rowData.structured_formatting.secondary_text;
+                return (
+                  <View>
+                    <Text style={styles.searchTitle()}>{title}</Text>
+                    <Text style={styles.searchDis()}>{address}</Text>
+                  </View>
+                );
+              }}
             />
-          </View> */}
+          </View>
 
-          <GooglePlacesAutocomplete
+          {/* <GooglePlacesAutocomplete
             // ref={placesAutocompleteRef}
             placeholder="search location"
             minLength={2}
             autoFocus={true}
             query={{
-              key: 'AIzaSyDjtilqk6uyj1gDV1lEdyhuFUu9mwobOSw',
+              key: 'AIzaSyCYV4DmQ9JtvmR1jQ6rPSbLlPceRc_5qLI',
               language: 'en',
               types: 'geocode',
             }}
             fetchDetails={true}
             returnKeyType={'search'}
             listViewDisplayed="auto"
+            onFail={object => console.log(object)}
             renderDescription={row => renderRow(row)}
+            onFail={error => console.error(error)}
             predefinedPlacesAlwaysVisible={true}
-            onPress={(data, details = null) => console.log(details)}
+            onPress={(data, details = null) => {
+              console.log('details :', details);
+              placesAutocompleteRef.current.setAddressText(
+                details.formatted_address,
+              );
+            }}
             getDefaultValue={() => ''}
             // styles={{
             //   textInputContainer: styles.searchPlacesTxt(),
@@ -448,7 +495,7 @@ export const AppointmentReminderScreen = animated => {
             // }}
             // renderRightButton={() => <SearchBtn />}
             styles={styles.googleStyle()}
-          />
+          /> */}
 
           {addressOneErr ? (
             <Text style={styles.textValidation()} text={addressOneErr} />

@@ -143,8 +143,8 @@ export const searchPlacesInputTxt = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoRegular,
   color: color.black,
-  width: size.deviceWidth * 0.89,
-  paddingRight: size.moderateScale(15),
+  width: size.deviceWidth * 0.77,
+  marginRight: size.moderateScale(15),
 });
 export const searchPlacesTxt = () => ({
   justifyContent: 'center',
@@ -242,7 +242,7 @@ export const googleStyle = () => ({
     flex: 2,
     // color: color.black,
     fontSize: 12,
-    fontFamily: 'Roboto-Medium',
+    // fontFamily: 'Roboto-Medium',
     padding: 0,
     marginBottom: 0,
     alignSelf: 'center',

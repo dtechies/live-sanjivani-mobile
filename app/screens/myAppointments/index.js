@@ -1,7 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {getAppointmentReminderProfile} from 'redux-actions';
+import {
+  getAppointmentReminderProfile,
+  editAppointmentReminderStatus,
+} from 'redux-actions';
 
 import {useDispatch} from 'react-redux';
 
@@ -38,7 +41,7 @@ export const MyAppointments = () => {
     let text = val.toLowerCase() || val.toUpperCase();
 
     let FilteredValue = appointmentReminderData.filter(item => {
-      return item.medicine_name.toLowerCase().match(text);
+      return item.doctor.doctor_name.toLowerCase().match(text);
     });
     FilteredValue.length == 0 && FilteredValue.push({value: 'null'});
     setFilteredData(FilteredValue);
@@ -54,24 +57,42 @@ export const MyAppointments = () => {
       'getAppointmentReminderProfile',
       getAppointmentReminderProfileResponse,
     );
-    // const res =
-    //   getAppointmentReminderProfileResponse.data.AppointmentReminderProfileData;
-    // console.log('res', res);
-    if (getAppointmentReminderProfileResponse.status) {
-      setAppointmentReminderData(
-        getAppointmentReminderProfileResponse.data
-          .AppointmentReminderProfileData,
-      );
-      setFilteredData(
-        getAppointmentReminderProfileResponse.data
-          .AppointmentReminderProfileData,
-      );
+    const res = getAppointmentReminderProfileResponse;
+    console.log('res', res);
+    if (res.status) {
+      let data = res.data.AppointmentReminderProfileData;
+      console.log('data', data);
+      const trueFirst = data.sort((x, y) => {
+        let demo = x.status === y.status;
+        return demo ? 0 : x.status ? -1 : 1;
+      });
+      setAppointmentReminderData(trueFirst);
+      setFilteredData(res.data.AppointmentReminderProfileData);
       // setLoading(false);
       setExtra(extra + 1);
       toastMessage(res.message);
     } else {
-      setLoading(true);
+      setLoading(false);
       toastMessage(res.message);
+    }
+  };
+  const updateReminderStatus = async val => {
+    setLoading(true);
+
+    const editMedicineReminderStatusBody = {
+      id: val?.id,
+      status: val.status == true ? false : true,
+    };
+    const editMedicineReminderStatusResponse = await dispatch(
+      editAppointmentReminderStatus(editMedicineReminderStatusBody),
+    );
+    const res = editMedicineReminderStatusResponse.payload;
+    if (res.status) {
+      setLoading(false);
+      getAppointmentReminderData();
+    } else {
+      setLoading(false);
+      setExtra(extra + 1);
     }
   };
 
@@ -148,48 +169,15 @@ export const MyAppointments = () => {
             return (
               <AppointmentCard
                 data={val}
-                onWholeCardPress={() => console.log('hiii')}
+                onWholeCardPress={() => console.log('Click...')}
                 time={val.user_selected_time}
                 date={val.date}
-                address={val.address1}
-                doctor={'Docter name Empty'}
+                address={val.doctor.doctor_address}
+                doctor={val.doctor.doctor_name}
                 onTogglePress={() => {
-                  reminderList[i].status = !val.status;
-
-                  setTimeout(() => {
-                    reminderList.sort(function (x, y) {
-                      return x.status === y.status ? 0 : x.status ? -1 : 1;
-                    });
-                    setAppointmentReminderData(reminderList);
-                    setExtra(extra + 1);
-                  }, 500);
+                  updateReminderStatus(val);
                 }}
               />
-              // <ReminderCard
-              //   data={val}
-              //   onWholeCardPress={() =>
-              //     navigation.navigate('checkMedicationReminderScreen', {
-              //       reminderData: val,
-              //       fromViewMedication: true,
-              //     })
-              //   }
-              //   onTogglePress={() => {
-              //     medicineReminderData[i].isActive = !val.isActive;
-
-              //     setTimeout(() => {
-              //       medicineReminderData.sort(function (x, y) {
-              //         return x.isActive === y.isActive
-              //           ? 0
-              //           : x.isActive
-              //           ? -1
-              //           : 1;
-              //       });
-              //       setMedicineReminderData(medicineReminderData);
-              //       setExtra(extra + 1);
-              //     }, 500);
-              //   }
-              // }
-              // />
             );
           })}
         </View>

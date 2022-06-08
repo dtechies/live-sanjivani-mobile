@@ -119,7 +119,6 @@ export const dropdownContainer = () => ({
 });
 export const separator = () => ({
   backgroundColor: color.borderBlue,
-  // height: size.moderateScale(1),
 });
 export const InsideLabelFieldText = () => ({
   fontSize: fontSize.small,
@@ -127,7 +126,6 @@ export const InsideLabelFieldText = () => ({
   color: color.blueTx,
   paddingVertical: size.moderateScale(5),
   paddingLeft: size.moderateScale(15),
-  textTransform: 'capitalize',
 });
 // modal style
 export const modalContentContainerStyle = () => ({

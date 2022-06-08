@@ -7,9 +7,9 @@ import {Button} from '../button';
 import {IcCrossArrow, color, size} from 'theme';
 export const AlertModal = props => {
   const {closeModal, data} = props;
-  useEffect(() => {
-    // console.log('data ==>', data);
-  }, []);
+  var givenTime = data?.user_selected_time;
+  var hourValue = givenTime.slice(0, 2);
+  var ampm = hourValue >= 12 ? 'PM' : 'AM';
   return (
     <View style={styles.container()}>
       <View style={styles.cardStyle()}>
@@ -25,15 +25,17 @@ export const AlertModal = props => {
           </Pressable>
         ) : null}
         <Text style={styles.textDate()} onPress={() => closeModal()}>
-          {data?.frequency_value}
+          {data?.user_selected_time.slice(0, 5)} {ampm}
         </Text>
         <Text style={styles.textTitle()} onPress={() => closeModal()}>
           {data?.reminder_name && data.reminder_name}
         </Text>
         <Text style={styles.textDescription()} onPress={() => closeModal()}>
           {data?.dose} {data?.medicine_name} {data?.medicine_strength}{' '}
-          {data?.medicine_strength_unit} {data?.medicine_form} {', '}
-          {data?.frequency_value} {data?.reminder_time}
+          {data?.medicine_strength_unit} {data?.medicine_form}
+          {', '}
+          {data?.reminder_frequency}
+          {', '} {data?.reminder_time}
         </Text>
 
         {data?.type == 'reminder' ? (
