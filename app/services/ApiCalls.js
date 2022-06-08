@@ -124,6 +124,14 @@ export const _getAppointmentReminder = async () => {
   // console.log('headers ==>', headers);
   return _api_calls('GET', '/get-appointment-reminder-profile', headers);
 };
+export const _getTodayMedicationList = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  // console.log('headers ==>', headers);
+  return _api_calls('GET', '/medication-list', headers);
+};
 export const _userFavoritesList = async () => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({

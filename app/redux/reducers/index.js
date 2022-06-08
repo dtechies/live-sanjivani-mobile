@@ -35,6 +35,7 @@ import editUserProfileReducer from './EditUserProfileReducer';
 import userLogOutReducer from './UserLogoutReducer';
 import getUserProfileReducer from './GetUserProfileReducer';
 import GetUserFavSubCategoryPdfReducer from './GetUserFavSubCategoryPdfReducer';
+import getTodayMedicationListReducer from './GetTodayMedicationListReducer';
 
 const persistConfig = {
   key: 'root',
@@ -74,6 +75,7 @@ const appReducer = combineReducers({
   userLogOutReducer: userLogOutReducer,
   getUserProfileReducer: getUserProfileReducer,
   GetUserFavSubCategoryPdfReducer: GetUserFavSubCategoryPdfReducer,
+  getTodayMedicationListReducer: getTodayMedicationListReducer,
 });
 const rootReducer = (state, action) => {
   // Clear all data in redux store to initial.

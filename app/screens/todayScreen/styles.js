@@ -49,7 +49,7 @@ export const timeAMStyle = () => ({
   fontSize: fontSize.medium,
 });
 export const desTextStyle = () => ({
-  paddingBottom: size.moderateScale(5),
+  marginVertical: size.moderateScale(5),
   fontFamily: fonts.latoRegular,
   color: color.dimGrey,
   fontSize: fontSize.verySmall,
@@ -208,6 +208,12 @@ export const circleDateView = () => ({
 export const separator = () => ({
   backgroundColor: color.midnightBlue,
   height: size.moderateScale(1),
+});
+export const textError = () => ({
+  fontFamily: fonts.latoBold,
+  color: color.blueCard,
+  fontSize: fontSize.medium,
+  paddingVertical: size.moderateScale(10),
 });
 export const insideUpcomingCircle = () => ({
   height: size.moderateScale(4),
