@@ -36,6 +36,7 @@ import userLogOutReducer from './UserLogoutReducer';
 import getUserProfileReducer from './GetUserProfileReducer';
 import GetUserFavSubCategoryPdfReducer from './GetUserFavSubCategoryPdfReducer';
 import addEditPlayerIdReducer from './AddEditPlayerIdReducer';
+import editReminderStatusReducer from './editReminderStatusReducer';
 
 const persistConfig = {
   key: 'root',

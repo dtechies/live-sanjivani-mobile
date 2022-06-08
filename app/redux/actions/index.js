@@ -31,3 +31,4 @@ export * from './UserLogoutAction';
 export * from './GetUserProfileAction';
 export * from './GetUserFavSubCategoryPdfAction';
 export * from './AddEditPlayerIdAction';
+export * from './editReminderStatusAction';
