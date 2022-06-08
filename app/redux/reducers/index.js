@@ -37,6 +37,7 @@ import getUserProfileReducer from './GetUserProfileReducer';
 import GetUserFavSubCategoryPdfReducer from './GetUserFavSubCategoryPdfReducer';
 import getTodayMedicationListReducer from './GetTodayMedicationListReducer';
 import addEditPlayerIdReducer from './AddEditPlayerIdReducer';
+import editReminderStatusReducer from './editReminderStatusReducer';
 
 const persistConfig = {
   key: 'root',
