@@ -8,7 +8,7 @@ export const getAppointmentReminderProfile = () => {
       .then(response => {
         // console.log('getAppointmentReminderProfile URL := ', url);
         // console.log('getAppointmentReminderProfile header := ', header);
-        console.log('getAppointmentReminderProfile Response := ', response);
+        // console.log('getAppointmentReminderProfile Response := ', response);
         if (response) {
           dispatch({
             type: Actions.GET_APPOINTMENT_REMINDER_PROFILE,
