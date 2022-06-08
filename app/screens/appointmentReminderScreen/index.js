@@ -21,13 +21,14 @@ import {useNavigation} from '@react-navigation/native';
 import DatePicker from 'react-native-modern-datepicker';
 import {IcAddress, color, size, SearchValNew, IcCrossArrow} from 'theme';
 import * as styles from './styles';
+import {GOOGLE_API_KEY} from 'config';
 import {Portal} from 'react-native-portalize';
 import {Modalize} from 'react-native-modalize';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 export const AppointmentReminderScreen = animated => {
   const dispatch = useDispatch();
   const toastRef = useRef();
-  const searchInputRef = useRef();
+  const placesAutocompleteRef = useRef();
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
   const [showTime, setShowTime] = useState(false);
@@ -188,7 +189,6 @@ export const AppointmentReminderScreen = animated => {
   }, []);
 
   const onChangeSearchText = e => {
-    console.log('SU AAVE CHE', e);
     setAddressOne(e);
   };
 
@@ -367,7 +367,7 @@ export const AppointmentReminderScreen = animated => {
             placeholder={'Address'}
             placeholderTextColor={color.black}
           /> */}
-          {/* <View style={styles.searchPlacesTxt()}>
+          <View style={styles.searchPlacesTxt()}>
             <View
               style={{
                 height: size.moderateScale(50),
@@ -380,13 +380,10 @@ export const AppointmentReminderScreen = animated => {
               />
             </View>
             <GooglePlacesAutocomplete
+              ref={placesAutocompleteRef}
               placeholder="search location"
               // minLength={2}
-              query={{
-                key: 'AIzaSyDjtilqk6uyj1gDV1lEdyhuFUu9mwobOSw',
-                language: 'en',
-                types: 'geocode',
-              }}
+              query={GOOGLE_API_KEY}
               fetchDetails={true}
               returnKeyType={'search'}
               listViewDisplayed="auto"
@@ -394,53 +391,62 @@ export const AppointmentReminderScreen = animated => {
               predefinedPlacesAlwaysVisible={true}
               onPress={(data, details = null) => {
                 console.log('details', details);
+                placesAutocompleteRef.current.setAddressText(
+                  details.formatted_address,
+                );
                 setAddressOne(details.formatted_address);
               }}
               onFail={error => console.error(error)}
               getDefaultValue={() => ''}
-              // textInputProps={{
-              //   InputComp: InputBox,
-              //   value: addressOne,
-              //   onChangeText: onChangeSearchText,
-              //   style: styles.searchPlacesInputTxt(),
-              //   placeholder: 'Search address',
-              //   placeholderTextColor: color.dimGrey,
-              //   errorStyle: {color: 'red'},
-              // }}
-              styles={{
-                textInputContainer: styles.searchPlacesTxt(),
-                textInput: {color: 'black'},
-                textInputContainer: {color: 'black'},
+              textInputProps={{
+                InputComp: InputBox,
+                value: addressOne,
+                onChangeText: onChangeSearchText,
+                style: styles.searchPlacesInputTxt(),
+                placeholder: 'Search address...',
+                placeholderTextColor: color.dimGrey,
+                errorStyle: {color: 'red'},
               }}
-              // renderRow={rowData => {
-              //   const title = rowData.structured_formatting.main_text;
-              //   const address = rowData.structured_formatting.secondary_text;
-              //   return (
-              //     <View>
-              //       <Text style={styles.searchTitle()}>{title}</Text>
-              //       <Text style={styles.searchDis()}>{address}</Text>
-              //     </View>
-              //   );
-              // }}
+              styles={{
+                textInput: {color: 'black'},
+              }}
+              renderRow={rowData => {
+                const title = rowData.structured_formatting.main_text;
+                const address = rowData.structured_formatting.secondary_text;
+                return (
+                  <View>
+                    <Text style={styles.searchTitle()}>{title}</Text>
+                    <Text style={styles.searchDis()}>{address}</Text>
+                  </View>
+                );
+              }}
             />
-          </View> */}
+          </View>
 
-          <GooglePlacesAutocomplete
+          {/* <GooglePlacesAutocomplete
             // ref={placesAutocompleteRef}
             placeholder="search location"
             minLength={2}
             autoFocus={true}
             query={{
-              key: 'AIzaSyDjtilqk6uyj1gDV1lEdyhuFUu9mwobOSw',
+              // key: 'AIzaSyCYV4DmQ9JtvmR1jQ6rPSbLlPceRc_5qLI',
+              // key: 'AIzaSyBm1a7GUXngk3vzhzmxronDeDSqr_9drZk',
+              key: 'AIzaSyDjtilqk6uyj1gDV1lEdyhuFUu9mwobOSw', //belboy
               language: 'en',
               types: 'geocode',
             }}
             fetchDetails={true}
             returnKeyType={'search'}
             listViewDisplayed="auto"
+            onFail={object => console.log(object)}
             renderDescription={row => renderRow(row)}
             predefinedPlacesAlwaysVisible={true}
-            onPress={(data, details = null) => console.log(details)}
+            onPress={(data, details = null) => {
+              console.log('details :', details);
+              placesAutocompleteRef.current.setAddressText(
+                details.formatted_address,
+              );
+            }}
             getDefaultValue={() => ''}
             // styles={{
             //   textInputContainer: styles.searchPlacesTxt(),
@@ -448,7 +454,7 @@ export const AppointmentReminderScreen = animated => {
             // }}
             // renderRightButton={() => <SearchBtn />}
             styles={styles.googleStyle()}
-          />
+          /> */}
 
           {addressOneErr ? (
             <Text style={styles.textValidation()} text={addressOneErr} />
