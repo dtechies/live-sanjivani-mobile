@@ -8,10 +8,11 @@ import {ToggleSwitch} from '../switch';
 export const AppointmentCard = props => {
   const {onTogglePress, onWholeCardPress, data, time, date, doctor, address} =
     props;
+  console.log('data', data);
   return (
     <Pressable
       onPress={() => onWholeCardPress && onWholeCardPress()}
-      style={styles.cardMain(data.isActive)}>
+      style={styles.cardMain(data.status)}>
       <View style={styles.medicationCard()}>
         <View style={styles.row()}>
           <View style={styles.onlyRow()}>

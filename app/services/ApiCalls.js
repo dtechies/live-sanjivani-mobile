@@ -176,3 +176,16 @@ export const _editMedicineReminderStatus = async payload => {
   });
   return _api_calls('POST', '/edit-medicine-reminder-status', headers, payload);
 };
+export const _editAppointmentReminderStatus = async payload => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  // console.log('headers ==>', headers);
+  return _api_calls(
+    'POST',
+    '/edit-appointment-reminder-status',
+    headers,
+    payload,
+  );
+};
