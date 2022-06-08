@@ -1,3 +1,3 @@
 module.exports = {
-  BASE_URL: 'https://ef11-2405-201-2006-7803-18e1-f622-758e-2d83.ngrok.io',
+  BASE_URL: 'https://76b9-2405-201-2006-7803-693a-1fc2-9b1b-4dcb.ngrok.io',
 };

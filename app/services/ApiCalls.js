@@ -163,7 +163,6 @@ export const _addAppointmentReminder = async payload => {
 export const _getUserFavSubCategoryPdf = async payload => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
-    type: 'multipart/form-data',
     token: token,
   });
   console.log('token', token);

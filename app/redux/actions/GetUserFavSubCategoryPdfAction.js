@@ -6,7 +6,7 @@ export const GetUserFavSubCategoryPdfAction = body => {
     dispatch({type: actions.USER_SELECTED_ID_PDF});
     return _getUserFavSubCategoryPdf(body)
       .then(response => {
-        console.log('GetUserFavSubCategoryPdf Response := ', response);
+        // console.log('GetUserFavSubCategoryPdf Response := ', response);
         if (response) {
           dispatch({
             type: actions.USER_SELECTED_ID_PDF,

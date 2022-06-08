@@ -29,7 +29,7 @@ export const OtpScreen = props => {
     new moment().add(31, 'seconds').format('X'),
   );
   const currentDate = new moment().format('YYYY-MM-DD');
-  const [otpData, setOtpData] = useState();
+  const [otpData, setOtpData] = useState('');
   const [loading, setLoading] = useState(false);
   const toastMessage = msg => {
     toastRef.current.show(msg);
@@ -124,7 +124,7 @@ export const OtpScreen = props => {
 
   useEffect(() => {
     if (props.route.params) {
-      // console.log('params :OTPPP', props.route.params.otpValue);
+      console.log('params :OTPPP', props.route.params.otpValue);
       setOtpData(props.route.params.otpValue);
     }
   }, []);
@@ -163,6 +163,8 @@ export const OtpScreen = props => {
           />
         </View>
         <View style={styles.headingMain()}>
+          <Text style={styles.firstHeadingTxt()} text={otpData.otp} />
+
           <Text
             style={styles.firstHeadingTxt()}
             tx={'otp_screen.verification'}
