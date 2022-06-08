@@ -72,31 +72,43 @@ export const TodayScreen = () => {
   // );
 
   const onMedicineReminderData = async () => {
+    setLoading(true);
     const getTodayMedicationResponse = await dispatch(getTodayMedicationList());
     const res = getTodayMedicationResponse;
-    if (res.status) {
-      // console.log('getTodayMedicationResponse ==>', res.data.MedicineData);
+    if (res != undefined) {
+      if (res.status) {
+        // console.log('getTodayMedicationResponse ==>', res.data.MedicineData);
 
-      let medicationList = res.data.MedicineData;
-      const medicationListNew = medicationList.sort((a, b) => {
-        return (
-          new moment(a.user_selected_time, 'h:mm a').format('X') -
-          new moment(b.user_selected_time, 'h:mm a').format('X')
-        );
-      });
-      medicationListNew.map(val => {
-        val.user_selected_time = new moment(val.user_selected_time, [
-          'hh:mm a',
-        ]).format('hh:mm A');
-      });
-      setMedication(medicationListNew);
-      // console.log('medicationListNew ==> ', medicationListNew);
-      // setLoading(false);
-      // toastMessage(res.message);
-      setExtra(extra + 1);
+        let medicationList = res.data.MedicineData;
+        const medicationListNew = medicationList.sort((a, b) => {
+          return (
+            new moment(a.user_selected_time, 'h:mm a').format('X') -
+            new moment(b.user_selected_time, 'h:mm a').format('X')
+          );
+        });
+        medicationListNew.map(val => {
+          val.user_selected_time = new moment(val.user_selected_time, [
+            'hh:mm a',
+          ]).format('hh:mm A');
+        });
+        let upcoming = medicationListNew.find(item => item.is_done == null);
+        // console.log('upcoming ==> ', upcoming);
+        if (upcoming != undefined) {
+          setMedicationUpcoming(
+            `${upcoming.dose} ${upcoming.reminder_name} ${upcoming.medicine_strength} ${upcoming.medicine_strength_unit} ${upcoming.medicine_form},${upcoming.reminder_frequency} ${upcoming.reminder_time}.`,
+          );
+        }
+        setMedication(medicationListNew);
+        // console.log('medicationListNew ==> ', medicationListNew);
+        setLoading(false);
+        // toastMessage(res.message);
+        setExtra(extra + 1);
+      } else {
+        setLoading(false);
+        // toastMessage(res.message);
+      }
     } else {
-      // setLoading(false);
-      toastMessage(res.message);
+      setLoading(false);
     }
   };
 
@@ -143,32 +155,26 @@ export const TodayScreen = () => {
   const onGetTipForDay = async () => {
     const getTipForDayResponse = await dispatch(getTipForDay());
     const res = getTipForDayResponse;
-    if (res.status) {
-      // console.log('getTipForDayResponse ==>', res.data.TipForDayData);
-      setTipsForTheDay(res.data.TipForDayData);
-      // setLoading(false);
-      // toastMessage(res.message);
-      setExtra(extra + 1);
-    } else {
-      // setLoading(false);
-      toastMessage(res.message);
+    if (res != undefined) {
+      if (res.status) {
+        // console.log('getTipForDayResponse ==>', res.data.TipForDayData);
+        setTipsForTheDay(res.data.TipForDayData);
+        // setLoading(false);
+        // toastMessage(res.message);
+        setExtra(extra + 1);
+      } else {
+        // setLoading(false);
+        toastMessage(res.message);
+      }
     }
   };
 
   useEffect(() => {
     setExtra(extra + 1);
-    let upcoming = medicationData.find(
-      item => item.is_done === false || item.is_done == null,
-    );
-    // console.log('upcoming ==> ', upcoming);
-    if (upcoming != undefined) {
-      setMedicationUpcoming(
-        `${upcoming.dose} ${upcoming.reminder_name} ${upcoming.medicine_strength} ${upcoming.medicine_strength_unit} ${upcoming.medicine_form},${upcoming.reminder_frequency} ${upcoming.reminder_time}.`,
-      );
-    }
+
     let tot = 0;
     medicationData.map(val => {
-      if (val.is_done) {
+      if (val.is_done != null) {
         tot = tot + 1;
       }
     });
@@ -210,29 +216,39 @@ export const TodayScreen = () => {
             />
           </View>
           <View style={styles.rowImage()}>
-            {medicationData.map((item, index) => {
-              return (
-                <View
-                  style={styles.row(medicationData.length > index + 1)}
-                  key={index + 'medicationData'}>
-                  {item.is_done ? (
-                    item.status ? (
-                      <IcTrue />
-                    ) : (
+            {medicationData.length != 0 &&
+              medicationData.map((item, index) => {
+                return (
+                  <View
+                    style={styles.row(medicationData.length > index + 1)}
+                    key={index + 'medicationData'}>
+                    {console.log('item.status ==> ', item.status, item.id)}
+                    {item.is_done && item.reminder_status == 'take' ? (
+                      <IcTrue fill={color.trueIcon} />
+                    ) : item.reminder_status == 'snooze' ? (
+                      <IcTrue fill={color.starColor} />
+                    ) : item.reminder_status == 'cancel' ? (
                       <IcFalse />
-                    )
-                  ) : (
-                    <View style={styles.upcomingCircle()}>
-                      <View style={styles.insideUpcomingCircle()}></View>
-                    </View>
-                  )}
-                  {medicationData.length > index + 1 && (
-                    <View style={styles.lineStyle(item.is_done)} />
-                  )}
-                </View>
-              );
-            })}
+                    ) : (
+                      <View style={styles.upcomingCircle()}>
+                        <View style={styles.insideUpcomingCircle()}></View>
+                      </View>
+                    )}
+                    {medicationData.length > index + 1 && (
+                      <View style={styles.lineStyle(item.is_done)} />
+                    )}
+                  </View>
+                );
+              })}
           </View>
+          {medicationData.length == 0 && (
+            <View>
+              <Text
+                style={styles.textError()}
+                text={'No Medication Progress Found.'}
+              />
+            </View>
+          )}
           <Text style={styles.desTextStyle()} text={medicationUpcoming} />
         </View>
         <View style={styles.medicationView()}>
@@ -268,6 +284,11 @@ export const TodayScreen = () => {
               </View>
             );
           })}
+          {medicationData.length == 0 && (
+            <View>
+              <Text style={styles.textError()} text={'No Medication Found.'} />
+            </View>
+          )}
         </View>
         <View style={styles.medicationView()}>
           <View style={styles.row()}>
@@ -316,20 +337,15 @@ export const TodayScreen = () => {
             </View>
           )}
         </View>
-        <View
-          style={{
-            backgroundColor: color.white,
-            paddingHorizontal: size.moderateScale(15),
-            paddingVertical: size.moderateScale(5),
-            marginHorizontal: size.moderateScale(20),
-            marginBottom: size.moderateScale(20),
-            borderRadius: size.moderateScale(10),
-          }}>
+        <View style={styles.tipsMain()}>
           <Text
             style={styles.medicineName()}
             tx={'today_screen.tips_for_the_day'}
           />
-          <Text style={styles.tipsTxt()} text={tipsForTheDay} />
+          <Text
+            style={styles.tipsTxt(tipsForTheDay)}
+            text={tipsForTheDay != '' ? tipsForTheDay : 'No Tips Found.'}
+          />
         </View>
       </ScrollView>
       <FabMenu

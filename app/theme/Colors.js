@@ -43,4 +43,5 @@ export const color = {
   midnightBlue: 'rgba(38,116,218,1)',
   modelColor: 'rgba(28,28,28,1)',
   modelTxtColor: 'rgba(3,3,3,1)',
+  trueIcon: 'rgba(38, 116, 218,1)',
 };

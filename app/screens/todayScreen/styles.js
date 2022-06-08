@@ -68,12 +68,20 @@ export const medicineName = () => ({
   color: color.steelBlue,
   fontSize: fontSize.medium,
 });
-export const tipsTxt = () => ({
+export const tipsTxt = val => ({
   paddingTop: size.moderateScale(10),
   paddingBottom: size.moderateScale(7),
-  fontFamily: fonts.latoRegular,
-  color: color.dimGrey,
+  fontFamily: val ? fonts.latoRegular : fonts.latoBold,
+  color: val ? color.dimGrey : color.blueCard,
   fontSize: fontSize.medium,
+});
+export const tipsMain = () => ({
+  backgroundColor: color.white,
+  paddingHorizontal: size.moderateScale(15),
+  paddingVertical: size.moderateScale(5),
+  marginHorizontal: size.moderateScale(20),
+  marginVertical: size.moderateScale(10),
+  borderRadius: size.moderateScale(10),
 });
 
 export const progressView = () => ({
@@ -83,7 +91,8 @@ export const progressView = () => ({
   height: size.moderateScale(100),
   marginHorizontal: size.moderateScale(20),
   backgroundColor: color.white,
-  marginVertical: size.moderateScale(20),
+  marginVertical: size.moderateScale(10),
+  marginTop: size.moderateScale(30),
   justifyContent: 'space-between',
 });
 export const medicationView = () => ({
@@ -93,7 +102,7 @@ export const medicationView = () => ({
   // height: size.moderateScale(100),
   marginHorizontal: size.moderateScale(20),
   backgroundColor: color.white,
-  marginVertical: size.moderateScale(20),
+  marginVertical: size.moderateScale(10),
 });
 
 export const reminderText = () => ({
@@ -115,7 +124,6 @@ export const backgroundBtn = () => ({
 
 export const row = isFlex => ({
   flexDirection: 'row',
-  // backgroundColor: 'red',
   alignItems: 'center',
   justifyContent: 'space-between',
   flex: isFlex ? 1 : 0,
@@ -231,7 +239,8 @@ export const upcomingCircle = () => ({
 });
 export const lineStyle = isDone => ({
   borderBottomWidth: 1,
-  borderBottomColor: isDone ? color.blue : color.dimGrey,
+  // borderBottomColor: isDone ? color.blue : color.dimGrey,
+  borderBottomColor: color.dimGrey,
   borderStyle: 'dashed',
   flex: 1,
 });
