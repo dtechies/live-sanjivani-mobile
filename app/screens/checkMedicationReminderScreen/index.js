@@ -95,6 +95,7 @@ export const CheckMedicationReminderScreen = props => {
       navigation.navigate('viewMedicationScreen');
     } else {
       setLoading(false);
+      // console.log('addMedicineReminder error ==>', res);
       toastMessage(res.message);
     }
   };
@@ -106,14 +107,12 @@ export const CheckMedicationReminderScreen = props => {
       // console.log('props', props.route.params);
       setData(props.route.params);
     }
-    //everyday
     let reminderFrequencyValue = param.reminderData
       ? param.reminderData?.reminder_frequency
       : param?.reminder_frequency;
-    if (
-      reminderFrequencyValue == 'EveryDay' ||
-      reminderFrequencyValue == 'Everyday'
-    ) {
+
+    //everyday
+    if (reminderFrequencyValue == 'EveryDay') {
       let newValue = days.map(i => {
         i.isSelected = true;
         return i;
@@ -122,19 +121,12 @@ export const CheckMedicationReminderScreen = props => {
     }
     //alternateDay
 
-    if (
-      reminderFrequencyValue == 'Alternate Day' ||
-      reminderFrequencyValue == 'Alternate day'
-    ) {
+    if (reminderFrequencyValue == 'Alternate Day') {
       let dateValue = param.reminderData
         ? param.reminderData?.frequency_value
         : param?.frequency_value;
       let givenDate = moment(dateValue, 'YYYY-MM-DD');
-      // let date = givenDate.format('D');
       let day = givenDate.day();
-      // console.log('date ==>', date);
-      // console.log('day ==>', day);
-      // console.log('Alertnate daty name ==>', day);
       let newValue = days.map((i, k) => {
         if (day == k) {
           i.isSelected = true;
@@ -146,10 +138,7 @@ export const CheckMedicationReminderScreen = props => {
       setDays(newValue);
     }
     //fixed date
-    if (
-      reminderFrequencyValue == 'Fixed date' ||
-      reminderFrequencyValue == 'Fixed Date'
-    ) {
+    if (reminderFrequencyValue == 'Fixed Date') {
       let dateValue = param.reminderData
         ? param.reminderData?.frequency_value
         : param?.frequency_value;
@@ -257,7 +246,8 @@ export const CheckMedicationReminderScreen = props => {
         </View>
       </View>
 
-      {param.medicineFilteredValue.length > 0 &&
+      {param.medicineFilteredValue &&
+        param.medicineFilteredValue.length > 0 &&
         param.medicineFilteredValue.map((item, index) => {
           return (
             <View style={styles.medicineDescriptionCard()}>

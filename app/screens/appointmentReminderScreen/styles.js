@@ -242,7 +242,7 @@ export const googleStyle = () => ({
     flex: 2,
     // color: color.black,
     fontSize: 12,
-    fontFamily: 'Roboto-Medium',
+    // fontFamily: 'Roboto-Medium',
     padding: 0,
     marginBottom: 0,
     alignSelf: 'center',
