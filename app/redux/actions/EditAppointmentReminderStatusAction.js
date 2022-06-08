@@ -1,38 +1,18 @@
-import {BASE_URL} from 'config';
 import * as actions from '../Types';
+import {_editAppointmentReminderStatus} from 'services';
 
-export const editAppointmentReminderStatus = (body, header) => {
-  const {token} = header;
-
+export const editAppointmentReminderStatus = body => {
   return dispatch => {
     dispatch({type: actions.EDIT_APPOINTMENT_REMINDER_STATUS});
-    let url = `${BASE_URL}/edit-appointment-reminder-status`;
-
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(body),
-    })
-      .then(res => res.json())
+    _editAppointmentReminderStatus;
+    return _editAppointmentReminderStatus(body)
       .then(response => {
-        // console.log('editAppointmentReminderStatus URL := ', url);
-        // console.log('editAppointmentReminderStatus header := ', header);
         // console.log('editAppointmentReminderStatus body := ', body);
         // console.log('editAppointmentReminderStatus Response := ', response);
-        if (response) {
-          return dispatch({
-            type: actions.EDIT_APPOINTMENT_REMINDER_STATUS,
-            payload: response,
-          });
-        } else {
-          return dispatch({
-            type: actions.EDIT_APPOINTMENT_REMINDER_STATUS,
-            payload: response,
-          });
-        }
+        return dispatch({
+          type: actions.EDIT_APPOINTMENT_REMINDER_STATUS,
+          payload: response,
+        });
       })
       .catch(error => {
         // console.log('editAppointmentReminderStatus Error Response :=\n', error);
