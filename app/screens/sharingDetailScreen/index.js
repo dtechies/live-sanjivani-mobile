@@ -1,9 +1,20 @@
-import React, {useState, useEffect} from 'react';
-import {View, SafeAreaView} from 'react-native';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
+import {View, SafeAreaView, Linking} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
-import {Text, Screen, InputBox, Button, Header, MedicalItems} from 'components';
+import {GetUserFavSubCategoryPdfAction} from 'redux-actions';
+import {
+  Text,
+  Screen,
+  InputBox,
+  Button,
+  Header,
+  MedicalItems,
+  Toast,
+  Loader,
+} from 'components';
 import {color} from 'theme';
+import {useDispatch} from 'react-redux';
+
 import * as styles from './styles';
 
 export const SharingDetailScreen = props => {
@@ -13,6 +24,9 @@ export const SharingDetailScreen = props => {
   const [extra, setExtra] = useState(0);
   const [sharingData, setSharingData] = useState([]);
   const [sharingId, setSharingId] = useState('');
+  const [loading, setLoading] = useState(false);
+  const toastRef = useRef();
+  const dispatch = useDispatch();
 
   const emailValidation = () => {
     {
@@ -21,28 +35,66 @@ export const SharingDetailScreen = props => {
         setEmailCorrect('Enter valid email');
         return false;
       } else {
+        sendPDF();
         setEmailCorrect('');
       }
     }
   };
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
+  const sendPDF = async () => {
+    setLoading(true);
+    console.log('dataId');
+    const pdfData = {
+      email: emailVal,
+      subcategory_id: sharingId,
+    };
 
+    // setExtra(extra + 1);
+    console.log('fevUserBody', pdfData);
+    const SubCategoryResponse = await dispatch(
+      GetUserFavSubCategoryPdfAction(pdfData),
+    );
+    const res = SubCategoryResponse;
+    console.log('addUserFavoriteData res RESSS==>', res);
+
+    if (res.status) {
+      console.log('true');
+      setLoading(false);
+      toastMessage(res.message);
+      setExtra(extra + 1);
+      // navigation.goBack();
+      setEmailVal('');
+    } else {
+      console.log('false');
+
+      setLoading(false);
+      toastMessage(res.message);
+    }
+  };
   useEffect(() => {
     if (props.route.params.selectedItems) {
       setSharingData(props.route.params.selectedItems);
-      // console.log(props.route.params.selectedItems);
       // setSharingData(selectedItems);
     }
     const data = props.route.params.selectedItems;
-    const id = data.map(i => i.id);
-    // console.log(
-    //   'id',
-    //   data.map(i => i.id),
-    // );
+    console.log('data', data);
+    const id = data.map(i => i.subcategory_id);
+    console.log('id', id);
     setSharingId(id);
   }, []);
 
   return (
     <SafeAreaView style={styles.container()}>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <Header
         leftOnPress={() => {
           navigation.goBack();
@@ -56,7 +108,6 @@ export const SharingDetailScreen = props => {
       <Screen withScroll>
         <View style={styles.rowListView()}>
           {sharingData.map((item, index) => {
-            let Icon = item.svg;
             // console.log('item', item);
             return (
               // <View></View>
@@ -76,6 +127,7 @@ export const SharingDetailScreen = props => {
           style={styles.textItemToShare()}
           tx="sharingDetail_screen.shareTo"
         />
+
         <InputBox
           value={emailVal}
           onChangeText={val => {
@@ -105,6 +157,11 @@ export const SharingDetailScreen = props => {
             nameTx="sharing_screen.download"
             buttonStyle={styles.addButtonStyle()}
             buttonText={styles.textAddButton()}
+            onPress={() =>
+              Linking.openURL(
+                'https://live-sanjivani.s3.us-east-2.amazonaws.com/userFavouriteCategoryPDF/D1KZW7KITR.pdf',
+              )
+            }
           />
         </View>
       </Screen>

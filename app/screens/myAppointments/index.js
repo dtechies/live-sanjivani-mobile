@@ -54,8 +54,8 @@ export const MyAppointments = () => {
       'getAppointmentReminderProfile',
       getAppointmentReminderProfileResponse,
     );
-    // const res =
-    //   getAppointmentReminderProfileResponse.data.AppointmentReminderProfileData;
+    const res =
+      getAppointmentReminderProfileResponse.data.AppointmentReminderProfileData;
     // console.log('res', res);
     if (getAppointmentReminderProfileResponse.status) {
       setAppointmentReminderData(
@@ -142,17 +142,18 @@ export const MyAppointments = () => {
         )}
         <View style={styles.bottomStyle()}>
           {reminderList.map((val, i) => {
+            console.log('val', val);
             if (val.value == 'null') {
               return <Text style={styles.noData()}>No Records Found...</Text>;
             }
             return (
               <AppointmentCard
                 data={val}
-                onWholeCardPress={() => console.log('hiii')}
+                onWholeCardPress={() => console.log('Click...')}
                 time={val.user_selected_time}
                 date={val.date}
-                address={val.address1}
-                doctor={'Docter name Empty'}
+                address={val.doctor.doctor_address}
+                doctor={val.doctor.doctor_name}
                 onTogglePress={() => {
                   reminderList[i].status = !val.status;
 
@@ -165,31 +166,6 @@ export const MyAppointments = () => {
                   }, 500);
                 }}
               />
-              // <ReminderCard
-              //   data={val}
-              //   onWholeCardPress={() =>
-              //     navigation.navigate('checkMedicationReminderScreen', {
-              //       reminderData: val,
-              //       fromViewMedication: true,
-              //     })
-              //   }
-              //   onTogglePress={() => {
-              //     medicineReminderData[i].isActive = !val.isActive;
-
-              //     setTimeout(() => {
-              //       medicineReminderData.sort(function (x, y) {
-              //         return x.isActive === y.isActive
-              //           ? 0
-              //           : x.isActive
-              //           ? -1
-              //           : 1;
-              //       });
-              //       setMedicineReminderData(medicineReminderData);
-              //       setExtra(extra + 1);
-              //     }, 500);
-              //   }
-              // }
-              // />
             );
           })}
         </View>

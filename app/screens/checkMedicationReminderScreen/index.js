@@ -257,7 +257,8 @@ export const CheckMedicationReminderScreen = props => {
         </View>
       </View>
 
-      {param.medicineFilteredValue.length > 0 &&
+      {param.medicineFilteredValue &&
+        param.medicineFilteredValue.length > 0 &&
         param.medicineFilteredValue.map((item, index) => {
           return (
             <View style={styles.medicineDescriptionCard()}>

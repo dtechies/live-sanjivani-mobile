@@ -58,7 +58,7 @@ export const TodayScreen = () => {
     setMedicationUpcoming(upcoming.decryption);
     let tot = 0;
     medicationData.map(val => {
-      if (val.status) {
+      if (val.isDone) {
         tot = tot + 1;
       }
     });
