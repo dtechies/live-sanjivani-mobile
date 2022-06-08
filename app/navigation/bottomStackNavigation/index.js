@@ -14,7 +14,7 @@ import {BottomTab, AlertModal} from 'components';
 const Tab = createBottomTabNavigator();
 export const BottomStackNavigation = props => {
   const [isModalOpen, closeModal] = useState(false);
-  const [notificationData, setNotificationData] = useState();
+  const [notificationDetail, setNotificationDetail] = useState();
   const [playerId, setPlayerId] = useState('');
 
   //OneSignal Init Code
@@ -39,9 +39,10 @@ export const BottomStackNavigation = props => {
           let isEmptyObject = Object.keys(obj).length > 0;
           // console.log('isEmptyObject', isEmptyObject); //
           // console.log('ShowInForeground notification Data ', notificationData);
+          // console.log('obj', obj);
           if (isEmptyObject) {
             closeModal(true);
-            setNotificationData(notificationData);
+            setNotificationDetail(notificationData);
           }
           notificationReceivedEvent.complete(notification);
         },
@@ -59,7 +60,7 @@ export const BottomStackNavigation = props => {
         // console.log('notification open handler', notificationData);
         if (isEmptyObject) {
           closeModal(true);
-          setNotificationData(notificationData);
+          setNotificationDetail(notificationData);
         }
       });
       OneSignal.setInAppMessageClickHandler(notification => {
@@ -70,13 +71,13 @@ export const BottomStackNavigation = props => {
 
         if (isEmptyObject) {
           closeModal(true);
-          setNotificationData(notificationData);
+          setNotificationDetail(notificationData);
         }
       });
       OneSignal.promptForPushNotificationsWithUserResponse(notification => {
         // console.log('Bottom navigation prompt', notification);
         // notification && closeModal(true);
-        // setNotificationData(notification);
+        // setNotificationDetail(notification);
       });
       OneSignal.setInAppMessageClickHandler(event => {
         // console.log('bottom OneSignal IAM clicked:', event);
@@ -170,7 +171,7 @@ export const BottomStackNavigation = props => {
       {isModalOpen && (
         <AlertModal
           closeModal={() => closeModal(false)}
-          data={notificationData}
+          data={notificationDetail}
           title={'abdul'}
         />
       )}

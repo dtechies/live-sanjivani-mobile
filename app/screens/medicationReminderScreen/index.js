@@ -12,7 +12,6 @@ import {
   Loader,
   Text,
   Button,
-  TitleBox,
   Screen,
   InputBox,
   Header,
@@ -35,6 +34,7 @@ export const MedicationReminderScreen = () => {
   const [medicineValue, setMedicineValue] = useState('');
   const [reminderName, setReminderName] = useState('');
   const [reminderNameErr, setReminderNameErr] = useState('');
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const [doseValue, setDoseValue] = useState(null);
   const [extra, setExtra] = useState(0);
@@ -131,11 +131,16 @@ export const MedicationReminderScreen = () => {
   };
 
   const getRemindFreqCurrentDate = givenDate => {
-    let day = givenDate.getDate();
-    let month = givenDate.getMonth() + 1;
+    let day =
+      givenDate.getDate() > 9 ? givenDate.getDate() : `0${givenDate.getDate()}`;
+    let month =
+      givenDate.getMonth() + 1 > 9
+        ? givenDate.getMonth() + 1
+        : `0${givenDate.getMonth() + 1}`;
     let year = givenDate.getFullYear();
     let newDate = year + '-' + month + '-' + day;
     setRemindFreqDate(newDate);
+    setSelectedDate(givenDate);
     setRemindFrequencyValueErr('');
     setShowDate(false);
   };
@@ -153,6 +158,7 @@ export const MedicationReminderScreen = () => {
     const getOtpResponse = await dispatch(getMedicineReminderView());
     const res = getOtpResponse.payload;
 
+    // console.log('response data ==>', res.data);
     if (res.status) {
       // console.log('response data ==>', res.data);
       setMedicineReminderViewData(res.data);
@@ -176,7 +182,7 @@ export const MedicationReminderScreen = () => {
       reminder_frequency: remindFrequencyValue,
       reminder_time: remindTimeValue,
       frequency_value: remindFreqDate,
-      user_selected_time: remindTime,
+      user_selected_time: `${remindTime.slice(0, 5)}:00`,
       pills_remaining: pills,
       medicineFilteredValue: medicineFilteredValue,
     });
@@ -560,8 +566,10 @@ export const MedicationReminderScreen = () => {
         {showDate && (
           <>
             <DateTimePickerModal
+              date={selectedDate}
               isVisible={showDate}
               mode="date"
+              minimumDate={new Date()}
               onConfirm={val => getRemindFreqCurrentDate(val)}
               onCancel={() => {
                 setShowDate(false);
@@ -627,8 +635,22 @@ export const MedicationReminderScreen = () => {
             <DateTimePickerModal
               isVisible={showTime}
               mode="time"
+              date={selectedDate}
+              minimumDate={new Date()}
               locale="en_GB"
-              onConfirm={val => getRemindTime(val)}
+              onConfirm={val => {
+                if (
+                  new Date(val).toDateString() === new Date().toDateString()
+                ) {
+                  if (new Date(val).getTime() > new Date().getTime()) {
+                    getRemindTime(val);
+                  } else {
+                    alert('Please Select Future Time');
+                  }
+                } else {
+                  getRemindTime(val);
+                }
+              }}
               onCancel={() => {
                 setShowTime(false);
                 setExtra(extra + 1);
