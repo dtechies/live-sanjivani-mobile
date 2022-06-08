@@ -38,11 +38,11 @@ export const BottomStackNavigation = props => {
           const obj = notificationData;
           let isEmptyObject = Object.keys(obj).length > 0;
           // console.log('isEmptyObject', isEmptyObject); //
-          // console.log('ShowInForeground notification Data ', notificationData);
+          console.log('ShowInForeground notification Data ', obj);
           // console.log('obj', obj);
           if (isEmptyObject) {
+            setNotificationDetail(obj);
             closeModal(true);
-            setNotificationDetail(notificationData);
           }
           notificationReceivedEvent.complete(notification);
         },
@@ -57,10 +57,10 @@ export const BottomStackNavigation = props => {
         const obj = {notificationData};
         let isEmptyObject = Object.keys(obj).length > 0;
 
-        // console.log('notification open handler', notificationData);
+        console.log('notification open handler', notificationData);
         if (isEmptyObject) {
-          closeModal(true);
           setNotificationDetail(notificationData);
+          closeModal(true);
         }
       });
       OneSignal.setInAppMessageClickHandler(notification => {
@@ -70,8 +70,8 @@ export const BottomStackNavigation = props => {
         let isEmptyObject = Object.keys(obj).length > 0;
 
         if (isEmptyObject) {
-          closeModal(true);
           setNotificationDetail(notificationData);
+          closeModal(true);
         }
       });
       OneSignal.promptForPushNotificationsWithUserResponse(notification => {
