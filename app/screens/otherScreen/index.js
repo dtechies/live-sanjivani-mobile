@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, View, Image} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SvgUri} from 'react-native-svg';
 // import {Dropdown} from 'react-native-element-dropdown';
@@ -88,7 +88,7 @@ export const OtherScreen = props => {
     setSelectedDate(newDate);
     setSelectedDateErr('');
     setExtra(extra + 1);
-    setShowDate(false);
+    // setShowDate(false);
   };
 
   const validation = () => {

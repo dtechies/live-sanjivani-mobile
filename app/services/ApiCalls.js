@@ -100,6 +100,15 @@ export const _getUserProfileData = async () => {
   return _api_calls('GET', '/get-user-profile-data', headers);
 };
 
+export const _getTipForDayData = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  // console.log('headers _getUserProfileData ==>', headers);
+  return _api_calls('GET', '/get-tip-for-day', headers);
+};
+
 export const _addSubcategory = async payload => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
@@ -114,6 +123,14 @@ export const _getAppointmentReminder = async () => {
   });
   // console.log('headers ==>', headers);
   return _api_calls('GET', '/get-appointment-reminder-profile', headers);
+};
+export const _getTodayMedicationList = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: token,
+  });
+  // console.log('headers ==>', headers);
+  return _api_calls('GET', '/medication-list', headers);
 };
 export const _userFavoritesList = async () => {
   let {_api_calls} = HttpCalls;
