@@ -7,7 +7,8 @@ import {Button} from '../button';
 import {IcCrossArrow, color, size} from 'theme';
 export const AlertModal = props => {
   const {closeModal, data} = props;
-  var givenTime = data?.user_selected_time;
+  console.log('DATAAAA', props);
+  var givenTime = data.user_selected_time;
   var hourValue = givenTime.slice(0, 2);
   var ampm = hourValue >= 12 ? 'PM' : 'AM';
   return (

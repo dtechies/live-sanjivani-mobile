@@ -89,8 +89,8 @@ const App = () => {
         let isEmptyObject = Object.keys(obj).length > 0;
 
         if (isEmptyObject) {
-          closeModal(true);
           setNotificationData(notificationData);
+          closeModal(true);
         }
       });
       OneSignal.promptForPushNotificationsWithUserResponse(notification => {

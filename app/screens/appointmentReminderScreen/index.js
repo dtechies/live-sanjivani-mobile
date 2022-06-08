@@ -203,10 +203,10 @@ export const AppointmentReminderScreen = animated => {
     setCurrentDate(newDate);
   }, []);
 
-  // const onChangeSearchText = e => {
-  //   console.log('SU AAVE CHE', e);
-  //   setAddressOne(e);
-  // };
+  const onChangeSearchText = e => {
+    console.log('SU AAVE CHE', e);
+    setAddressOne(e);
+  };
 
   const renderRow = row => {
     return (
