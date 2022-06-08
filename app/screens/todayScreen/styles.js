@@ -4,6 +4,11 @@ export const container = () => ({
   flex: 1,
   backgroundColor: color.steelBlue,
 });
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
 export const textLanding = () => ({
   paddingBottom: size.moderateScale(5),
   fontFamily: fonts.latoRegular,

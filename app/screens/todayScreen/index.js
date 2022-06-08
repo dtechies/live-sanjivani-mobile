@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {
   View,
   SafeAreaView,
@@ -7,21 +7,30 @@ import {
   ToastAndroid,
 } from 'react-native';
 // import moment from 'moment';
-import {Text, FabMenu} from 'components';
+import {Text, FabMenu, Loader, Toast} from 'components';
 import {size, color, IcFalse, IcTrue} from 'theme';
 import {reminderListData, medicationReminder} from 'json';
 import {useDispatch, useSelector} from 'react-redux';
+import {getTipForDay} from 'redux-actions';
 import * as styles from './styles';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {useDoubleBackPressExit} from 'utils';
 // import LinearGradient from 'react-native-linear-gradient';
 export const TodayScreen = () => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const toastRef = useRef();
   const [activeIndex, setActiveIndex] = useState([]);
   const [medicationData, setMedication] = useState(medicationReminder);
   const [medicationTrue, setMedicationTrue] = useState(medicationReminder);
   const [medicationUpcoming, setMedicationUpcoming] = useState('');
   const [reminderList, setReminderList] = useState(reminderListData);
-  const navigation = useNavigation();
+  const [tipsForTheDay, setTipsForTheDay] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [extra, setExtra] = useState(0);
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
 
   useDoubleBackPressExit();
 
@@ -52,6 +61,21 @@ export const TodayScreen = () => {
   //       BackHandler.removeEventListener('hardwareBackPress', backPressHandler);
   //   }, []),
   // );
+  const onGetTipForDay = async () => {
+    const getTipForDayResponse = await dispatch(getTipForDay());
+    console.log('getTipForDayResponse ==>', getTipForDayResponse);
+    const res = getTipForDayResponse;
+    if (res.status) {
+      console.log('getTipForDayResponse ==>', res.data.TipForDayData);
+      setTipsForTheDay(res.data.TipForDayData);
+      // setLoading(false);
+      // toastMessage(res.message);
+      setExtra(extra + 1);
+    } else {
+      // setLoading(false);
+      toastMessage(res.message);
+    }
+  };
 
   useEffect(() => {
     let upcoming = medicationData.find(item => item.isDone === false);
@@ -63,9 +87,18 @@ export const TodayScreen = () => {
       }
     });
     setMedicationTrue(tot);
+    onGetTipForDay();
   }, []);
   return (
     <SafeAreaView style={styles.container()}>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <Text style={styles.textHeaderName()} text={'Hi Ashish'} />
       <Text style={styles.textLanding()} tx={'today_screen.keep_it_up!'} />
       <Text
@@ -186,7 +219,7 @@ export const TodayScreen = () => {
             style={styles.medicineName()}
             tx={'today_screen.tips_for_the_day'}
           />
-          <Text style={styles.tipsTxt()} text={'Drink water'} />
+          <Text style={styles.tipsTxt()} text={tipsForTheDay} />
         </View>
       </ScrollView>
       <FabMenu
