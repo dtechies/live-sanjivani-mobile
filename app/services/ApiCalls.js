@@ -210,8 +210,7 @@ export const _addEditPlayerId = async payload => {
 export const _editReminderStatus = async payload => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
-    token: token,
+    token: store.getState().userDataReducer.userDataResponse.userData.token,
   });
-  // console.log('headers ==>', headers);
   return _api_calls('POST', '/edit-reminder-status', headers, payload);
 };

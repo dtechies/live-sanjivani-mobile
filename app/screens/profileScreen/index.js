@@ -32,6 +32,7 @@ export const ProfileScreen = () => {
     );
     const res = removePlayerIdResponse.payload;
     if (res.status) {
+      clearData();
       await dispatch(userLogOut());
       await dispatch(userData({login: false}));
       navigation.navigate('authStackNavigation', {screen: 'loginScreen'});
