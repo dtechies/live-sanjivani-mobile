@@ -1,11 +1,11 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
 import {addMedicineReminder} from 'redux-actions';
-import {Loader, Text, Button, Header, Toast} from 'components';
+import {Loader, Text, Button, Header, Toast, Screen} from 'components';
 
 import * as styles from './styles';
 
@@ -51,13 +51,13 @@ export const CheckMedicationReminderScreen = props => {
     seIsDateErr('');
     setShowDate(false);
   };
-  const validation = () => {
-    if (remindFreqDate === null || remindFreqDate === '') {
-      seIsDateErr('Please select Date...');
-    } else {
-      onSave();
-    }
-  };
+  // const validation = () => {
+  //   if (remindFreqDate === null || remindFreqDate === '') {
+  //     seIsDateErr('Please select Date...');
+  //   } else {
+  //     onSave();
+  //   }
+  // };
   const onSave = async () => {
     setLoading(true);
     let formData = new FormData();
@@ -92,6 +92,10 @@ export const CheckMedicationReminderScreen = props => {
     if (res.status) {
       // console.log('addMedicineReminder List ==>', res);
       toastMessage(res.message);
+      setData('');
+      setDays(daysJson);
+      param.medicineFilteredValue = [];
+      setLoading(false);
       navigation.navigate('viewMedicationScreen');
     } else {
       setLoading(false);
@@ -153,7 +157,13 @@ export const CheckMedicationReminderScreen = props => {
       setDays(newValue);
     }
   }, []);
-
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     console.log('check ');
+  //     setData('');
+  //     setDays(daysJson);
+  //   }, []),
+  // );
   return (
     <SafeAreaView style={styles.container()}>
       <Toast
@@ -180,7 +190,7 @@ export const CheckMedicationReminderScreen = props => {
         title={'CheckMedicationReminderScreen.title'}
       />
 
-      <View style={styles.screenContainer()}>
+      <Screen style={styles.screenContainer()}>
         <View style={styles.cardFirst()}>
           <View style={styles.backHalf()}>
             <Text style={styles.labelFieldText()}>
@@ -244,76 +254,75 @@ export const CheckMedicationReminderScreen = props => {
             ) : null}
           </View>
         </View>
-      </View>
-
-      {param.medicineFilteredValue &&
-        param.medicineFilteredValue.length > 0 &&
-        param.medicineFilteredValue.map((item, index) => {
-          return (
-            <View style={styles.medicineDescriptionCard()}>
-              <View style={styles.rowView()}>
-                <Text
-                  style={styles.title()}
-                  tx={'CheckMedicationReminderScreen.name'}
-                />
-                <Text text={':'} />
-                <Text numberOfLines={2} style={styles.description()}>
-                  {item.name}
-                </Text>
+        {param.medicineFilteredValue &&
+          param.medicineFilteredValue.length > 0 &&
+          param.medicineFilteredValue.map((item, index) => {
+            return (
+              <View style={styles.medicineDescriptionCard()}>
+                <View style={styles.rowView()}>
+                  <Text
+                    style={styles.title()}
+                    tx={'CheckMedicationReminderScreen.name'}
+                  />
+                  <Text text={':'} />
+                  <Text numberOfLines={2} style={styles.description()}>
+                    {item.name}
+                  </Text>
+                </View>
+                <View style={styles.rowView()}>
+                  <Text
+                    style={styles.title()}
+                    tx={'CheckMedicationReminderScreen.benefit'}
+                  />
+                  <Text text={':'} />
+                  <Text numberOfLines={2} style={styles.description()}>
+                    {item.benefits}
+                  </Text>
+                </View>
+                <View style={styles.rowView()}>
+                  <Text
+                    style={styles.title()}
+                    tx={'CheckMedicationReminderScreen.safetyAdvice'}
+                  />
+                  <Text text={':'} />
+                  <Text numberOfLines={2} style={styles.description()}>
+                    {item.safety_advice}
+                  </Text>
+                </View>
+                <View style={styles.rowView()}>
+                  <Text
+                    style={styles.title()}
+                    tx={'CheckMedicationReminderScreen.sideEffects'}
+                  />
+                  <Text text={':'} />
+                  <Text numberOfLines={2} style={styles.description()}>
+                    {item.side_effects}
+                  </Text>
+                </View>
+                <View style={styles.rowView()}>
+                  <Text
+                    style={styles.title()}
+                    tx={'CheckMedicationReminderScreen.use'}
+                  />
+                  <Text text={':'} />
+                  <Text numberOfLines={2} style={styles.description()}>
+                    {item.use}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.rowView()}>
-                <Text
-                  style={styles.title()}
-                  tx={'CheckMedicationReminderScreen.benefit'}
-                />
-                <Text text={':'} />
-                <Text numberOfLines={2} style={styles.description()}>
-                  {item.benefits}
-                </Text>
-              </View>
-              <View style={styles.rowView()}>
-                <Text
-                  style={styles.title()}
-                  tx={'CheckMedicationReminderScreen.safetyAdvice'}
-                />
-                <Text text={':'} />
-                <Text numberOfLines={2} style={styles.description()}>
-                  {item.safety_advice}
-                </Text>
-              </View>
-              <View style={styles.rowView()}>
-                <Text
-                  style={styles.title()}
-                  tx={'CheckMedicationReminderScreen.sideEffects'}
-                />
-                <Text text={':'} />
-                <Text numberOfLines={2} style={styles.description()}>
-                  {item.side_effects}
-                </Text>
-              </View>
-              <View style={styles.rowView()}>
-                <Text
-                  style={styles.title()}
-                  tx={'CheckMedicationReminderScreen.use'}
-                />
-                <Text text={':'} />
-                <Text numberOfLines={2} style={styles.description()}>
-                  {item.use}
-                </Text>
-              </View>
-            </View>
-          );
-        })}
-      {param.fromViewMedication ? null : (
-        <Button
-          buttonStyle={styles.button()}
-          buttonText={styles.buttonTxt()}
-          nameTx={'ViewMedicationScreen.save'}
-          onPress={() => {
-            onSave();
-          }}
-        />
-      )}
+            );
+          })}
+        {param.fromViewMedication ? null : (
+          <Button
+            buttonStyle={styles.button()}
+            buttonText={styles.buttonTxt()}
+            nameTx={'ViewMedicationScreen.save'}
+            onPress={() => {
+              onSave();
+            }}
+          />
+        )}
+      </Screen>
     </SafeAreaView>
   );
 };

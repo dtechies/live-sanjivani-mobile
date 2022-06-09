@@ -15,7 +15,6 @@ const Tab = createBottomTabNavigator();
 export const BottomStackNavigation = props => {
   const [isModalOpen, closeModal] = useState(false);
   const [notificationDetail, setNotificationDetail] = useState();
-  const [playerId, setPlayerId] = useState('');
 
   //OneSignal Init Code
   OneSignal.setAppId('3b7300ff-2be3-46f8-ad6a-5473e664b134');
@@ -38,7 +37,7 @@ export const BottomStackNavigation = props => {
           const obj = notificationData;
           let isEmptyObject = Object.keys(obj).length > 0;
           // console.log('isEmptyObject', isEmptyObject); //
-          console.log('ShowInForeground notification Data ', obj);
+          // console.log('ShowInForeground notification Data ', obj);
           // console.log('obj', obj);
           if (isEmptyObject) {
             setNotificationDetail(obj);
@@ -57,7 +56,7 @@ export const BottomStackNavigation = props => {
         const obj = {notificationData};
         let isEmptyObject = Object.keys(obj).length > 0;
 
-        console.log('notification open handler', notificationData);
+        // console.log('notification open handler', notificationData);
         if (isEmptyObject) {
           setNotificationDetail(notificationData);
           closeModal(true);
@@ -93,7 +92,6 @@ export const BottomStackNavigation = props => {
       });
 
       const deviceState = await OneSignal.getDeviceState();
-      setPlayerId(deviceState.userId);
 
       // console.log('Bottom navigation deviceState', deviceState);
       // console.log(

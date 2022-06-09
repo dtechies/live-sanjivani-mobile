@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux';
 import moment from 'moment';
 import {loginUser, userData, getOtp, addEditPlayerId} from 'redux-actions';
 
-import {Loader, Text, Button, Toast} from 'components';
+import {Loader, Text, Button, Toast, Screen} from 'components';
 import {size, color, IcCrossArrow, images} from 'theme';
 import * as styles from './styles';
 
@@ -55,7 +55,7 @@ export const OtpScreen = props => {
       // previous.userData.player_id = playerId;
       // await dispatch(userData(previous));
       setTimeout(() => {
-        navigation.navigate('bottomStackNavigation');
+        navigation.navigate('bottomStackNavigation', {screen: 'Today'});
       }, 150);
     } else {
       toastMessage(res.message);
@@ -71,7 +71,10 @@ export const OtpScreen = props => {
     };
     // console.log('loginBody ==>', loginBody);
     const loginResponse = await dispatch(loginUser(loginBody));
-    const res = loginResponse.payload;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (loginResponse) {
+      res = loginResponse.payload;
+    }
     // console.log('login res ==>', res);
     if (res.status) {
       var a = moment(res.data.user.dob);
@@ -98,7 +101,10 @@ export const OtpScreen = props => {
     // console.log('getOtpBody ==>', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     // console.log('getOtpBody ==>', getOtpResponse);
-    const res = getOtpResponse.payload;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (getOtpResponse) {
+      res = getOtpResponse.payload;
+    }
     if (res.status) {
       // console.log('getOtp res ==>', res.data.otp);
       setLoading(false);
@@ -139,10 +145,9 @@ export const OtpScreen = props => {
       counter > 0 &&
         setTimeout(() => {
           if (counter <= 10) {
-            // console.log('${timerDiff}==>', `${timerDiff}`);
+            // console.log('${timerDiff} 111==>', `${timerDiff}`);
             setCounter(`0${timerDiff}`);
           } else {
-            // console.log('timerDiff ==>', timerDiff);
             setCounter(timerDiff);
           }
         }, 1000);
@@ -189,7 +194,6 @@ export const OtpScreen = props => {
 
   useEffect(() => {
     if (props.route.params) {
-      console.log('params :OTPPP', props.route.params.otpValue);
       setOtpData(props.route.params.otpValue);
     }
   }, []);
@@ -217,7 +221,10 @@ export const OtpScreen = props => {
         opacity={0.9}
       />
       {loading && <Loader />}
-      <View style={styles.screenContainer()}>
+      <Screen
+        keyboardShouldPersistTaps="handled"
+        bounces={false}
+        style={styles.screenContainer()}>
         <View style={styles.imageView()}>
           <Image
             style={{
@@ -353,7 +360,7 @@ export const OtpScreen = props => {
           nameTx={'otp_screen.login'}
           onPress={() => navigation.navigate('loginScreen')}
         />
-      </View>
+      </Screen>
     </SafeAreaView>
   );
 };

@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {getOtp} from 'redux-actions';
 import {Loader, Text, Button, InputBox, Toast} from 'components';
-import {size, images} from 'theme';
+import {size, images, color} from 'theme';
 import * as styles from './styles';
 export const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -23,13 +23,12 @@ export const LoginScreen = () => {
     const getOtpBody = {
       mob_no: number,
     };
-    // console.log('otp', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    // console.log('getOtpResponse ====', getOtpResponse);
-    const res = getOtpResponse.payload;
-    // console.log('res', res);
+    let res = {status: false, message: 'Connection Error...!'};
+    if (getOtpResponse) {
+      res = getOtpResponse.payload;
+    }
     if (res.status) {
-      // console.log('response data loginn ==>', res.data);
       setLoading(false);
       toastMessage(res.message);
       setTimeout(() => {
@@ -75,6 +74,7 @@ export const LoginScreen = () => {
         <Text style={styles.labelLoginTxt()} tx={'login_screen.number'} />
         <InputBox
           value={number}
+          placeholderTextColor={color.grayIcon}
           placeholder={'XXXXXXXXXX'}
           keyboardType={'phone-pad'}
           withButton={true}

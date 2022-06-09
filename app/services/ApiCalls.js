@@ -1,7 +1,6 @@
 import HttpCalls from './HttpCalls';
 import {headersData} from './Services';
 import {store, persistor} from './../redux';
-
 export const _getAllCategory = async payload => {
   let token = store.getState().userDataReducer.userDataResponse.login
     ? store.getState().userDataReducer.userDataResponse.userData.token
@@ -285,8 +284,7 @@ export const _editReminderStatus = async payload => {
     : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
-    token: token,
+    token: store.getState().userDataReducer.userDataResponse.userData.token,
   });
-  // console.log('headers ==>', headers);
   return _api_calls('POST', '/edit-reminder-status', headers, payload);
 };

@@ -127,7 +127,6 @@ export const MyAppointments = () => {
             }}
             inputStyle={styles.buttonNew()}
             leftIcon={true}
-            placeholderTextColor={color.dimGrey}
             containerStyle={styles.mainInputStyle()}
             placeholder={'Search Appointment'}
             leftIconName={
