@@ -15,7 +15,7 @@ export const headersData = async params => {
   return {
     headers: {
       'Content-Type': params.type ? params.type : 'application/json',
-      Authorization: params ? (params.token ? `Bearer ${token}` : '') : '',
+      Authorization: token ? (token ? `Bearer ${token}` : '') : '',
     },
   };
 };
