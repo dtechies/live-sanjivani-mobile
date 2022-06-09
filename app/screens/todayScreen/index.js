@@ -25,7 +25,7 @@ export const TodayScreen = () => {
   const toastRef = useRef();
   const [activeIndex, setActiveIndex] = useState([]);
   const [medicationData, setMedication] = useState([]);
-  const [medicationTrue, setMedicationTrue] = useState();
+  const [medicationTrue, setMedicationTrue] = useState(0);
   const [medicationUpcoming, setMedicationUpcoming] = useState('');
   const [reminderList, setReminderList] = useState([]);
   const [tipsForTheDay, setTipsForTheDay] = useState('');
@@ -77,7 +77,7 @@ export const TodayScreen = () => {
     const res = getTodayMedicationResponse;
     if (res != undefined) {
       if (res.status) {
-        // console.log('getTodayMedicationResponse ==>', res.data.MedicineData);
+        console.log('getTodayMedicationResponse ==>', res.data.MedicineData);
 
         let medicationList = res.data.MedicineData;
         const medicationListNew = medicationList.sort((a, b) => {
@@ -98,6 +98,14 @@ export const TodayScreen = () => {
             `${upcoming.dose} ${upcoming.reminder_name} ${upcoming.medicine_strength} ${upcoming.medicine_strength_unit} ${upcoming.medicine_form},${upcoming.reminder_frequency} ${upcoming.reminder_time}.`,
           );
         }
+        let tot = 0;
+        medicationListNew.map(val => {
+          if (val.is_done != '0') {
+            // || val.is_done != null
+            tot = tot + 1;
+          }
+        });
+        setMedicationTrue(tot);
         // console.log('medicationListNew ===> ', medicationListNew);
         setMedication(medicationListNew);
         // console.log('medicationListNew ==> ', medicationListNew);
@@ -118,7 +126,7 @@ export const TodayScreen = () => {
     const getAppointmentRmdResponse = await dispatch(
       getAppointmentReminderProfile(),
     );
-    console.log('getAppointmentReminderProfile', getAppointmentRmdResponse);
+    // console.log('getAppointmentReminderProfile', getAppointmentRmdResponse);
     if (getAppointmentRmdResponse) {
       if (getAppointmentRmdResponse.status) {
         // setLoading(false);
@@ -171,16 +179,6 @@ export const TodayScreen = () => {
   };
 
   useEffect(() => {
-    setExtra(extra + 1);
-
-    let tot = 0;
-    medicationData.map(val => {
-      if (val.is_done != '0') {
-        // || val.is_done != null
-        tot = tot + 1;
-      }
-    });
-    setMedicationTrue(tot);
     onGetTipForDay();
     getAppointmentReminderData();
     onMedicineReminderData();
@@ -198,7 +196,7 @@ export const TodayScreen = () => {
       {loading && <Loader />}
       <Text
         style={styles.textHeaderName()}
-        text={`Hi ${userData.first_name}`}
+        text={`Hi ${userData ? userData.first_name : ''}`}
       />
       <Text style={styles.textLanding()} tx={'today_screen.keep_it_up!'} />
       <Text

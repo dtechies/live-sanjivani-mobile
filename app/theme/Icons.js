@@ -203,7 +203,12 @@ export const IcEdit = props => (
   <Edit height={props.height} width={props.width} fill={props.fill} />
 );
 export const IcLogout = props => (
-  <Logout height={props.height} width={props.width} fill={props.fill} />
+  <Logout
+    height={props.height}
+    width={props.width}
+    fill={props.fill}
+    stroke={props.stroke}
+  />
 );
 export const IcSanjivaniLogo = props => (
   <SanjivaniLogo height={props.height} width={props.width} fill={props.fill} />

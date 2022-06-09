@@ -64,11 +64,12 @@ export const CheckMedicationReminderScreen = props => {
     formData.append('user_id', userId);
     formData.append('reminder_name', data?.reminder_name);
     formData.append('doctor_name', data?.referredBy);
-    formData.append('medicine_image', {
-      uri: data?.imageUpload.path,
-      name: data?.imageUpload.imageName,
-      type: data?.imageUpload.mime,
-    });
+    data.imageUpload.path !== undefined &&
+      formData.append('medicine_image', {
+        uri: data?.imageUpload.path,
+        name: data?.imageUpload.imageName,
+        type: data?.imageUpload.mime,
+      });
     formData.append('medicine_name', data?.medicine_name);
     formData.append('medicine_form', data?.medicine_form);
     formData.append('dose', data.dose);
@@ -85,13 +86,12 @@ export const CheckMedicationReminderScreen = props => {
     const addMedicineReminderResponse = await dispatch(
       addMedicineReminder(formData),
     );
-    setLoading(false);
     const res = addMedicineReminderResponse.payload;
     // console.log('addMedicineReminder Res ==>', res);
+    setLoading(false);
 
     if (res.status) {
       // console.log('addMedicineReminder List ==>', res);
-      toastMessage(res.message);
       setData('');
       setDays(daysJson);
       param.medicineFilteredValue = [];
@@ -254,8 +254,7 @@ export const CheckMedicationReminderScreen = props => {
             ) : null}
           </View>
         </View>
-        {param.medicineFilteredValue &&
-          param.medicineFilteredValue.length > 0 &&
+        {param.medicineFilteredValue.length > 0 &&
           param.medicineFilteredValue.map((item, index) => {
             return (
               <View style={styles.medicineDescriptionCard()}>
