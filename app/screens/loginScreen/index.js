@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {getOtp} from 'redux-actions';
 import {Loader, Text, Button, InputBox, Toast} from 'components';
-import {size, images} from 'theme';
+import {size, images, color} from 'theme';
 import * as styles from './styles';
 export const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -74,6 +74,7 @@ export const LoginScreen = () => {
         <Text style={styles.labelLoginTxt()} tx={'login_screen.number'} />
         <InputBox
           value={number}
+          placeholderTextColor={color.grayIcon}
           placeholder={'XXXXXXXXXX'}
           keyboardType={'phone-pad'}
           withButton={true}

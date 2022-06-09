@@ -165,7 +165,6 @@ export const SharingDetailScreen = props => {
           mainContainerStyle={styles.inputMainContainer()}
           inputStyle={styles.labelFieldText()}
           placeholder={'Please Enter Email'}
-          placeholderTextColor={color.black}
         />
         {emailCorrect ? (
           <Text style={styles.textValidation()} text={emailCorrect} />

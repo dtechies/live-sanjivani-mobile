@@ -372,7 +372,6 @@ export const AppointmentReminderScreen = animated => {
               />
             }
             placeholder={'Doctor/Practice...'}
-            placeholderTextColor={color.black}
           />
           {searchValErr ? (
             <Text style={styles.textValidation()} text={searchValErr} />
@@ -413,7 +412,7 @@ export const AppointmentReminderScreen = animated => {
               />
             }
             placeholder={'Address'}
-            placeholderTextColor={color.black}
+            
           /> */}
           <View style={styles.searchPlacesTxt()}>
             <View
@@ -452,7 +451,6 @@ export const AppointmentReminderScreen = animated => {
                 onChangeText: onChangeSearchText,
                 style: styles.searchPlacesInputTxt(),
                 placeholder: 'Search address...',
-                placeholderTextColor: color.dimGrey,
                 errorStyle: {color: 'red'},
               }}
               styles={{
