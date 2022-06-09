@@ -53,7 +53,7 @@ export const itemListMain = val => ({
   paddingLeft: size.moderateScale(30),
 });
 export const itemListTxt = val => ({
-  width: size.deviceWidth * 0.22,
+  width: size.deviceWidth * 0.25,
   color: color.black,
   fontSize: val == 1 ? fontSize.verySmall : fontSize.medium,
   fontFamily: fonts.latoRegular,
@@ -74,7 +74,7 @@ export const dropDownMain = () => ({
 });
 
 export const dropdown = () => ({
-  width: size.deviceWidth * 0.6,
+  width: size.deviceWidth * 0.53,
   marginVertical: size.moderateScale(5),
   paddingHorizontal: size.moderateScale(5),
   borderRadius: size.moderateScale(5),
@@ -122,7 +122,7 @@ export const inputStyle = () => ({
 });
 
 export const inputMainContainer = () => ({
-  width: size.deviceWidth * 0.6,
+  width: size.deviceWidth * 0.53,
   marginBottom: size.moderateScale(5),
   marginLeft: size.moderateScale(20),
 });
