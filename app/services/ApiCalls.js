@@ -30,6 +30,21 @@ export const _registerUser = async payload => {
   let headers = await headersData({});
   return _api_calls('POST', '/register-user', headers, payload);
 };
+export const _addOtherData = async payload => {
+  // console.log('_addOtherData ==> ', payload);
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
+  });
+  return _api_calls(
+    'POST',
+    '/add-user-cat-subcategory-values',
+    headers,
+    payload,
+  );
+};
 export const _getMedicineReminderProfile = async () => {
   let {_api_calls} = HttpCalls;
   let headers = await headersData({

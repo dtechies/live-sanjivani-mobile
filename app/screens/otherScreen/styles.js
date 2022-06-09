@@ -58,7 +58,20 @@ export const itemListTxt = val => ({
   fontSize: val == 1 ? fontSize.verySmall : fontSize.medium,
   fontFamily: fonts.latoRegular,
 });
-
+export const searchedValueList = () => ({
+  marginTop: 2,
+  paddingVertical: size.moderateScale(10),
+  borderColor: color.white,
+  borderWidth: size.moderateScale(1),
+  paddingHorizontal: size.moderateScale(15),
+  backgroundColor: color.white,
+  borderRadius: 10,
+});
+export const inputTxt = () => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoRegular,
+  color: color.black,
+});
 //drop down
 export const labelFieldText = () => ({
   fontSize: fontSize.small,

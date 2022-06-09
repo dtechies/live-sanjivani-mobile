@@ -449,6 +449,9 @@ export const MedicationReminderScreen = () => {
             },
           }}
           onChange={item => {
+            console.log('====================================');
+            console.log('item medicine', item);
+            console.log('====================================');
             setDoseValue(item.value);
             setDoseValueErr('');
             setIsFocus(false);

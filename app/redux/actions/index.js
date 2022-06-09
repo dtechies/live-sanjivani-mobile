@@ -33,3 +33,4 @@ export * from './GetUserFavSubCategoryPdfAction';
 export * from './GetTodayMedicationListAction';
 export * from './AddEditPlayerIdAction';
 export * from './EditReminderStatusAction';
+export * from './AddOtherDataAction';

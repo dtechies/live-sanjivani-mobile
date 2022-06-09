@@ -37,7 +37,8 @@ import getUserProfileReducer from './GetUserProfileReducer';
 import GetUserFavSubCategoryPdfReducer from './GetUserFavSubCategoryPdfReducer';
 import getTodayMedicationListReducer from './GetTodayMedicationListReducer';
 import addEditPlayerIdReducer from './AddEditPlayerIdReducer';
-import editReminderStatusReducer from './editReminderStatusReducer';
+import editReminderStatusReducer from './EditMedicineReminderStatusReducer';
+import addOtherScreenReducer from './AddOtherDataReducer';
 
 const persistConfig = {
   key: 'root',
@@ -79,6 +80,7 @@ const appReducer = combineReducers({
   GetUserFavSubCategoryPdfReducer: GetUserFavSubCategoryPdfReducer,
   getTodayMedicationListReducer: getTodayMedicationListReducer,
   addEditPlayerIdReducer: addEditPlayerIdReducer,
+  addOtherScreenReducer: addOtherScreenReducer,
 });
 const rootReducer = (state, action) => {
   // Clear all data in redux store to initial.

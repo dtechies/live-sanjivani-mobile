@@ -1,13 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, View} from 'react-native';
+import {SafeAreaView, View, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SvgUri} from 'react-native-svg';
 import {useDispatch, useSelector} from 'react-redux';
+import {addOtherData} from 'redux-actions';
 // import {Dropdown} from 'react-native-element-dropdown';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 // import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-import {Loader, Text, Button, Screen, InputBox, Header} from 'components';
+import {
+  Loader,
+  Text,
+  Button,
+  Screen,
+  InputBox,
+  Header,
+  Toast,
+} from 'components';
 import {
   size,
   color,
@@ -24,6 +33,7 @@ import * as styles from './styles';
 import {menstruation, startOfCycle, protection} from 'json';
 
 export const OtherScreen = props => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [isLoading, seIsLoading] = useState(false);
   const [extra, setExtra] = useState(0);
@@ -44,6 +54,8 @@ export const OtherScreen = props => {
   const [severity, setSeverity] = useState('');
   const [severityErr, setSeverityErr] = useState('');
   const [thisArray, setThisArray] = useState([]);
+  const [nestedCat, setVestedCat] = useState([]);
+
   const [toothbrushing, setToothbrushing] = useState('');
   const [subCategoryId, setSubCategoryId] = useState(0);
   const [toothbrushingErr, setToothbrushingErr] = useState('');
@@ -102,54 +114,136 @@ export const OtherScreen = props => {
     setExtra(extra + 1);
     // setShowDate(false);
   };
+  const toastRef = useRef();
 
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
   const validation = () => {
-    if (
-      element !== '' ||
-      severity !== '' ||
-      reaction !== '' ||
-      selectedDate !== ''
-    ) {
-      if (reaction == '') {
-        setReactionErr('Please Enter Reaction Details');
-      } else {
-        setReactionErr('');
-      }
-      if (element == '') {
-        setElementErr('Please Enter Element Details');
-      } else {
-        setElementErr('');
-      }
-      if (severity == '') {
-        setSeverityErr('Please Enter severity Details');
-      } else {
-        setSeverityErr('');
-      }
-      if (selectedDate == '') {
-        setSelectedDateErr('Please Select Date');
-      } else {
-        setSelectedDateErr('');
-      }
-    } else {
-      setReactionErr('');
-      setSeverityErr('');
-      setSelectedDateErr('');
-    }
+    // selectedDateErr == '' &&
+    //           elementErr == '' &&
+    //           reactionErr == '' &&
+    //           severityErr == '' &&
+    //           doseValueErr == '' &&
+    //           startOfCycleValErr == ''
+    //             ? saveData()
+    // if (thisArray.length != 0) {
+    //   let arrayVAAAAL = [];
+    //   subCategory.map(val => {
+    //     arrayVAAAAL = thisArray.filter(v => {
+    //       return (v.nm = val.other_subcategories.name);
+    //     });
+    //   });
 
-    if (doseValue !== '' || startOfCycleVal !== '') {
-      if (startOfCycleVal == '') {
-        setStartOfCycleValErr('Please Select start of Cycle Details');
-      } else {
-        setStartOfCycleValErr('');
-      }
-      if (doseValue == '') {
-        setDoseValueErr('Please Select Flow Details');
-      } else {
-        setDoseValueErr('');
-      }
-    }
+    // ,,,,,,,,
+    // let datttt = [];
+    // subCategory.map(val => {
+    //   val.other_subcategories.map(v => {
+    //     console.log('val HHHHHHHH', v.name);
+    //     let datttt = thisArray.filter(item => {
+    //       return item.nm == v.name;
+    //     });
+    //   });
+    //   datttt = [];
+    // });
+    // thisArray.map(val => {
+    //   console.log('val OOOOOOOO', val.nm);
+    // });
+    // console.log('subcategory VALI =>', subCategory);
+    // console.log('thisArray  VALI=>', thisArray);
+    // console.log('arrayVAAAAL  VALI=>', arrayVAAAAL);
+    // }
+    // ............abs
+    // if (
+    //   element !== '' ||
+    //   severity !== '' ||
+    //   reaction !== '' ||
+    //   selectedDate !== ''
+    // ) {
+    //   if (reaction == '') {
+    //     setReactionErr('Please Enter Reaction Details');
+    //   } else {
+    //     setReactionErr('');
+    //   }
+    //   if (element == '') {
+    //     setElementErr('Please Enter Element Details');
+    //   } else {
+    //     setElementErr('');
+    //   }
+    //   if (severity == '') {
+    //     setSeverityErr('Please Enter severity Details');
+    //   } else {
+    //     setSeverityErr('');
+    //   }
+    //   if (selectedDate == '') {
+    //     setSelectedDateErr('Please Select Date');
+    //   } else {
+    //     setSelectedDateErr('');
+    //   }
+    // } else {
+    //   setReactionErr('');
+    //   setSeverityErr('');
+    //   setSelectedDateErr('');
+    // }
+
+    // if (doseValue !== '' || startOfCycleVal !== '') {
+    //   if (startOfCycleVal == '') {
+    //     setStartOfCycleValErr('Please Select start of Cycle Details');
+    //   } else {
+    //     setStartOfCycleValErr('');
+    //   }
+    //   if (doseValue == '') {
+    //     setDoseValueErr('Please Select Flow Details');
+    //   } else {
+    //     setDoseValueErr('');
+    //   }
+    // }
+    addData();
   };
 
+  const addData = async () => {
+    // setLoading(true);
+    let bodyArray = [];
+    // bodyArray.push({
+    //   subcategory_id:item.id,
+    //   user_id: userData.id,
+    // })
+    let id = 0;
+    let obj = {};
+    thisArray.map(item => {
+      if (id == 0) {
+        id = item.id;
+      } else {
+        if (id == item.id) {
+          obj[item.nm] = item.value;
+        }
+      }
+    });
+    console.log('THIS', thisArray);
+    const getOtherBody = [
+      {
+        subcategory_id: 12,
+        user_id: userData.id,
+        value:
+          "{'element': 'test1','reaction': 'test2','severity': 'test3','onset': 'test4'}",
+      },
+      {
+        subcategory_id: 13,
+        user_id: 49,
+        value: "{'drink': 'test1'}",
+      },
+    ];
+    // const getOtherDataResponse = await dispatch(addOtherData(getOtherBody));
+    // const res = getOtherDataResponse.payload;
+    // if (res.status) {
+    //   console.log('response data ==>', res.data);
+    //   setLoading(false);
+    //   toastMessage(res.message);
+    // } else {
+    //   setLoading(false);
+    //   toastMessage(res.message);
+    // }
+  };
   const saveData = () => {
     navigation.goBack();
   };
@@ -171,7 +265,7 @@ export const OtherScreen = props => {
         isCamera={false}
         text={title}
       />
-      {console.log('subCategory ==> ', subCategory)}
+      {/* {console.log('subCategory DEMOOOOO==> ', thisArray)} */}
       <Screen withScroll bounces={false} style={styles.screenContainer()}>
         {subCategory &&
           subCategory.map((value, i) => {
@@ -190,18 +284,25 @@ export const OtherScreen = props => {
                 {value.other_subcategories.length != 0 &&
                   value.other_subcategories.map((val, index) => {
                     let isDropDown = false;
+                    let dropDownValue = [];
+                    let dropDownSelectedVal = {label: 'val1', value: 'val1'};
+                    let defaultDropDown = {label: '', value: ''};
                     if (val.unit.startsWith('[')) {
-                      let valNew = JSON.stringify(val.unit);
-                      let newVal = JSON.parse(valNew);
-                      let dataa = [{value: 'Flow'}, {value: 'No Flow'}];
-                      console.log('IF...', newVal);
-                      console.log('val', newVal[0]);
+                      const txt = val.unit;
+                      let obj = txt.slice(1, txt.length - 1);
+                      let obj1 = obj.split(',');
+                      obj1.map(val1 => {
+                        val1 = val1.slice(1, val1.length - 1);
+                        dropDownValue.push({label: val1, value: val1});
+                      });
+                      // console.log('val', dropDownValue[0]);
                       isDropDown = true;
                     }
                     return (
-                      <View style={styles.itemListMain()}>
+                      <View
+                        style={styles.itemListMain()}
+                        key={index + 'other_subcategories'}>
                         <Text style={styles.itemListTxt(1)}>{val.name}</Text>
-                        {/* {(val.unit == 'Text' || val.unit == 'Number') && ( */}
                         {!isDropDown ? (
                           <InputBox
                             placeholder={`Enter ${val.name}`}
@@ -215,50 +316,77 @@ export const OtherScreen = props => {
                               let name = val.name;
                               if (thisArray.length == 0) {
                                 thisArray.push({
-                                  [name]: val.v,
+                                  id: val.id,
+                                  nm: val.name,
+                                  value: v,
                                 });
                               } else {
                                 thisArray.map((j, k) => {
-                                  if (j.subcategory_id === value.category_id) {
+                                  if (j.nm === val.name) {
                                     indexK = k;
                                   }
                                 });
                                 if (indexK == -1) {
                                   thisArray.push({
-                                    [name]: val.v,
+                                    id: val.id,
+                                    nm: val.name,
+                                    value: v,
                                   });
                                 } else {
-                                  thisArray[indexK].name = v;
+                                  thisArray[indexK].value = v;
                                 }
                               }
                               setThisArray(thisArray);
                               console.log('thisArray', thisArray);
-                              setIsError('');
+                              // setIsError('');
                               setExtra(extra + 1);
                             }}
                           />
                         ) : (
                           <Dropdown
-                            defaultValue={languageDefault}
-                            data={protection}
+                            // defaultValue={defaultDropDown}
+                            data={dropDownValue}
                             labelField="label"
                             valueField="value"
-                            // placeholder={'Language'}
+                            placeholder={'nn'}
                             dropdownPosition={'bottom'}
                             style={styles.dropdown()}
-                            // placeholderStyle={styles.labelFieldText()}
+                            placeholderStyle={styles.labelFieldText()}
                             selectedTextStyle={styles.selectedOptionTextStyle()}
                             maxHeight={size.moderateScale(56)}
                             containerStyle={styles.dropdownContainer()}
-                            // value={language}
-                            onFocus={() => setIsFocus(true)}
-                            onBlur={() => setIsFocus(false)}
+                            // value={'151'}
                             flatListProps={{
                               bounces: false,
                             }}
                             onChange={item => {
-                              setLanguage(item.value);
-                              setIsFocus(false);
+                              let indexK = -1;
+                              let name = val.unit;
+                              let v = item.value;
+                              if (thisArray.length == 0) {
+                                thisArray.push({
+                                  nm: val.unit,
+                                  value: v,
+                                });
+                              } else {
+                                thisArray.map((j, k) => {
+                                  if (j.nm === val.unit) {
+                                    indexK = k;
+                                  }
+                                });
+                                if (indexK == -1) {
+                                  thisArray.push({
+                                    nm: val.unit,
+                                    value: v,
+                                  });
+                                } else {
+                                  thisArray[indexK].value = v;
+                                }
+                              }
+                              setThisArray(thisArray);
+                              console.log('thisArray', thisArray);
+                              // setIsError('');
+                              setExtra(extra + 1);
                             }}
                             renderItem={item => {
                               return (
@@ -272,8 +400,29 @@ export const OtherScreen = props => {
                               );
                             }}
                           />
+                          // <View>
+                          //   {dropDownValue.length > 0 &&
+                          //     dropDownValue.map(item => {
+                          //       return (
+                          //         <Pressable
+                          //           style={styles.searchedValueList()}
+                          //           onPress={() => {
+                          //             setSearchVal(item.doctor_name);
+                          //             setAddressOne(item.doctor_address);
+                          //             setExtra(extra + 1);
+                          //             // setSpeciality(item.speciality);
+                          //             setSearchValErr('');
+                          //             setDoctorFilteredName([]);
+                          //             // Keyboard.dismiss;
+                          //           }}>
+                          //           <Text style={styles.inputTxt()}>
+                          //             {item.doctor_name}
+                          //           </Text>
+                          //         </Pressable>
+                          //       );
+                          //     })}
+                          // </View>
                         )}
-                        {/* )} */}
                       </View>
                     );
                   })}
@@ -286,14 +435,7 @@ export const OtherScreen = props => {
             buttonText={styles.btnContinueTxt()}
             nameTx={'addDetails_Screen.save'}
             onPress={() => {
-              selectedDateErr == '' &&
-              elementErr == '' &&
-              reactionErr == '' &&
-              severityErr == '' &&
-              doseValueErr == '' &&
-              startOfCycleValErr == ''
-                ? saveData()
-                : validation();
+              validation();
             }}
           />
         </View>
