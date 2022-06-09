@@ -159,16 +159,17 @@ export const AppointmentReminderScreen = animated => {
   const addAppointmentData = async () => {
     setLoading(true);
     // console.log('dataId', dataId);
+    let date = new moment(selectedDate, ['Do MMMM YYYY']).format('YYYY-MM-D');
     let formData = new FormData();
     formData.append('doctor_name', searchVal);
-    formData.append('date', selectedDate);
+    formData.append('date', date);
     formData.append('doctor_address', addressOne);
     formData.append('user_selected_time', selectedTime);
     formData.append('user_id', userId);
     formData.append('reminder_time', reminderTime);
 
     setExtra(extra + 1);
-    // console.log('fevUserBody', fevUserBody);
+    // console.log('fevUserBody', formData);
     const SubCategoryResponse = await dispatch(
       addAppointmentReminder(formData),
     );

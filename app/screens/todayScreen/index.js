@@ -91,13 +91,14 @@ export const TodayScreen = () => {
             'hh:mm a',
           ]).format('hh:mm A');
         });
-        let upcoming = medicationListNew.find(item => item.is_done == null);
+        let upcoming = medicationListNew.find(item => item.is_done == '0');
         // console.log('upcoming ==> ', upcoming);
         if (upcoming != undefined) {
           setMedicationUpcoming(
             `${upcoming.dose} ${upcoming.reminder_name} ${upcoming.medicine_strength} ${upcoming.medicine_strength_unit} ${upcoming.medicine_form},${upcoming.reminder_frequency} ${upcoming.reminder_time}.`,
           );
         }
+        // console.log('medicationListNew ===> ', medicationListNew);
         setMedication(medicationListNew);
         // console.log('medicationListNew ==> ', medicationListNew);
         setLoading(false);
@@ -117,7 +118,7 @@ export const TodayScreen = () => {
     const getAppointmentRmdResponse = await dispatch(
       getAppointmentReminderProfile(),
     );
-    // console.log('getAppointmentReminderProfile', getAppointmentRmdResponse);
+    console.log('getAppointmentReminderProfile', getAppointmentRmdResponse);
     if (getAppointmentRmdResponse) {
       if (getAppointmentRmdResponse.status) {
         // setLoading(false);
@@ -175,6 +176,7 @@ export const TodayScreen = () => {
     let tot = 0;
     medicationData.map(val => {
       if (val.is_done != '0') {
+        // || val.is_done != null
         tot = tot + 1;
       }
     });
@@ -223,7 +225,7 @@ export const TodayScreen = () => {
                     style={styles.row(medicationData.length > index + 1)}
                     key={index + 'medicationData'}>
                     {/* {console.log('item.status ==> ', item.status, item.id)} */}
-                    {item.is_done && item.reminder_status == 'take' ? (
+                    {item.is_done != '0' && item.reminder_status == 'take' ? (
                       <IcTrue fill={color.trueIcon} />
                     ) : item.reminder_status == 'snooze' ? (
                       <IcTrue fill={color.starColor} />
