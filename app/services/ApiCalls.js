@@ -58,7 +58,9 @@ export const _addMedicineReminder = async payload => {
 
   let headers = await headersData({
     type: 'multipart/form-data',
-    token: store.getState().userDataReducer.userDataResponse.userData.token,
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
   });
   return _api_calls('POST', '/add-medicine-reminder', headers, payload);
 };
