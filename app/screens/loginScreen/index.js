@@ -9,7 +9,7 @@ import * as styles from './styles';
 export const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [number, setNumber] = useState('7046892973');
+  const [number, setNumber] = useState('');
   const [extra, setExtra] = useState(0);
   const [loading, setLoading] = useState(false);
   const [numberCorrect, setNumberCorrect] = useState('');
