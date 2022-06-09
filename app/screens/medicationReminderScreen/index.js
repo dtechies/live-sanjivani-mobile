@@ -310,7 +310,6 @@ export const MedicationReminderScreen = () => {
           titleStyle={styles.labelFieldText()}
           placeholder={'Reminder Name'}
           inputStyle={styles.inputStyle()}
-          placeholderTextColor={color.grayTxt}
           value={reminderName}
           mainContainerStyle={styles.inputMainContainer()}
           onChangeText={val => {
@@ -326,7 +325,6 @@ export const MedicationReminderScreen = () => {
           titleStyle={styles.labelFieldText()}
           placeholder={'Add your Provider/Specialist'}
           inputStyle={styles.inputStyle()}
-          placeholderTextColor={color.grayTxt}
           value={referredBy}
           mainContainerStyle={styles.inputMainContainer()}
           onChangeText={val => {
@@ -340,7 +338,6 @@ export const MedicationReminderScreen = () => {
           titleTx={'medication_reminder_screen.name_of_medicine'}
           titleStyle={styles.labelFieldText()}
           placeholder={'Glycomet'}
-          placeholderTextColor={color.grayTxt}
           inputStyle={styles.inputStyle()}
           value={name}
           mainContainerStyle={styles.inputMainContainer()}
@@ -688,7 +685,6 @@ export const MedicationReminderScreen = () => {
               placeholder={'0'}
               keyboardType={'number-pad'}
               inputStyle={styles.inputStyle()}
-              placeholderTextColor={color.grayTxt}
               value={pills}
               mainContainerStyle={styles.inputMainContainer()}
               onChangeText={val => {
