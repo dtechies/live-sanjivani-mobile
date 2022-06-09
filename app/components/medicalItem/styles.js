@@ -55,10 +55,10 @@ export const centerLeftView = () => ({
 });
 export const flexDirectionStyle = () => ({
   flexDirection: 'row',
+  flexWrap: 'wrap',
   // paddingLeft: size.moderateScale(20),
 });
 export const centerRightView = () => ({
-  // backgroundColor: 'red',
   justifyContent: 'center',
   paddingLeft: size.moderateScale(10),
   flex: 4,
