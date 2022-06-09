@@ -9,7 +9,7 @@ import * as styles from './styles';
 export const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [number, setNumber] = useState('7046892973');
+  const [number, setNumber] = useState('');
   const [extra, setExtra] = useState(0);
   const [loading, setLoading] = useState(false);
   const [numberCorrect, setNumberCorrect] = useState('');
@@ -23,13 +23,12 @@ export const LoginScreen = () => {
     const getOtpBody = {
       mob_no: number,
     };
-    // console.log('otp', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    // console.log('getOtpResponse ====', getOtpResponse);
-    const res = getOtpResponse.payload;
-    // console.log('res', res);
+    let res = {status: false, message: 'Connection Error...!'};
+    if (getOtpResponse) {
+      res = getOtpResponse.payload;
+    }
     if (res.status) {
-      // console.log('response data loginn ==>', res.data);
       setLoading(false);
       toastMessage(res.message);
       setTimeout(() => {

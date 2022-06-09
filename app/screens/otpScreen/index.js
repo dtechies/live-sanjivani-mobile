@@ -71,7 +71,10 @@ export const OtpScreen = props => {
     };
     // console.log('loginBody ==>', loginBody);
     const loginResponse = await dispatch(loginUser(loginBody));
-    const res = loginResponse.payload;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (loginResponse) {
+      res = loginResponse.payload;
+    }
     // console.log('login res ==>', res);
     if (res.status) {
       var a = moment(res.data.user.dob);
@@ -98,7 +101,10 @@ export const OtpScreen = props => {
     // console.log('getOtpBody ==>', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     // console.log('getOtpBody ==>', getOtpResponse);
-    const res = getOtpResponse.payload;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (getOtpResponse) {
+      res = getOtpResponse.payload;
+    }
     if (res.status) {
       // console.log('getOtp res ==>', res.data.otp);
       setLoading(false);

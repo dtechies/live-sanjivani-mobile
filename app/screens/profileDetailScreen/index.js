@@ -39,6 +39,7 @@ export const ProfileDetailScreen = () => {
   const [lastNm, setLastNm] = useState(userDetails.last_name);
   const [lastNmErr, setLastNmErr] = useState('');
   const [dob, setDob] = useState(userDetails.dob);
+  const [givenDate, setGivenDate] = useState(userDetails.dob);
   const [dobErr, setDobErr] = useState('');
   const [email, setEmail] = useState(userDetails.email);
   const [emailErr, setEmailErr] = useState('');
@@ -176,8 +177,9 @@ export const ProfileDetailScreen = () => {
     let day = givenDate.getDate();
     let month = givenDate.getMonth() + 1;
     let year = givenDate.getFullYear();
-    let newDate = day + '-' + month + '-' + year;
+    let newDate = year + '-' + month + '-' + day;
     setDob(newDate);
+    setGivenDate(givenDate);
     setDobErr('');
     setShowDate(false);
   };
@@ -453,7 +455,7 @@ export const ProfileDetailScreen = () => {
             <DateTimePickerModal
               isVisible={showDate}
               mode="date"
-              date={dob ? new Date(dob) : new Date()}
+              date={givenDate ? new Date(givenDate) : new Date()}
               onConfirm={val => getCurrentDate(val)}
               onCancel={() => {
                 setShowDate(false);
