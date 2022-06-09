@@ -49,7 +49,9 @@ export const timeAMStyle = () => ({
   fontSize: fontSize.medium,
 });
 export const desTextStyle = () => ({
-  marginVertical: size.moderateScale(5),
+  // marginVertical: size.moderateScale(),
+  marginTop: size.moderateScale(10),
+  marginBottom: size.moderateScale(5),
   fontFamily: fonts.latoRegular,
   color: color.dimGrey,
   fontSize: fontSize.verySmall,
@@ -88,7 +90,7 @@ export const progressView = () => ({
   paddingVertical: size.moderateScale(10),
   paddingHorizontal: size.moderateScale(20),
   borderRadius: size.moderateScale(10),
-  height: size.moderateScale(100),
+  // height: size.moderateScale(100),
   marginHorizontal: size.moderateScale(20),
   backgroundColor: color.white,
   marginVertical: size.moderateScale(10),
@@ -133,7 +135,7 @@ export const rowImage = () => ({
   alignItems: 'center',
   // justifyContent: 'space-between',
   flex: 1,
-  // backgroundColor: 'red',
+  marginTop: size.moderateScale(5),
 });
 export const medicationCard = () => ({
   paddingBottom: size.moderateScale(5),
@@ -238,12 +240,12 @@ export const upcomingCircle = () => ({
   justifyContent: 'center',
 });
 export const lineStyle = isDone => ({
-  borderBottomWidth: 1,
-  borderRadius: 1,
-  // borderBottomColor: isDone ? color.blue : color.dimGrey,
-  borderBottomColor: color.dimGrey,
-  borderStyle: 'dashed',
   flex: 1,
+  borderStyle: 'dashed',
+  borderRadius: 0,
+  borderWidth: 1,
+  // borderColor: isDone ? color.blue : color.dimGrey,
+  borderColor: color.dimGrey,
 });
 export const plusMenu = () => ({
   backgroundColor: 'white',
