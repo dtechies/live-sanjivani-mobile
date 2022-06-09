@@ -174,7 +174,7 @@ export const TodayScreen = () => {
 
     let tot = 0;
     medicationData.map(val => {
-      if (val.is_done != null) {
+      if (val.is_done != '0') {
         tot = tot + 1;
       }
     });

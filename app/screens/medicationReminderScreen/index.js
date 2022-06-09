@@ -1,6 +1,6 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useCallback} from 'react';
 import {SafeAreaView, Pressable, View, Image} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -55,7 +55,7 @@ export const MedicationReminderScreen = () => {
   const [name, setName] = useState('');
   const [nameErr, setNameErr] = useState('');
   const [medicineFormNameErr, setMedicineFormNameErr] = useState(null);
-  const [medicineStrength, setMedicineStrength] = useState('');
+  const [medicineStrengthUnit, setMedicineStrengthUnit] = useState('');
 
   const [strength, setStrength] = useState('');
   const [strengthErr, setStrengthErr] = useState('');
@@ -181,7 +181,7 @@ export const MedicationReminderScreen = () => {
       medicine_form: medicineValue,
       dose: doseValue,
       medicine_strength: strength,
-      medicine_strength_unit: medicineStrength,
+      medicine_strength_unit: medicineStrengthUnit,
       reminder_frequency: remindFrequencyValue,
       reminder_time: remindTimeValue,
       frequency_value: remindFreqDate,
@@ -217,7 +217,7 @@ export const MedicationReminderScreen = () => {
     }
     if (medicineValue == 'Drop') {
       setMedicineStrengthErr('');
-    } else if (medicineStrength === '') {
+    } else if (medicineStrengthUnit === '') {
       setMedicineStrengthErr('Enter medicine Strength');
     }
     if (medicineValue == 'Drop') {
@@ -225,7 +225,7 @@ export const MedicationReminderScreen = () => {
     } else if (strength === '') {
       setStrengthErr('Enter Strength');
     }
-    if (medicineStrength === '') {
+    if (medicineStrengthUnit === '') {
     }
     if (doseValue === '' || doseValue === null) {
       setDoseValueErr('Select dose');
@@ -253,10 +253,29 @@ export const MedicationReminderScreen = () => {
     //   setStrengthErr('Enter Strength');
     // }
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      setReminderName('');
+      setReferredBy('');
+      setName('');
+      setImageData('Upload or take picture from phone');
+      setImageUpload('');
+      setMedicineValue('');
+      setDoseValue(null);
+      setStrength('');
+      setMedicineStrengthUnit('');
+      setRemindFrequencyValue(null);
+      setRemindTimeValue(null);
+      setRemindFreqDate('');
+      setRemindTime('');
+      setPills('');
+      setMedicineFilteredValue();
+    }, []),
+  );
   useEffect(() => {
     onGetMedicineReminderView();
   }, []);
-
   return (
     <SafeAreaView style={styles.container()}>
       <Toast
@@ -452,12 +471,13 @@ export const MedicationReminderScreen = () => {
               titleStyle={styles.labelFieldText()}
               placeholder={'Ex: 150'}
               maxLength={3}
+              keyboardType={'decimal-pad'}
+              placeholderTextColor={color.grayTxt}
               inputStyle={styles.inputStyle()}
               value={strength}
               mainContainerStyle={styles.inputMainContainer()}
               onChangeText={val => {
                 setStrength(val);
-
                 setNameErr('');
               }}
             />
@@ -490,7 +510,7 @@ export const MedicationReminderScreen = () => {
                 },
               }}
               onChange={item => {
-                setMedicineStrength(item.unit);
+                setMedicineStrengthUnit(item.unit);
                 setMedicineStrengthErr('');
                 setIsFocus(false);
               }}
@@ -550,7 +570,7 @@ export const MedicationReminderScreen = () => {
             );
           }}
         />
-        {remindFrequencyValue !== 'Everyday' && remindFrequencyValue !== null && (
+        {remindFrequencyValue !== 'EveryDay' && remindFrequencyValue !== null && (
           <Pressable
             onPress={() => {
               setShowDate(!showDate);
@@ -663,6 +683,7 @@ export const MedicationReminderScreen = () => {
               titleTx={'medication_reminder_screen.pill_remaining'}
               titleStyle={styles.labelFieldText()}
               placeholder={'0'}
+              keyboardType={'number-pad'}
               inputStyle={styles.inputStyle()}
               value={pills}
               mainContainerStyle={styles.inputMainContainer()}

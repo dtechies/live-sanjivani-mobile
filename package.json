@@ -11,7 +11,8 @@
     "postinstall": "node ./bin/postInstall",
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:3000 tcp:3000 && adb reverse tcp:9001 tcp:9001 && adb reverse tcp:8081 tcp:8081",
     "clean": "rm -rf node_modules && rm -rf yarn.lock && cd ios && rm -rf Pods && rm -rf Podfile.lock && cd .. && cd android && rm -rf build && cd app && rm -rf build && cd .. && cd ..",
-    "generate_apk": "cd android && ./gradlew app:assembleRelease"
+    "generate_apk": "cd android && ./gradlew app:assembleRelease",
+    "ios_8": "npx react-native run-ios --simulator='iPhone 8'"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.3",
