@@ -18,6 +18,7 @@ export const toast = () => ({
 });
 export const screenContainer = () => ({
   paddingHorizontal: size.moderateScale(20),
+  flex: 1,
 });
 
 export const headingMain = () => ({

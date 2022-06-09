@@ -32,4 +32,4 @@ export * from './GetUserProfileAction';
 export * from './GetUserFavSubCategoryPdfAction';
 export * from './GetTodayMedicationListAction';
 export * from './AddEditPlayerIdAction';
-export * from './editReminderStatusAction';
+export * from './EditReminderStatusAction';
