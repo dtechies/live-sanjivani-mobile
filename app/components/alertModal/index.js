@@ -13,10 +13,6 @@ export const AlertModal = props => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
-  var givenTime = data.user_selected_time;
-  var hourValue = givenTime.slice(0, 2);
-  var ampm = hourValue >= 12 ? 'PM' : 'AM';
-
   // useEffect(() => {
   //   console.log('data', data);
   // }, []);
@@ -47,8 +43,9 @@ export const AlertModal = props => {
   return (
     <View style={styles.container()}>
       {loading && <Loader />}
+
       <View style={styles.cardStyle()}>
-        {data?.type == 'appointment' ? (
+        {data?.type == 'appointment_reminder' && (
           <Pressable
             onPress={() => closeModal()}
             style={styles.closeIconStyle()}>
@@ -58,20 +55,38 @@ export const AlertModal = props => {
               fill={color.black}
             />
           </Pressable>
-        ) : null}
-        <Text style={styles.textDate()}>
-          {data?.user_selected_time.slice(0, 5)} {ampm}
-        </Text>
-        <Text style={styles.textTitle()}>
-          {data?.reminder_name && data.reminder_name}
-        </Text>
-        <Text style={styles.textDescription()}>
-          {data?.dose} {data?.medicine_name} {data?.medicine_strength}{' '}
-          {data?.medicine_strength_unit} {data?.medicine_form}
-          {', '}
-          {data?.reminder_frequency}
-          {', '} {data?.reminder_time}
-        </Text>
+        )}
+        <View>
+          {data?.type == 'appointment_reminder' ? (
+            <View>
+              <Text style={styles.textDate()}>
+                {data?.user_selected_time.slice(0, 5)}
+              </Text>
+              <Text style={styles.textTitle()}>
+                {data?.doctor_name && data.doctor_name}
+              </Text>
+              <Text style={styles.textTitle()}>
+                {data?.doctor_address && data.doctor_address}
+              </Text>
+            </View>
+          ) : (
+            <View>
+              <Text style={styles.textDate()}>
+                {data?.user_selected_time.slice(0, 5)}
+              </Text>
+              <Text style={styles.textTitle()}>
+                {data?.reminder_name && data.reminder_name}
+              </Text>
+              <Text style={styles.textDescription()}>
+                {data?.dose} {data?.medicine_name} {data?.medicine_strength}{' '}
+                {data?.medicine_strength_unit} {data?.medicine_form}
+                {', '}
+                {data?.reminder_frequency}
+                {', '} {data?.reminder_time}
+              </Text>
+            </View>
+          )}
+        </View>
 
         {data?.type == 'reminder' ? (
           <View style={styles.rowView()}>
