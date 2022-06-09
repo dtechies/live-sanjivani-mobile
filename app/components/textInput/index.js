@@ -57,8 +57,7 @@ export const InputBox = props => {
           <TextInput
             testID={inputTestId}
             style={[styles.inputContainer(leftIcon, isRightUnit), inputStyle]}
-            // placeholderTextColor={leftIcon ? color.blue : color.dimGrey}
-            placeholderTextColor={placeholderTextColor}
+            placeholderTextColor={leftIcon ? color.blue : color.dimGrey}
             selectionColor={color.dimGrey}
             value={value}
             ref={textRef}

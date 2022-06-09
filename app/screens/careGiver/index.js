@@ -157,7 +157,6 @@ export const CareGiver = () => {
           <View style={styles.rightViewStyle()}>
             <InputBox
               placeholder={'Enter First Name'}
-              placeholderTextColor={color.dimGrey}
               value={firstName}
               onChangeText={val => {
                 setFirstName(val);
@@ -184,7 +183,6 @@ export const CareGiver = () => {
           <View style={styles.rightViewStyle()}>
             <InputBox
               placeholder={'Enter Last Name'}
-              placeholderTextColor={color.dimGrey}
               value={lastName}
               editable={isEdit}
               onChangeText={val => {
@@ -211,7 +209,6 @@ export const CareGiver = () => {
           <View style={styles.rightViewStyle()}>
             <InputBox
               placeholder={'Enter Contact Number'}
-              placeholderTextColor={color.dimGrey}
               value={phone}
               editable={isEdit}
               onChangeText={val => {
@@ -239,7 +236,6 @@ export const CareGiver = () => {
           <View style={styles.rightViewStyle()}>
             <InputBox
               placeholder={'Enter Email'}
-              placeholderTextColor={color.dimGrey}
               value={email}
               editable={isEdit}
               onChangeText={val => {
@@ -266,7 +262,6 @@ export const CareGiver = () => {
           <View style={styles.rightViewStyle()}>
             <InputBox
               placeholder={'Enter Nick Name'}
-              placeholderTextColor={color.dimGrey}
               value={nickName}
               editable={isEdit}
               onChangeText={val => {
