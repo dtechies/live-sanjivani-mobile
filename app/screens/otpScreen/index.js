@@ -98,9 +98,9 @@ export const OtpScreen = props => {
     const getOtpBody = {
       mob_no: otpData ? otpData?.mob_no : '',
     };
-    // console.log('getOtpBody ==>', getOtpBody);
+    console.log('getOtpBody ==>', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    // console.log('getOtpBody ==>', getOtpResponse);
+    console.log('getOtpBodyresponses ==>', getOtpResponse);
     let res = {status: false, message: 'Connection Error...!'};
     if (getOtpResponse) {
       res = getOtpResponse.payload;
