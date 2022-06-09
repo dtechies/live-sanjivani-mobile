@@ -24,7 +24,10 @@ export const HelpSupportScreen = () => {
   const onHelpSupport = async () => {
     setLoading(true);
     const helpResponse = await dispatch(getHelpSupport());
-    const res = helpResponse;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (helpResponse) {
+      res = helpResponse;
+    }
     if (res.status) {
       // console.log('helpResponse data ==>', res);
       setLoading(false);

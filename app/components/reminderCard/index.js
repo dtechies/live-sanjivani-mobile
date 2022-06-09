@@ -22,9 +22,8 @@ export const ReminderCard = props => {
             width={size.moderateScale(12)}
             fill={data.status ? color.darkBlue : color.blueLight}
           />
-          <Text style={styles.cardHeading(data.status)}>
-            {data?.dose} {data?.medicine_name} {data?.medicine_strength}{' '}
-            {data?.medicine_strength_unit}
+          <Text style={styles.cardReminder(data.status)}>
+            {data?.reminder_name}
           </Text>
         </View>
         <ToggleSwitch
@@ -34,6 +33,10 @@ export const ReminderCard = props => {
         />
       </View>
       <View>
+        <Text style={styles.cardHeading(data.status)}>
+          {data?.dose} {data?.medicine_name} {data?.medicine_strength}{' '}
+          {data?.medicine_strength_unit}
+        </Text>
         <Text style={styles.cardText(data.status)}>
           {data?.user_selected_time.slice(0, 5)} {ampm}
           {', '}

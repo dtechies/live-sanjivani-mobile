@@ -177,7 +177,7 @@ export const ProfileDetailScreen = () => {
     let day = givenDate.getDate();
     let month = givenDate.getMonth() + 1;
     let year = givenDate.getFullYear();
-    let newDate = day + '-' + month + '-' + year;
+    let newDate = year + '-' + month + '-' + day;
     setDob(newDate);
     setGivenDate(givenDate);
     setDobErr('');

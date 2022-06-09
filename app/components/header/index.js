@@ -112,7 +112,7 @@ export const Header = props => {
             style={styles.imgMain(
               props.isCamera ? 3 : props.isLogoCenter ? 1 : 2,
             )}>
-            {console.log('Header image ==> ', props.source.uri)}
+            {/* {console.log('Header image ==> ', props.source.uri)} */}
             <Image
               source={
                 props.source.uri == '' ? images.icPersonLogo : props.source
