@@ -31,6 +31,7 @@ export const ProfileScreen = () => {
       addEditPlayerId(removePlayerIdBody),
     );
     const res = removePlayerIdResponse.payload;
+
     if (res.status) {
       clearData();
       await dispatch(userLogOut());
@@ -132,6 +133,7 @@ export const ProfileScreen = () => {
                   height={size.moderateScale(40)}
                   width={size.moderateScale(40)}
                   fill={item.selectedCard ? color.white : color.blue}
+                  stroke={item.selectedCard ? color.blue : color.white}
                 />
                 <Text
                   text={item.value}

@@ -7,10 +7,6 @@ import {ToggleSwitch} from '../switch';
 
 export const ReminderCard = props => {
   const {onTogglePress, onWholeCardPress, data} = props;
-  // console.log('datatatat=', data);
-  var givenTime = data?.user_selected_time;
-  var hourValue = givenTime.slice(0, 2);
-  var ampm = hourValue >= 12 ? 'PM' : 'AM';
   return (
     <Pressable
       onPress={() => onWholeCardPress && onWholeCardPress()}
@@ -38,7 +34,7 @@ export const ReminderCard = props => {
           {data?.medicine_strength_unit}
         </Text>
         <Text style={styles.cardText(data.status)}>
-          {data?.user_selected_time.slice(0, 5)} {ampm}
+          {data?.user_selected_time.slice(0, 5)}
           {', '}
           {data?.reminder_time}
         </Text>

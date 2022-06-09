@@ -6,7 +6,7 @@ export const container = () => ({
   height: size.deviceHeight,
   width: size.deviceWidth,
   zIndex: 50000000,
-  paddingHorizontal: size.moderateScale(10),
+  paddingHorizontal: size.moderateScale(20),
   justifyContent: 'center',
 });
 export const textDate = () => ({
