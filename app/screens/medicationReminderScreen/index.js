@@ -145,9 +145,7 @@ export const MedicationReminderScreen = () => {
     setShowDate(false);
   };
   const getRemindTime = givenTime => {
-    var hours = givenTime.getHours();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    let newTime = givenTime.toTimeString().slice(0, 5) + ' ' + ampm;
+    let newTime = givenTime.toTimeString().slice(0, 5);
     setRemindTime(newTime);
     setRemindTimeErr('');
     setShowTime(false);
@@ -204,9 +202,9 @@ export const MedicationReminderScreen = () => {
     if (name === '') {
       setNameErr('Enter medicine name');
     }
-    if (imageData === null) {
-      setImageDataErr('Upload / take image');
-    }
+    // if (imageData === null) {
+    //   setImageDataErr('Upload / take image');
+    // }
     if (medicineValue === '' || medicineValue === null) {
       setMedicineFormNameErr('Select medicine form');
     }

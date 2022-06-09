@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, SafeAreaView, FlatList, Pressable, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
 
 import {Text, Screen, Header} from 'components';
 import {serviceListData, DWMYData} from 'json';
@@ -8,43 +9,16 @@ import {size, color, images} from 'theme';
 import * as styles from './styles';
 import {LineChart} from 'react-native-chart-kit';
 import {SvgUri, SvgXml} from 'react-native-svg';
+import {GetSubCategoryGraphs} from 'redux-actions';
+import moment from 'moment';
 
 export const ProgressDetailScreen = props => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
   const [sharingData, setSharingData] = useState({});
   const [dWMYData, setDWMYData] = useState(DWMYData);
   const [isSelected, setSelected] = useState(0);
-  const dayList = [
-    '6:AM',
-    '8:AM',
-    '10:AM',
-    '12:PM',
-    '2:PM',
-    '4:PM',
-    '6:PM',
-    '8:PM',
-    '10:PM',
-    '12:AM',
-    '2:AM',
-    '4:AM',
-  ];
-  const dayData = [
-    '62',
-    '56',
-    '88',
-    '99',
-    '70',
-    '65',
-    '80',
-    '85',
-    '79',
-    '81',
-    '85',
-    '89',
-  ];
-  const weekList = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-  const weekData = ['85', '68', '77', '80', '75', '65', '79'];
   const yearList = [
     'Jan',
     'Feb',
@@ -59,53 +33,18 @@ export const ProgressDetailScreen = props => {
     'Nav',
     'Dec',
   ];
-  const yearData = [
-    '68',
-    '87',
-    '74',
-    '81',
-    '83',
-    '87',
-    '85',
-    '77',
-    '73',
-    '67',
-    '77',
-    '67',
-  ];
-  const monthList = [
-    '1-3',
-    '4-6',
-    '7-9',
-    '10-12',
-    '13-15',
-    '16-18',
-    '19-21',
-    '22-24',
-    '25-27',
-    '28-30',
-    '31',
-  ];
-  const monthData = [
-    '80',
-    '70',
-    '65',
-    '80',
-    '91',
-    '84',
-    '74',
-    '76',
-    '88',
-    '89',
-    '85',
-  ];
   // const [Icon, setIcon] = useState();
-  const [isSelectedList, setSelectedList] = useState(dayList);
-  const [isSelectedData, setSelectedData] = useState(dayData);
-  const minValue = 60;
-  const maxValue = 90;
+  const [isSelectedList, setSelectedList] = useState([]);
+  const [isSelectedData, setSelectedData] = useState([]);
+  const [weekDetails, setWeekDetails] = useState([]);
+  const [dateDetails, setDateDetails] = useState([]);
+  const [monthsDetails, setMonthsDetails] = useState([]);
+  const [yearDetails, setYearDetails] = useState([]);
+  const minValue = 0;
+  const [maxValue, setMaxValue] = useState(300);
+  const [yieldAr, setYieldAr] = useState([]);
   function* yLabel() {
-    yield* [minValue, 70, 80, maxValue];
+    yield* yieldAr;
   }
   const yLabelIterator = yLabel();
   const chartConfig = {
@@ -122,25 +61,111 @@ export const ProgressDetailScreen = props => {
   const itemSelect = index => {
     setSelected(index);
     if (index == 0) {
-      setSelectedData(dayData);
-      setSelectedList(dayList);
+      let maxValueHere = Math.max(...dateDetails.map(i => i.data));
+      setMaxValue(maxValueHere);
+      let minValueHere = 0;
+      let minValueHereAyy = [];
+      minValueHereAyy.push(minValueHere);
+      [...Array(3)].map(i => {
+        minValueHere += maxValueHere / 3;
+        minValueHereAyy.push(minValueHere.toFixed(1));
+      });
+      setYieldAr(minValueHereAyy);
+      console.log('res', maxValueHere / 3, minValueHereAyy);
+
+      setSelectedList(dateDetails.map(i => i.time.split('-')[0]));
+      setSelectedData(dateDetails.map(i => i.data));
     } else if (index == 1) {
-      setSelectedData(weekData);
-      setSelectedList(weekList);
+      let maxValueHere = Math.max(...weekDetails.map(i => i.data));
+      setMaxValue(maxValueHere);
+      let minValueHere = 0;
+      let minValueHereAyy = [];
+      minValueHereAyy.push(minValueHere);
+      [...Array(3)].map(i => {
+        minValueHere += maxValueHere / 3;
+        minValueHereAyy.push(minValueHere.toFixed(1));
+      });
+      setYieldAr(minValueHereAyy);
+      console.log('res', maxValueHere / 3, minValueHereAyy);
+
+      setSelectedList(
+        weekDetails.map(i => moment(i.date, 'YYYY-MM-DD').format('ddd')),
+      );
+      setSelectedData(weekDetails.map(i => i.data));
     } else if (index == 2) {
-      setSelectedData(monthData);
-      setSelectedList(monthList);
+      let maxValueHere = Math.max(...monthsDetails.map(i => i.data));
+      setMaxValue(maxValueHere);
+      let minValueHere = 0;
+      let minValueHereAyy = [];
+      minValueHereAyy.push(minValueHere);
+      [...Array(3)].map(i => {
+        minValueHere += maxValueHere / 3;
+        minValueHereAyy.push(minValueHere.toFixed(1));
+      });
+      setYieldAr(minValueHereAyy);
+      console.log('res', maxValueHere / 3, minValueHereAyy);
+
+      setSelectedList(
+        monthsDetails.map(
+          i => `${i.date.split('-')[2]}-${i.date.split('-')[5]}`,
+        ),
+      );
+      setSelectedData(monthsDetails.map(i => i.data));
     } else if (index == 3) {
-      setSelectedData(yearData);
+      let maxValueHere = Math.max(...yearDetails.map(i => i.data));
+      setMaxValue(maxValueHere);
+      let minValueHere = 0;
+      let minValueHereAyy = [];
+      minValueHereAyy.push(minValueHere);
+      [...Array(3)].map(i => {
+        minValueHere += maxValueHere / 3;
+        minValueHereAyy.push(minValueHere.toFixed(1));
+      });
+      setYieldAr(minValueHereAyy);
+      console.log('res', maxValueHere / 3, minValueHereAyy);
+
       setSelectedList(yearList);
+      setSelectedData(yearDetails.map(i => i.data));
     }
     setExtra(extra + 1);
   };
   // const Icon = props.route.params && props.route.params.selectedItems.svg;
+  const GetSubCategoryGraph = async () => {
+    const graphBody = {
+      subcategory_id: props.route.params.selectedItems.id,
+    };
+    const subCatGraphRes = await dispatch(GetSubCategoryGraphs(graphBody));
+    console.log('subCatGraphRes', subCatGraphRes);
+    let res = subCatGraphRes.data;
+    if (subCatGraphRes.status) {
+      console.log('res', res);
+      setWeekDetails(res.WeeklyData);
+      setDateDetails(res.DailyData);
+      setMonthsDetails(res.MonthlyData);
+      setYearDetails(res.YearlyData);
+
+      // Math.max(...res.DailyData.map(i => i.data))
+      let maxValueHere = Math.max(...res.DailyData.map(i => i.data));
+      setMaxValue(maxValueHere);
+      let minValueHere = 0;
+      let minValueHereAyy = [];
+      minValueHereAyy.push(minValueHere);
+      [...Array(3)].map(i => {
+        minValueHere += maxValueHere / 3;
+        minValueHereAyy.push(minValueHere.toFixed(1));
+      });
+      setYieldAr(minValueHereAyy);
+      console.log('res', maxValueHere / 3, minValueHereAyy);
+      setSelectedList(res.DailyData.map(i => i.time.split('-')[1]));
+      setSelectedData(res.DailyData.map(i => i.data));
+    }
+  };
   useEffect(() => {
     if (props.route.params) {
+      GetSubCategoryGraph();
       console.log('props.route.params ==> ', props.route.params);
       setSharingData(props.route.params?.selectedItems);
+
       setExtra(extra + 1);
     }
   }, []);
@@ -209,21 +234,26 @@ export const ProgressDetailScreen = props => {
             datasets: [
               {
                 data: isSelectedData,
+                withDots: true,
                 color: (opacity = 1) => `rgba(255, 0, 0, ${opacity})`, // optional
               },
               {
-                data: [60], // min
+                data: [0], // min
                 withDots: false,
               },
               {
-                data: [100], // max
+                data: [maxValue], // max
                 withDots: false,
               },
             ],
           }}
+          getDotColor={dataPoint => {
+            if (dataPoint !== null) return 'red';
+          }}
           width={size.deviceWidth * 0.98}
-          height={320}
+          height={size.moderateScale(320)}
           verticalLabelRotation={90}
+          horizontalLabelRotation={-90}
           formatYLabel={() => yLabelIterator.next().value}
           // fromZero={false}
           chartConfig={chartConfig}
@@ -231,6 +261,7 @@ export const ProgressDetailScreen = props => {
           withShadow={false}
           style={{
             paddingRight: size.moderateScale(30),
+            paddingLeft: size.moderateScale(2),
             fontSize: 1,
             borderRadius: size.moderateScale(10),
           }}
