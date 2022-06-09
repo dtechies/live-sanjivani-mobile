@@ -53,7 +53,10 @@ export const SharingScreen = () => {
   const getAllSubCategoryData = async () => {
     setLoading(true);
     const SubCategoryResponse = await dispatch(getAllSubCategory());
-    const res = SubCategoryResponse;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (SubCategoryResponse) {
+      res = SubCategoryResponse;
+    }
     // console.log('SubCategoryResponse res ==>', res);
     if (res.status) {
       setLoading(false);

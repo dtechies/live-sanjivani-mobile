@@ -35,7 +35,10 @@ export const ProgressScreen = () => {
   const getAllSubCategoryData = async () => {
     setLoading(true);
     const SubCategoryResponse = await dispatch(getAllSubCategory());
-    const res = SubCategoryResponse;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (SubCategoryResponse) {
+      res = SubCategoryResponse;
+    }
     if (res.status) {
       setLoading(false);
       let newData = res.data.map(i => {
@@ -60,7 +63,10 @@ export const ProgressScreen = () => {
     };
     setExtra(extra + 1);
     const SubCategoryResponse = await dispatch(addUserFavorite(fevUserBody));
-    const res = SubCategoryResponse;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (SubCategoryResponse) {
+      res = SubCategoryResponse;
+    }
 
     if (res.status) {
       setLoading(false);
@@ -75,7 +81,10 @@ export const ProgressScreen = () => {
   const getUserFavoriteListData = async () => {
     setLoading(true);
     const SubCategoryResponse = await dispatch(getUserFavoriteList());
-    const res = SubCategoryResponse;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (SubCategoryResponse) {
+      res = SubCategoryResponse;
+    }
     if (res.status) {
       setLoading(false);
       let favData = res.data.subCategoryDataN;

@@ -7,6 +7,7 @@ import {serviceListData, DWMYData} from 'json';
 import {size, color, images} from 'theme';
 import * as styles from './styles';
 import {LineChart} from 'react-native-chart-kit';
+import {SvgUri, SvgXml} from 'react-native-svg';
 
 export const ProgressDetailScreen = props => {
   const navigation = useNavigation();
@@ -138,7 +139,7 @@ export const ProgressDetailScreen = props => {
   // const Icon = props.route.params && props.route.params.selectedItems.svg;
   useEffect(() => {
     if (props.route.params) {
-      // console.log('props.route.params ==> ', props.route.params);
+      console.log('props.route.params ==> ', props.route.params);
       setSharingData(props.route.params?.selectedItems);
       setExtra(extra + 1);
     }
@@ -174,13 +175,13 @@ export const ProgressDetailScreen = props => {
             text={sharingData.name}
           />
           <View style={styles.row()}>
-            {/* <Icon height={20} width={20} fill={color.black} /> */}
-
-            <Image
-              resizeMode="cover"
-              source={imageUrl}
-              style={styles.centerLeftView()}
+            <SvgUri
+              height={size.moderateScale(35)}
+              width={size.moderateScale(35)}
+              // color={'red'}
+              uri={sharingData.icon}
             />
+
             <Text style={styles.textItemValue()} text={sharingData.value} />
             <Text style={styles.textItemUnit()} text={sharingData.unit} />
           </View>

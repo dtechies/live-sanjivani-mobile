@@ -18,14 +18,19 @@ export const cardFirst = () => ({
   marginHorizontal: size.moderateScale(15),
 });
 export const cardHeading = val => ({
+  marginLeft: size.moderateScale(34),
+  color: val ? color.darkBlue : color.blueLight,
+  fontFamily: fonts.latoRegular,
+  fontSize: fontSize.verySmall,
+});
+export const cardReminder = val => ({
   marginLeft: size.moderateScale(7),
   color: val ? color.darkBlue : color.blueLight,
   fontFamily: fonts.latoBold,
-  fontSize: fontSize.verySmall,
+  fontSize: fontSize.small,
 });
 export const cardText = val => ({
-  marginLeft: size.moderateScale(35),
-  marginTop: size.moderateScale(8),
+  marginLeft: size.moderateScale(34),
   fontSize: fontSize.verySmall,
   fontFamily: fonts.latoRegular,
   color: val ? color.darkBlue : color.blueCard,

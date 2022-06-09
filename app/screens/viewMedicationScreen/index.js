@@ -123,7 +123,6 @@ export const ViewMedicationScreen = () => {
             }}
             inputStyle={styles.buttonNew()}
             leftIcon={true}
-            placeholderTextColor={color.dimGrey}
             containerStyle={styles.mainInputStyle()}
             placeholder={'Search Medicine'}
             leftIconName={

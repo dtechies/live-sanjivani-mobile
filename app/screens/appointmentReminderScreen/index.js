@@ -140,7 +140,10 @@ export const AppointmentReminderScreen = animated => {
   const onGetDoctorDetails = async () => {
     setLoading(true);
     const getOtpResponse = await dispatch(getAppointmentReminderAllDetail());
-    const res = getOtpResponse;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (getOtpResponse) {
+      res = getOtpResponse;
+    }
     // console.log('getDoctorData res ==>', res);
     if (res.status) {
       setLoading(false);
@@ -170,7 +173,10 @@ export const AppointmentReminderScreen = animated => {
     const SubCategoryResponse = await dispatch(
       addAppointmentReminder(formData),
     );
-    const res = SubCategoryResponse;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (SubCategoryResponse) {
+      res = SubCategoryResponse;
+    }
     // console.log('addUserFavoriteData res RESSS==>', res);
 
     if (res.status) {
@@ -205,7 +211,7 @@ export const AppointmentReminderScreen = animated => {
   }, []);
 
   const onChangeSearchText = e => {
-    console.log('SU AAVE CHE', e);
+    // console.log('SU AAVE CHE', e);
     setAddressOne(e);
   };
 
@@ -367,7 +373,6 @@ export const AppointmentReminderScreen = animated => {
               />
             }
             placeholder={'Doctor/Practice...'}
-            placeholderTextColor={color.black}
           />
           {searchValErr ? (
             <Text style={styles.textValidation()} text={searchValErr} />
@@ -408,7 +413,7 @@ export const AppointmentReminderScreen = animated => {
               />
             }
             placeholder={'Address'}
-            placeholderTextColor={color.black}
+            
           /> */}
           <View style={styles.searchPlacesTxt()}>
             <View
@@ -447,7 +452,6 @@ export const AppointmentReminderScreen = animated => {
                 onChangeText: onChangeSearchText,
                 style: styles.searchPlacesInputTxt(),
                 placeholder: 'Search address...',
-                placeholderTextColor: color.dimGrey,
                 errorStyle: {color: 'red'},
               }}
               styles={{
