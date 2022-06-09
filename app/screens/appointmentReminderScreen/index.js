@@ -34,7 +34,7 @@ export const AppointmentReminderScreen = animated => {
   const [showTime, setShowTime] = useState(false);
   const [showTimeReminder, setShowTimeReminder] = useState(false);
   const [selectedDate, setSelectedDate] = useState(
-    new moment().format('Do MMMM YYYY'),
+    new moment().format('YYYY-MM-DD'),
   );
   const [selectedDateErr, setSelectedDateErr] = useState('');
   const [searchVal, setSearchVal] = useState('');
@@ -66,34 +66,38 @@ export const AppointmentReminderScreen = animated => {
     popUpRef.current?.close();
   };
   const getAppointmentTime = givenTime => {
-    var hours = givenTime.getHours();
-    var m = givenTime.getMinutes();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    var h = hours;
-    if (h >= 12) {
-      h = hours - 12;
-    }
-    if (h == 0) {
-      h = 12;
-    }
-    m = m < 10 ? '0' + m : m;
-    setSelectedTime(`${h}:${m} ${ampm}`);
+    console.log('givenTime=>', givenTime);
+    let newTime = givenTime.toTimeString().slice(0, 5);
+    console.log('givenTime=>', newTime);
+    // var hours = givenTime.getHours();
+    // var m = givenTime.getMinutes();
+    // var ampm = hours >= 12 ? 'PM' : 'AM';
+    // var h = hours;
+    // if (h >= 12) {
+    //   h = hours - 12;
+    // }
+    // if (h == 0) {
+    //   h = 12;
+    // }
+    // m = m < 10 ? '0' + m : m;
+    setSelectedTime(newTime);
     setSelectedTimeErr('');
     setShowTime(false);
   };
   const getReminderTime = givenTime => {
-    var hours = givenTime.getHours();
-    var m = givenTime.getMinutes();
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    var h = hours;
-    if (h >= 12) {
-      h = hours - 12;
-    }
-    if (h == 0) {
-      h = 12;
-    }
-    m = m < 10 ? '0' + m : m;
-    setReminderTime(`${h}:${m} ${ampm}`);
+    // var hours = givenTime.getHours();
+    // var m = givenTime.getMinutes();
+    // var ampm = hours >= 12 ? 'PM' : 'AM';
+    // var h = hours;
+    // if (h >= 12) {
+    //   h = hours - 12;
+    // }
+    // if (h == 0) {
+    //   h = 12;
+    // }
+    // m = m < 10 ? '0' + m : m;
+    let newTime = givenTime.toTimeString().slice(0, 5);
+    setReminderTime(newTime);
     setSelectedTimeErrSecond('');
     setShowTimeReminder(false);
   };
@@ -157,17 +161,18 @@ export const AppointmentReminderScreen = animated => {
   };
 
   const addAppointmentData = async () => {
-    setLoading(true);
-    // console.log('dataId', dataId);
-    let date = new moment(selectedDate, ['Do MMMM YYYY']).format('YYYY-MM-D');
+    // setLoading(true);
+    console.log('dataId', selectedDate);
+    // let date = new moment(selectedDate, ['Do MMMM YYYY']).format('YYYY-MM-D');
     let formData = new FormData();
     formData.append('doctor_name', searchVal);
-    formData.append('date', date);
+    formData.append('date', selectedDate);
     formData.append('doctor_address', addressOne);
-    formData.append('user_selected_time', selectedTime);
+    formData.append('user_selected_time', `${selectedTime.slice(0, 5)}:00`);
     formData.append('user_id', userId);
-    formData.append('reminder_time', reminderTime);
-
+    formData.append('reminder_time', `${reminderTime.slice(0, 5)}:00`);
+    console.log('formData', formData);
+    // return;
     setExtra(extra + 1);
     // console.log('fevUserBody', formData);
     const SubCategoryResponse = await dispatch(
@@ -257,7 +262,8 @@ export const AppointmentReminderScreen = animated => {
               current={moment(new Date()).format('YYYY-MM-DD')}
               selected={moment(new Date()).format('YYYY-MM-DD')}
               onSelectedChange={date => {
-                setSelectedDate(moment(date).format('Do MMMM YYYY'));
+                // console.log('date=>', moment(date).format('YYYY-MM-DD'));
+                setSelectedDate(moment(date).format('YYYY-MM-DD'));
                 setSelectedDateErr('');
                 // setExtra(extra + 1);
               }}
