@@ -239,6 +239,7 @@ export const upcomingCircle = () => ({
 });
 export const lineStyle = isDone => ({
   borderBottomWidth: 1,
+  borderRadius: 1,
   // borderBottomColor: isDone ? color.blue : color.dimGrey,
   borderBottomColor: color.dimGrey,
   borderStyle: 'dashed',
