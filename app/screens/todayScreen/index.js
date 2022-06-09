@@ -118,7 +118,7 @@ export const TodayScreen = () => {
     const getAppointmentRmdResponse = await dispatch(
       getAppointmentReminderProfile(),
     );
-    // console.log('getAppointmentReminderProfile', getAppointmentRmdResponse);
+    console.log('getAppointmentReminderProfile', getAppointmentRmdResponse);
     if (getAppointmentRmdResponse) {
       if (getAppointmentRmdResponse.status) {
         // setLoading(false);
