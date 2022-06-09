@@ -222,7 +222,7 @@ export const TodayScreen = () => {
                   <View
                     style={styles.row(medicationData.length > index + 1)}
                     key={index + 'medicationData'}>
-                    {console.log('item.status ==> ', item.status, item.id)}
+                    {/* {console.log('item.status ==> ', item.status, item.id)} */}
                     {item.is_done && item.reminder_status == 'take' ? (
                       <IcTrue fill={color.trueIcon} />
                     ) : item.reminder_status == 'snooze' ? (

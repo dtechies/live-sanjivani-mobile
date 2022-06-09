@@ -23,13 +23,12 @@ export const LoginScreen = () => {
     const getOtpBody = {
       mob_no: number,
     };
-    // console.log('otp', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    // console.log('getOtpResponse ====', getOtpResponse);
-    const res = getOtpResponse.payload;
-    // console.log('res', res);
+    let res = {status: false, message: 'Connection Error...!'};
+    if (getOtpResponse) {
+      res = getOtpResponse.payload;
+    }
     if (res.status) {
-      // console.log('response data loginn ==>', res.data);
       setLoading(false);
       toastMessage(res.message);
       setTimeout(() => {

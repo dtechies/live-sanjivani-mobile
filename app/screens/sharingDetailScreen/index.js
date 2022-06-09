@@ -45,31 +45,58 @@ export const SharingDetailScreen = props => {
   };
   const sendPDF = async () => {
     setLoading(true);
-    console.log('dataId');
+    // console.log('dataId');
     const pdfData = {
       email: emailVal,
       subcategory_id: sharingId,
     };
 
     // setExtra(extra + 1);
-    console.log('fevUserBody', pdfData);
+    // console.log('fevUserBody', pdfData);
     const SubCategoryResponse = await dispatch(
       GetUserFavSubCategoryPdfAction(pdfData),
     );
-    const res = SubCategoryResponse;
-    console.log('addUserFavoriteData res RESSS==>', res);
+    let res = {status: false, message: 'Connection Error...!'};
+    if (SubCategoryResponse) {
+      res = SubCategoryResponse;
+    }
+    // console.log('addUserFavoriteData res RESSS==>', res);
 
     if (res.status) {
-      console.log('true');
+      // console.log('true');
       setLoading(false);
       toastMessage(res.message);
       setExtra(extra + 1);
       // navigation.goBack();
       setEmailVal('');
     } else {
-      console.log('false');
+      // console.log('false');
 
       setLoading(false);
+      toastMessage(res.message);
+    }
+  };
+  const download = async () => {
+    const pdfData = {
+      subcategory_id: sharingId,
+    };
+    const SubCategoryResponse = await dispatch(
+      GetUserFavSubCategoryPdfAction(pdfData),
+    );
+    let res = {status: false, message: 'Connection Error...!'};
+    if (SubCategoryResponse) {
+      res = SubCategoryResponse;
+    }
+    console.log('addUserFavoriteData res RESSS==>', res.data.link);
+    if (res.status) {
+      // console.log('true');
+      toastMessage(res.message);
+      let pdf = res.data.link;
+      // setLink(res.data.link);
+      Linking.openURL(`http://${pdf.slice(8)}`);
+      // pdfDownload(res.data.link);
+    } else {
+      // console.log('false');
       toastMessage(res.message);
     }
   };
@@ -79,9 +106,9 @@ export const SharingDetailScreen = props => {
       // setSharingData(selectedItems);
     }
     const data = props.route.params.selectedItems;
-    console.log('data', data);
+    // console.log('data', data);
     const id = data.map(i => i.subcategory_id);
-    console.log('id', id);
+    // console.log('id', id);
     setSharingId(id);
   }, []);
 
@@ -157,11 +184,7 @@ export const SharingDetailScreen = props => {
             nameTx="sharing_screen.download"
             buttonStyle={styles.addButtonStyle()}
             buttonText={styles.textAddButton()}
-            onPress={() =>
-              Linking.openURL(
-                'https://live-sanjivani.s3.us-east-2.amazonaws.com/userFavouriteCategoryPDF/D1KZW7KITR.pdf',
-              )
-            }
+            onPress={() => download()}
           />
         </View>
       </Screen>
