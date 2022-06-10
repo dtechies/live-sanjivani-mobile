@@ -11,8 +11,8 @@ export const toast = () => ({
   paddingVertical: size.moderateScale(12),
 });
 export const inputMain = () => ({
-  width: size.deviceWidth * 0.89,
-  marginTop: size.moderateScale(10),
+  flex: 1,
+  // width: size.deviceWidth * 0.89,
   borderColor: color.white,
   shadowColor: color.black,
   shadowOffset: {width: 1, height: 1},
@@ -89,30 +89,21 @@ export const validationView = () => ({
   height: size.moderateScale(15),
 });
 
-//drop down
-// export const labelFieldText = () => ({
-//   fontSize: fontSize.small,
-//   color: color.dimGray,
-//   fontFamily: fonts.latoBold,
-//   marginLeft: size.moderateScale(10),
-// });
-export const dropDownMain = () => ({
-  borderBottomLeftRadius: size.moderateScale(10),
-  borderBottomRightRadius: size.moderateScale(10),
-  borderTopLeftRadius: size.moderateScale(10),
-  borderTopRightRadius: size.moderateScale(10),
-});
+//drop down style
 
 export const dropdown = () => ({
   width: size.deviceWidth * 0.15,
   marginVertical: size.moderateScale(5),
-  paddingHorizontal: size.moderateScale(5),
-  borderRadius: size.moderateScale(5),
-  paddingVertical: size.moderateScale(5),
+  height: size.deviceHeight * 0.06,
+  borderRadius: size.moderateScale(10),
+  paddingVertical: size.moderateScale(7),
   backgroundColor: color.white,
-  marginLeft: size.moderateScale(20),
-
-  // underlineColor: 'transparent',
+  marginRight: size.moderateScale(8),
+  shadowColor: color.black,
+  shadowOffset: {width: 0, height: 1},
+  shadowOpacity: 0.8,
+  shadowRadius: 1,
+  elevation: size.moderateScale(4),
 });
 export const selectedOptionTextStyle = () => ({
   color: color.blueTx,
@@ -129,7 +120,6 @@ export const dropdownContainer = () => ({
 });
 export const separator = () => ({
   backgroundColor: color.borderBlue,
-  // height: size.moderateScale(1),
 });
 export const InsideLabelFieldText = () => ({
   fontSize: fontSize.small,
@@ -138,4 +128,9 @@ export const InsideLabelFieldText = () => ({
   paddingVertical: size.moderateScale(5),
   paddingLeft: size.moderateScale(15),
   textTransform: 'capitalize',
+});
+export const rowView = () => ({
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginTop: size.moderateScale(10),
 });
