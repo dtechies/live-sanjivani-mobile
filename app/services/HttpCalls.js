@@ -9,9 +9,11 @@ function _post(url, headers, data) {
         ? data
         : JSON.stringify(data),
   };
-  return fetch(url, options).then(r => {
-    return r.json();
-  });
+  return fetch(url, options)
+    .then(r => {
+      return r.json();
+    })
+    .catch(e => console.log('error', e));
 }
 
 function _get(url, headers) {

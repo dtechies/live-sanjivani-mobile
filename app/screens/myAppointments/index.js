@@ -53,15 +53,15 @@ export const MyAppointments = () => {
     const getAppointmentReminderProfileResponse = await dispatch(
       getAppointmentReminderProfile(),
     );
-    console.log(
-      'getAppointmentReminderProfile',
-      getAppointmentReminderProfileResponse,
-    );
+    // console.log(
+    //   'getAppointmentReminderProfile',
+    //   getAppointmentReminderProfileResponse,
+    // );
     const res = getAppointmentReminderProfileResponse;
-    console.log('res', res);
+    // console.log('res', res);
     if (res.status) {
       let data = res.data.AppointmentReminderProfileData;
-      console.log('data', data);
+      // console.log('data', data);
       const trueFirst = data.sort((x, y) => {
         let demo = x.status === y.status;
         return demo ? 0 : x.status ? -1 : 1;

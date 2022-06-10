@@ -13,7 +13,7 @@ export const screenContainer = () => ({
   backgroundColor: color.themeBack,
 });
 export const container1 = () => ({
-  width: size.deviceWidth * 1,
+  width: size.deviceWidth,
   flexDirection: 'row',
   alignItems: 'center',
   backgroundColor: color.themeBack,
@@ -22,16 +22,19 @@ export const container1 = () => ({
   borderBottomWidth: 1.5,
 });
 export const icon = () => ({
-  width: size.deviceWidth * 0.32,
+  // width: size.deviceWidth * 0.2,
+  flex: 1,
   alignItems: 'center',
   borderRightColor: color.borderLight,
   borderRightWidth: 1,
   paddingVertical: size.moderateScale(15),
 });
 export const textMain = () => ({
-  width: size.deviceWidth * 0.25,
+  // width: size.deviceWidth * 0.25,
   marginHorizontal: size.moderateScale(10),
   alignItems: 'flex-start',
+  flex: 1,
+  // backgroundColor: 'green',
 });
 export const textTitle = () => ({
   color: color.black,
@@ -55,12 +58,15 @@ export const cardItem = () => ({
 export const cardItem1 = () => ({
   flexDirection: 'row',
   alignItems: 'center',
+  flex: 1.5,
+  // backgroundColor: 'red',
 });
 export const mainCardView = () => ({
   flexDirection: 'row',
   backgroundColor: color.white,
-  width: size.moderateScale(125),
-  paddingHorizontal: size.moderateScale(10),
+  // width: size.moderateScale(125),
+  paddingHorizontal: size.moderateScale(5),
+  paddingVertical: size.moderateScale(2),
   shadowColor: color.black,
   shadowRadius: size.moderateScale(5),
   shadowOffset: {height: 3, width: 0},
@@ -69,6 +75,7 @@ export const mainCardView = () => ({
   borderRadius: size.moderateScale(10),
   color: color.grayTxt,
   justifyContent: 'space-around',
+  marginHorizontal: size.moderateScale(15),
   // backgroundColor: 'green',
 });
 
@@ -76,12 +83,15 @@ export const cardItemInputBoxMain = val => ({
   color: color.grayTxt,
   fontSize: fontSize.verySmall,
   fontFamily: fonts.segoeUIBold,
+  // backgroundColor: 'red',
+  paddingVertical: size.moderateScale(10),
   flex: 1,
 });
 export const cardItemInputBoxText = () => ({
   color: color.grayTxt,
   flex: 1,
   alignSelf: 'center',
+  // backgroundColor: 'green',
   fontSize: fontSize.verySmall,
   fontFamily: fonts.segoeUIBold,
 });
@@ -94,7 +104,7 @@ export const cardText = () => ({
   fontSize: fontSize.medium,
   fontFamily: fonts.segoeUIBold,
   color: color.grayTxt,
-  backgroundColor: 'green',
+  // backgroundColor: 'green',
 });
 export const btnContinue = val => ({
   alignSelf: 'center',

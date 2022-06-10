@@ -34,7 +34,9 @@ export const _registerUser = async payload => {
   //   : '';
   // console.log('_registerUser_payload ==> ', payload);
   let {_api_calls} = HttpCalls;
-  let headers = await headersData({});
+  let headers = await headersData({
+    type: 'application/json',
+  });
   return _api_calls('POST', '/register-user', headers, payload);
 };
 export const _getMedicineReminderProfile = async () => {
@@ -313,8 +315,11 @@ export const _addEditPlayerId = async payload => {
   let {_api_calls} = HttpCalls;
 
   let headers = await headersData({
-    token: store.getState().userDataReducer.userDataResponse.userData.token,
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
   });
+  // console.log('vvvv', 'POST', '/add-edit-player-id', headers, payload);
   return _api_calls('POST', '/add-edit-player-id', headers, payload);
 };
 export const _editReminderStatus = async payload => {
@@ -323,7 +328,9 @@ export const _editReminderStatus = async payload => {
   //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
-    token: store.getState().userDataReducer.userDataResponse.userData.token,
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
   });
   return _api_calls('POST', '/edit-reminder-status', headers, payload);
 };
