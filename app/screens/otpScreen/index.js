@@ -122,7 +122,7 @@ export const OtpScreen = props => {
       setThirdDigit('');
       setFourthDigit('');
       setOtpErr('');
-      setIsRequest(true);
+      setIsRequest(false);
       setIsCount(false);
       setExtra(extra + 1);
     } else {
@@ -142,10 +142,10 @@ export const OtpScreen = props => {
     };
     ONESIGNAL();
   }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       let timerDiff = counterTimer - new moment().format('X');
-      // console.log('timerDiff 1', timerDiff);
       timerDiff = timerDiff > 0 ? timerDiff : '00';
       counter > 0 &&
         setTimeout(() => {
@@ -157,7 +157,7 @@ export const OtpScreen = props => {
           }
         }, 1000);
 
-      if (counter <= 0) {
+      if (counter <= 0 || timerDiff <= 0) {
         setOtpErr('');
         setIsRequest(false);
         setIsCount(true);
@@ -168,7 +168,7 @@ export const OtpScreen = props => {
       setExtra(extra + 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [counterTimer]);
   // useEffect(() => {
   //   let timerDiff = counterTimer - new moment().format('X');
   //   console.log('timerDiff 1', timerDiff);

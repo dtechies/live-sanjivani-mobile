@@ -119,7 +119,7 @@ export const LoginScreen = () => {
             btnName={'Request OTP'}
             maxLength={10}
             onChangeText={val => {
-              setNumber(val);
+              setNumber(val.replace(/[^0-9]+/g, ''));
               setNumberCorrect('');
               setExtra(extra + 1);
             }}
