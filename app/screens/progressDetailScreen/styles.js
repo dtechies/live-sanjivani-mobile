@@ -56,6 +56,12 @@ export const buttonTxt = () => ({
   fontFamily: fonts.latoBold,
   fontSize: fontSize.medium,
 });
+export const graphStyle = () => ({
+  paddingRight: size.moderateScale(30),
+  paddingLeft: size.moderateScale(2),
+  fontSize: 1,
+  borderRadius: size.moderateScale(10),
+});
 export const centerLeftView = () => ({
   // flex: 1,
   height: size.moderateScale(20),

@@ -88,3 +88,54 @@ export const textValidation = () => ({
 export const validationView = () => ({
   height: size.moderateScale(15),
 });
+
+//drop down
+// export const labelFieldText = () => ({
+//   fontSize: fontSize.small,
+//   color: color.dimGray,
+//   fontFamily: fonts.latoBold,
+//   marginLeft: size.moderateScale(10),
+// });
+export const dropDownMain = () => ({
+  borderBottomLeftRadius: size.moderateScale(10),
+  borderBottomRightRadius: size.moderateScale(10),
+  borderTopLeftRadius: size.moderateScale(10),
+  borderTopRightRadius: size.moderateScale(10),
+});
+
+export const dropdown = () => ({
+  width: size.deviceWidth * 0.15,
+  marginVertical: size.moderateScale(5),
+  paddingHorizontal: size.moderateScale(5),
+  borderRadius: size.moderateScale(5),
+  paddingVertical: size.moderateScale(5),
+  backgroundColor: color.white,
+  marginLeft: size.moderateScale(20),
+
+  // underlineColor: 'transparent',
+});
+export const selectedOptionTextStyle = () => ({
+  color: color.blueTx,
+  fontFamily: fonts.latoBold,
+  fontSize: fontSize.small,
+  marginLeft: size.moderateScale(10),
+  textTransform: 'capitalize',
+});
+export const dropdownContainer = () => ({
+  borderRadius: size.moderateScale(10),
+  marginTop: size.moderateScale(5),
+  borderWidth: 1,
+  backgroundColor: color.white,
+});
+export const separator = () => ({
+  backgroundColor: color.borderBlue,
+  // height: size.moderateScale(1),
+});
+export const InsideLabelFieldText = () => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoBold,
+  color: color.blueTx,
+  paddingVertical: size.moderateScale(5),
+  paddingLeft: size.moderateScale(15),
+  textTransform: 'capitalize',
+});

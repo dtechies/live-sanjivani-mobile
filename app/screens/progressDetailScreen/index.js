@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {View, SafeAreaView, FlatList, Pressable, Image} from 'react-native';
+import {View, SafeAreaView, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import {Text, Screen, Header} from 'components';
-import {serviceListData, DWMYData} from 'json';
+import {DWMYData} from 'json';
 import {size, color, images} from 'theme';
 import * as styles from './styles';
 import {LineChart} from 'react-native-chart-kit';
-import {SvgUri, SvgXml} from 'react-native-svg';
+import {SvgUri} from 'react-native-svg';
 import {GetSubCategoryGraphs} from 'redux-actions';
 import moment from 'moment';
 
@@ -257,9 +257,6 @@ export const ProgressDetailScreen = props => {
               if (dataPoint !== null) {
                 return 'red';
               }
-              // else {
-              //   return 'green';
-              // }
             }}
             width={size.deviceWidth * 0.98}
             height={size.moderateScale(320)}
@@ -270,12 +267,7 @@ export const ProgressDetailScreen = props => {
             chartConfig={chartConfig}
             segments={3}
             withShadow={false}
-            style={{
-              paddingRight: size.moderateScale(30),
-              paddingLeft: size.moderateScale(2),
-              fontSize: 1,
-              borderRadius: size.moderateScale(10),
-            }}
+            style={styles.graphStyle()}
           />
         )}
       </Screen>
