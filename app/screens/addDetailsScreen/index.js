@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {SafeAreaView, Pressable, View, TextInput, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
@@ -19,6 +19,7 @@ export const AddDetailsScreen = props => {
   const [bloodGlucoseVal, setBloodGlucoseVal] = useState('');
   const [isLoading, seIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [BMIValue, setBMIValue] = useState('');
   const [thisArray, setThisArray] = useState([]);
   const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState(
@@ -41,6 +42,12 @@ export const AddDetailsScreen = props => {
   };
 
   const saveData = async () => {
+    if (BMIValue !== '') {
+      thisArray.push({
+        subcategory_id: 19,
+        value: BMIValue,
+      });
+    }
     setLoading(true);
     const subCategoryBody = {
       subcategory_data: thisArray,
@@ -62,6 +69,11 @@ export const AddDetailsScreen = props => {
       toastMessage(res.payload.message);
     }
   };
+
+  useEffect(() => {
+    console.log(subCategory, thisArray, 'thisArray');
+  }, []);
+
   return (
     <SafeAreaView style={styles.container()}>
       <Toast
@@ -157,7 +169,7 @@ export const AddDetailsScreen = props => {
                           );
                         }}
                       />
-                    ) : (
+                    ) : val.id !== 19 ? (
                       <Pressable style={styles.mainCardView()}>
                         <TextInput
                           ref={refsFocus4}
@@ -185,12 +197,49 @@ export const AddDetailsScreen = props => {
                                 thisArray[indexK].value = v;
                               }
                             }
+                            let bmiValue = 0;
+                            let bmiValueData = 0;
+                            thisArray.map(i => {
+                              if (
+                                i.subcategory_id == 8 ||
+                                i.subcategory_id == 9
+                              ) {
+                                bmiValue = bmiValue + 1;
+                              }
+                            });
+                            if (bmiValue == 2) {
+                              thisArray.map(j => {
+                                if (
+                                  j.subcategory_id == 8 ||
+                                  j.subcategory_id == 9
+                                ) {
+                                  bmiValueData += parseInt(j.value);
+                                  console.log('parseInt(i.value)', j.value);
+                                }
+                              });
+                              console.log('SU', bmiValueData);
+                              setBMIValue(
+                                bmiValueData ? bmiValueData.toString() : '',
+                              );
+                            }
                             setThisArray(thisArray);
                             // console.log('thisArray', thisArray);
                             setIsError('');
                             setExtra(extra + 1);
                           }}
                           maxLength={4}
+                        />
+                        <Text style={styles.cardItemInputBoxText()}>
+                          {val.unit}
+                        </Text>
+                      </Pressable>
+                    ) : (
+                      <Pressable style={styles.mainCardView()}>
+                        <TextInput
+                          editable={false}
+                          style={styles.cardItemInputBoxMain()}
+                          maxLength={4}
+                          value={BMIValue}
                         />
                         <Text style={styles.cardItemInputBoxText()}>
                           {val.unit}
