@@ -40,6 +40,7 @@ const defaultProps = {
 const DropdownComponent = React.forwardRef((props, currentRef) => {
   const orientation = useDeviceOrientation();
   const {
+    onSelectVal,
     onChange,
     style,
     containerStyle,
@@ -250,9 +251,9 @@ const DropdownComponent = React.forwardRef((props, currentRef) => {
 
   const onSelect = item => {
     onSearch('');
-    setCurrentValue(e => (e = item));
     onChange(item);
     eventClose();
+    setCurrentValue(e => (e = item));
   };
 
   const _renderDropdown = () => {

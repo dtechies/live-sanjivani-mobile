@@ -7,6 +7,11 @@ export const container = () => ({
 export const screenContainer = () => ({
   backgroundColor: color.themeBack,
 });
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
+});
 export const btnContinue = () => ({
   alignSelf: 'center',
   marginVertical: size.deviceHeight * 0.02,
@@ -58,7 +63,42 @@ export const itemListTxt = val => ({
   fontSize: val == 1 ? fontSize.verySmall : fontSize.medium,
   fontFamily: fonts.latoRegular,
 });
-
+export const searchedValueList = () => ({
+  // width: size.deviceWidth * 0.53,
+  // // marginVertical: size.moderateScale(5),
+  // // marginBottom: 5,
+  // paddingHorizontal: size.moderateScale(5),
+  // // borderRadius: size.moderateScale(5),
+  // paddingVertical: size.moderateScale(10),
+  // backgroundColor: color.white,
+  // marginLeft: size.moderateScale(20),
+  // shadowColor: color.black,
+  // shadowOffset: {width: 0, height: 1},
+  // shadowOpacity: 0.2,
+  // shadowRadius: 1,
+  // elevation: size.moderateScale(10),
+  padding: size.moderateScale(5),
+});
+export const inputTxt = () => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoRegular,
+  color: color.black,
+});
+export const textMain1 = () => ({
+  shadowColor: color.black,
+  shadowOffset: {width: 0, height: 1},
+  shadowOpacity: 0.2,
+  shadowRadius: 1,
+  elevation: size.moderateScale(10),
+  width: size.deviceWidth * 0.53,
+  // marginVertical: size.moderateScale(5),
+  // marginBottom: 5,
+  paddingHorizontal: size.moderateScale(10),
+  borderRadius: size.moderateScale(5),
+  paddingVertical: size.moderateScale(12),
+  backgroundColor: color.white,
+  marginLeft: size.moderateScale(20),
+});
 //drop down
 export const labelFieldText = () => ({
   fontSize: fontSize.small,
@@ -67,10 +107,17 @@ export const labelFieldText = () => ({
   marginLeft: size.moderateScale(10),
 });
 export const dropDownMain = () => ({
-  borderBottomLeftRadius: size.moderateScale(10),
-  borderBottomRightRadius: size.moderateScale(10),
-  borderTopLeftRadius: size.moderateScale(10),
-  borderTopRightRadius: size.moderateScale(10),
+  shadowColor: color.black,
+  shadowOffset: {width: 0, height: 1},
+  shadowOpacity: 0.2,
+  shadowRadius: 1,
+  elevation: size.moderateScale(10),
+  width: size.deviceWidth * 0.53,
+  marginTop: size.moderateScale(5),
+  paddingHorizontal: size.moderateScale(5),
+  borderRadius: size.moderateScale(5),
+  backgroundColor: color.white,
+  marginLeft: size.moderateScale(20),
 });
 
 export const dropdown = () => ({
@@ -102,8 +149,9 @@ export const dropdownContainer = () => ({
   backgroundColor: color.white,
 });
 export const separator = () => ({
-  backgroundColor: color.borderBlue,
-  // height: size.moderateScale(1),
+  backgroundColor: color.red,
+  height: size.moderateScale(1),
+  // padding: 0,
 });
 export const InsideLabelFieldText = () => ({
   fontSize: fontSize.small,
@@ -134,7 +182,7 @@ export const btnContainer = () => ({
   marginTop: size.moderateScale(30),
 });
 export const cardContainer = () => ({
-  width: size.deviceWidth * 0.6,
+  width: size.deviceWidth * 0.53,
   marginBottom: size.moderateScale(5),
   marginLeft: size.moderateScale(20),
   shadowColor: color.black,

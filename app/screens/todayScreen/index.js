@@ -167,7 +167,7 @@ export const TodayScreen = () => {
     if (res != undefined) {
       if (res.status) {
         // console.log('getTipForDayResponse ==>', res.data.TipForDayData);
-        setTipsForTheDay(res.data.TipForDayData);
+        setTipsForTheDay(res.data.value);
         // setLoading(false);
         // toastMessage(res.message);
         setExtra(extra + 1);
