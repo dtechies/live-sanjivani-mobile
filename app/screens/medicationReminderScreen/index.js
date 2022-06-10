@@ -46,7 +46,7 @@ export const MedicationReminderScreen = () => {
   const [remindTime, setRemindTime] = useState('');
   const [showTime, setShowTime] = useState(false);
   const [imageData, setImageData] = useState(
-    'Upload or take picture from phone',
+    'Upload or take picture of your medicine',
   );
   const [imageUpload, setImageUpload] = useState('');
   const [imageDataErr, setImageDataErr] = useState('');
@@ -88,7 +88,6 @@ export const MedicationReminderScreen = () => {
       let filteredName = medicineReminderViewData.MedicineData.filter(item => {
         return item.name.toLowerCase().match(text);
       });
-
       setMedicineFilteredValue(filteredName);
     }
   };
@@ -251,13 +250,13 @@ export const MedicationReminderScreen = () => {
     //   setStrengthErr('Enter Strength');
     // }
   };
-
   useFocusEffect(
     useCallback(() => {
+      onGetMedicineReminderView();
       setReminderName('');
       setReferredBy('');
       setName('');
-      setImageData('Upload or take picture from phone');
+      setImageData('Upload or take picture of your medicine');
       setImageUpload('');
       setMedicineValue('');
       setDoseValue(null);
@@ -268,7 +267,6 @@ export const MedicationReminderScreen = () => {
       setRemindFreqDate('');
       setRemindTime('');
       setPills('');
-      setMedicineFilteredValue();
     }, []),
   );
   useEffect(() => {
@@ -306,7 +304,7 @@ export const MedicationReminderScreen = () => {
         <InputBox
           titleTx={'medication_reminder_screen.reminderName'}
           titleStyle={styles.labelFieldText()}
-          placeholder={'Reminder Name'}
+          placeholder={'Ex. Heart'}
           inputStyle={styles.inputStyle()}
           value={reminderName}
           mainContainerStyle={styles.inputMainContainer()}
@@ -321,7 +319,7 @@ export const MedicationReminderScreen = () => {
         <InputBox
           titleTx={'medication_reminder_screen.referred_by'}
           titleStyle={styles.labelFieldText()}
-          placeholder={'Add your Provider/Specialist'}
+          placeholder={'Ex. Dr John'}
           inputStyle={styles.inputStyle()}
           value={referredBy}
           mainContainerStyle={styles.inputMainContainer()}
@@ -335,7 +333,7 @@ export const MedicationReminderScreen = () => {
         <InputBox
           titleTx={'medication_reminder_screen.name_of_medicine'}
           titleStyle={styles.labelFieldText()}
-          placeholder={'Glycomet'}
+          placeholder={'Ex. Glycomet'}
           inputStyle={styles.inputStyle()}
           value={name}
           mainContainerStyle={styles.inputMainContainer()}
@@ -355,6 +353,7 @@ export const MedicationReminderScreen = () => {
                   setName(item.name);
                   setNameErr('');
                   setMedicineDropDown(false);
+                  setMedicineFilteredValue(item);
                   setExtra(extra + 1);
                 }}>
                 <Text style={styles.medicineName()}>{item.name}</Text>
@@ -365,7 +364,7 @@ export const MedicationReminderScreen = () => {
         <Pressable
           style={styles.imageView()}
           onPress={() => {
-            if (imageData == 'Upload or take picture from phone') {
+            if (imageData == 'Upload or take picture of your medicine') {
               modalRef.current.open();
             } else {
               modalPreviewRef.current.open();
@@ -382,15 +381,15 @@ export const MedicationReminderScreen = () => {
           tx="medication_reminder_screen.medicine_form"
         />
         <Dropdown
-          defaultValue={{label: 'Select Forms', label: 'Select Forms'}}
+          defaultValue={{label: 'Select Form'}}
           data={medicineForm}
           labelField="label"
           valueField="label"
           dropdownPosition={'bottom'}
           style={styles.dropdown()}
           selectedTextStyle={styles.selectedOptionTextStyle()}
-          maxHeight={size.moderateScale(70)}
-          showsVerticalScrollIndicator={false}
+          maxHeight={size.moderateScale(90)}
+          showsVerticalScrollIndicator={true}
           containerStyle={styles.dropdownContainer()}
           // value={medicineValue}
           onFocus={() => setIsFocus(true)}
@@ -423,7 +422,7 @@ export const MedicationReminderScreen = () => {
           tx="medication_reminder_screen.dose"
         />
         <Dropdown
-          defaultValue={{value: 'Select Dose', label: 'Select Dose'}}
+          defaultValue={{label: 'Select Dose'}}
           data={dose}
           // data={medicineReminderViewData?.Dose}
 
@@ -467,7 +466,7 @@ export const MedicationReminderScreen = () => {
             <InputBox
               titleTx={'medication_reminder_screen.strength'}
               titleStyle={styles.labelFieldText()}
-              placeholder={'Ex: 150'}
+              placeholder={'Ex. 150'}
               maxLength={3}
               keyboardType={'decimal-pad'}
               placeholderTextColor={color.grayTxt}
@@ -484,7 +483,6 @@ export const MedicationReminderScreen = () => {
             ) : null}
             <Dropdown
               defaultValue={{
-                unit: 'Select Strength',
                 unit: 'Select Strength',
               }}
               data={medicineReminderViewData?.MedicineStrengthData}
@@ -534,7 +532,7 @@ export const MedicationReminderScreen = () => {
           tx="medication_reminder_screen.reminder_frequency"
         />
         <Dropdown
-          defaultValue={{name: 'Select Frequency', name: 'Select Frequency'}}
+          defaultValue={{name: 'Select Frequency'}}
           data={medicineReminderViewData?.ReminderFrequencyData}
           labelField="name"
           valueField="name"
@@ -600,7 +598,7 @@ export const MedicationReminderScreen = () => {
           tx="medication_reminder_screen.reminder_time"
         />
         <Dropdown
-          defaultValue={{name: 'Select Time', name: 'Select Time'}}
+          defaultValue={{name: 'Select Time'}}
           data={medicineReminderViewData?.ReminderTimeData}
           labelField="name"
           valueField="name"
@@ -609,8 +607,8 @@ export const MedicationReminderScreen = () => {
           style={styles.dropdown(1)}
           placeholderStyle={styles.labelFieldText1()}
           selectedTextStyle={styles.selectedOptionTextStyle()}
-          maxHeight={size.moderateScale(82)}
-          showsVerticalScrollIndicator={false}
+          maxHeight={size.moderateScale(90)}
+          showsVerticalScrollIndicator={true}
           containerStyle={styles.dropdownContainer()}
           value={remindTimeValue}
           onFocus={() => setIsFocus(true)}
@@ -680,7 +678,7 @@ export const MedicationReminderScreen = () => {
             <InputBox
               titleTx={'medication_reminder_screen.pill_remaining'}
               titleStyle={styles.labelFieldText()}
-              placeholder={'0'}
+              placeholder={'Number of pills'}
               keyboardType={'number-pad'}
               inputStyle={styles.inputStyle()}
               value={pills}

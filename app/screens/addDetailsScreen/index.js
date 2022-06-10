@@ -1,18 +1,22 @@
 import React, {useState, useRef} from 'react';
 import {SafeAreaView, Pressable, View, TextInput, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import Dropdown from '../../components/Dropdown/src/components/Dropdown';
+
 import {useDispatch} from 'react-redux';
 import {AddSubcategory} from 'redux-actions';
 import {SvgUri} from 'react-native-svg';
 import {Loader, Text, Button, Screen, Header, Toast} from 'components';
 import {size} from 'theme';
 import * as styles from './styles';
-
+import {BloodGlucoseData} from 'json';
 export const AddDetailsScreen = props => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const toastRef = useRef();
   const [extra, setExtra] = useState(0);
+  const [isFocus, setIsFocus] = useState(false);
+  const [bloodGlucoseVal, setBloodGlucoseVal] = useState('');
   const [isLoading, seIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [thisArray, setThisArray] = useState([]);
@@ -94,21 +98,32 @@ export const AddDetailsScreen = props => {
                     <Text style={styles.textTitle()}>{val.name}</Text>
                   </View>
                   <View style={styles.cardItem1()}>
-                    <Pressable
-                      // onPress={() => {
-                      //   refsFocus4.current.focus();
-                      // }}
-                      style={styles.mainCardView()}>
-                      <TextInput
-                        ref={refsFocus4}
-                        keyboardType={'number-pad'}
-                        style={styles.cardItemInputBoxMain()}
-                        onChangeText={v => {
+                    {val.id == 7 ? (
+                      <Dropdown
+                        defaultValue={{
+                          name: 'select',
+                        }}
+                        data={BloodGlucoseData}
+                        labelField="name"
+                        valueField="name"
+                        dropdownPosition={'bottom'}
+                        style={styles.dropdown()}
+                        selectedTextStyle={styles.selectedOptionTextStyle()}
+                        maxHeight={size.moderateScale(90)}
+                        containerStyle={styles.dropdownContainer()}
+                        // value={language}
+                        onFocus={() => setIsFocus(true)}
+                        onBlur={() => setIsFocus(false)}
+                        flatListProps={{
+                          bounces: false,
+                        }}
+                        onChange={item => {
+                          setBloodGlucoseVal(item.name);
                           let indexK = -1;
                           if (thisArray.length == 0) {
                             thisArray.push({
                               subcategory_id: val.id,
-                              value: v,
+                              value: item.name,
                             });
                           } else {
                             thisArray.map((j, k) => {
@@ -119,23 +134,69 @@ export const AddDetailsScreen = props => {
                             if (indexK == -1) {
                               thisArray.push({
                                 subcategory_id: val.id,
-                                value: v,
+                                value: item.name,
                               });
                             } else {
-                              thisArray[indexK].value = v;
+                              thisArray[indexK].value = item.name;
                             }
                           }
                           setThisArray(thisArray);
-                          // console.log('thisArray', thisArray);
                           setIsError('');
                           setExtra(extra + 1);
+                          setIsFocus(false);
                         }}
-                        maxLength={4}
+                        renderItem={item => {
+                          return (
+                            <View>
+                              <Text
+                                text={item.name}
+                                style={styles.InsideLabelFieldText()}
+                              />
+                              <View style={styles.separator()} />
+                            </View>
+                          );
+                        }}
                       />
-                      <Text style={styles.cardItemInputBoxText()}>
-                        {val.unit}
-                      </Text>
-                    </Pressable>
+                    ) : (
+                      <Pressable style={styles.mainCardView()}>
+                        <TextInput
+                          ref={refsFocus4}
+                          keyboardType={'number-pad'}
+                          style={styles.cardItemInputBoxMain()}
+                          onChangeText={v => {
+                            let indexK = -1;
+                            if (thisArray.length == 0) {
+                              thisArray.push({
+                                subcategory_id: val.id,
+                                value: v,
+                              });
+                            } else {
+                              thisArray.map((j, k) => {
+                                if (j.subcategory_id === val.id) {
+                                  indexK = k;
+                                }
+                              });
+                              if (indexK == -1) {
+                                thisArray.push({
+                                  subcategory_id: val.id,
+                                  value: v,
+                                });
+                              } else {
+                                thisArray[indexK].value = v;
+                              }
+                            }
+                            setThisArray(thisArray);
+                            // console.log('thisArray', thisArray);
+                            setIsError('');
+                            setExtra(extra + 1);
+                          }}
+                          maxLength={4}
+                        />
+                        <Text style={styles.cardItemInputBoxText()}>
+                          {val.unit}
+                        </Text>
+                      </Pressable>
+                    )}
                   </View>
                 </View>
               );
