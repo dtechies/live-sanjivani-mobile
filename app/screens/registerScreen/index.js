@@ -2,9 +2,11 @@ import React, {useState, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
+import Dropdown1 from '../../components/Dropdown/src/components/Dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useDispatch} from 'react-redux';
 import {userData, registerUser} from 'redux-actions';
+import {countryCode} from 'json';
 import {
   Loader,
   Text,
@@ -39,12 +41,16 @@ export const RegisterScreen = () => {
   const [genderErr, setGenderErr] = useState('');
   const [language, setLanguage] = useState('');
   const [languageErr, setLanguageErr] = useState('');
+  const [countryCodeVal, setCountryCodeVal] = useState('+91');
   const [loading, setLoading] = useState(false);
   const toastRef = useRef();
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-
+  const [codeDefault, setCodeDefault] = useState({
+    label: '+91',
+    value: '+91',
+  });
   const getCurrentDate = givenDate => {
     let day =
       givenDate.getDate() > 9 ? givenDate.getDate() : `0${givenDate.getDate()}`;
@@ -72,8 +78,9 @@ export const RegisterScreen = () => {
       mob_no: phone,
       email: email,
       language: language,
+      country_code: countryCodeVal,
     };
-    // console.log('RegisterBody ==>', RegisterBody);
+    console.log('RegisterBody ==>', RegisterBody);
     const RegisterResponse = await dispatch(registerUser(RegisterBody));
     let res = {status: false, message: 'Connection Error...!'};
     if (RegisterResponse) {
@@ -82,7 +89,7 @@ export const RegisterScreen = () => {
     if (res.status) {
       setLoading(false);
       // dispatch(userData({userData: res.data.user, login: true}));
-      // console.log('Register response data ==>', res.data);
+      console.log('Register response data ==>', res.data);
       toastMessage(res.message);
       setTimeout(() => {
         navigation.navigate('otpScreen', {
@@ -280,17 +287,58 @@ export const RegisterScreen = () => {
         />
         {emailErr ? <Text style={styles.errorText()}>{emailErr}</Text> : null}
         <InputBox
-          placeholder={'Phone Number'}
-          keyboardType={'number-pad'}
+          value={phone}
+          placeholderTextColor={color.grayIcon}
+          placeholder={'XXXXXXXXXX'}
+          keyboardType={'phone-pad'}
+          btnName={'Request OTP'}
+          maxLength={10}
+          onChangeText={val => {
+            // mobileNumberValidation(val);
+            setPhone(val);
+            setPhoneErr('');
+            setExtra(extra + 1);
+          }}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
-          placeholderTextColor={color.grayTxt}
-          value={phone}
-          maxLength={10}
-          onChangeText={text => {
-            setPhone(text);
-            setPhoneErr('');
-          }}
+          defaultNumber={
+            // <Text
+            //   style={styles.labelFieldText()}
+            //   tx="login_screen.countryCode"
+            // />
+            <Dropdown1
+              defaultValue={codeDefault}
+              data={countryCode}
+              labelField="label"
+              valueField="value"
+              dropdownPosition={'bottom'}
+              style={styles.dropdown1()}
+              placeholderStyle={styles.labelFieldText()}
+              selectedTextStyle={styles.selectedOptionTextStyle()}
+              maxHeight={size.moderateScale(50)}
+              containerStyle={styles.dropdownContainer()}
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
+              flatListProps={{
+                bounces: false,
+              }}
+              onChange={item => {
+                setCountryCodeVal(item.value);
+                setIsFocus(false);
+              }}
+              renderItem={item => {
+                return (
+                  <View>
+                    <Text
+                      text={item.value}
+                      style={styles.InsideLabelFieldText()}
+                    />
+                    <View style={styles.separator()} />
+                  </View>
+                );
+              }}
+            />
+          }
         />
         {phoneErr ? <Text style={styles.errorText()}>{phoneErr}</Text> : null}
         {/* <InputBox
@@ -303,10 +351,10 @@ export const RegisterScreen = () => {
           mainContainerStyle={styles.inputMainDisableContainer()}
         /> */}
         <Dropdown
+          placeholder={'Language'}
           data={languageVal}
           labelField="label"
           valueField="value"
-          placeholder={'Language'}
           dropdownPosition={'bottom'}
           style={styles.dropdown()}
           placeholderStyle={styles.labelFieldText()}

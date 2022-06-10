@@ -10,6 +10,7 @@ import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
 import {useDispatch, useSelector} from 'react-redux';
 import {getOtp, getUserProfile, editUserProfile, userData} from 'redux-actions';
+import {countryCode} from 'json';
 import {
   Text,
   Button,
@@ -73,6 +74,7 @@ export const ProfileDetailScreen = () => {
   const [otpValue, setOtpValue] = useState('');
   const [loading, setLoading] = useState(false);
   const currentDate = new moment().format('YYYY-MM-DD');
+  const [countryCodeVal, setCountryCodeVal] = useState('+91');
 
   const modalRef = useRef();
   const toastRef = useRef();
@@ -80,11 +82,15 @@ export const ProfileDetailScreen = () => {
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-
+  const [codeDefault, setCodeDefault] = useState({
+    label: '+91',
+    value: '+91',
+  });
   const onGetOtp = async () => {
     setLoading(true);
     const getOtpBody = {
       mob_no: phone,
+      country_code: countryCodeVal,
     };
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     const res = getOtpResponse.payload;
@@ -257,6 +263,7 @@ export const ProfileDetailScreen = () => {
     if (otp) {
       formData.append('mob_no', phone);
       formData.append('otp', otpValue);
+      formData.append('country_code', countryCodeVal);
     }
     formData.append('language', language);
 
@@ -399,8 +406,8 @@ export const ProfileDetailScreen = () => {
               // placeholder={'Gender'}
               dropdownPosition={'bottom'}
               style={styles.dropdown()}
-              placeholderStyle={styles.labelFieldText()}
-              selectedTextStyle={styles.selectedOptionTextStyle()}
+              placeholderStyle={styles.labelFieldText(isEditable)}
+              selectedTextStyle={styles.selectedOptionTextStyle(isEditable)}
               maxHeight={size.moderateScale(55)}
               containerStyle={styles.dropdownContainer()}
               // value={dropGender}
@@ -505,6 +512,45 @@ export const ProfileDetailScreen = () => {
             maxLength={10}
             keyboardType="numeric"
             editable={isEditablePhone}
+            defaultNumber={
+              // <Text
+              //   style={styles.labelFieldText()}
+              //   tx="login_screen.countryCode"
+              // />
+              <Dropdown
+                defaultValue={codeDefault}
+                data={countryCode}
+                labelField="label"
+                valueField="value"
+                disable={isEditable ? false : true}
+                dropdownPosition={'bottom'}
+                style={styles.dropdown1()}
+                placeholderStyle={styles.labelFieldText(isEditable)}
+                selectedTextStyle={styles.selectedOptionTextStyle(isEditable)}
+                maxHeight={size.moderateScale(50)}
+                containerStyle={styles.dropdownContainer()}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                flatListProps={{
+                  bounces: false,
+                }}
+                onChange={item => {
+                  setCountryCodeVal(item.value);
+                  setIsFocus(false);
+                }}
+                renderItem={item => {
+                  return (
+                    <View>
+                      <Text
+                        text={item.value}
+                        style={styles.InsideLabelFieldText()}
+                      />
+                      <View style={styles.separator()} />
+                    </View>
+                  );
+                }}
+              />
+            }
           />
           {otp && (
             <InputBox
@@ -543,7 +589,7 @@ export const ProfileDetailScreen = () => {
               dropdownPosition={'bottom'}
               style={styles.dropdown()}
               // placeholderStyle={styles.labelFieldText()}
-              selectedTextStyle={styles.selectedOptionTextStyle()}
+              selectedTextStyle={styles.selectedOptionTextStyle(isEditable)}
               maxHeight={size.moderateScale(56)}
               containerStyle={styles.dropdownContainer()}
               // value={language}
