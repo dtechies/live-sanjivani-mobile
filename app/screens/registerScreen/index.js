@@ -46,10 +46,17 @@ export const RegisterScreen = () => {
   };
 
   const getCurrentDate = givenDate => {
-    let day = givenDate.getDate();
-    let month = givenDate.getMonth() + 1;
+    let day =
+      givenDate.getDate() > 9 ? givenDate.getDate() : `0${givenDate.getDate()}`;
+    let month =
+      givenDate.getMonth() + 1 > 9
+        ? givenDate.getMonth() + 1
+        : `0${givenDate.getMonth() + 1}`;
     let year = givenDate.getFullYear();
-    let newDate = day + '-' + month + '-' + year;
+    let newDate = year + '-' + month + '-' + day;
+
+    // console.log('givenDate', givenDate);
+    // console.log('new date', newDate);
     setSelectedDate(newDate);
     setShowDate(false);
     setDobErr('');
@@ -57,12 +64,11 @@ export const RegisterScreen = () => {
 
   const onRegisterData = async () => {
     setLoading(true);
-    let dateForRequest = selectedDate.split('-');
     const RegisterBody = {
       first_name: firstNm,
       last_name: lastNm,
       gender: gender,
-      dob: `${dateForRequest[2]}-${dateForRequest[1]}-${dateForRequest[0]}`,
+      dob: selectedDate,
       mob_no: phone,
       email: email,
       language: language,
@@ -73,8 +79,8 @@ export const RegisterScreen = () => {
     // console.log('Register res ==>', res);
     if (res.status) {
       setLoading(false);
-      dispatch(userData({userData: res.data.user, login: true}));
-      // console.log('Register response data ==>', res);
+      // dispatch(userData({userData: res.data.user, login: true}));
+      // console.log('Register response data ==>', res.data);
       toastMessage(res.message);
       setTimeout(() => {
         navigation.navigate('otpScreen', {
@@ -83,7 +89,7 @@ export const RegisterScreen = () => {
             otp: res.data.otp,
           },
         });
-      }, 150);
+      }, 200);
     } else {
       setLoading(false);
       toastMessage(res.message);
@@ -246,6 +252,7 @@ export const RegisterScreen = () => {
             <DateTimePickerModal
               isVisible={showDate}
               mode="date"
+              maximumDate={new Date()}
               onConfirm={val => getCurrentDate(val)}
               onCancel={() => {
                 setShowDate(false);

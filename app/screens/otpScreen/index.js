@@ -51,7 +51,7 @@ export const OtpScreen = props => {
     );
     const res = addEditPlayerIdResponse.payload;
     if (res.status) {
-      // console.log('api called', res);
+      // console.log('addPlayerId', res);
       // previous.userData.player_id = playerId;
       // await dispatch(userData(previous));
       setTimeout(() => {
