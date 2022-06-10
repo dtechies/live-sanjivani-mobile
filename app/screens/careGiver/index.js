@@ -35,25 +35,6 @@ export const CareGiver = () => {
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-  const {userDataResponse} = useSelector(state => ({
-    userDataResponse: state.userDataReducer.userDataResponse,
-  }));
-
-  useEffect(() => {
-    // console.log('userData ==>', userDataResponse);
-    if (userDataResponse.careGiver) {
-      setFirstName(userDataResponse.careGiver.first_name);
-      setLastName(userDataResponse.careGiver.last_name);
-      setPhone(userDataResponse.careGiver.contact_no);
-      setEmail(userDataResponse.careGiver.email);
-      setNickName(userDataResponse.careGiver.nick_name);
-      setIsEdit(false);
-      setExtra(extra + 1);
-    } else {
-      setIsEdit(true);
-    }
-  }, []);
-
   const validation = () => {
     let error = false;
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -105,19 +86,13 @@ export const CareGiver = () => {
     };
     // console.log('addCaregiverBody ==>', addCaregiverBody);
     const AddCareGiverResponse = await dispatch(AddCareGiver(addCaregiverBody));
-    const res = AddCareGiverResponse;
-    // console.log('addCaregiverBody res ==>', res);
+    let res = {status: false, message: 'Connection Error...!'};
+    if (AddCareGiverResponse) {
+      res = AddCareGiverResponse;
+    }
     if (res.status) {
       setLoading(false);
       toastMessage(res.message);
-      dispatch(
-        userData({
-          userData: userDataResponse.userData,
-          age: userDataResponse.age,
-          login: userDataResponse.login,
-          careGiver: addCaregiverBody,
-        }),
-      );
       setTimeout(() => {
         navigation.navigate('addScreen');
       }, 150);
@@ -166,7 +141,6 @@ export const CareGiver = () => {
               maxLength={15}
               inputStyle={styles.inputTextStyle()}
               containerStyle={styles.containerVal()}
-              editable={isEdit}
             />
           </View>
         </View>
@@ -184,7 +158,6 @@ export const CareGiver = () => {
             <InputBox
               placeholder={'Enter Last Name'}
               value={lastName}
-              editable={isEdit}
               onChangeText={val => {
                 setLastName(val);
                 setLastNameCorrect('');
@@ -210,7 +183,6 @@ export const CareGiver = () => {
             <InputBox
               placeholder={'Enter Contact Number'}
               value={phone}
-              editable={isEdit}
               onChangeText={val => {
                 setPhone(val);
                 setPhoneCorrect('');
@@ -237,7 +209,6 @@ export const CareGiver = () => {
             <InputBox
               placeholder={'Enter Email'}
               value={email}
-              editable={isEdit}
               onChangeText={val => {
                 setEmail(val);
                 setEmailCorrect('');
@@ -263,7 +234,6 @@ export const CareGiver = () => {
             <InputBox
               placeholder={'Enter Nick Name'}
               value={nickName}
-              editable={isEdit}
               onChangeText={val => {
                 setNickName(val);
                 setNickNameCorrect('');
@@ -279,16 +249,14 @@ export const CareGiver = () => {
           <Text style={styles.textValidation()} text={nickNameCorrect} />
         ) : null}
       </Screen>
-      {isEdit && (
-        <Button
-          buttonStyle={styles.button()}
-          buttonText={styles.buttonTxt()}
-          nameTx={'careGiver_screen.save'}
-          onPress={() => {
-            validation();
-          }}
-        />
-      )}
+      <Button
+        buttonStyle={styles.button()}
+        buttonText={styles.buttonTxt()}
+        nameTx={'careGiver_screen.save'}
+        onPress={() => {
+          validation();
+        }}
+      />
     </SafeAreaView>
   );
 };

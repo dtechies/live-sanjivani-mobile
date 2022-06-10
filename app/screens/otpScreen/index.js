@@ -49,7 +49,10 @@ export const OtpScreen = props => {
     const addEditPlayerIdResponse = await dispatch(
       addEditPlayerId(addEditPlayerIdBody),
     );
-    const res = addEditPlayerIdResponse.payload;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (addEditPlayerIdResponse) {
+      res = addEditPlayerIdResponse.payload;
+    }
     if (res.status) {
       // console.log('addPlayerId', res);
       // previous.userData.player_id = playerId;

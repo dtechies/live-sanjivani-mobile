@@ -117,6 +117,11 @@ export const ProfileScreen = () => {
                       navigation.navigate('profileDetailScreen');
                     }, 500);
                   }
+                  if (item.value == 'My CareGiver') {
+                    setTimeout(() => {
+                      navigation.navigate('myCareGiver');
+                    }, 500);
+                  }
                   if (item.value == 'Logout') {
                     setTimeout(() => {
                       onLogoutData();
