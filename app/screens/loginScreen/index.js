@@ -91,7 +91,7 @@ export const LoginScreen = () => {
           maxLength={10}
           onChangeText={val => {
             // mobileNumberValidation(val);
-            setNumber(val);
+            setNumber(val.replace(/[^0-9]+/g, ''));
             setNumberCorrect('');
             setExtra(extra + 1);
           }}

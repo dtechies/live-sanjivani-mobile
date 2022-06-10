@@ -295,7 +295,7 @@ export const RegisterScreen = () => {
           maxLength={10}
           onChangeText={val => {
             // mobileNumberValidation(val);
-            setPhone(val);
+            setPhone(val.replace(/[^0-9]+/g, ''));
             setPhoneErr('');
             setExtra(extra + 1);
           }}
