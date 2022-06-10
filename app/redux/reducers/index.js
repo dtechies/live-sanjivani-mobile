@@ -40,6 +40,7 @@ import EditReminderStatusReducer from './EditReminderStatusReducer';
 import GetSubCatGraph from './SubCategoryGraphReducer';
 import GetCareGiverListReducer from './GetCareGiverListReducer';
 import addOtherScreenReducer from './AddOtherDataReducer';
+import DeleteCareGiverReducer from './DeleteCareGiverReducer';
 
 const persistConfig = {
   key: 'root',
@@ -83,6 +84,7 @@ const appReducer = combineReducers({
   addOtherScreenReducer: addOtherScreenReducer,
   GetSubCatGraph: GetSubCatGraph,
   GetCareGiverListReducer: GetCareGiverListReducer,
+  DeleteCareGiverReducer: DeleteCareGiverReducer,
 });
 const rootReducer = (state, action) => {
   // Clear all data in redux store to initial.

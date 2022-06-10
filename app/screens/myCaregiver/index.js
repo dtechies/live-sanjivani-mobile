@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {GetCareGiverListAction} from 'redux-actions';
+import {GetCareGiverListAction, DeleteCareGiverAction} from 'redux-actions';
 
 import {useDispatch} from 'react-redux';
 
@@ -26,7 +26,15 @@ export const MyCareGiver = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getCaregiverData();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   const toastMessage = msg => {
+    console.log('SU0', msg);
     toastRef.current.show(msg);
   };
 
@@ -66,11 +74,26 @@ export const MyCareGiver = () => {
       toastMessage(res.message);
     }
   };
+  const DeleteData = async val => {
+    setLoading(true);
 
-  useEffect(() => {
-    getCaregiverData();
-  }, []);
-
+    const editMedicineReminderStatusBody = {
+      id: val?.id,
+    };
+    const editMedicineReminderStatusResponse = await dispatch(
+      DeleteCareGiverAction(editMedicineReminderStatusBody),
+    );
+    let res = {status: false, message: 'Connection Error...!'};
+    if (editMedicineReminderStatusResponse) {
+      res = editMedicineReminderStatusResponse.payload;
+    }
+    if (res.status) {
+      setFilteredData(filteredData.filter(i => i.id != val.id));
+      setLoading(false);
+    } else {
+      setLoading(false);
+    }
+  };
   return (
     <SafeAreaView style={styles.container()}>
       {loading && <Loader />}
@@ -138,7 +161,12 @@ export const MyCareGiver = () => {
             }
             return (
               <View>
-                <CareGiverCard data={val} />
+                <CareGiverCard
+                  data={val}
+                  onPress={() => {
+                    DeleteData(val);
+                  }}
+                />
               </View>
             );
           })}
