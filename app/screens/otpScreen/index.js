@@ -73,7 +73,6 @@ export const OtpScreen = props => {
       otp: otpData ? otpVal : '',
       country_code: otpData ? otpData?.country_code : '',
     };
-    // console.log('loginBody ==>', loginBody);
     const loginResponse = await dispatch(loginUser(loginBody));
     let res = {status: false, message: 'Connection Error...!'};
     if (loginResponse) {

@@ -35,6 +35,7 @@ export const ProfileDetailScreen = () => {
     userDetails: state.userDataReducer.userDataResponse.userData,
     age: state.userDataReducer.userDataResponse.age,
   }));
+  // console.log('userDetails', userDetails);
   const [firstNm, setFirstNm] = useState(userDetails.first_name);
   const [firstNmErr, setFirstNmErr] = useState('');
   const [lastNm, setLastNm] = useState(userDetails.last_name);
@@ -87,6 +88,7 @@ export const ProfileDetailScreen = () => {
     const getOtpBody = {
       mob_no: phone,
       country_code: countryCodeVal,
+      user_id: userDetails.id,
     };
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     const res = getOtpResponse.payload;
@@ -242,8 +244,9 @@ export const ProfileDetailScreen = () => {
   };
   const editProfileDetails = async () => {
     setLoading(true);
-    // console.log('isEditablePhone ==> ', isEditablePhone);
     let formData = new FormData();
+
+    formData.append('user_id', userDetails?.id);
     formData.append('first_name', firstNm);
     formData.append('last_name', lastNm);
     formData.append('gender', gender);
@@ -268,9 +271,15 @@ export const ProfileDetailScreen = () => {
     const EditUserProfileResponse = await dispatch(editUserProfile(formData));
     const res = EditUserProfileResponse;
     // console.log('EditUserProfileResponse Res ==>', res);
-
+    // return;
     if (res.status) {
+      // var a = moment(res.data.dob);
+      // var b = moment(currentDate);
+      // var years = b.diff(a, 'year');
+      // b.add(years, 'years');
+      // await dispatch(userData({userData: res.data, age: years, login: true}));
       setLoading(false);
+
       toastMessage(res.message);
       setIsEditable(false);
       setOtpValue('');
