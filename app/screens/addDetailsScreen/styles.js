@@ -76,22 +76,20 @@ export const mainCardView = () => ({
   color: color.grayTxt,
   justifyContent: 'space-around',
   marginHorizontal: size.moderateScale(15),
-  // backgroundColor: 'green',
+  paddingRight: size.moderateScale(8),
 });
 
 export const cardItemInputBoxMain = val => ({
   color: color.grayTxt,
   fontSize: fontSize.verySmall,
   fontFamily: fonts.segoeUIBold,
-  // backgroundColor: 'red',
   paddingVertical: size.moderateScale(10),
   flex: 1,
 });
 export const cardItemInputBoxText = () => ({
   color: color.grayTxt,
-  flex: 1,
+  // flex: 1,
   alignSelf: 'center',
-  // backgroundColor: 'green',
   fontSize: fontSize.verySmall,
   fontFamily: fonts.segoeUIBold,
 });
@@ -160,4 +158,43 @@ export const errorTxt = () => ({
 });
 export const textMsgMain = val => ({
   padding: size.moderateScale(25),
+});
+
+// drop down style
+export const dropDownMain = () => ({
+  borderBottomLeftRadius: size.moderateScale(10),
+  borderBottomRightRadius: size.moderateScale(10),
+  borderTopLeftRadius: size.moderateScale(10),
+  borderTopRightRadius: size.moderateScale(10),
+});
+
+export const dropdown = () => ({
+  width: size.deviceWidth * 0.32,
+  marginVertical: size.moderateScale(5),
+  paddingHorizontal: size.moderateScale(5),
+  borderRadius: size.moderateScale(10),
+  paddingVertical: size.moderateScale(5),
+  backgroundColor: color.white,
+  marginLeft: size.moderateScale(15),
+  shadowColor: color.black,
+  shadowRadius: size.moderateScale(5),
+  shadowOffset: {height: 3, width: 0},
+  shadowOpacity: 0.2,
+  elevation: size.moderateScale(10),
+});
+export const selectedOptionTextStyle = () => ({
+  color: color.blueTx,
+  fontFamily: fonts.latoBold,
+  fontSize: fontSize.small,
+  marginLeft: size.moderateScale(10),
+  textTransform: 'capitalize',
+});
+export const dropdownContainer = () => ({
+  borderRadius: size.moderateScale(10),
+  marginTop: size.moderateScale(5),
+  borderWidth: 1,
+  backgroundColor: color.white,
+});
+export const separator = () => ({
+  backgroundColor: color.borderBlue,
 });

@@ -2,6 +2,7 @@ export const medicineForm = [
   {label: 'Tablet', value: 'tablet'},
   {label: 'Pill', value: 'pill'},
   {label: 'Drop', value: 'drop'},
+  {label: 'Inhaler', value: 'inhaler'},
 ];
 export const dose = [
   {label: '1', value: '1'},

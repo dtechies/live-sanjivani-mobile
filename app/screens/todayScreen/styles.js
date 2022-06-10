@@ -50,8 +50,7 @@ export const timeAMStyle = () => ({
 });
 export const desTextStyle = () => ({
   // marginVertical: size.moderateScale(),
-  marginTop: size.moderateScale(10),
-  marginBottom: size.moderateScale(5),
+  marginVertical: size.moderateScale(5),
   fontFamily: fonts.latoRegular,
   color: color.dimGrey,
   fontSize: fontSize.verySmall,
@@ -65,7 +64,7 @@ export const titleTextContainer = () => ({
 });
 export const medicineName = () => ({
   paddingTop: size.moderateScale(10),
-  paddingBottom: size.moderateScale(7),
+  // paddingBottom: size.moderateScale(7),
   fontFamily: fonts.latoBold,
   color: color.steelBlue,
   fontSize: fontSize.medium,

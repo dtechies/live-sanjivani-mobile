@@ -343,3 +343,13 @@ export const _subCategoryGraph = async payload => {
   });
   return _api_calls('POST', '/subcategory-graph', headers, payload);
 };
+export const _getCareGiverList = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
+  });
+  console.log('headers _getUserProfileData ==>', headers);
+  return _api_calls('GET', '/get-caregiver', headers);
+};
