@@ -39,6 +39,7 @@ import addEditPlayerIdReducer from './AddEditPlayerIdReducer';
 import EditReminderStatusReducer from './EditReminderStatusReducer';
 import GetSubCatGraph from './SubCategoryGraphReducer';
 import GetCareGiverListReducer from './GetCareGiverListReducer';
+import addOtherScreenReducer from './AddOtherDataReducer';
 
 const persistConfig = {
   key: 'root',
