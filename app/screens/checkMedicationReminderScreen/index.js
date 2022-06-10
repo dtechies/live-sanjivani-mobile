@@ -115,6 +115,24 @@ export const CheckMedicationReminderScreen = props => {
       ? param.reminderData?.reminder_frequency
       : param?.reminder_frequency;
 
+    //Once A Week
+
+    if (reminderFrequencyValue == 'Once A Week') {
+      let dateValue = param.reminderData
+        ? param.reminderData?.frequency_value
+        : param?.frequency_value;
+      // let weekNumber = moment(dateValue, 'YYYY-MM-DD').isoWeek();
+      let dayNumber = moment(dateValue, 'YYYY-MM-DD').isoWeekday();
+      // console.log('weekNumber =>', weekNumber);
+      // console.log('dayNumber =>', dayNumber);
+      let newValue = days.map((i, k) => {
+        if (k == dayNumber) {
+          i.isSelected = true;
+        }
+        return i;
+      });
+      setDays(newValue);
+    }
     //everyday
     if (reminderFrequencyValue == 'EveryDay') {
       let newValue = days.map(i => {
@@ -254,7 +272,9 @@ export const CheckMedicationReminderScreen = props => {
             ) : null}
           </View>
         </View>
-        {param.medicineFilteredValue.length > 0 &&
+
+        {param.medicineFilteredValue &&
+          param.medicineFilteredValue.length > 0 &&
           param.medicineFilteredValue.map((item, index) => {
             return (
               <View style={styles.medicineDescriptionCard()}>

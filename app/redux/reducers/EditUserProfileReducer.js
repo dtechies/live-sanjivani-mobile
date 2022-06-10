@@ -4,7 +4,7 @@ const initialState = {
   editUserProfileResponse: [],
 };
 
-const editUserProfileReducer = (state = initialState, action) => {
+const EditUserProfileReducer = (state = initialState, action) => {
   const {type, payload} = action;
 
   switch (type) {
@@ -15,4 +15,4 @@ const editUserProfileReducer = (state = initialState, action) => {
   }
 };
 
-export default editUserProfileReducer;
+export default EditUserProfileReducer;
