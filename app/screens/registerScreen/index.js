@@ -324,7 +324,7 @@ export const RegisterScreen = () => {
             btnName={'Request OTP'}
             maxLength={10}
             onChangeText={val => {
-              setPhone(val);
+              setPhone(val.replace(/[^0-9]+/g, ''));
               setPhoneErr('');
               setExtra(extra + 1);
             }}

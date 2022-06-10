@@ -22,7 +22,7 @@ export const ProfileScreen = () => {
     userDetails: state.userDataReducer.userDataResponse.userData,
     age: state.userDataReducer.userDataResponse.age,
   }));
-
+  console.log('userDetails', userDetails);
   const removePlayerId = async () => {
     const removePlayerIdBody = {
       player_id: null,
@@ -117,7 +117,7 @@ export const ProfileScreen = () => {
                       navigation.navigate('profileDetailScreen');
                     }, 500);
                   }
-                  if (item.value == 'My CareGiver') {
+                  if (item.value == 'My Care Giver') {
                     setTimeout(() => {
                       navigation.navigate('myCareGiver');
                     }, 500);

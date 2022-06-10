@@ -4,7 +4,7 @@ const initialState = {
   editMedicineReminderStatusResponse: [],
 };
 
-const editMedicineReminderStatusReducer = (state = initialState, action) => {
+const EditMedicineReminderStatusReducer = (state = initialState, action) => {
   const {type, payload} = action;
 
   switch (type) {
@@ -15,4 +15,4 @@ const editMedicineReminderStatusReducer = (state = initialState, action) => {
   }
 };
 
-export default editMedicineReminderStatusReducer;
+export default EditMedicineReminderStatusReducer;

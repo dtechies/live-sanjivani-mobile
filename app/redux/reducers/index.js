@@ -21,7 +21,6 @@ import getAllSubCategoryReducer from './GetAllSubCategoryReducer';
 import getTipForDayReducer from './GetTipForDayReducer';
 import addMedicineReminderReducer from './AddMedicineReminderReducer';
 import getMedicineReminderProfileReducer from './GetMedicineReminderProfileReducer';
-import editMedicineReminderStatusReducer from './EditMedicineReminderStatusReducer';
 import getMedicineReminderViewReducer from './GetMedicineReminderViewReducer';
 import getMedicineAllDetailReducer from './GetMedicineReminderAllDetailReducer';
 import getAppointmentReminderProfileReducer from './GetAppointmentReminderProfileReducer';
@@ -40,6 +39,8 @@ import addEditPlayerIdReducer from './AddEditPlayerIdReducer';
 import EditReminderStatusReducer from './EditReminderStatusReducer';
 import GetSubCatGraph from './SubCategoryGraphReducer';
 import GetCareGiverListReducer from './GetCareGiverListReducer';
+import addOtherScreenReducer from './AddOtherDataReducer';
+import DeleteCareGiverReducer from './DeleteCareGiverReducer';
 
 const persistConfig = {
   key: 'root',
@@ -64,7 +65,6 @@ const appReducer = combineReducers({
   getTipForDayReducer: getTipForDayReducer,
   addMedicineReminderReducer: addMedicineReminderReducer,
   getMedicineReminderProfileReducer: getMedicineReminderProfileReducer,
-  editMedicineReminderStatusReducer: editMedicineReminderStatusReducer,
   getMedicineReminderViewReducer: getMedicineReminderViewReducer,
   getMedicineAllDetailReducer: getMedicineAllDetailReducer,
   getAppointmentReminderProfileReducer: getAppointmentReminderProfileReducer,
@@ -81,8 +81,10 @@ const appReducer = combineReducers({
   GetUserFavSubCategoryPdfReducer: GetUserFavSubCategoryPdfReducer,
   getTodayMedicationListReducer: getTodayMedicationListReducer,
   addEditPlayerIdReducer: addEditPlayerIdReducer,
+  addOtherScreenReducer: addOtherScreenReducer,
   GetSubCatGraph: GetSubCatGraph,
   GetCareGiverListReducer: GetCareGiverListReducer,
+  DeleteCareGiverReducer: DeleteCareGiverReducer,
 });
 const rootReducer = (state, action) => {
   // Clear all data in redux store to initial.

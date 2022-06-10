@@ -39,6 +39,21 @@ export const _registerUser = async payload => {
   });
   return _api_calls('POST', '/register-user', headers, payload);
 };
+export const _addOtherData = async payload => {
+  // console.log('_addOtherData ==> ', payload);
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
+  });
+  return _api_calls(
+    'POST',
+    '/add-user-cat-subcategory-values',
+    headers,
+    payload,
+  );
+};
 export const _getMedicineReminderProfile = async () => {
   // let token = store.getState().userDataReducer.userDataResponse.login
   //   ? store.getState().userDataReducer.userDataResponse.userData.token
@@ -91,7 +106,7 @@ export const _getAllCategoryAndSubCategory = async () => {
       ? store.getState().userDataReducer.userDataResponse.userData.token
       : '',
   });
-  // console.log('headers ==> Bansi..', headers, token);
+  // console.log('headers ==> ', headers, token);
   return _api_calls('GET', '/all_cat_subcategory', headers);
 };
 export const _addAppointmentReminderView = async () => {
@@ -350,6 +365,16 @@ export const _getCareGiverList = async () => {
       ? store.getState().userDataReducer.userDataResponse.userData.token
       : '',
   });
-  console.log('headers _getUserProfileData ==>', headers);
+  // console.log('headers _getUserProfileData ==>', headers);
   return _api_calls('GET', '/get-caregiver', headers);
+};
+export const _getCareGiverDelete = async body => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
+  });
+  console.log('headers _getCareGiverDelete ==>', headers);
+  return _api_calls('DELETE', '/delete-caregiver', headers, body);
 };
