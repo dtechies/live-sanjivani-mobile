@@ -75,8 +75,10 @@ export const RegisterScreen = () => {
     };
     // console.log('RegisterBody ==>', RegisterBody);
     const RegisterResponse = await dispatch(registerUser(RegisterBody));
-    const res = RegisterResponse.payload;
-    // console.log('Register res ==>', res);
+    let res = {status: false, message: 'Connection Error...!'};
+    if (RegisterResponse) {
+      res = RegisterResponse.payload;
+    }
     if (res.status) {
       setLoading(false);
       // dispatch(userData({userData: res.data.user, login: true}));

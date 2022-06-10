@@ -36,7 +36,7 @@ export const inputTextStyle = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoRegular,
   color: color.blueTx,
-  paddingLeft: size.moderateScale(9),
+  paddingHorizontal: size.moderateScale(9),
 });
 export const mainViewStyle = val => ({
   flexDirection: 'row',

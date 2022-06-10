@@ -39,6 +39,7 @@ import getTodayMedicationListReducer from './GetTodayMedicationListReducer';
 import addEditPlayerIdReducer from './AddEditPlayerIdReducer';
 import EditReminderStatusReducer from './EditReminderStatusReducer';
 import GetSubCatGraph from './SubCategoryGraphReducer';
+import GetCareGiverListReducer from './GetCareGiverListReducer';
 
 const persistConfig = {
   key: 'root',
@@ -81,6 +82,7 @@ const appReducer = combineReducers({
   getTodayMedicationListReducer: getTodayMedicationListReducer,
   addEditPlayerIdReducer: addEditPlayerIdReducer,
   GetSubCatGraph: GetSubCatGraph,
+  GetCareGiverListReducer: GetCareGiverListReducer,
 });
 const rootReducer = (state, action) => {
   // Clear all data in redux store to initial.
