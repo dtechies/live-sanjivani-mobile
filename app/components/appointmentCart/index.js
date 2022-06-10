@@ -8,7 +8,7 @@ import {ToggleSwitch} from '../switch';
 export const AppointmentCard = props => {
   const {onTogglePress, onWholeCardPress, data, time, date, doctor, address} =
     props;
-  console.log('data', data);
+  // console.log('data', data);
   return (
     <Pressable
       onPress={() => onWholeCardPress && onWholeCardPress()}
