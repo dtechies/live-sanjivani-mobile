@@ -21,7 +21,6 @@ import getAllSubCategoryReducer from './GetAllSubCategoryReducer';
 import getTipForDayReducer from './GetTipForDayReducer';
 import addMedicineReminderReducer from './AddMedicineReminderReducer';
 import getMedicineReminderProfileReducer from './GetMedicineReminderProfileReducer';
-import editMedicineReminderStatusReducer from './EditMedicineReminderStatusReducer';
 import getMedicineReminderViewReducer from './GetMedicineReminderViewReducer';
 import getMedicineAllDetailReducer from './GetMedicineReminderAllDetailReducer';
 import getAppointmentReminderProfileReducer from './GetAppointmentReminderProfileReducer';
@@ -37,7 +36,7 @@ import getUserProfileReducer from './GetUserProfileReducer';
 import GetUserFavSubCategoryPdfReducer from './GetUserFavSubCategoryPdfReducer';
 import getTodayMedicationListReducer from './GetTodayMedicationListReducer';
 import addEditPlayerIdReducer from './AddEditPlayerIdReducer';
-import editReminderStatusReducer from './EditMedicineReminderStatusReducer';
+import EditMedicineReminderStatusReducer from './EditMedicineReminderStatusReducer';
 import addOtherScreenReducer from './AddOtherDataReducer';
 import editReminderStatusReducer from './EditReminderStatusReducer';
 import GetSubCatGraph from './SubCategoryGraphReducer';
@@ -65,7 +64,6 @@ const appReducer = combineReducers({
   getTipForDayReducer: getTipForDayReducer,
   addMedicineReminderReducer: addMedicineReminderReducer,
   getMedicineReminderProfileReducer: getMedicineReminderProfileReducer,
-  editMedicineReminderStatusReducer: editMedicineReminderStatusReducer,
   getMedicineReminderViewReducer: getMedicineReminderViewReducer,
   getMedicineAllDetailReducer: getMedicineAllDetailReducer,
   getAppointmentReminderProfileReducer: getAppointmentReminderProfileReducer,

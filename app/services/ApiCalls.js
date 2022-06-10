@@ -107,7 +107,7 @@ export const _getAllCategoryAndSubCategory = async () => {
       ? store.getState().userDataReducer.userDataResponse.userData.token
       : '',
   });
-  // console.log('headers ==> Bansi..', headers, token);
+  // console.log('headers ==> ', headers, token);
   return _api_calls('GET', '/all_cat_subcategory', headers);
 };
 export const _addAppointmentReminderView = async () => {
