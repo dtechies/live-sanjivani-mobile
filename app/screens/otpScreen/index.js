@@ -146,7 +146,6 @@ export const OtpScreen = props => {
   useEffect(() => {
     const interval = setInterval(() => {
       let timerDiff = counterTimer - new moment().format('X');
-      console.log('timerDiff', timerDiff, counter, counterTimer);
       timerDiff = timerDiff > 0 ? timerDiff : '00';
       counter > 0 &&
         setTimeout(() => {
