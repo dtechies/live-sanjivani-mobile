@@ -207,7 +207,7 @@ export const DemoScreen = () => {
               withButton={true}
               inputStyle={styles.button()}
               onRightIconPress={() => {
-                console.log('request Opt...');
+                // console.log('request Opt...');
               }}
               defaultNumber={
                 <Text
@@ -331,7 +331,7 @@ export const DemoScreen = () => {
               isRightSide={true}
               inputStyle={styles.button()}
               onRightIconPress={() => {
-                console.log('upload data');
+                // console.log('upload data');
               }}
             />
             {/* <View style={styles.mainReminder()}>

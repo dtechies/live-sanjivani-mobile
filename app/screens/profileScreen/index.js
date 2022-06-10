@@ -30,6 +30,7 @@ export const ProfileScreen = () => {
     const removePlayerIdResponse = await dispatch(
       addEditPlayerId(removePlayerIdBody),
     );
+    // console.log('adsasdasdas', removePlayerIdResponse);
     const res = removePlayerIdResponse.payload;
 
     if (res.status) {

@@ -110,7 +110,9 @@ export const AppointmentReminderScreen = animated => {
       setSearchValErr('Enter doctor name');
     }
     if (addressOne === '') {
-      setAddressOneErr('Enter address one');
+      setAddressOneErr('Enter address');
+    } else {
+      setAddressOneErr('');
     }
     if (selectedTime === 'Time') {
       setSelectedTimeErr('Select time');
@@ -162,7 +164,7 @@ export const AppointmentReminderScreen = animated => {
 
   const addAppointmentData = async () => {
     // setLoading(true);
-    console.log('dataId', selectedDate);
+    console.log('clicked==>');
     // let date = new moment(selectedDate, ['Do MMMM YYYY']).format('YYYY-MM-D');
     let formData = new FormData();
     formData.append('doctor_name', searchVal);
@@ -171,7 +173,7 @@ export const AppointmentReminderScreen = animated => {
     formData.append('user_selected_time', `${selectedTime.slice(0, 5)}:00`);
     formData.append('user_id', userId);
     formData.append('reminder_time', `${reminderTime.slice(0, 5)}:00`);
-    console.log('formData', formData);
+    // console.log('formData', formData);
     // return;
     setExtra(extra + 1);
     // console.log('fevUserBody', formData);
@@ -227,6 +229,9 @@ export const AppointmentReminderScreen = animated => {
       </View>
     );
   };
+  useEffect(() => {
+    setAddressOneErr('');
+  }, [addressOne]);
 
   return (
     <SafeAreaView style={styles.full()}>
@@ -444,11 +449,12 @@ export const AppointmentReminderScreen = animated => {
               renderDescription={row => console.log(row)}
               predefinedPlacesAlwaysVisible={true}
               onPress={(data, details = null) => {
-                console.log('details', details);
+                // console.log('details', details);
                 placesAutocompleteRef.current.setAddressText(
                   details.formatted_address,
                 );
                 setAddressOne(details.formatted_address);
+                setExtra(extra + 1);
               }}
               onFail={error => console.error(error)}
               getDefaultValue={() => ''}
@@ -550,6 +556,7 @@ export const AppointmentReminderScreen = animated => {
                 buttonText={styles.textAddButton()}
                 onPress={() => {
                   addAppointmentData();
+                  setExtra(extra + 1);
                 }}
               />
             </View>
@@ -561,7 +568,11 @@ export const AppointmentReminderScreen = animated => {
         buttonStyle={styles.addButtonStyle()}
         buttonText={styles.textAddButton()}
         onPress={() => {
-          selectedDate && searchVal && addressOne
+          selectedDate &&
+          searchVal &&
+          addressOne &&
+          selectedTime != 'Time' &&
+          reminderTime != 'Time'
             ? onOpenPopUp()
             : validation();
         }}

@@ -322,6 +322,7 @@ export const _addEditPlayerId = async payload => {
       ? store.getState().userDataReducer.userDataResponse.userData.token
       : '',
   });
+  // console.log('vvvv', 'POST', '/add-edit-player-id', headers, payload);
   return _api_calls('POST', '/add-edit-player-id', headers, payload);
 };
 export const _editReminderStatus = async payload => {
