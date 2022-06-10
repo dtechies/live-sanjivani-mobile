@@ -5,6 +5,7 @@ export const container = () => ({
 });
 export const screenContainer = () => ({
   backgroundColor: color.themeBack,
+  flex: 1,
 });
 export const toast = () => ({
   marginHorizontal: size.moderateScale(20),
@@ -17,6 +18,7 @@ export const cardFirst = () => ({
   shadowOffset: {height: size.moderateScale(3), width: 0},
   shadowOpacity: 0.2,
   elevation: size.moderateScale(5),
+  marginBottom: size.moderateScale(8),
 });
 export const cardSecond = () => ({
   height: size.moderateScale(200),

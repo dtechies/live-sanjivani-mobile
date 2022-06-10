@@ -259,7 +259,6 @@ export const TodayScreen = () => {
             />
           </View>
           {medicationData.map((item, index) => {
-            const isActive = activeIndex.includes(item.id);
             return (
               <View
                 style={styles.medicationCard()}

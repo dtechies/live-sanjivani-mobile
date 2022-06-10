@@ -4,7 +4,7 @@ const initialState = {
   editReminderStatusResponse: [],
 };
 
-const editReminderStatusReducer = (state = initialState, action) => {
+const EditReminderStatusReducer = (state = initialState, action) => {
   const {type, payload} = action;
 
   switch (type) {
@@ -15,4 +15,4 @@ const editReminderStatusReducer = (state = initialState, action) => {
   }
 };
 
-export default editReminderStatusReducer;
+export default EditReminderStatusReducer;
