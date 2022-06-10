@@ -143,7 +143,7 @@ export const errorText = val => ({
 
 export const medicineDescriptionCard = () => ({
   padding: size.moderateScale(15),
-  marginTop: size.moderateScale(30),
+  marginTop: size.moderateScale(20),
   backgroundColor: color.white,
   borderWidth: size.moderateScale(1),
   borderColor: color.white,
