@@ -25,7 +25,7 @@ export const MainProfileDetail = [
   },
   {
     label: '3',
-    value: 'My CareGiver',
+    value: 'My Care Giver',
     svg: IcAppointment,
     selectedCard: false,
   },

@@ -31,13 +31,16 @@ function _delete(url, headers, data) {
     headers: headers.headers,
     body: JSON.stringify(data),
   };
-  return fetch(url, options).then(r => {
-    return r.json();
-  });
+  return fetch(url, options)
+    .then(r => {
+      return r.json();
+    })
+    .catch(e => console.log('SU LYA', e));
 }
 
 function _api_calls(type, url, headers = {}, data = {}) {
   url = `${BASE_URL + url}`;
+  console.log('ATAPICALL', url, headers, data);
   switch (type) {
     case 'POST':
       return _post(url, headers, data);

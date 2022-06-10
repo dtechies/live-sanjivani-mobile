@@ -18,10 +18,6 @@ export const LoginScreen = () => {
   const [loading, setLoading] = useState(false);
   const [numberCorrect, setNumberCorrect] = useState('');
   const [isFocus, setIsFocus] = useState(false);
-  const [codeDefault, setCodeDefault] = useState({
-    label: '+91',
-    value: '+91',
-  });
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -81,64 +77,59 @@ export const LoginScreen = () => {
 
       <View style={styles.screenContainer()}>
         <Text style={styles.labelLoginTxt()} tx={'login_screen.number'} />
-        <InputBox
-          value={number}
-          placeholderTextColor={color.grayIcon}
-          placeholder={'XXXXXXXXXX'}
-          keyboardType={'phone-pad'}
-          withButton={true}
-          btnName={'Request OTP'}
-          maxLength={10}
-          onChangeText={val => {
-            // mobileNumberValidation(val);
-            setNumber(val.replace(/[^0-9]+/g, ''));
-            setNumberCorrect('');
-            setExtra(extra + 1);
-          }}
-          inputStyle={styles.inputTxt()}
-          mainContainerStyle={styles.inputMain()}
-          onRightIconPress={() => {
-            validateMobile();
-          }}
-          defaultNumber={
-            // <Text
-            //   style={styles.labelFieldText()}
-            //   tx="login_screen.countryCode"
-            // />
-            <Dropdown
-              defaultValue={codeDefault}
-              data={countryCode}
-              labelField="label"
-              valueField="value"
-              dropdownPosition={'bottom'}
-              style={styles.dropdown()}
-              placeholderStyle={styles.labelFieldText()}
-              selectedTextStyle={styles.selectedOptionTextStyle()}
-              maxHeight={size.moderateScale(50)}
-              containerStyle={styles.dropdownContainer()}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
-              flatListProps={{
-                bounces: false,
-              }}
-              onChange={item => {
-                setCountryCodeVal(item.value);
-                setIsFocus(false);
-              }}
-              renderItem={item => {
-                return (
-                  <View>
-                    <Text
-                      text={item.value}
-                      style={styles.InsideLabelFieldText()}
-                    />
-                    <View style={styles.separator()} />
-                  </View>
-                );
-              }}
-            />
-          }
-        />
+        <View style={styles.rowView()}>
+          <Dropdown
+            defaultValue={{label: '+91'}}
+            data={countryCode}
+            labelField="label"
+            valueField="value"
+            dropdownPosition={'bottom'}
+            style={styles.dropdown()}
+            placeholderStyle={styles.labelFieldText()}
+            selectedTextStyle={styles.selectedOptionTextStyle()}
+            maxHeight={size.moderateScale(60)}
+            containerStyle={styles.dropdownContainer()}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
+            flatListProps={{
+              bounces: false,
+            }}
+            onChange={item => {
+              setCountryCodeVal(item.value);
+              setIsFocus(false);
+            }}
+            renderItem={item => {
+              return (
+                <View>
+                  <Text
+                    text={item.value}
+                    style={styles.InsideLabelFieldText()}
+                  />
+                  <View style={styles.separator()} />
+                </View>
+              );
+            }}
+          />
+          <InputBox
+            value={number}
+            placeholderTextColor={color.grayIcon}
+            placeholder={'XXXXXXXXXX'}
+            keyboardType={'phone-pad'}
+            withButton={true}
+            btnName={'Request OTP'}
+            maxLength={10}
+            onChangeText={val => {
+              setNumber(val.replace(/[^0-9]+/g, ''));
+              setNumberCorrect('');
+              setExtra(extra + 1);
+            }}
+            inputStyle={styles.inputTxt()}
+            mainContainerStyle={styles.inputMain()}
+            onRightIconPress={() => {
+              validateMobile();
+            }}
+          />
+        </View>
         <View style={styles.validationView()}>
           {numberCorrect ? (
             <Text style={styles.textValidation()} text={numberCorrect} />

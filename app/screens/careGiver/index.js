@@ -94,7 +94,7 @@ export const CareGiver = () => {
       setLoading(false);
       toastMessage(res.message);
       setTimeout(() => {
-        navigation.navigate('addScreen');
+        navigation.goBack();
       }, 150);
     } else {
       setLoading(false);
