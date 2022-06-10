@@ -47,3 +47,9 @@ export const cardTextEmail = () => ({
   fontFamily: fonts.latoRegular,
   color: color.cornBlue,
 });
+export const crossSvgStyle = () => ({
+  // backgroundColor: 'red',
+  // alignSelf: 'flex-end',
+  padding: size.moderateScale(5),
+  // paddingBottom: size.moderateScale(10),
+});

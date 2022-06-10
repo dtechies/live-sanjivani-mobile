@@ -35,3 +35,4 @@ export * from './AddEditPlayerIdAction';
 export * from './EditReminderStatusAction';
 export * from './SubCategoryGraphAction';
 export * from './GetCareGiverListAction';
+export * from './DeleteCareGiverAction';

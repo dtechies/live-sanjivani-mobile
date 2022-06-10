@@ -350,6 +350,16 @@ export const _getCareGiverList = async () => {
       ? store.getState().userDataReducer.userDataResponse.userData.token
       : '',
   });
-  console.log('headers _getUserProfileData ==>', headers);
+  // console.log('headers _getUserProfileData ==>', headers);
   return _api_calls('GET', '/get-caregiver', headers);
+};
+export const _getCareGiverDelete = async body => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
+  });
+  console.log('headers _getCareGiverDelete ==>', headers);
+  return _api_calls('DELETE', '/delete-caregiver', headers, body);
 };
