@@ -17,6 +17,7 @@ export const CheckMedicationReminderScreen = props => {
   const [isDateErr, seIsDateErr] = useState('');
   const [extra, setExtra] = useState(0);
   const [data, setData] = useState();
+  const [medicineDetail, setMedicineDetail] = useState();
   const param = props.route.params;
   const {token, userId} = useSelector(state => ({
     token: state.userDataReducer.userDataResponse.userData.token,
@@ -94,7 +95,7 @@ export const CheckMedicationReminderScreen = props => {
       // console.log('addMedicineReminder List ==>', res);
       setData('');
       setDays(daysJson);
-      param.medicineFilteredValue = [];
+      // param.medicineFilteredValue = [];
       setLoading(false);
       navigation.navigate('viewMedicationScreen');
     } else {
@@ -110,11 +111,32 @@ export const CheckMedicationReminderScreen = props => {
     } else if (param) {
       // console.log('props', props.route.params);
       setData(props.route.params);
+      let obj = props.route.params.medicineFilteredValue;
+      let isEmptyObject = Object.keys(obj).length > 0;
+      isEmptyObject && setMedicineDetail(obj);
     }
     let reminderFrequencyValue = param.reminderData
       ? param.reminderData?.reminder_frequency
       : param?.reminder_frequency;
 
+    //Once A Week
+
+    if (reminderFrequencyValue == 'Once A Week') {
+      let dateValue = param.reminderData
+        ? param.reminderData?.frequency_value
+        : param?.frequency_value;
+      // let weekNumber = moment(dateValue, 'YYYY-MM-DD').isoWeek();
+      let dayNumber = moment(dateValue, 'YYYY-MM-DD').isoWeekday();
+      // console.log('weekNumber =>', weekNumber);
+      // console.log('dayNumber =>', dayNumber);
+      let newValue = days.map((i, k) => {
+        if (k == dayNumber) {
+          i.isSelected = true;
+        }
+        return i;
+      });
+      setDays(newValue);
+    }
     //everyday
     if (reminderFrequencyValue == 'EveryDay') {
       let newValue = days.map(i => {
@@ -254,63 +276,61 @@ export const CheckMedicationReminderScreen = props => {
             ) : null}
           </View>
         </View>
-        {param.medicineFilteredValue.length > 0 &&
-          param.medicineFilteredValue.map((item, index) => {
-            return (
-              <View style={styles.medicineDescriptionCard()}>
-                <View style={styles.rowView()}>
-                  <Text
-                    style={styles.title()}
-                    tx={'CheckMedicationReminderScreen.name'}
-                  />
-                  <Text text={':'} />
-                  <Text numberOfLines={2} style={styles.description()}>
-                    {item.name}
-                  </Text>
-                </View>
-                <View style={styles.rowView()}>
-                  <Text
-                    style={styles.title()}
-                    tx={'CheckMedicationReminderScreen.benefit'}
-                  />
-                  <Text text={':'} />
-                  <Text numberOfLines={2} style={styles.description()}>
-                    {item.benefits}
-                  </Text>
-                </View>
-                <View style={styles.rowView()}>
-                  <Text
-                    style={styles.title()}
-                    tx={'CheckMedicationReminderScreen.safetyAdvice'}
-                  />
-                  <Text text={':'} />
-                  <Text numberOfLines={2} style={styles.description()}>
-                    {item.safety_advice}
-                  </Text>
-                </View>
-                <View style={styles.rowView()}>
-                  <Text
-                    style={styles.title()}
-                    tx={'CheckMedicationReminderScreen.sideEffects'}
-                  />
-                  <Text text={':'} />
-                  <Text numberOfLines={2} style={styles.description()}>
-                    {item.side_effects}
-                  </Text>
-                </View>
-                <View style={styles.rowView()}>
-                  <Text
-                    style={styles.title()}
-                    tx={'CheckMedicationReminderScreen.use'}
-                  />
-                  <Text text={':'} />
-                  <Text numberOfLines={2} style={styles.description()}>
-                    {item.use}
-                  </Text>
-                </View>
-              </View>
-            );
-          })}
+
+        {medicineDetail && (
+          <View style={styles.medicineDescriptionCard()}>
+            <View style={styles.rowView()}>
+              <Text
+                style={styles.title()}
+                tx={'CheckMedicationReminderScreen.name'}
+              />
+              <Text text={':'} />
+              <Text numberOfLines={2} style={styles.description()}>
+                {medicineDetail?.name}
+              </Text>
+            </View>
+            <View style={styles.rowView()}>
+              <Text
+                style={styles.title()}
+                tx={'CheckMedicationReminderScreen.benefit'}
+              />
+              <Text text={':'} />
+              <Text numberOfLines={2} style={styles.description()}>
+                {medicineDetail?.benefits}
+              </Text>
+            </View>
+            <View style={styles.rowView()}>
+              <Text
+                style={styles.title()}
+                tx={'CheckMedicationReminderScreen.safetyAdvice'}
+              />
+              <Text text={':'} />
+              <Text numberOfLines={2} style={styles.description()}>
+                {medicineDetail?.safety_advice}
+              </Text>
+            </View>
+            <View style={styles.rowView()}>
+              <Text
+                style={styles.title()}
+                tx={'CheckMedicationReminderScreen.sideEffects'}
+              />
+              <Text text={':'} />
+              <Text numberOfLines={2} style={styles.description()}>
+                {medicineDetail?.side_effects}
+              </Text>
+            </View>
+            <View style={styles.rowView()}>
+              <Text
+                style={styles.title()}
+                tx={'CheckMedicationReminderScreen.use'}
+              />
+              <Text text={':'} />
+              <Text numberOfLines={2} style={styles.description()}>
+                {medicineDetail?.use}
+              </Text>
+            </View>
+          </View>
+        )}
         {param.fromViewMedication ? null : (
           <Button
             buttonStyle={styles.button()}

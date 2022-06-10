@@ -199,5 +199,10 @@
   "medicationReminderList_Screen": {
     "title": "Medication Reminder List",
     "myMedicineList": "My Medicine List"
+  },
+  "myCareGiver_screen": {
+    "title": "My Care Giver ",
+    "careGiverList": "Care Giver List",
+    "save": "Save"
   }
 }

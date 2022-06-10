@@ -49,9 +49,12 @@ export const OtpScreen = props => {
     const addEditPlayerIdResponse = await dispatch(
       addEditPlayerId(addEditPlayerIdBody),
     );
-    const res = addEditPlayerIdResponse.payload;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (addEditPlayerIdResponse) {
+      res = addEditPlayerIdResponse.payload;
+    }
     if (res.status) {
-      // console.log('api called', res);
+      // console.log('addPlayerId', res);
       // previous.userData.player_id = playerId;
       // await dispatch(userData(previous));
       setTimeout(() => {
@@ -68,6 +71,7 @@ export const OtpScreen = props => {
     const loginBody = {
       mob_no: otpData ? otpData?.mob_no : '',
       otp: otpData ? otpVal : '',
+      country_code: otpData ? otpData?.country_code : '',
     };
     // console.log('loginBody ==>', loginBody);
     const loginResponse = await dispatch(loginUser(loginBody));
@@ -97,6 +101,7 @@ export const OtpScreen = props => {
     setLoading(true);
     const getOtpBody = {
       mob_no: otpData ? otpData?.mob_no : '',
+      country_code: otpData ? otpData?.country_code : '',
     };
     console.log('getOtpBody ==>', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));

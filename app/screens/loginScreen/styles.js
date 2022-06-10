@@ -11,8 +11,8 @@ export const toast = () => ({
   paddingVertical: size.moderateScale(12),
 });
 export const inputMain = () => ({
-  width: size.deviceWidth * 0.89,
-  marginTop: size.moderateScale(10),
+  flex: 1,
+  // width: size.deviceWidth * 0.89,
   borderColor: color.white,
   shadowColor: color.black,
   shadowOffset: {width: 1, height: 1},
@@ -87,4 +87,50 @@ export const textValidation = () => ({
 });
 export const validationView = () => ({
   height: size.moderateScale(15),
+});
+
+//drop down style
+
+export const dropdown = () => ({
+  width: size.deviceWidth * 0.15,
+  marginVertical: size.moderateScale(5),
+  height: size.deviceHeight * 0.06,
+  borderRadius: size.moderateScale(10),
+  paddingVertical: size.moderateScale(7),
+  backgroundColor: color.white,
+  marginRight: size.moderateScale(8),
+  shadowColor: color.black,
+  shadowOffset: {width: 0, height: 1},
+  shadowOpacity: 0.8,
+  shadowRadius: 1,
+  elevation: size.moderateScale(4),
+});
+export const selectedOptionTextStyle = () => ({
+  color: color.blueTx,
+  fontFamily: fonts.latoBold,
+  fontSize: fontSize.small,
+  marginLeft: size.moderateScale(10),
+  textTransform: 'capitalize',
+});
+export const dropdownContainer = () => ({
+  borderRadius: size.moderateScale(10),
+  marginTop: size.moderateScale(5),
+  borderWidth: 1,
+  backgroundColor: color.white,
+});
+export const separator = () => ({
+  backgroundColor: color.borderBlue,
+});
+export const InsideLabelFieldText = () => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoBold,
+  color: color.blueTx,
+  paddingVertical: size.moderateScale(5),
+  paddingLeft: size.moderateScale(15),
+  textTransform: 'capitalize',
+});
+export const rowView = () => ({
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginTop: size.moderateScale(10),
 });

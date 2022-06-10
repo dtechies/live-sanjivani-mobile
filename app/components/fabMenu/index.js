@@ -39,7 +39,7 @@ export const FabMenu = ({addAppointment, addReminder}) => {
     <View style={styles.demoView()}>
       <Animated.View style={styles.buttonsContainer(translate1X)}>
         <Animated.View style={styles.labelScale(scaleX)}>
-          <Text style={styles.labelText()}>Add Reminder</Text>
+          <Text style={styles.labelText()}>Add Medication</Text>
         </Animated.View>
         <AnimatedPressable
           onPress={() => {

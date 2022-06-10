@@ -10,6 +10,7 @@ import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
 import {useDispatch, useSelector} from 'react-redux';
 import {getOtp, getUserProfile, editUserProfile, userData} from 'redux-actions';
+import {countryCode} from 'json';
 import {
   Text,
   Button,
@@ -73,6 +74,7 @@ export const ProfileDetailScreen = () => {
   const [otpValue, setOtpValue] = useState('');
   const [loading, setLoading] = useState(false);
   const currentDate = new moment().format('YYYY-MM-DD');
+  const [countryCodeVal, setCountryCodeVal] = useState('+91');
 
   const modalRef = useRef();
   const toastRef = useRef();
@@ -80,16 +82,16 @@ export const ProfileDetailScreen = () => {
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-
   const onGetOtp = async () => {
     setLoading(true);
     const getOtpBody = {
       mob_no: phone,
+      country_code: countryCodeVal,
     };
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     const res = getOtpResponse.payload;
     if (res.status) {
-      console.log('response data ==>', res.data);
+      // console.log('response data ==>', res.data);
       setLoading(false);
       toastMessage(res.message);
     } else {
@@ -148,7 +150,7 @@ export const ProfileDetailScreen = () => {
       var imgPathSubstr = image.path.substring(imgPathIndex + 1);
       image.imageName = imgPathSubstr;
       modalRef.current.close();
-      console.log('image ==> ', image);
+      // console.log('image ==> ', image);
       setImageData(image);
       setIsImageData(true);
       setImageDataErr('');
@@ -257,14 +259,15 @@ export const ProfileDetailScreen = () => {
     if (otp) {
       formData.append('mob_no', phone);
       formData.append('otp', otpValue);
+      formData.append('country_code', countryCodeVal);
     }
     formData.append('language', language);
 
-    console.log('formData', formData);
+    // console.log('formData', formData);
 
     const EditUserProfileResponse = await dispatch(editUserProfile(formData));
     const res = EditUserProfileResponse;
-    console.log('EditUserProfileResponse Res ==>', res);
+    // console.log('EditUserProfileResponse Res ==>', res);
 
     if (res.status) {
       setLoading(false);
@@ -399,8 +402,8 @@ export const ProfileDetailScreen = () => {
               // placeholder={'Gender'}
               dropdownPosition={'bottom'}
               style={styles.dropdown()}
-              placeholderStyle={styles.labelFieldText()}
-              selectedTextStyle={styles.selectedOptionTextStyle()}
+              placeholderStyle={styles.labelFieldText(isEditable)}
+              selectedTextStyle={styles.selectedOptionTextStyle(isEditable)}
               maxHeight={size.moderateScale(55)}
               containerStyle={styles.dropdownContainer()}
               // value={dropGender}
@@ -476,36 +479,75 @@ export const ProfileDetailScreen = () => {
             keyboardType={'email-address'}
           />
           {emailErr ? <Text style={styles.errorText()}>{emailErr}</Text> : null}
-          <InputBox
-            mainContainerStyle={styles.inputMain()}
-            inputStyle={styles.button(isEditablePhone)}
-            value={phone}
-            onChangeText={text => {
-              setPhone(text);
-              setPhoneErr('');
-              setExtra(extra + 1);
-            }}
-            withButton={true}
-            btnName={changeBtn}
-            disabled={isEditable ? false : true}
-            onRightIconPress={() => {
-              setIsEditablePhone(true);
-              setChangeBtn('Send OTP');
-              setExtra(extra + 1);
-              if (changeBtn == 'Send OTP') {
-                if (phone.length == 10) {
-                  setOtp(true);
-                  onGetOtp();
-                } else {
-                  setPhoneErr('Invalid Phone number');
+
+          <View style={styles.countryCodeRowView()}>
+            <Dropdown
+              defaultValue={{label: '+91'}}
+              data={countryCode}
+              labelField="label"
+              valueField="value"
+              dropdownPosition={'bottom'}
+              style={styles.countryCodeDropdown()}
+              placeholderStyle={styles.labelFieldText()}
+              selectedTextStyle={styles.countryCodeSelectedOptionTextStyle()}
+              maxHeight={size.moderateScale(60)}
+              containerStyle={styles.countryCodeDropdownContainer()}
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
+              flatListProps={{
+                bounces: false,
+              }}
+              onChange={item => {
+                setCountryCodeVal(item.value);
+                setIsFocus(false);
+              }}
+              renderItem={item => {
+                return (
+                  <View>
+                    <Text
+                      text={item.value}
+                      style={styles.countryCodeInsideLabelFieldText()}
+                    />
+                    <View style={styles.countryCodeSeparator()} />
+                  </View>
+                );
+              }}
+            />
+            <InputBox
+              mainContainerStyle={styles.updateMobileNumberInputMain()}
+              inputStyle={styles.button(isEditablePhone)}
+              value={phone}
+              onChangeText={text => {
+                setPhone(text);
+                setPhoneErr('');
+                setExtra(extra + 1);
+              }}
+              withButton={true}
+              btnName={changeBtn}
+              disabled={isEditable ? false : true}
+              onRightIconPress={() => {
+                setIsEditablePhone(true);
+                setChangeBtn('Send OTP');
+                setExtra(extra + 1);
+                if (changeBtn == 'Send OTP') {
+                  if (phone.length == 10) {
+                    setOtp(true);
+                    onGetOtp();
+                  } else {
+                    setPhoneErr('Invalid Phone number');
+                  }
                 }
-              }
-            }}
-            buttonStyle={styles.changePhoneBtnStyle(isEditable)}
-            maxLength={10}
-            keyboardType="numeric"
-            editable={isEditablePhone}
-          />
+              }}
+              buttonStyle={styles.changePhoneBtnStyle(isEditable)}
+              maxLength={10}
+              keyboardType="numeric"
+              editable={isEditablePhone}
+            />
+            {phoneErr ? (
+              <Text style={styles.errorText()}>{phoneErr}</Text>
+            ) : null}
+          </View>
+
           {otp && (
             <InputBox
               placeholder={'Enter OTP'}
@@ -543,7 +585,7 @@ export const ProfileDetailScreen = () => {
               dropdownPosition={'bottom'}
               style={styles.dropdown()}
               // placeholderStyle={styles.labelFieldText()}
-              selectedTextStyle={styles.selectedOptionTextStyle()}
+              selectedTextStyle={styles.selectedOptionTextStyle(isEditable)}
               maxHeight={size.moderateScale(56)}
               containerStyle={styles.dropdownContainer()}
               // value={language}

@@ -87,7 +87,7 @@ export const SharingDetailScreen = props => {
     if (SubCategoryResponse) {
       res = SubCategoryResponse;
     }
-    console.log('addUserFavoriteData res RESSS==>', res.data.link);
+    // console.log('addUserFavoriteData res RESSS==>', res.data.link);
     if (res.status) {
       // console.log('true');
       toastMessage(res.message);

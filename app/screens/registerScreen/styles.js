@@ -1,3 +1,4 @@
+import {styles} from 'react-native-element-dropdown/src/components/TextInput/styles';
 import {color, size, fonts, fontSize} from 'theme';
 
 export const container = () => ({
@@ -27,7 +28,8 @@ export const inputStyle = () => ({
 export const labelFieldText = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
-  color: color.dimGray,
+  color: color.dimGrey,
+  // backgroundColor: 'red',
 });
 export const dropdown = () => ({
   paddingHorizontal: size.moderateScale(5),
@@ -56,9 +58,9 @@ export const InsideLabelFieldText = () => ({
 export const dropdownContainer = () => ({
   borderRadius: size.moderateScale(10),
 });
-export const inputMainContainer = () => ({
-  marginBottom: size.moderateScale(5),
-  // backgroundColor: 'red',
+export const inputMainContainer = val => ({
+  marginBottom: val ? 0 : size.moderateScale(5),
+  flex: 1,
 });
 export const labelDisableText = () => ({
   fontSize: fontSize.small,
@@ -110,4 +112,51 @@ export const errorText = val => ({
   fontSize: fontSize.small,
   marginLeft: size.moderateScale(5),
   marginBottom: size.moderateScale(10),
+});
+
+// country Code drop down style
+
+export const countryCodeDropdown = () => ({
+  width: size.deviceWidth * 0.15,
+  marginVertical: size.moderateScale(5),
+  height: size.deviceHeight * 0.06,
+  borderRadius: size.moderateScale(10),
+  paddingHorizontal: size.moderateScale(1),
+  backgroundColor: color.white,
+  marginRight: size.moderateScale(8),
+});
+export const countryCodeSelectedOptionTextStyle = () => ({
+  color: color.blueTx,
+  fontFamily: fonts.latoBold,
+  fontSize: fontSize.small,
+  marginLeft: size.moderateScale(10),
+  textTransform: 'capitalize',
+});
+export const countryCodeDropdownContainer = () => ({
+  borderRadius: size.moderateScale(10),
+  marginTop: size.moderateScale(5),
+  borderWidth: 1,
+  backgroundColor: color.white,
+});
+export const countryCodeSeparator = () => ({
+  backgroundColor: color.borderBlue,
+});
+export const countryCodeInsideLabelFieldText = () => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoBold,
+  color: color.blueTx,
+  paddingVertical: size.moderateScale(5),
+  paddingLeft: size.moderateScale(15),
+  textTransform: 'capitalize',
+});
+export const countryCodeRowView = () => ({
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginVertical: size.moderateScale(5),
+});
+export const countryCodeLabelFieldText = () => ({
+  fontSize: fontSize.small,
+  color: color.dimGray,
+  fontFamily: fonts.latoBold,
+  marginHorizontal: size.moderateScale(5),
 });

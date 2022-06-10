@@ -30,6 +30,7 @@ export const ProfileScreen = () => {
     const removePlayerIdResponse = await dispatch(
       addEditPlayerId(removePlayerIdBody),
     );
+    // console.log('adsasdasdas', removePlayerIdResponse);
     const res = removePlayerIdResponse.payload;
 
     if (res.status) {
@@ -114,6 +115,11 @@ export const ProfileScreen = () => {
                   if (item.value == 'Account Settings') {
                     setTimeout(() => {
                       navigation.navigate('profileDetailScreen');
+                    }, 500);
+                  }
+                  if (item.value == 'My CareGiver') {
+                    setTimeout(() => {
+                      navigation.navigate('myCareGiver');
                     }, 500);
                   }
                   if (item.value == 'Logout') {

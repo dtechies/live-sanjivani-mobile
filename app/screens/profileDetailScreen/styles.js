@@ -33,6 +33,9 @@ export const inputMain = () => ({
   marginVertical: size.moderateScale(3),
   alignSelf: 'center',
 });
+export const updateMobileNumberInputMain = () => ({
+  flex: 1,
+});
 export const button = val => ({
   width: size.deviceWidth * 0.35,
   fontFamily: fonts.latoBold,
@@ -73,11 +76,11 @@ export const cardDesign = () => ({
   elevation: size.moderateScale(5),
   marginBottom: size.moderateScale(10),
 });
-export const labelFieldText = () => ({
+export const labelFieldText = val => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
   marginLeft: size.moderateScale(10),
-  color: color.blue,
+  color: val ? color.blue : color.darkGrey,
   textTransform: 'capitalize',
 });
 export const dropdown = () => ({
@@ -91,10 +94,10 @@ export const dropdown = () => ({
   paddingVertical: size.moderateScale(5),
   backgroundColor: color.white,
 });
-export const selectedOptionTextStyle = () => ({
+export const selectedOptionTextStyle = val => ({
   fontFamily: fonts.latoBold,
   marginLeft: size.moderateScale(10),
-  color: color.blue,
+  color: val ? color.blue : color.darkGrey,
   textTransform: 'capitalize',
 });
 export const separator = () => ({
@@ -174,4 +177,58 @@ export const errorText = val => ({
 });
 export const changePhoneBtnStyle = val => ({
   backgroundColor: val ? color.blue : color.dimGrey,
+});
+export const dropdown1 = () => ({
+  width: size.deviceWidth * 0.15,
+  marginVertical: size.moderateScale(5),
+  paddingHorizontal: size.moderateScale(5),
+  borderRadius: size.moderateScale(5),
+  paddingVertical: size.moderateScale(5),
+  backgroundColor: color.white,
+  marginLeft: size.moderateScale(20),
+
+  // underlineColor: 'transparent',
+});
+
+// country Code drop down style
+
+export const countryCodeDropdown = () => ({
+  width: size.deviceWidth * 0.15,
+  marginVertical: size.moderateScale(5),
+  height: size.deviceHeight * 0.06,
+  borderRadius: size.moderateScale(10),
+  paddingHorizontal: size.moderateScale(1),
+  backgroundColor: color.white,
+  marginRight: size.moderateScale(8),
+});
+export const countryCodeSelectedOptionTextStyle = () => ({
+  color: color.blueTx,
+  fontFamily: fonts.latoBold,
+  fontSize: fontSize.small,
+  marginLeft: size.moderateScale(10),
+  textTransform: 'capitalize',
+});
+export const countryCodeDropdownContainer = () => ({
+  borderRadius: size.moderateScale(10),
+  marginTop: size.moderateScale(5),
+  borderWidth: 1,
+  backgroundColor: color.white,
+});
+export const countryCodeSeparator = () => ({
+  backgroundColor: color.borderBlue,
+});
+export const countryCodeInsideLabelFieldText = () => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoBold,
+  color: color.blueTx,
+  paddingVertical: size.moderateScale(5),
+  paddingLeft: size.moderateScale(15),
+  textTransform: 'capitalize',
+});
+export const countryCodeRowView = () => ({
+  flexDirection: 'row',
+  alignItems: 'center',
+  flex: 1,
+  marginVertical: size.moderateScale(5),
+  marginHorizontal: size.moderateScale(20),
 });

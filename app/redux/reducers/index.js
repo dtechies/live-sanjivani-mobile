@@ -30,16 +30,15 @@ import getSubCategoryDataReducer from './getSubCategoryDataReducer';
 import getOtpReducer from './GetOtpReducer';
 import addSubcategoryReducer from './AddSubcategoryReducer';
 import addCareGiverReducer from './AddCareGiverReducer';
-import editUserProfileReducer from './EditUserProfileReducer';
+import EditUserProfileReducer from './EditUserProfileReducer';
 import userLogOutReducer from './UserLogoutReducer';
 import getUserProfileReducer from './GetUserProfileReducer';
 import GetUserFavSubCategoryPdfReducer from './GetUserFavSubCategoryPdfReducer';
 import getTodayMedicationListReducer from './GetTodayMedicationListReducer';
 import addEditPlayerIdReducer from './AddEditPlayerIdReducer';
-import EditMedicineReminderStatusReducer from './EditMedicineReminderStatusReducer';
-import addOtherScreenReducer from './AddOtherDataReducer';
-import editReminderStatusReducer from './EditReminderStatusReducer';
+import EditReminderStatusReducer from './EditReminderStatusReducer';
 import GetSubCatGraph from './SubCategoryGraphReducer';
+import GetCareGiverListReducer from './GetCareGiverListReducer';
 
 const persistConfig = {
   key: 'root',
@@ -74,7 +73,7 @@ const appReducer = combineReducers({
   getOtpReducer: getOtpReducer,
   addSubcategoryReducer: addSubcategoryReducer,
   addCareGiverReducer: addCareGiverReducer,
-  editUserProfileReducer: editUserProfileReducer,
+  editUserProfileReducer: EditUserProfileReducer,
   userLogOutReducer: userLogOutReducer,
   getUserProfileReducer: getUserProfileReducer,
   GetUserFavSubCategoryPdfReducer: GetUserFavSubCategoryPdfReducer,
@@ -82,6 +81,7 @@ const appReducer = combineReducers({
   addEditPlayerIdReducer: addEditPlayerIdReducer,
   addOtherScreenReducer: addOtherScreenReducer,
   GetSubCatGraph: GetSubCatGraph,
+  GetCareGiverListReducer: GetCareGiverListReducer,
 });
 const rootReducer = (state, action) => {
   // Clear all data in redux store to initial.

@@ -15,6 +15,8 @@ import {
   CheckMedicationReminderScreen,
   HelpSupportDetailsScreen,
   MyAppointments,
+  MyCareGiver,
+  CareGiver,
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
@@ -57,6 +59,8 @@ export const ProfileStackNavigation = () => {
         component={CheckMedicationReminderScreen}
       />
       <Stack.Screen name="myAppointments" component={MyAppointments} />
+      <Stack.Screen name="myCareGiver" component={MyCareGiver} />
+      <Stack.Screen name="careGiver" component={CareGiver} />
     </Stack.Navigator>
   );
 };
