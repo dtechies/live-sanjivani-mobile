@@ -3,18 +3,25 @@ import {View, Pressable, Image, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {getOtp} from 'redux-actions';
+import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 import {Loader, Text, Button, InputBox, Toast} from 'components';
 import {size, images, color} from 'theme';
+import {countryCode} from 'json';
 import * as styles from './styles';
 export const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const toastRef = useRef();
   const [number, setNumber] = useState('');
+  const [countryCodeVal, setCountryCodeVal] = useState('+91');
   const [extra, setExtra] = useState(0);
   const [loading, setLoading] = useState(false);
   const [numberCorrect, setNumberCorrect] = useState('');
-  const toastRef = useRef();
-
+  const [isFocus, setIsFocus] = useState(false);
+  const [codeDefault, setCodeDefault] = useState({
+    label: '+91',
+    value: '+91',
+  });
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -22,7 +29,9 @@ export const LoginScreen = () => {
     setLoading(true);
     const getOtpBody = {
       mob_no: number,
+      country_code: countryCodeVal,
     };
+    console.log('BODYYYY res..', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     let res = {status: false, message: 'Connection Error...!'};
     if (getOtpResponse) {
@@ -92,9 +101,41 @@ export const LoginScreen = () => {
             validateMobile();
           }}
           defaultNumber={
-            <Text
-              style={styles.labelFieldText()}
-              tx="login_screen.countryCode"
+            // <Text
+            //   style={styles.labelFieldText()}
+            //   tx="login_screen.countryCode"
+            // />
+            <Dropdown
+              defaultValue={codeDefault}
+              data={countryCode}
+              labelField="label"
+              valueField="value"
+              dropdownPosition={'bottom'}
+              style={styles.dropdown()}
+              placeholderStyle={styles.labelFieldText()}
+              selectedTextStyle={styles.selectedOptionTextStyle()}
+              maxHeight={size.moderateScale(50)}
+              containerStyle={styles.dropdownContainer()}
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
+              flatListProps={{
+                bounces: false,
+              }}
+              onChange={item => {
+                setCountryCodeVal(item.value);
+                setIsFocus(false);
+              }}
+              renderItem={item => {
+                return (
+                  <View>
+                    <Text
+                      text={item.value}
+                      style={styles.InsideLabelFieldText()}
+                    />
+                    <View style={styles.separator()} />
+                  </View>
+                );
+              }}
             />
           }
         />

@@ -73,11 +73,11 @@ export const cardDesign = () => ({
   elevation: size.moderateScale(5),
   marginBottom: size.moderateScale(10),
 });
-export const labelFieldText = () => ({
+export const labelFieldText = val => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
   marginLeft: size.moderateScale(10),
-  color: color.blue,
+  color: val ? color.blue : color.darkGrey,
   textTransform: 'capitalize',
 });
 export const dropdown = () => ({
@@ -91,10 +91,10 @@ export const dropdown = () => ({
   paddingVertical: size.moderateScale(5),
   backgroundColor: color.white,
 });
-export const selectedOptionTextStyle = () => ({
+export const selectedOptionTextStyle = val => ({
   fontFamily: fonts.latoBold,
   marginLeft: size.moderateScale(10),
-  color: color.blue,
+  color: val ? color.blue : color.darkGrey,
   textTransform: 'capitalize',
 });
 export const separator = () => ({
@@ -174,4 +174,15 @@ export const errorText = val => ({
 });
 export const changePhoneBtnStyle = val => ({
   backgroundColor: val ? color.blue : color.dimGrey,
+});
+export const dropdown1 = () => ({
+  width: size.deviceWidth * 0.15,
+  marginVertical: size.moderateScale(5),
+  paddingHorizontal: size.moderateScale(5),
+  borderRadius: size.moderateScale(5),
+  paddingVertical: size.moderateScale(5),
+  backgroundColor: color.white,
+  marginLeft: size.moderateScale(20),
+
+  // underlineColor: 'transparent',
 });
