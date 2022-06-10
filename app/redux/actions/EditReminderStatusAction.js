@@ -1,7 +1,7 @@
 import * as actions from '../Types';
 import {_editReminderStatus} from 'services';
 
-export const editReminderStatusAction = body => {
+export const EditReminderStatusAction = body => {
   return dispatch => {
     dispatch({type: actions.EDIT_REMINDER_STATUS});
     _editReminderStatus;
