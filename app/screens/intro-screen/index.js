@@ -7,6 +7,7 @@ import {images, IcIntro1, IcIntro2, IcIntro3, IcSplashColor} from 'theme';
 import {Button, Text} from 'components';
 import styles from './styles';
 import {useDoubleBackPressExit} from 'utils';
+import {ChangeLanguage} from '../../components';
 
 export const IntroScreen = () => {
   const scrollRef = useRef(null);
@@ -51,15 +52,21 @@ export const IntroScreen = () => {
               <View key={val.toString()} style={styles.welcomeTextView}>
                 <View style={styles.headingMain}>
                   <IcSplashColor />
-                  <Text style={styles.welcomeTextMain}>{'Live Sanjivani'}</Text>
-                  <Text style={styles.welcomeText}>{'Har Pal Apke Sath'}</Text>
-                  <Text style={styles.welcomeTextSub}>
-                    {val == 0
-                      ? 'Get Medicine  Reminder'
-                      : val == 1
-                      ? 'Get Appointment Reminder'
-                      : 'Discuss in the  Forum'}
-                  </Text>
+                  <Text
+                    style={styles.welcomeTextMain}
+                    tx="intro_Screen.mainTitle"
+                  />
+                  <Text style={styles.welcomeText} tx="intro_Screen.subTitle" />
+                  <Text
+                    style={styles.welcomeTextSub}
+                    tx={
+                      val == 0
+                        ? 'intro_Screen.getMedicine'
+                        : val == 1
+                        ? 'intro_Screen.getAppointment'
+                        : 'intro_Screen.Discuss'
+                    }
+                  />
                 </View>
                 {val == 0 ? (
                   <View>
@@ -107,7 +114,7 @@ export const IntroScreen = () => {
           <Button
             buttonStyle={styles.buttonStyle}
             buttonText={styles.buttonText}
-            name={'Skip'}
+            nameTx="intro_Screen.skip"
             onPress={() => {
               navigation.navigate('loginScreen');
             }}
@@ -127,10 +134,11 @@ export const IntroScreen = () => {
               </View>
             ))}
           </View>
+          <ChangeLanguage />
           <Button
             buttonStyle={styles.buttonStyle}
             buttonText={styles.buttonText}
-            name={'Next'}
+            nameTx="intro_Screen.next"
             onPress={loginPress}
           />
         </View>

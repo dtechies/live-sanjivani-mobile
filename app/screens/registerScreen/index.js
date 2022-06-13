@@ -185,6 +185,7 @@ export const RegisterScreen = () => {
       <Screen bounces={false} style={styles.screenContainer()}>
         <InputBox
           placeholder={'First Name'}
+          // titleTx={}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
           placeholderTextColor={color.grayTxt}
