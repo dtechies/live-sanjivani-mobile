@@ -1,0 +1,19 @@
+{
+  "demo_screen": {
+    "demo_data": "डेमो"
+  },
+  "condition": {
+    "en": "to English"
+  },
+  "login_screen": {
+    "number": "Demo",
+    "countryCode": "+91",
+    "learnMore": "Learn more",
+    "otp": "Enter OTP",
+    "request_otp": "Request OTP",
+    "register_new_user": "Register New User",
+    "request_new_otp": "Request New OTP",
+    "login": "Login",
+    "or": "Or"
+  }
+}
