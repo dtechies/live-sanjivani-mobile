@@ -27,6 +27,7 @@ export const LoginScreen = () => {
     const getOtpBody = {
       mob_no: number,
       country_code: countryCodeVal,
+      user_id: null,
     };
     console.log('BODYYYY res..', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));

@@ -168,7 +168,8 @@
     "emailId": "Email ID",
     "nickName": "Nick Name",
     "save": "Save",
-    "continue": "Continue"
+    "continue": "Continue",
+    "search": "Search"
   },
   "symptoms_screen": {
     "title": "Symptom Checker",
