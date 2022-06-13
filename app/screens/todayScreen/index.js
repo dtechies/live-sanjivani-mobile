@@ -18,6 +18,7 @@ import {
 import * as styles from './styles';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {useDoubleBackPressExit} from 'utils';
+// import {ChangeLanguage} from '../../components';
 // import LinearGradient from 'react-native-linear-gradient';
 export const TodayScreen = () => {
   const navigation = useNavigation();
@@ -347,6 +348,7 @@ export const TodayScreen = () => {
           />
         </View>
       </ScrollView>
+      {/* <ChangeLanguage /> */}
       <FabMenu
         addReminder={() => navigation.navigate('medicationReminderScreen')}
         addAppointment={() => navigation.navigate('appointmentReminderScreen')}

@@ -168,7 +168,8 @@
     "emailId": "Email ID",
     "nickName": "Nick Name",
     "save": "Save",
-    "continue": "Continue"
+    "continue": "Continue",
+    "search": "Search"
   },
   "symptoms_screen": {
     "title": "Symptom Checker",
@@ -214,5 +215,17 @@
     "title": "Medical Journal Lists",
     "save": "Save",
     "listAllJournal": "List Of All Journal"
+  },
+  "otherDetails": {
+    "title": "Other Details"
+  },
+  "intro_Screen": {
+    "mainTitle": "Live Sanjivani",
+    "subTitle": "Har Pal Apke Sath",
+    "getMedicine": "Get Medicine Reminder",
+    "getAppointment": "Get Appointment Reminder",
+    "Discuss": "Discuss in the  Forum",
+    "skip": "Skip",
+    "next": "Next"
   }
 }

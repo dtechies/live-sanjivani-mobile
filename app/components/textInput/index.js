@@ -61,6 +61,7 @@ export const InputBox = props => {
             selectionColor={color.dimGrey}
             value={value}
             ref={textRef}
+            placeholder={titleTx}
             // maxLength={4}
             {...props}
           />

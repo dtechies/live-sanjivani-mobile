@@ -378,6 +378,16 @@ export const _getCareGiverDelete = async body => {
   console.log('headers _getCareGiverDelete ==>', headers);
   return _api_calls('DELETE', '/delete-caregiver', headers, body);
 };
+export const _getAllSymptom = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
+  });
+  // console.log('header-all-symptom', headers);
+  return _api_calls('GET', '/all-symptom', headers);
+};
 export const _addEditMedicalJournalNote = async payload => {
   let {_api_calls} = HttpCalls;
 

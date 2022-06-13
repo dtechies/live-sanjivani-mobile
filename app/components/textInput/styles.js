@@ -27,7 +27,7 @@ export const row = () => ({
   flexDirection: 'row',
 });
 export const inputContainer = (v1, v2) => ({
-  flex: v2 ? 0 : 1,
+  flex: 1,
   fontFamily: fonts.latoRegular,
   fontSize: fontSize.small,
   padding: 0,
@@ -82,6 +82,8 @@ export const rightUnit = () => ({
   // marginTop: size.moderateScale(-2),
   // marginRight: size.moderateScale(-2),
   // marginRight: size.moderateScale(15),
+  backgroundColor: 'red',
+  // justifyContent: 'flex-end',
 });
 export const rightIcon = () => ({
   alignItems: 'center',
@@ -98,4 +100,5 @@ export const btnTextUnit = () => ({
   color: color.grayTxt,
   fontSize: fontSize.medium,
   fontFamily: fonts.segoeUIBold,
+  marginRight: size.moderateScale(10),
 });

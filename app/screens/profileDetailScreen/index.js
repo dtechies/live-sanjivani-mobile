@@ -82,23 +82,7 @@ export const ProfileDetailScreen = () => {
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-  const onGetOtp = async () => {
-    setLoading(true);
-    const getOtpBody = {
-      mob_no: phone,
-      country_code: countryCodeVal,
-    };
-    const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    const res = getOtpResponse.payload;
-    if (res.status) {
-      // console.log('response data ==>', res.data);
-      setLoading(false);
-      toastMessage(res.message);
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
-    }
-  };
+
   // const getUserProfileData = async () => {
   //   // setLoading(true);
   //   const getOtpResponse = await dispatch(getUserProfile());
@@ -134,10 +118,6 @@ export const ProfileDetailScreen = () => {
   //     // toastMessage(res.message);
   //   }
   // };
-
-  // useEffect(() => {
-  //   getUserProfileData();
-  // }, []);
 
   const uploadFromGallery = () => {
     ImagePicker.openPicker({
@@ -240,10 +220,30 @@ export const ProfileDetailScreen = () => {
       editProfileDetails();
     }
   };
+  const onGetOtp = async () => {
+    setLoading(true);
+    const getOtpBody = {
+      mob_no: phone,
+      country_code: countryCodeVal,
+      user_id: userDetails.id,
+    };
+    // console.log('getOtpBody ==>', getOtpBody);
+    const getOtpResponse = await dispatch(getOtp(getOtpBody));
+    const res = getOtpResponse.payload;
+    if (res.status) {
+      // console.log('response data ==>', res.data);
+      setLoading(false);
+      toastMessage(res.message);
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+    }
+  };
   const editProfileDetails = async () => {
     setLoading(true);
-    // console.log('isEditablePhone ==> ', isEditablePhone);
     let formData = new FormData();
+
+    formData.append('user_id', userDetails?.id);
     formData.append('first_name', firstNm);
     formData.append('last_name', lastNm);
     formData.append('gender', gender);
@@ -268,9 +268,17 @@ export const ProfileDetailScreen = () => {
     const EditUserProfileResponse = await dispatch(editUserProfile(formData));
     const res = EditUserProfileResponse;
     // console.log('EditUserProfileResponse Res ==>', res);
-
+    // return;
     if (res.status) {
+      var a = moment(res.data.dob);
+      var b = moment(currentDate);
+      var years = b.diff(a, 'year');
+      b.add(years, 'years');
+      // res.data.token = userStore.userData.token;
+      // userStore.userData = res.data;
+      await dispatch(userData({userData: res.data, age: years, login: true}));
       setLoading(false);
+
       toastMessage(res.message);
       setIsEditable(false);
       setOtpValue('');
@@ -278,8 +286,7 @@ export const ProfileDetailScreen = () => {
       setIsEditablePhone(false);
       // getUserProfileData();
       setExtra(extra + 1);
-      res.data.token = userStore.userData.token;
-      userStore.userData = res.data;
+
       // console.log('response RES  data :- ', res.data);
 
       var a = moment(res.data.dob);
@@ -292,7 +299,6 @@ export const ProfileDetailScreen = () => {
       toastMessage(res.message);
     }
   };
-
   return (
     <SafeAreaView>
       <Toast
@@ -482,7 +488,7 @@ export const ProfileDetailScreen = () => {
 
           <View style={styles.countryCodeRowView()}>
             <Dropdown
-              defaultValue={{label: '+91'}}
+              defaultValue={{label: '+91', value: '+91'}}
               data={countryCode}
               labelField="label"
               valueField="value"
