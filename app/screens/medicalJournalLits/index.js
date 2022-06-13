@@ -1,25 +1,33 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {SafeAreaView, Pressable, View} from 'react-native';
+import {SafeAreaView, Pressable, View, Image} from 'react-native';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {GetCareGiverListAction, DeleteCareGiverAction} from 'redux-actions';
+import {
+  GetUserMedicalJournalNoteAction,
+  GetDeleteMedicalJournalNoteAction,
+} from 'redux-actions';
 
 import {useDispatch} from 'react-redux';
-
+import {Modalize} from 'react-native-modalize';
+import {Portal} from 'react-native-portalize';
 import {
   Loader,
   Text,
   Screen,
   InputBox,
   Header,
-  CareGiverCard,
+  JournalCard,
+  Button,
 } from 'components';
-import {size, color, IcBtnPlus, SearchValNew} from 'theme';
+import {size, color, IcBtnPlus, SearchValNew, IcCrossArrow} from 'theme';
 import * as styles from './styles';
 
-export const MyCareGiver = () => {
+export const MedicalJournalLists = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const toastRef = useRef();
+  const modalPreviewRef = useRef();
+  const [imageUpload, setImageUpload] = useState('');
+
   const [extra, setExtra] = useState(0);
   const [searchText, setSearchText] = useState('');
   const [careGiverList, setCareGiverList] = useState([]);
@@ -53,17 +61,19 @@ export const MyCareGiver = () => {
   };
 
   const getCaregiverData = async () => {
-    setLoading(true);
+    // setLoading(true);
 
     const getAppointmentReminderProfileResponse = await dispatch(
-      GetCareGiverListAction(),
+      GetUserMedicalJournalNoteAction(),
     );
+    console.log('data', getAppointmentReminderProfileResponse);
     let res = {status: false, message: 'Connection Error...!'};
     if (getAppointmentReminderProfileResponse) {
       res = getAppointmentReminderProfileResponse;
     }
     if (res.status) {
-      let data = res.data;
+      let data = res.data.MedicalJournalNoteData;
+      console.log('DataJournal', data);
       setCareGiverList(data);
       setFilteredData(data);
       setLoading(false);
@@ -74,18 +84,21 @@ export const MyCareGiver = () => {
       toastMessage(res.message);
     }
   };
+  const PreviewImage = val => {
+    setImageUpload(val.image);
+    modalPreviewRef.current.open();
+  };
   const DeleteData = async val => {
     setLoading(true);
-
     const editMedicineReminderStatusBody = {
       id: val?.id,
     };
     const editMedicineReminderStatusResponse = await dispatch(
-      DeleteCareGiverAction(editMedicineReminderStatusBody),
+      GetDeleteMedicalJournalNoteAction(editMedicineReminderStatusBody),
     );
     let res = {status: false, message: 'Connection Error...!'};
     if (editMedicineReminderStatusResponse) {
-      res = editMedicineReminderStatusResponse.payload;
+      res = editMedicineReminderStatusResponse;
     }
     if (res.status) {
       setFilteredData(filteredData.filter(i => i.id != val.id));
@@ -94,6 +107,7 @@ export const MyCareGiver = () => {
       setLoading(false);
     }
   };
+
   return (
     <SafeAreaView style={styles.container()}>
       {loading && <Loader />}
@@ -110,11 +124,11 @@ export const MyCareGiver = () => {
         isHeading={true}
         isBlue={false}
         isCamera={false}
-        title={'myCareGiver_screen.title'}
+        title={'medicalJournalLists_screen.title'}
       />
       <View style={styles.screenContainer()}>
         <View style={styles.searchBarRowView()}>
-          <InputBox
+          {/* <InputBox
             value={searchText}
             onChangeText={val => {
               onSearch(val);
@@ -122,7 +136,7 @@ export const MyCareGiver = () => {
             inputStyle={styles.buttonNew()}
             leftIcon={true}
             containerStyle={styles.mainInputStyle()}
-            placeholder={'Search Care Giver'}
+            placeholder={'Search Journal'}
             leftIconName={
               <SearchValNew
                 height={size.moderateScale(20)}
@@ -130,24 +144,24 @@ export const MyCareGiver = () => {
                 fill={color.blue}
               />
             }
-          />
+          /> */}
+
+          <View style={styles.headingMain()}>
+            <Text
+              tx={'medicalJournalLists_screen.listAllJournal'}
+              style={styles.ViewSubTitle()}
+            />
+          </View>
           <Pressable
             style={styles.shadow()}
             onPress={() => {
-              navigation.navigate('careGiver');
+              navigation.navigate('medicalJournalScreen');
             }}>
             <IcBtnPlus
               height={size.moderateScale(65)}
               width={size.moderateScale(65)}
             />
           </Pressable>
-        </View>
-
-        <View style={styles.headingMain()}>
-          <Text
-            tx={'myCareGiver_screen.careGiverList'}
-            style={styles.ViewSubTitle()}
-          />
         </View>
       </View>
       <Screen style={styles.screenContainer()}>
@@ -156,13 +170,17 @@ export const MyCareGiver = () => {
         )}
         <View style={styles.bottomStyle()}>
           {filteredData.map((val, i) => {
+            console.log('val', val);
             if (val.value == 'null') {
               return <Text style={styles.noData()}>No Records Found...</Text>;
             }
             return (
               <View key={i + 'careGiver'}>
-                <CareGiverCard
+                <JournalCard
                   data={val}
+                  ImageClick={() => {
+                    PreviewImage(val);
+                  }}
                   onPress={() => {
                     DeleteData(val);
                   }}
@@ -172,6 +190,37 @@ export const MyCareGiver = () => {
           })}
         </View>
       </Screen>
+      <Portal>
+        <Modalize
+          ref={modalPreviewRef}
+          adjustToContentHeight={true}
+          disableScrollIfPossible={false}
+          scrollViewProps={{
+            showsVerticalScrollIndicator: false,
+            contentContainerStyle: styles.modalContentContainerStyle(),
+          }}
+          modalStyle={styles.modalStyle()}
+          handleStyle={styles.dragStyle()}>
+          <View>
+            <Pressable
+              onPress={() => {
+                modalPreviewRef.current.close();
+              }}
+              style={styles.crossIconView()}>
+              <IcCrossArrow
+                width={size.moderateScale(18)}
+                height={size.moderateScale(18)}
+                fill={color.black}
+              />
+            </Pressable>
+            <Image
+              resizeMode="contain"
+              source={{uri: imageUpload}}
+              style={styles.imageModelView()}
+            />
+          </View>
+        </Modalize>
+      </Portal>
     </SafeAreaView>
   );
 };

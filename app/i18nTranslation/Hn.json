@@ -15,5 +15,17 @@
     "request_new_otp": "Request New OTP",
     "login": "Login",
     "or": "Or"
+  },
+  "register_screen": {
+    "first_name": "First",
+    "last_name": "Last Name",
+    "email": "Email",
+    "phone_Number": "Phone Number",
+    "gender": "Gender",
+    "select_language": "Selected Language",
+    "dob": "DOB",
+    "next": "Register",
+    "title_register": "Lets Create Your Profile",
+    "title": "Register New User"
   }
 }

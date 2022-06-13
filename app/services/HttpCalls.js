@@ -40,7 +40,7 @@ function _delete(url, headers, data) {
 
 function _api_calls(type, url, headers = {}, data = {}) {
   url = `${BASE_URL + url}`;
-  console.log('ATAPICALL', url, headers, data);
+  // console.log('api_Calls', url, headers, data);
   switch (type) {
     case 'POST':
       return _post(url, headers, data);

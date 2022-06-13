@@ -39,8 +39,8 @@ export const dropdown = () => ({
   paddingVertical: size.moderateScale(5),
   backgroundColor: color.white,
 });
-export const selectedOptionTextStyle = () => ({
-  color: color.blueTx,
+export const selectedOptionTextStyle = val => ({
+  color: val ? color.blueTx : color.dimGrey,
   fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
 });
@@ -125,8 +125,8 @@ export const countryCodeDropdown = () => ({
   backgroundColor: color.white,
   marginRight: size.moderateScale(8),
 });
-export const countryCodeSelectedOptionTextStyle = () => ({
-  color: color.blueTx,
+export const countryCodeSelectedOptionTextStyle = val => ({
+  color: val ? color.blueTx : color.dimGrey,
   fontFamily: fonts.latoBold,
   fontSize: fontSize.small,
   marginLeft: size.moderateScale(10),
@@ -153,7 +153,6 @@ export const countryCodeInsideLabelFieldText = () => ({
 export const countryCodeRowView = () => ({
   flexDirection: 'row',
   alignItems: 'center',
-  marginVertical: size.moderateScale(5),
 });
 export const countryCodeLabelFieldText = () => ({
   fontSize: fontSize.small,

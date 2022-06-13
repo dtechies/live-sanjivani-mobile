@@ -78,7 +78,7 @@ export const TodayScreen = () => {
     const res = getTodayMedicationResponse;
     if (res != undefined) {
       if (res.status) {
-        console.log('getTodayMedicationResponse ==>', res.data.MedicineData);
+        // console.log('getTodayMedicationResponse ==>', res.data.MedicineData);
 
         let medicationList = res.data.MedicineData;
         const medicationListNew = medicationList.sort((a, b) => {
@@ -246,7 +246,7 @@ export const TodayScreen = () => {
             <View>
               <Text
                 style={styles.textError()}
-                text={'No Medication Progress Found.'}
+                tx={'today_screen.noMedicationProgressRecords'}
               />
             </View>
           )}
@@ -286,7 +286,10 @@ export const TodayScreen = () => {
           })}
           {medicationData.length == 0 && (
             <View>
-              <Text style={styles.textError()} text={'No Medication Found.'} />
+              <Text
+                style={styles.textError()}
+                tx={'today_screen.noMedicationRecords'}
+              />
             </View>
           )}
         </View>
@@ -333,7 +336,10 @@ export const TodayScreen = () => {
             })}
           {reminderList.length == 0 && (
             <View>
-              <Text style={styles.textError()} text={'No Appointment Found.'} />
+              <Text
+                style={styles.textError()}
+                tx={'today_screen.noAppointmentRecords'}
+              />
             </View>
           )}
         </View>
@@ -344,7 +350,8 @@ export const TodayScreen = () => {
           />
           <Text
             style={styles.tipsTxt(tipsForTheDay)}
-            text={tipsForTheDay != '' ? tipsForTheDay : 'No Tips Found.'}
+            text={tipsForTheDay != '' ? tipsForTheDay : ''}
+            tx={tipsForTheDay == '' ? 'today_screen.noTipsRecords' : ''}
           />
         </View>
       </ScrollView>

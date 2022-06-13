@@ -32,3 +32,4 @@ export * from './helpSupportDetailsScreen';
 export * from './myAppointments';
 export * from './myCaregiver';
 export * from './symptomDetailScreen';
+export * from './medicalJournalLits';

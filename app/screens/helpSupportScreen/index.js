@@ -30,7 +30,6 @@ export const HelpSupportScreen = () => {
     }
     if (res.status) {
       // console.log('helpResponse data ==>', res);
-      setLoading(false);
       // toastMessage(res.message);
       let data = res.data.HelpSupportData;
       let support = data.filter(val => {
@@ -41,6 +40,7 @@ export const HelpSupportScreen = () => {
         return val.type == 'Disclosures';
       });
       setHelpDisclosures(disclosures);
+      setLoading(false);
       setExtra(extra + 1);
     } else {
       setLoading(false);

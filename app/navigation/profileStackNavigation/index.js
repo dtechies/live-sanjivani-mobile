@@ -18,6 +18,7 @@ import {
   MyCareGiver,
   CareGiver,
   SymptomDetailScreen,
+  MedicalJournalLists,
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
@@ -65,6 +66,8 @@ export const ProfileStackNavigation = () => {
       <Stack.Screen
         name="symptomDetailScreen"
         component={SymptomDetailScreen}
+        name="medicalJournalLists"
+        component={MedicalJournalLists}
       />
     </Stack.Navigator>
   );
