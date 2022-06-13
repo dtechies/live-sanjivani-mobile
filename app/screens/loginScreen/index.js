@@ -8,6 +8,7 @@ import {Loader, Text, Button, InputBox, Toast} from 'components';
 import {size, images, color} from 'theme';
 import {countryCode} from 'json';
 import * as styles from './styles';
+// import {ChangeLanguage} from '../../components';
 export const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -79,7 +80,7 @@ export const LoginScreen = () => {
         <Text style={styles.labelLoginTxt()} tx={'login_screen.number'} />
         <View style={styles.rowView()}>
           <Dropdown
-            defaultValue={{label: '+91'}}
+            defaultValue={{label: '+91', value: '+91'}}
             data={countryCode}
             labelField="label"
             valueField="value"
@@ -146,6 +147,7 @@ export const LoginScreen = () => {
           <Text style={styles.labelOrTxt()} tx={'login_screen.learnMore'} />
         </Pressable>
       </View>
+      {/* <ChangeLanguage /> */}
     </SafeAreaView>
   );
 };
