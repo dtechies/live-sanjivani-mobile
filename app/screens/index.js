@@ -31,3 +31,4 @@ export * from './medicationReminderList';
 export * from './helpSupportDetailsScreen';
 export * from './myAppointments';
 export * from './myCaregiver';
+export * from './medicalJournalLits';
