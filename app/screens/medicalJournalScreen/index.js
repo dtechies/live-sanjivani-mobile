@@ -1,14 +1,17 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {SafeAreaView, Pressable, View, ScrollView} from 'react-native';
+import {SafeAreaView, Pressable, View, Image, TextInput} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 // import {Dropdown} from 'react-native-element-dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
+import {addEditMedicalJournalNote} from 'redux-actions';
+import {useDispatch} from 'react-redux';
 
 import {
   Loader,
+  Toast,
   Text,
   Button,
   TitleBox,
@@ -16,25 +19,36 @@ import {
   InputBox,
   Header,
 } from 'components';
-import {size, color, images} from 'theme';
+import {size, color, images, IcCrossArrow} from 'theme';
 import * as styles from './styles';
 import {MedicalJournalListJson} from 'json';
 
 export const MedicalJournalScreen = props => {
   const navigation = useNavigation();
   const modalRef = useRef();
+  const dispatch = useDispatch();
+  const toastRef = useRef();
+
+  const modalPreviewRef = useRef();
   const [isLoading, seIsLoading] = useState(false);
   const [extra, setExtra] = useState(0);
-  const [imageData, setImageData] = useState(null);
-  const [imageDataErr, setImageDataErr] = useState('');
+  const [imageData, setImageData] = useState(
+    'Upload or take picture of your medicine',
+  );
+  const [imageUpload, setImageUpload] = useState({});
+
   const [timeErr, setTimeErr] = useState('');
   const [dateErr, setDateErr] = useState('');
-  const [title, setTitle] = useState('Medical Journal');
-  const [subCategory, setSubCategory] = useState([]);
+  const [description, setDescription] = useState('');
+  const [descriptionErr, setDescriptionErr] = useState('');
   const [showTime, setShowTime] = useState(false);
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showDate, setShowDate] = useState(false);
+
+  useEffect(() => {
+    console.log('imageUpload', imageUpload);
+  }, [imageUpload]);
 
   const uploadFromGallery = () => {
     ImagePicker.openPicker({
@@ -47,10 +61,10 @@ export const MedicalJournalScreen = props => {
       var imgPathSubstr = image.path.substring(imgPathIndex + 1);
       image.imageName = imgPathSubstr;
       modalRef.current.close();
-      setImageData(image.path);
-      setImageDataErr('');
+      setImageData('Preview Image');
+      setImageUpload(image);
       setExtra(extra + 1);
-      // console.log('uploadFromGallery Image ==>', image.path);
+      console.log('uploadFromGallery Image ==>', image);
     });
   };
   const takeFromCamera = () => {
@@ -66,8 +80,9 @@ export const MedicalJournalScreen = props => {
       image.imageName = imgPathSubstr;
       // console.log('takeFromCamera Image ==>', image);
       modalRef.current.close();
-      setImageData(image);
-      setImageDataErr('');
+      setImageData('Preview Image');
+      setImageUpload(image);
+      setExtra(extra + 1);
     });
   };
 
@@ -89,18 +104,11 @@ export const MedicalJournalScreen = props => {
   const getAppointmentTime = givenTime => {
     var hours = givenTime.getHours();
     var ampm = hours >= 12 ? 'PM' : 'AM';
-    let newDate = givenTime.toTimeString().slice(0, 5) + ' ' + ampm;
+    let newDate = givenTime.toTimeString().slice(0, 5);
     setSelectedTime(newDate);
     setTimeErr('');
     setShowTime(false);
   };
-  useEffect(() => {
-    if (props.route.params) {
-      setTitle(props.route.params.title);
-      setSubCategory(props.route.params.sub);
-      setExtra(extra + 1);
-    }
-  }, []);
 
   const validation = () => {
     if (selectedDate === null) {
@@ -109,16 +117,53 @@ export const MedicalJournalScreen = props => {
     if (selectedTime === null) {
       setTimeErr('Please select Time...');
     }
-    if (imageData === null) {
-      setImageDataErr('Please Upload / take image...');
+    if (description === '') {
+      setDescriptionErr('Please Enter Description...');
+    }
+  };
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
+  const addMedicalJournalData = async () => {
+    seIsLoading(true);
+    let formData = new FormData();
+    formData.append('time', selectedTime);
+    formData.append('date', selectedDate);
+    formData.append('description', description);
+    formData.append('image', {
+      uri: imageUpload.path,
+      name: imageUpload.imageName,
+      type: imageUpload.mime,
+    });
+    const SubCategoryResponse = await dispatch(
+      addEditMedicalJournalNote(formData),
+    );
+    let res = {status: false, message: 'Connection Error...!'};
+    if (SubCategoryResponse) {
+      res = SubCategoryResponse;
+    }
+    setExtra(extra + 1);
+
+    if (res.status) {
+      seIsLoading(false);
+      toastMessage(res.message);
+      setExtra(extra + 1);
+      navigation.goBack();
+    } else {
+      seIsLoading(false);
+      toastMessage(res.message);
     }
   };
 
-  const addMedicalJournal = () => {
-    navigation.goBack();
-  };
   return (
     <SafeAreaView style={styles.container()}>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
       {isLoading && <Loader />}
       <Header
         leftOnPress={() => {
@@ -127,117 +172,103 @@ export const MedicalJournalScreen = props => {
         isColor={true}
         isLeftArrow={true}
         isHeading={true}
-        text={title}
+        title={'medicalJournal_screen.title'}
+      />
+      <Screen>
+        <View style={styles.dateTimeCardStyle()}>
+          <View style={styles.cardDesign()}>
+            <View style={styles.circleView()} />
+            <Text style={styles.cardTxt()} text="Date" />
+            {showDate && (
+              <DateTimePickerModal
+                isVisible={showDate}
+                mode="date"
+                onConfirm={val => getCurrentDate(val)}
+                onCancel={() => {
+                  setShowDate(false);
+                  setExtra(extra + 1);
+                }}
+              />
+            )}
+          </View>
+          <View style={styles.cardDesign(1)}>
+            <View style={styles.circleView()} />
+            <Text style={styles.cardTxt()} text="Time" />
+            {showTime && (
+              <DateTimePickerModal
+                isVisible={showTime}
+                mode="time"
+                locale="en_GB"
+                onConfirm={val => getAppointmentTime(val)}
+                onCancel={() => {
+                  setShowTime(false);
+                  setExtra(extra + 1);
+                }}
+              />
+            )}
+          </View>
+        </View>
+        <View style={styles.dateTimeCardStyle()}>
+          <Pressable
+            style={styles.cardView()}
+            onPress={() => {
+              setShowDate(true);
+            }}>
+            <Text style={styles.cardTxt(1)} text={selectedDate} />
+          </Pressable>
+          <Pressable
+            style={styles.cardView(1)}
+            onPress={() => {
+              setShowTime(!showTime);
+            }}>
+            <Text style={styles.cardTxt(1)} text={selectedTime} />
+          </Pressable>
+        </View>
+
+        <View style={styles.dateTimeCardStyle()}>
+          {dateErr ? <Text style={styles.errorText()}>{dateErr}</Text> : null}
+          {timeErr ? <Text style={styles.errorText1()}>{timeErr}</Text> : null}
+        </View>
+        <Text style={styles.cardTxt(2)} tx="medicalJournal_screen.order" />
+        <Pressable
+          style={styles.imageView()}
+          onPress={() => {
+            if (imageData == 'Upload or take picture of your medicine') {
+              modalRef.current.open();
+            } else {
+              modalPreviewRef.current.open();
+            }
+          }}>
+          <Text style={styles.textImage()} text={imageData} />
+        </Pressable>
+
+        <TextInput
+          value={description}
+          placeholder={'Enter description'}
+          placeholderTextColor={color.dimGrey}
+          multiline
+          numberOfLines={4}
+          onChangeText={text => {
+            setDescription(text);
+            setDescriptionErr('');
+          }}
+          style={styles.containerVal()}
+        />
+        {descriptionErr ? (
+          <Text style={styles.errorText(2)}>{descriptionErr}</Text>
+        ) : null}
+      </Screen>
+      <Button
+        buttonStyle={styles.btnContinue()}
+        buttonText={styles.btnContinueTxt()}
+        nameTx={'medicalJournal_screen.save'}
+        onPress={() => {
+          selectedDate && selectedTime && description
+            ? addMedicalJournalData()
+            : validation();
+        }}
       />
 
-      <View style={styles.dateTimeCardStyle()}>
-        <View style={styles.cardDesign()}>
-          <View style={styles.circleView()} />
-          <Text style={styles.cardTxt()} text="Date" />
-          {showDate && (
-            <DateTimePickerModal
-              isVisible={showDate}
-              mode="date"
-              onConfirm={val => getCurrentDate(val)}
-              onCancel={() => {
-                setShowDate(false);
-                setExtra(extra + 1);
-              }}
-            />
-          )}
-        </View>
-        <View style={styles.cardDesign(1)}>
-          <View style={styles.circleView()} />
-          <Text style={styles.cardTxt()} text="Time" />
-          {showTime && (
-            <DateTimePickerModal
-              isVisible={showTime}
-              mode="time"
-              locale="en_GB"
-              onConfirm={val => getAppointmentTime(val)}
-              onCancel={() => {
-                setShowTime(false);
-                setExtra(extra + 1);
-              }}
-            />
-          )}
-        </View>
-      </View>
-      <View style={styles.dateTimeCardStyle()}>
-        <Pressable
-          style={styles.cardView()}
-          onPress={() => {
-            setShowDate(true);
-          }}>
-          <Text style={styles.cardTxt(1)} text={selectedDate} />
-        </Pressable>
-        <Pressable
-          style={styles.cardView(1)}
-          onPress={() => {
-            setShowTime(!showTime);
-          }}>
-          <Text style={styles.cardTxt(1)} text={selectedTime} />
-        </Pressable>
-      </View>
-
-      {/* <View style={styles.headingMain()}> */}
-
-      {/* </View> */}
-      <View style={styles.dateTimeCardStyle()}>
-        {dateErr ? <Text style={styles.errorText()}>{dateErr}</Text> : null}
-        {timeErr ? <Text style={styles.errorText1()}>{timeErr}</Text> : null}
-      </View>
-      <View>
-        <View style={styles.headingMain(1)}>
-          <Text style={styles.cardTxt(2)} tx="addDetails_Screen.order" />
-        </View>
-        <InputBox
-          placeholderTextColor={color.blue}
-          mainContainerStyle={styles.inputMain()}
-          placeholder={'Type here'}
-          isRightSide={true}
-          inputStyle={styles.inputValue()}
-          onRightIconPress={() => {
-            modalRef.current.open();
-          }}
-          containerStyle={styles.mainContainerStyle()}
-        />
-      </View>
-      {imageDataErr ? (
-        <Text style={styles.errorText(2)}>{imageDataErr}</Text>
-      ) : null}
-      <View>
-        <Button
-          buttonStyle={styles.btnContinue()}
-          buttonText={styles.btnContinueTxt()}
-          nameTx={'addDetails_Screen.save'}
-          onPress={() => {
-            selectedDate && selectedTime && imageData
-              ? addMedicalJournal()
-              : validation();
-          }}
-        />
-      </View>
-      <View style={styles.row()}>
-        <View style={styles.circleView()} />
-        <Text
-          style={styles.listJournalHeader()}
-          tx="medicalJournal_screen.listAllJournal"
-        />
-      </View>
-      <Screen style={styles.screenContainer()}>
-        {MedicalJournalListJson.map(item => {
-          return (
-            <View style={styles.MedicalJournalListView()}>
-              <View style={styles.rowImage()}>
-                <Text style={styles.textTodayProgress()} text={item.date} />
-                <Text style={styles.textTodayProgress()} text={item.time} />
-              </View>
-              <Text style={styles.desTextStyle()} text={item.description} />
-            </View>
-          );
-        })}
-      </Screen>
       <Portal>
         <Modalize
           ref={modalRef}
@@ -252,13 +283,51 @@ export const MedicalJournalScreen = props => {
           <View>
             <Button
               onPress={() => takeFromCamera()}
-              nameTx="medication_reminder_screen.take_picture"
+              nameTx="medicalJournal_screen.take_picture"
               buttonStyle={styles.submitButtonStyle()}
               buttonText={styles.textSubmitButton()}
             />
             <Button
               onPress={() => uploadFromGallery()}
-              nameTx="medication_reminder_screen.upload_picture"
+              nameTx="medicalJournal_screen.upload_picture"
+              buttonStyle={styles.submitButtonStyle()}
+              buttonText={styles.textSubmitButton()}
+            />
+          </View>
+        </Modalize>
+        <Modalize
+          ref={modalPreviewRef}
+          adjustToContentHeight={true}
+          disableScrollIfPossible={false}
+          scrollViewProps={{
+            showsVerticalScrollIndicator: false,
+            contentContainerStyle: styles.modalContentContainerStyle(),
+          }}
+          modalStyle={styles.modalStyle()}
+          handleStyle={styles.dragStyle()}>
+          <View>
+            <Pressable
+              onPress={() => {
+                modalPreviewRef.current.close();
+              }}
+              style={styles.crossIconView()}>
+              <IcCrossArrow
+                width={size.moderateScale(18)}
+                height={size.moderateScale(18)}
+                fill={color.black}
+              />
+            </Pressable>
+            <Image
+              resizeMode="contain"
+              source={{uri: imageUpload && imageUpload?.path}}
+              style={styles.imageModelView()}
+            />
+            <Button
+              onPress={() => {
+                modalRef.current.open();
+                modalPreviewRef.current.close();
+              }}
+              nameTx="medicalJournal_screen.changeImage"
               buttonStyle={styles.submitButtonStyle()}
               buttonText={styles.textSubmitButton()}
             />

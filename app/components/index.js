@@ -18,3 +18,4 @@ export * from './reminderCard';
 export * from './alertModal';
 export * from './appointmentCart';
 export * from './careGiverCard';
+export * from './journalCard';

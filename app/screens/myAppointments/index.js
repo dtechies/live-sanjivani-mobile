@@ -48,7 +48,7 @@ export const MyAppointments = () => {
   };
 
   const getAppointmentReminderData = async () => {
-    // setLoading(true);
+    setLoading(true);
 
     const getAppointmentReminderProfileResponse = await dispatch(
       getAppointmentReminderProfile(),
@@ -62,13 +62,14 @@ export const MyAppointments = () => {
     if (res.status) {
       let data = res.data.AppointmentReminderProfileData;
       // console.log('data', data);
+      // console.table(data);
       const trueFirst = data.sort((x, y) => {
         let demo = x.status === y.status;
         return demo ? 0 : x.status ? -1 : 1;
       });
       setAppointmentReminderData(trueFirst);
       setFilteredData(res.data.AppointmentReminderProfileData);
-      // setLoading(false);
+      setLoading(false);
       setExtra(extra + 1);
       toastMessage(res.message);
     } else {
@@ -167,6 +168,7 @@ export const MyAppointments = () => {
             }
             return (
               <AppointmentCard
+                key={i + 'My appointment'}
                 data={val}
                 onWholeCardPress={() => console.log('Click...')}
                 time={val.user_selected_time}

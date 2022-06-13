@@ -17,6 +17,7 @@ import {
   MyAppointments,
   MyCareGiver,
   CareGiver,
+  MedicalJournalLists,
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
@@ -61,6 +62,10 @@ export const ProfileStackNavigation = () => {
       <Stack.Screen name="myAppointments" component={MyAppointments} />
       <Stack.Screen name="myCareGiver" component={MyCareGiver} />
       <Stack.Screen name="careGiver" component={CareGiver} />
+      <Stack.Screen
+        name="medicalJournalLists"
+        component={MedicalJournalLists}
+      />
     </Stack.Navigator>
   );
 };

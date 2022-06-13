@@ -41,6 +41,8 @@ import GetSubCatGraph from './SubCategoryGraphReducer';
 import GetCareGiverListReducer from './GetCareGiverListReducer';
 import addOtherScreenReducer from './AddOtherDataReducer';
 import DeleteCareGiverReducer from './DeleteCareGiverReducer';
+import GetUserMedicalJournalNoteReducer from './GetUserMedicalJournalNoteReducer';
+import GetDeleteMedicalJournalNoteReducer from './GetDeleteMedicalJournalNoteReducer';
 import getAllSymptomReducer from './GetAllSymptomReducer';
 
 const persistConfig = {
@@ -86,6 +88,8 @@ const appReducer = combineReducers({
   GetSubCatGraph: GetSubCatGraph,
   GetCareGiverListReducer: GetCareGiverListReducer,
   DeleteCareGiverReducer: DeleteCareGiverReducer,
+  GetUserMedicalJournalNoteReducer: GetUserMedicalJournalNoteReducer,
+  GetDeleteMedicalJournalNoteReducer: GetDeleteMedicalJournalNoteReducer,
   getAllSymptomReducer: getAllSymptomReducer,
 });
 const rootReducer = (state, action) => {
