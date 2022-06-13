@@ -125,6 +125,7 @@ export const ViewMedicationScreen = () => {
             leftIcon={true}
             containerStyle={styles.mainInputStyle()}
             placeholder={'Search Medicine'}
+            placeHolderVal={'ViewMedicationScreen.searchMedicine'}
             leftIconName={
               <SearchValNew
                 height={size.moderateScale(20)}

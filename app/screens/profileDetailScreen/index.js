@@ -397,7 +397,7 @@ export const ProfileDetailScreen = () => {
               defaultValue={genderDefault}
               // ref={genderRef}
               data={genderVal}
-              labelField="label"
+              labelTxField="label"
               valueField="value"
               // placeholder={'Gender'}
               dropdownPosition={'bottom'}
@@ -484,7 +484,7 @@ export const ProfileDetailScreen = () => {
             <Dropdown
               defaultValue={{label: '+91', value: '+91'}}
               data={countryCode}
-              labelField="label"
+              labelTxField="label"
               valueField="value"
               dropdownPosition={'bottom'}
               style={styles.countryCodeDropdown()}
@@ -579,7 +579,7 @@ export const ProfileDetailScreen = () => {
             <Dropdown
               defaultValue={languageDefault}
               data={languageVal}
-              labelField="label"
+              labelTxField="label"
               valueField="value"
               // placeholder={'Language'}
               dropdownPosition={'bottom'}

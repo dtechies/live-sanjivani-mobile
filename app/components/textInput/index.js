@@ -31,13 +31,13 @@ export const InputBox = props => {
     isRightUnit,
     unit,
     btnName,
+    placeHolderVal,
     buttonStyle,
   } = props;
 
   const {t} = useContext(LocalizationContext);
   const i18nText = titleTx && t(titleTx, txOptions);
   const content = i18nText || title;
-
   return (
     <View style={mainContainerStyle}>
       {content && !withButton && (
@@ -61,7 +61,7 @@ export const InputBox = props => {
             selectionColor={color.dimGrey}
             value={value}
             ref={textRef}
-            placeholder={titleTx}
+            placeholder={t(placeHolderVal)}
             // maxLength={4}
             {...props}
           />

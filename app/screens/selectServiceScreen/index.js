@@ -21,7 +21,7 @@ export const SelectServiceScreen = () => {
       <Screen bounces={false} contentContainerStyle={styles.screenContainer()}>
         <Dropdown
           data={selectServiceList}
-          labelField="label"
+          labelTxField="label"
           valueField="value"
           placeholder={'Select Services'}
           dropdownPosition={'bottom'}
