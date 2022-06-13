@@ -210,7 +210,7 @@ export const DemoSecond = () => {
         </View>
         <Dropdown
           data={dose}
-          labelField="label"
+          labelTxField="label"
           valueField="value"
           placeholder={'Dose'}
           dropdownPosition={'bottom'}

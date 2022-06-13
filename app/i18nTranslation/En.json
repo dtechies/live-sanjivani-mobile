@@ -81,7 +81,31 @@
     "next": "Next",
     "take_picture": "Take Picture",
     "upload_picture": "Upload Picture",
-    "reminderName": "Reminder Name"
+    "reminderName": "Reminder Name",
+    "uploadImage": "Upload or take picture of your medicine",
+    "previewImg": "Preview Image",
+    "reminderNameErr": "Enter Reminder Name",
+    "doctorNameErr": "Enter doctor name",
+    "medicineName": "Enter medicine name",
+    "imageErr": "Upload / take image",
+    "medicineFormErr": "Select medicine form",
+    "pillsErr": "Enter Pills",
+    "medicineStrengthErr": "Enter medicine Strength",
+    "strengthErr": "Enter Strength",
+    "doseErr": "Select dose",
+    "reminderFrequencyErr": "Select reminder frequency",
+    "dateErr": "Select a Date",
+    "reminderTimeErr": "Select reminder time",
+    "timeErr": "Select a Time",
+    "reminderExample": "Ex. Heart",
+    "doctorNmExample": "Ex. Dr John",
+    "medicineNmExample": "Ex. Glycomet",
+    "strengthExample": "Ex. 150",
+    "selectForm": "Select Form",
+    "selectFrequency": "Select Frequency",
+    "futureTimeErr": "Please Select Future Time",
+    "pillNumber": "Number of pills",
+    "changeImg": "Change Image"
   },
   "login_screen": {
     "number": "Enter Your Phone Number",
@@ -92,7 +116,8 @@
     "register_new_user": "Register New User",
     "request_new_otp": "Request New OTP",
     "login": "Login",
-    "or": "Or"
+    "or": "Or",
+    "errorMsg":"Phone number should be equal to 10 digits"
   },
   "register_screen": {
     "first_name": "First Name",
@@ -100,11 +125,20 @@
     "email": "Email",
     "phone_Number": "Phone Number",
     "gender": "Gender",
-    "select_language": "Selected Language",
+    "language": "Language",
     "dob": "DOB",
-    "next": "Register",
+    "save": "Register",
     "title_register": "Lets Create Your Profile",
-    "title": "Register New User"
+    "title": "Register New User",
+    "firstNameError":"Please Enter First Name",
+    "LastNameError":"Please Enter Last Name",
+    "emailError":"Please Enter Email Address",
+    "invalidEmailError":"Invalid Email Address",
+    "phoneNameError":"Please Enter Phone number",
+    "invalidPhoneNameError":"Invalid Phone number",
+    "dobError":"Please select Date",
+    "genderError":"Please select Gender",
+    "languageError":"Please select Language"
   },
   "help_screen": {
     "title": "Help",
@@ -125,6 +159,12 @@
     "you_are_on_the_right_track": "You are on the right track",
     "today_progress": "Today's Progress",
     "today_medication": "Today's Medication",
+    "noMedicationProgressRecords": "No Medication Progress Found.",
+    "noMedicationRecords": "No Medication Found.",
+    "noAppointmentRecords": "No Appointment Found.",
+    "noTipsRecords": "No Tips Found.",
+    "addMedication": "Add Medication",
+    "addAppointment": "Add Appointment",
     "today_appointment": "Today's Appointment"
   },
   "select_service_screen": {
@@ -143,7 +183,8 @@
     "medicationList": "Medication List",
     "SubTitle": "My Medicine",
     "todaysMedication": "Today's Medication",
-    "save": "Save"
+    "save": "Save",
+    "searchMedicine": "Search Medicine"
   },
   "myAppointments_screen": {
     "title": "Appointment Reminder",
@@ -227,5 +268,25 @@
     "Discuss": "Discuss in the  Forum",
     "skip": "Skip",
     "next": "Next"
+  },
+  "profileJson":{
+    "male": "Male",
+    "female":"Female",
+    "other":"Other",
+    "hindi":"Hindi",
+    "english":"English",
+    "+91":"+91",
+    "+1":"+1"
+  },
+  "medicationJson":{
+    "1": "1",
+    "2":"2",
+    "3":"3",
+    "4":"4",
+    "5":"5",
+    "tablet":"Tablet",
+    "pill":"Pill",
+    "drop":"Drop",
+    "inhaler":"Inhaler"
   }
 }

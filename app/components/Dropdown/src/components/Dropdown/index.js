@@ -11,7 +11,6 @@ import {
   Image,
   Keyboard,
   Modal,
-  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -19,6 +18,7 @@ import {
   KeyboardEvent,
   I18nManager,
 } from 'react-native';
+import {Text} from 'components';
 import CInput from '../TextInput';
 import {useDeviceOrientation} from '../../useDeviceOrientation';
 import {useDetectDevice} from '../../toolkits';
@@ -40,7 +40,6 @@ const defaultProps = {
 const DropdownComponent = React.forwardRef((props, currentRef) => {
   const orientation = useDeviceOrientation();
   const {
-    onSelectVal,
     onChange,
     style,
     containerStyle,
@@ -51,6 +50,7 @@ const DropdownComponent = React.forwardRef((props, currentRef) => {
     selectedTextProps,
     data,
     labelField,
+    labelTxField,
     valueField,
     value,
     activeColor,
@@ -74,6 +74,7 @@ const DropdownComponent = React.forwardRef((props, currentRef) => {
     flatListProps,
     searchQuery,
     defaultValue = {},
+    isTxEnabled,
   } = props;
 
   const ref = useRef(null);
@@ -264,8 +265,13 @@ const DropdownComponent = React.forwardRef((props, currentRef) => {
           {renderLeftIcon?.()}
           <Text
             style={[styles.textItem, selectedTextStyle]}
-            {...selectedTextProps}>
-            {isSelected !== null
+            {...selectedTextProps}
+            tx={
+              isTxEnabled && isSelected !== null
+                ? _.get(currentValue, labelTxField)
+                : _.get(defaultValue, labelTxField)
+            }>
+            {!isTxEnabled && isSelected !== null
               ? _.get(currentValue, labelField)
               : _.get(defaultValue, labelField)}
           </Text>
@@ -297,8 +303,10 @@ const DropdownComponent = React.forwardRef((props, currentRef) => {
           renderItem(item)
         ) : (
           <View style={styles.item}>
-            <Text style={[styles.textItem, selectedTextStyle, font()]}>
-              {_.get(item, labelField)}
+            <Text
+              style={[styles.textItem, selectedTextStyle, font()]}
+              tx={isTxEnabled && _.get(item, labelTxField)}>
+              {isTxEnabled && _.get(item, labelField)}
             </Text>
           </View>
         )}

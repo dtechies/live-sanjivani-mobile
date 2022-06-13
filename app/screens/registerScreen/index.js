@@ -1,12 +1,10 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Dropdown} from 'react-native-element-dropdown';
-import CustomDropDown from '../../components/Dropdown/src/components/Dropdown';
+import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useDispatch} from 'react-redux';
 import {registerUser} from 'redux-actions';
-import {countryCode} from 'json';
 import {
   Loader,
   Text,
@@ -18,7 +16,7 @@ import {
 } from 'components';
 import {size, color} from 'theme';
 import * as styles from './styles';
-import {genderVal, languageVal} from 'json';
+import {genderVal, languageVal, countryCode} from 'json';
 export const RegisterScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -42,6 +40,9 @@ export const RegisterScreen = () => {
   const [languageErr, setLanguageErr] = useState('');
   const [countryCodeVal, setCountryCodeVal] = useState('+91');
   const [loading, setLoading] = useState(false);
+  const [isColor, setIsColor] = useState(false);
+  const [isColor1, setIsColor1] = useState(false);
+  const [isColor2, setIsColor2] = useState(false);
   const toastRef = useRef();
   const toastMessage = msg => {
     toastRef.current.show(msg);
@@ -85,7 +86,7 @@ export const RegisterScreen = () => {
     if (res.status) {
       setLoading(false);
       // dispatch(userData({userData: res.data.user, login: true}));
-      console.log('Register response data ==>', res.data);
+      // console.log('Register response data ==>', res.data);
       toastMessage(res.message);
       setTimeout(() => {
         navigation.navigate('otpScreen', {
@@ -105,10 +106,10 @@ export const RegisterScreen = () => {
   const emailValidate = () => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (email === '') {
-      setEmailErr('Please Enter Email Address');
+      setEmailErr('register_screen.emailError');
       return false;
     } else if (reg.test(email) === false) {
-      setEmailErr('Invalid email');
+      setEmailErr('register_screen.invalidEmailError');
       return false;
     } else {
       setEmailErr('');
@@ -118,19 +119,19 @@ export const RegisterScreen = () => {
   const validation = () => {
     let error = false;
     if (firstNm === '') {
-      setFirstNmErr('Please Enter First Name');
+      setFirstNmErr('register_screen.firstNameError');
       error = true;
     }
     if (lastNm === '') {
-      setLastNmErr('Please Enter Last Name');
+      setLastNmErr('register_screen.LastNameError');
       error = true;
     }
     if (gender === '') {
-      setGenderErr('Please select Gender');
+      setGenderErr('register_screen.genderError');
       error = true;
     }
     if (selectedDate === '') {
-      setDobErr('Please select Date');
+      setDobErr('register_screen.dobError');
       error = true;
     }
     let ans = emailValidate();
@@ -138,14 +139,14 @@ export const RegisterScreen = () => {
       error = true;
     }
     if (phone === '') {
-      setPhoneErr('Please Enter Phone number');
+      setPhoneErr('register_screen.phoneNameError');
       error = true;
     } else if (phone.length < 10) {
-      setPhoneErr('Invalid Phone number');
+      setPhoneErr('register_screen.invalidPhoneNameError');
       error = true;
     }
     if (language === '') {
-      setLanguageErr('Please select Language');
+      setLanguageErr('register_screen.languageError');
       error = true;
     }
 
@@ -184,8 +185,7 @@ export const RegisterScreen = () => {
       />
       <Screen bounces={false} style={styles.screenContainer()}>
         <InputBox
-          placeholder={'First Name'}
-          // titleTx={}
+          placeHolderVal={'register_screen.first_name'}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
           placeholderTextColor={color.grayTxt}
@@ -197,10 +197,10 @@ export const RegisterScreen = () => {
           maxLength={15}
         />
         {firstNmErr ? (
-          <Text style={styles.errorText()}>{firstNmErr}</Text>
+          <Text style={styles.errorText()} tx={firstNmErr} />
         ) : null}
         <InputBox
-          placeholder={'Last Name'}
+          placeHolderVal={'register_screen.last_name'}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
           placeholderTextColor={color.grayTxt}
@@ -211,16 +211,17 @@ export const RegisterScreen = () => {
           }}
           maxLength={15}
         />
-        {lastNmErr ? <Text style={styles.errorText()}>{lastNmErr}</Text> : null}
+        {lastNmErr ? <Text style={styles.errorText()} tx={lastNmErr} /> : null}
         <Dropdown
           data={genderVal}
-          labelField="label"
+          labelTxField="label"
           valueField="value"
-          placeholder={'Gender'}
+          defaultValue={genderVal[0]}
+          placeholder={<Text tx={'register_screen.gender'} />}
           dropdownPosition={'bottom'}
           style={styles.dropdown()}
           placeholderStyle={styles.labelFieldText()}
-          selectedTextStyle={styles.selectedOptionTextStyle()}
+          selectedTextStyle={styles.selectedOptionTextStyle(isColor)}
           maxHeight={size.moderateScale(90)}
           containerStyle={styles.dropdownContainer()}
           value={gender}
@@ -229,21 +230,23 @@ export const RegisterScreen = () => {
           flatListProps={{
             bounces: false,
           }}
+          isTxEnabled={true}
           onChange={item => {
             setGender(item.value);
             setGenderErr('');
             setIsFocus(false);
+            setIsColor(true);
           }}
           renderItem={item => {
             return (
               <View>
-                <Text text={item.value} style={styles.InsideLabelFieldText()} />
+                <Text tx={item.label} style={styles.InsideLabelFieldText()} />
                 <View style={styles.separator()} />
               </View>
             );
           }}
         />
-        {genderErr ? <Text style={styles.errorText()}>{genderErr}</Text> : null}
+        {genderErr ? <Text style={styles.errorText()} tx={genderErr} /> : null}
         <Pressable
           style={styles.dateMainView()}
           onPress={() => {
@@ -251,9 +254,11 @@ export const RegisterScreen = () => {
             // setDobErr('');
             setExtra(extra + 1);
           }}>
-          <Text style={styles.textDate(selectedDate == '' ? 1 : 0)}>
-            {selectedDate == '' ? 'DOB' : selectedDate}
-          </Text>
+          <Text
+            style={styles.textDate(selectedDate == '' ? 1 : 0)}
+            tx={selectedDate == '' ? 'register_screen.dob' : ''}
+            text={selectedDate == '' ? '' : selectedDate}
+          />
           {showDate && (
             <DateTimePickerModal
               isVisible={showDate}
@@ -267,12 +272,12 @@ export const RegisterScreen = () => {
             />
           )}
         </Pressable>
-        {dobErr ? <Text style={styles.errorText()}>{dobErr}</Text> : null}
+        {dobErr ? <Text style={styles.errorText()} tx={dobErr} /> : null}
         <InputBox
-          placeholder={'Email'}
+          placeHolderVal={'register_screen.email'}
           keyboardType={'email-address'}
           inputStyle={styles.inputStyle()}
-          mainContainerStyle={styles.inputMainContainer()}
+          mainContainerStyle={styles.inputMainContainer(true)}
           placeholderTextColor={color.grayTxt}
           value={email}
           onChangeText={text => {
@@ -282,18 +287,20 @@ export const RegisterScreen = () => {
           }}
           maxLength={45}
         />
-        {emailErr ? <Text style={styles.errorText()}>{emailErr}</Text> : null}
+        {emailErr ? <Text style={styles.errorText()} tx={emailErr} /> : null}
         <View style={styles.countryCodeRowView()}>
-          <CustomDropDown
-            defaultValue={{label: '+91', value: '+91'}}
+          <Dropdown
+            defaultValue={countryCode[0]}
             data={countryCode}
-            labelField="label"
+            labelTxField="label"
             valueField="value"
             placeholder={'+91'}
             dropdownPosition={'bottom'}
             style={styles.countryCodeDropdown()}
             placeholderStyle={styles.countryCodeLabelFieldText()}
-            selectedTextStyle={styles.countryCodeSelectedOptionTextStyle()}
+            selectedTextStyle={styles.countryCodeSelectedOptionTextStyle(
+              isColor1,
+            )}
             maxHeight={size.moderateScale(60)}
             containerStyle={styles.countryCodeDropdownContainer()}
             onFocus={() => setIsFocus(true)}
@@ -301,15 +308,17 @@ export const RegisterScreen = () => {
             flatListProps={{
               bounces: false,
             }}
+            isTxEnabled={true}
             onChange={item => {
-              setCountryCodeVal(item.value);
+              setCountryCodeVal(item.label);
               setIsFocus(false);
+              setIsColor1(true);
             }}
             renderItem={item => {
               return (
                 <View>
                   <Text
-                    text={item.value}
+                    tx={item.label}
                     style={styles.countryCodeInsideLabelFieldText()}
                   />
                   <View style={styles.countryCodeSeparator()} />
@@ -332,27 +341,23 @@ export const RegisterScreen = () => {
             inputStyle={styles.inputStyle()}
             mainContainerStyle={styles.inputMainContainer(countryDropDown)}
           />
-          {phoneErr ? <Text style={styles.errorText()}>{phoneErr}</Text> : null}
         </View>
-
-        {/* <InputBox
-          titleTx={'register_screen.select_language'}
-          titleStyle={styles.labelDisableText()}
-          value={'English'}
-          containerStyle={styles.disableLanguage()}
-          editable={editable}
-          inputStyle={styles.inputDisableStyle()}
-          mainContainerStyle={styles.inputMainDisableContainer()}
-        /> */}
+        {phoneErr ? <Text style={styles.errorText()} tx={phoneErr} /> : null}
         <Dropdown
-          placeholder={'Language'}
+          defaultValue={{
+            label: 'register_screen.language',
+            value: '',
+          }}
+          // defaultValue={{label: <Text tx={languageVal[0].label} />}}
+          // placeholder={<Text tx={'register_screen.language'} />}
           data={languageVal}
-          labelField="label"
+          // labelTxField="label"
+          labelTxField="label"
           valueField="value"
           dropdownPosition={'bottom'}
           style={styles.dropdown()}
           placeholderStyle={styles.labelFieldText()}
-          selectedTextStyle={styles.selectedOptionTextStyle()}
+          selectedTextStyle={styles.selectedOptionTextStyle(isColor2)}
           maxHeight={size.moderateScale(56)}
           containerStyle={styles.dropdownContainer()}
           value={language}
@@ -361,28 +366,31 @@ export const RegisterScreen = () => {
           flatListProps={{
             bounces: false,
           }}
+          isTxEnabled={true}
           onChange={item => {
+            console.log('bansi value..');
             setLanguage(item.value);
             setIsFocus(false);
             setLanguageErr('');
+            setIsColor2(true);
           }}
           renderItem={item => {
             return (
               <View>
-                <Text text={item.value} style={styles.InsideLabelFieldText()} />
+                <Text tx={item.label} style={styles.InsideLabelFieldText()} />
                 <View style={styles.separator()} />
               </View>
             );
           }}
         />
         {languageErr ? (
-          <Text style={styles.errorText()}>{languageErr}</Text>
+          <Text style={styles.errorText()} tx={languageErr} />
         ) : null}
 
         <Button
           buttonStyle={styles.button()}
           buttonText={styles.buttonTxt()}
-          nameTx={'register_screen.next'}
+          nameTx={'register_screen.save'}
           onPress={() => {
             validation();
           }}

@@ -30,7 +30,7 @@ export const LandingScreen = () => {
         value={languageData}
         data={local_data}
         valueField="value"
-        labelField="lable"
+        labelTxField="lable"
         placeholder="Select Language"
         onChange={e => {
           setLanguageData(e.value);
