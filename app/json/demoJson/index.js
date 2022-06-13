@@ -49,12 +49,18 @@ export const MainProfileDetail = [
   },
   {
     label: '7',
+    value: 'Other Details',
+    svg: IcJournal,
+    selectedCard: false,
+  },
+  {
+    label: '8',
     value: 'Help',
     svg: IcHelp,
     selectedCard: false,
   },
   {
-    label: '8',
+    label: '9',
     value: 'Logout',
     svg: IcLogout,
     selectedCard: false,

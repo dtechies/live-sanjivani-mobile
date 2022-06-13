@@ -117,6 +117,11 @@ export const ProfileScreen = () => {
                       navigation.navigate('profileDetailScreen');
                     }, 500);
                   }
+                  if (item.value == 'Other Details') {
+                    setTimeout(() => {
+                      navigation.navigate('OtherDetails');
+                    }, 500);
+                  }
                   if (item.value == 'My Care Giver') {
                     setTimeout(() => {
                       navigation.navigate('myCareGiver');
