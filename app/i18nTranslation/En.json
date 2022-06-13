@@ -173,13 +173,14 @@
   },
   "symptoms_screen": {
     "title": "Symptom Checker",
-    "header": "Identify possible condition and treatment related to your symptoms.",
+    "header": "This tool is not a substitute for medical advice.",
     "age": "Age",
     "gender": "Gender",
     "male": "Male",
     "female": "Female",
     "whatAreYourSymptoms": "What Are Your Symptoms?",
-    "continue": "Continue"
+    "continue": "Continue",
+    "additionalInfo": "Additional info"
   },
   "otp_screen": {
     "verification": "Verification",
@@ -217,5 +218,23 @@
     "Discuss": "Discuss in the  Forum",
     "skip": "Skip",
     "next": "Next"
+  },
+  "symptoms_detail_screen": {
+    "title": "Symptom Detail Screen",
+    "conditionDetails": "Condition Details",
+    "symptom": "Symptom",
+    "howCommon": "How common",
+    "overView": "Overview",
+    "riskFactor": "Risk factor",
+    "diagnosedBy": "Diagnosed By",
+    "didYouKnow": "Did you know",
+    "facts": "Facts",
+    "treatmentOption": "Treatment Options",
+    "treatment": "Treatment",
+    "takeCare": "Take Care of Yourself",
+    "madeWorseBy": "Made worse By",
+    "whenToSeeDoctor": "When to see doctor",
+    "questionsAsk": "Questions to ask doctor",
+    "whatToExpect": "What to expect"
   }
 }

@@ -39,7 +39,8 @@ export const SymptomsScreen = () => {
   const [selectedSymptomList, setSelectedSymptomList] = useState([]);
   const [showSelectedSymptomList, setShowSelectedSymptomList] = useState(false);
   const [symptomDropDown, setSymptomDropDown] = useState(false);
-
+  const [currentMedication, setCurrentMedication] = useState('');
+  const [existingCondition, setExistingCondition] = useState('');
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -56,9 +57,27 @@ export const SymptomsScreen = () => {
     }
   };
   const onSearchPress = () => {
-    // console.log('selectedSymptomList', selectedSymptomList);
-    // console.log('gender ==>', gender);
-    // console.log('age ==>', age);
+    let symptomId = selectedSymptomList.map((item, index) => {
+      return item.id;
+    });
+    let data = allSymptomList.filter(val => {
+      let text = val.age;
+      let startAgeRange = text.split('-')[0];
+      let endAgeRange = text.split('-')[1];
+      if (
+        val.gender == gender.toLowerCase() ||
+        val.id == symptomId ||
+        age > startAgeRange ||
+        age < endAgeRange
+      ) {
+        return val;
+      }
+    });
+    navigation.navigate('symptomDetailScreen', {
+      data: data,
+      age: age,
+      gender: gender,
+    });
   };
   const clearData = () => {
     let newSymptomChecker = symptomChecker.map(i => {
@@ -119,7 +138,7 @@ export const SymptomsScreen = () => {
       />
       {loading && <Loader />}
       <Text style={styles.labelTextStyle()} tx={'symptoms_screen.header'} />
-      <Screen>
+      <Screen bounces={false}>
         <View style={styles.mainDetailContainer()}>
           <View style={{flexDirection: 'row'}}>
             <View style={styles.full()}>
@@ -203,6 +222,7 @@ export const SymptomsScreen = () => {
           style={styles.labelTextStyle()}
           tx={'symptoms_screen.whatAreYourSymptoms'}
         />
+
         <InputBox
           value={searchText}
           onChangeText={val => {
@@ -251,7 +271,7 @@ export const SymptomsScreen = () => {
                     setExtra(extra + 1);
                   }
                 }}>
-                <Text style={styles.cardTxt()} text={val.name} />
+                <Text style={styles.cardTxt(val.isActive)} text={val.name} />
               </Pressable>
             );
           })}
@@ -275,25 +295,34 @@ export const SymptomsScreen = () => {
                     <IcCrossArrow
                       width={size.moderateScale(10)}
                       height={size.moderateScale(10)}
-                      fill={color.black}
+                      fill={color.blueTx}
                     />
                   </Pressable>
                 </View>
               );
             })}
         </View>
-      </Screen>
-
-      {/* <Pressable
-        style={styles.circleBtnView()}
-        onPress={() => {
-          // console.log('add symptom');
-        }}>
-        <IcBtnPlus
-          height={size.moderateScale(69)}
-          width={size.moderateScale(69)}
+        <InputBox
+          value={currentMedication}
+          onChangeText={val => {
+            setCurrentMedication(val);
+          }}
+          mainContainerStyle={styles.inputSearchStyle()}
+          inputStyle={styles.inputTxt()}
+          placeholder={'Current Medications'}
+          placeholderTextColor={color.blueTx}
         />
-      </Pressable> */}
+        <InputBox
+          value={existingCondition}
+          onChangeText={val => {
+            setExistingCondition(val);
+          }}
+          mainContainerStyle={styles.inputSearchStyle()}
+          inputStyle={styles.inputTxt()}
+          placeholder={'Existing Conditions'}
+          placeholderTextColor={color.blueTx}
+        />
+      </Screen>
       <View style={styles.footerView()}>
         <Button
           buttonStyle={styles.buttonFooter()}
