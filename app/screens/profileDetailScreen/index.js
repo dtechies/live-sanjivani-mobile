@@ -35,7 +35,6 @@ export const ProfileDetailScreen = () => {
     userDetails: state.userDataReducer.userDataResponse.userData,
     age: state.userDataReducer.userDataResponse.age,
   }));
-  // console.log('userDetails', userDetails);
   const [firstNm, setFirstNm] = useState(userDetails.first_name);
   const [firstNmErr, setFirstNmErr] = useState('');
   const [lastNm, setLastNm] = useState(userDetails.last_name);
@@ -83,24 +82,7 @@ export const ProfileDetailScreen = () => {
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-  const onGetOtp = async () => {
-    setLoading(true);
-    const getOtpBody = {
-      mob_no: phone,
-      country_code: countryCodeVal,
-      user_id: userDetails.id,
-    };
-    const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    const res = getOtpResponse.payload;
-    if (res.status) {
-      // console.log('response data ==>', res.data);
-      setLoading(false);
-      toastMessage(res.message);
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
-    }
-  };
+
   // const getUserProfileData = async () => {
   //   // setLoading(true);
   //   const getOtpResponse = await dispatch(getUserProfile());
@@ -136,10 +118,6 @@ export const ProfileDetailScreen = () => {
   //     // toastMessage(res.message);
   //   }
   // };
-
-  // useEffect(() => {
-  //   getUserProfileData();
-  // }, []);
 
   const uploadFromGallery = () => {
     ImagePicker.openPicker({
@@ -242,6 +220,25 @@ export const ProfileDetailScreen = () => {
       editProfileDetails();
     }
   };
+  const onGetOtp = async () => {
+    setLoading(true);
+    const getOtpBody = {
+      mob_no: phone,
+      country_code: countryCodeVal,
+      user_id: userDetails.id,
+    };
+    // console.log('getOtpBody ==>', getOtpBody);
+    const getOtpResponse = await dispatch(getOtp(getOtpBody));
+    const res = getOtpResponse.payload;
+    if (res.status) {
+      // console.log('response data ==>', res.data);
+      setLoading(false);
+      toastMessage(res.message);
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+    }
+  };
   const editProfileDetails = async () => {
     setLoading(true);
     let formData = new FormData();
@@ -273,11 +270,13 @@ export const ProfileDetailScreen = () => {
     // console.log('EditUserProfileResponse Res ==>', res);
     // return;
     if (res.status) {
-      // var a = moment(res.data.dob);
-      // var b = moment(currentDate);
-      // var years = b.diff(a, 'year');
-      // b.add(years, 'years');
-      // await dispatch(userData({userData: res.data, age: years, login: true}));
+      var a = moment(res.data.dob);
+      var b = moment(currentDate);
+      var years = b.diff(a, 'year');
+      b.add(years, 'years');
+      // res.data.token = userStore.userData.token;
+      // userStore.userData = res.data;
+      await dispatch(userData({userData: res.data, age: years, login: true}));
       setLoading(false);
 
       toastMessage(res.message);
@@ -287,8 +286,7 @@ export const ProfileDetailScreen = () => {
       setIsEditablePhone(false);
       // getUserProfileData();
       setExtra(extra + 1);
-      res.data.token = userStore.userData.token;
-      userStore.userData = res.data;
+
       // console.log('response RES  data :- ', res.data);
 
       var a = moment(res.data.dob);
@@ -301,7 +299,6 @@ export const ProfileDetailScreen = () => {
       toastMessage(res.message);
     }
   };
-
   return (
     <SafeAreaView>
       <Toast

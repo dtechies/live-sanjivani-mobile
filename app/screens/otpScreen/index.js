@@ -78,7 +78,6 @@ export const OtpScreen = props => {
     if (loginResponse) {
       res = loginResponse.payload;
     }
-    // console.log('login res ==>', res);
     if (res.status) {
       var a = moment(res.data.user.dob);
       var b = moment(currentDate);
@@ -102,9 +101,9 @@ export const OtpScreen = props => {
       mob_no: otpData ? otpData?.mob_no : '',
       country_code: otpData ? otpData?.country_code : '',
     };
-    console.log('getOtpBody ==>', getOtpBody);
+    // console.log('getOtpBody ==>', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    console.log('getOtpBodyresponses ==>', getOtpResponse);
+    // console.log('getOtpBody responses ==>', getOtpResponse);
     let res = {status: false, message: 'Connection Error...!'};
     if (getOtpResponse) {
       res = getOtpResponse.payload;
