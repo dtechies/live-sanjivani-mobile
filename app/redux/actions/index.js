@@ -37,3 +37,5 @@ export * from './AddOtherDataAction';
 export * from './SubCategoryGraphAction';
 export * from './GetCareGiverListAction';
 export * from './DeleteCareGiverAction';
+export * from './GetUserMedicalJournalNoteAction';
+export * from './GetDeleteMedicalJournalNoteAction';

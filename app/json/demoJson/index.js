@@ -31,14 +31,14 @@ export const MainProfileDetail = [
   },
   {
     label: '4',
-    value: 'Symptom Checker',
-    svg: IcMan,
+    value: 'Medical Journal Lists',
+    svg: IcJournal,
     selectedCard: false,
   },
   {
     label: '5',
-    value: 'Medical Journal',
-    svg: IcJournal,
+    value: 'Symptom Checker',
+    svg: IcMan,
     selectedCard: false,
   },
   {

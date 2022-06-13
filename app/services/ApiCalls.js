@@ -378,3 +378,34 @@ export const _getCareGiverDelete = async body => {
   console.log('headers _getCareGiverDelete ==>', headers);
   return _api_calls('DELETE', '/delete-caregiver', headers, body);
 };
+export const _addEditMedicalJournalNote = async payload => {
+  let {_api_calls} = HttpCalls;
+
+  let headers = await headersData({
+    type: 'multipart/form-data',
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
+  });
+  return _api_calls('POST', '/add-medical-journal-note', headers, payload);
+};
+export const _getUserMedicalJournalNote = async () => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
+  });
+  // console.log('headers _getUserProfileData ==>', headers);
+  return _api_calls('GET', '/get-user-medical-journal-note', headers);
+};
+export const _getDeleteMedicalJournalNote = async body => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
+  });
+  // console.log('headers _getUserProfileData ==>', headers);
+  return _api_calls('DELETE', '/delete-medical-journal-note', headers, body);
+};

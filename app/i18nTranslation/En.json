@@ -194,7 +194,12 @@
     "order": "Order with Prescription"
   },
   "medicalJournal_screen": {
-    "listAllJournal": "List Of All Journal"
+    "title": "Medical Journal",
+    "order": "Order with Prescription",
+    "changeImage": "Change Image",
+    "take_picture": "Take Picture",
+    "upload_picture": "Upload Picture",
+    "save": "Save"
   },
   "medicationReminderList_Screen": {
     "title": "Medication Reminder List",
@@ -204,5 +209,10 @@
     "title": "My Care Giver ",
     "careGiverList": "Care Giver List",
     "save": "Save"
+  },
+  "medicalJournalLists_screen": {
+    "title": "Medical Journal Lists",
+    "save": "Save",
+    "listAllJournal": "List Of All Journal"
   }
 }

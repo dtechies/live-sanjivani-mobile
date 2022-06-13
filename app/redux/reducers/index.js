@@ -41,6 +41,8 @@ import GetSubCatGraph from './SubCategoryGraphReducer';
 import GetCareGiverListReducer from './GetCareGiverListReducer';
 import addOtherScreenReducer from './AddOtherDataReducer';
 import DeleteCareGiverReducer from './DeleteCareGiverReducer';
+import GetUserMedicalJournalNoteReducer from './GetUserMedicalJournalNoteReducer';
+import GetDeleteMedicalJournalNoteReducer from './GetDeleteMedicalJournalNoteReducer';
 
 const persistConfig = {
   key: 'root',
@@ -85,6 +87,8 @@ const appReducer = combineReducers({
   GetSubCatGraph: GetSubCatGraph,
   GetCareGiverListReducer: GetCareGiverListReducer,
   DeleteCareGiverReducer: DeleteCareGiverReducer,
+  GetUserMedicalJournalNoteReducer: GetUserMedicalJournalNoteReducer,
+  GetDeleteMedicalJournalNoteReducer: GetDeleteMedicalJournalNoteReducer,
 });
 const rootReducer = (state, action) => {
   // Clear all data in redux store to initial.
