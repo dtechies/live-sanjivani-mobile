@@ -488,7 +488,7 @@ export const ProfileDetailScreen = () => {
 
           <View style={styles.countryCodeRowView()}>
             <Dropdown
-              defaultValue={{label: '+91'}}
+              defaultValue={{label: '+91', value: '+91'}}
               data={countryCode}
               labelField="label"
               valueField="value"

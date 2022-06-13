@@ -185,6 +185,7 @@ export const RegisterScreen = () => {
       <Screen bounces={false} style={styles.screenContainer()}>
         <InputBox
           placeholder={'First Name'}
+          // titleTx={}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
           placeholderTextColor={color.grayTxt}
@@ -284,7 +285,7 @@ export const RegisterScreen = () => {
         {emailErr ? <Text style={styles.errorText()}>{emailErr}</Text> : null}
         <View style={styles.countryCodeRowView()}>
           <CustomDropDown
-            defaultValue={{label: '+91'}}
+            defaultValue={{label: '+91', value: '+91'}}
             data={countryCode}
             labelField="label"
             valueField="value"

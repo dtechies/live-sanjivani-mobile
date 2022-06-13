@@ -205,5 +205,17 @@
     "title": "My Care Giver ",
     "careGiverList": "Care Giver List",
     "save": "Save"
+  },
+  "otherDetails": {
+    "title": "Other Details"
+  },
+  "intro_Screen": {
+    "mainTitle": "Live Sanjivani",
+    "subTitle": "Har Pal Apke Sath",
+    "getMedicine": "Get Medicine Reminder",
+    "getAppointment": "Get Appointment Reminder",
+    "Discuss": "Discuss in the  Forum",
+    "skip": "Skip",
+    "next": "Next"
   }
 }

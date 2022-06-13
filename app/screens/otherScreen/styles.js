@@ -209,3 +209,12 @@ export const errorText = val => ({
   // marginTop: val == 1 ? 5 : -5,
   // marginBottom: 15,
 });
+
+export const errorTxt = () => ({
+  color: color.blueCard,
+  fontFamily: fonts.latoBold,
+  fontSize: fontSize.medium,
+});
+export const textMsgMain = val => ({
+  padding: size.moderateScale(25),
+});
