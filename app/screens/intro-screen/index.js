@@ -134,7 +134,7 @@ export const IntroScreen = () => {
               </View>
             ))}
           </View>
-          <ChangeLanguage />
+
           <Button
             buttonStyle={styles.buttonStyle}
             buttonText={styles.buttonText}
