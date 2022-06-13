@@ -88,7 +88,8 @@ export const cardTxt = val => ({
   fontSize: val == 1 ? fontSize.mediumLargeSec : fontSize.medium,
   fontFamily: fonts.latoBold,
   color: color.headerBlue,
-  marginLeft: size.moderateScale(val == 1 ? 0 : 7),
+  marginLeft: size.moderateScale(val == 2 ? 19 : 7),
+  marginTop: size.moderateScale(val == 2 ? 19 : 0),
 });
 export const listJournalHeader = val => ({
   fontSize: fontSize.medium,
@@ -133,7 +134,6 @@ export const cardView = val => ({
   shadowRadius: size.moderateScale(3),
   elevation: size.moderateScale(5),
   paddingVertical: size.moderateScale(15),
-  paddingHorizontal: size.moderateScale(28),
   borderRadius: size.moderateScale(5),
   marginLeft: val == 1 ? size.moderateScale(10) : 0,
   width: size.deviceWidth * 0.39,
@@ -224,4 +224,48 @@ export const desTextStyle = () => ({
   fontFamily: fonts.latoRegular,
   color: color.dimGrey,
   fontSize: fontSize.medium,
+});
+export const imageView = val => ({
+  marginVertical: size.moderateScale(15),
+  backgroundColor: color.white,
+  justifyContent: 'center',
+  marginHorizontal: size.moderateScale(20),
+  borderRadius: size.moderateScale(10),
+  paddingLeft: size.moderateScale(5),
+  height: size.deviceHeight * 0.06,
+});
+export const textImage = val => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoBold,
+  color: color.blueTx,
+  paddingLeft: size.moderateScale(5),
+});
+export const imageModelView = val => ({
+  marginTop: size.moderateScale(10),
+  height: size.moderateScale(400),
+  width: size.moderateScale(400),
+  alignSelf: 'center',
+});
+export const crossIconView = () => ({
+  alignSelf: 'flex-end',
+});
+export const containerVal = () => ({
+  backgroundColor: color.white,
+  padding: size.moderateScale(11),
+  paddingTop: size.moderateScale(10),
+  // textAlignVertical: 'top',
+  height: size.deviceHeight * 0.2,
+  marginHorizontal: size.moderateScale(20),
+  borderRadius: size.moderateScale(10),
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoRegular,
+  color: color.blueTx,
+});
+export const inputTextStyle = () => ({
+  paddingHorizontal: size.moderateScale(9),
+});
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
+  paddingHorizontal: size.moderateScale(20),
+  paddingVertical: size.moderateScale(12),
 });

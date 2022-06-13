@@ -101,9 +101,9 @@ export const ProfileScreen = () => {
                       navigation.navigate('symptomsScreen');
                     }, 500);
                   }
-                  if (item.value == 'Medical Journal') {
+                  if (item.value == 'Medical Journal Lists') {
                     setTimeout(() => {
-                      navigation.navigate('medicalJournalScreen');
+                      navigation.navigate('medicalJournalLists');
                     }, 500);
                   }
                   if (item.value == 'Help') {

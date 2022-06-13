@@ -28,6 +28,7 @@ export const labelFieldDropText = () => ({
   fontFamily: fonts.latoBold,
   color: color.blueTx,
   marginLeft: size.moderateScale(10),
+  // marginTop: size.moderateScale(10),
 });
 export const labelFieldText1 = () => ({
   fontSize: fontSize.small,

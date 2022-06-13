@@ -54,7 +54,7 @@ export const LoginScreen = () => {
       setNumberCorrect('');
       onGetOtp();
     } else {
-      setNumberCorrect('Phone number should be equal to 10 digits');
+      setNumberCorrect('login_screen.errorMsg');
     }
   };
   return (
@@ -81,9 +81,10 @@ export const LoginScreen = () => {
         <Text style={styles.labelLoginTxt()} tx={'login_screen.number'} />
         <View style={styles.rowView()}>
           <Dropdown
-            defaultValue={{label: '+91', value: '+91'}}
+            defaultValue={countryCode[0]}
             data={countryCode}
-            labelField="label"
+            labelTxField="label"
+            placeholder={'+91'}
             valueField="value"
             dropdownPosition={'bottom'}
             style={styles.dropdown()}
@@ -134,7 +135,7 @@ export const LoginScreen = () => {
         </View>
         <View style={styles.validationView()}>
           {numberCorrect ? (
-            <Text style={styles.textValidation()} text={numberCorrect} />
+            <Text style={styles.textValidation()} tx={numberCorrect} />
           ) : null}
         </View>
         <Text style={styles.labelOrTxt()} tx={'login_screen.or'} />

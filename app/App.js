@@ -15,7 +15,7 @@ import OneSignal from 'react-native-onesignal';
 export const LocalizationContext = createContext();
 
 const App = () => {
-  const [locale, setLocale] = useState('ar');
+  const [locale, setLocale] = useState('en');
   const [isModalOpen, closeModal] = useState(false);
 
   const [notificationData, setNotificationData] = useState();
