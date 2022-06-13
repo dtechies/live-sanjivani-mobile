@@ -40,7 +40,7 @@ export const ViewMedicationScreen = () => {
   };
 
   const getMedicineReminderData = async () => {
-    // setLoading(true);
+    setLoading(true);
 
     const getMedicineReminderProfileResponse = await dispatch(
       getMedicineReminderProfile(),
@@ -64,12 +64,12 @@ export const ViewMedicationScreen = () => {
       //   res.data.MedicineReminderProfileData,
       // );
       setFilteredData(res.data.MedicineReminderProfileData);
-      // setLoading(false);
-      toastMessage(res.message);
+      setLoading(false);
+      // toastMessage(res.message);
       setExtra(extra + 1);
     } else {
       setLoading(false);
-      toastMessage(res.message);
+      // toastMessage(res.message);
     }
   };
   const updateReminderStatus = async val => {
@@ -153,7 +153,7 @@ export const ViewMedicationScreen = () => {
           />
         </View>
       </View>
-      <Screen style={styles.screenContainer()}>
+      <Screen style={styles.screenContainer()} bounces={false}>
         {filteredData.length == 0 && (
           <Text style={styles.noData()}>No Records Found...</Text>
         )}
