@@ -117,7 +117,7 @@
     "request_new_otp": "Request New OTP",
     "login": "Login",
     "or": "Or",
-    "errorMsg":"Phone number should be equal to 10 digits"
+    "errorMsg": "Phone number should be equal to 10 digits"
   },
   "register_screen": {
     "first_name": "First Name",
@@ -130,15 +130,15 @@
     "save": "Register",
     "title_register": "Lets Create Your Profile",
     "title": "Register New User",
-    "firstNameError":"Please Enter First Name",
-    "LastNameError":"Please Enter Last Name",
-    "emailError":"Please Enter Email Address",
-    "invalidEmailError":"Invalid Email Address",
-    "phoneNameError":"Please Enter Phone number",
-    "invalidPhoneNameError":"Invalid Phone number",
-    "dobError":"Please select Date",
-    "genderError":"Please select Gender",
-    "languageError":"Please select Language"
+    "firstNameError": "Please Enter First Name",
+    "LastNameError": "Please Enter Last Name",
+    "emailError": "Please Enter Email Address",
+    "invalidEmailError": "Invalid Email Address",
+    "phoneNameError": "Please Enter Phone number",
+    "invalidPhoneNameError": "Invalid Phone number",
+    "dobError": "Please select Date",
+    "genderError": "Please select Gender",
+    "languageError": "Please select Language"
   },
   "help_screen": {
     "title": "Help",
@@ -214,13 +214,14 @@
   },
   "symptoms_screen": {
     "title": "Symptom Checker",
-    "header": "Identify possible condition and treatment related to your symptoms.",
+    "header": "This tool is not a substitute for medical advice.",
     "age": "Age",
     "gender": "Gender",
     "male": "Male",
     "female": "Female",
     "whatAreYourSymptoms": "What Are Your Symptoms?",
-    "continue": "Continue"
+    "continue": "Continue",
+    "additionalInfo": "Additional info"
   },
   "otp_screen": {
     "verification": "Verification",
@@ -269,24 +270,42 @@
     "skip": "Skip",
     "next": "Next"
   },
-  "profileJson":{
-    "male": "Male",
-    "female":"Female",
-    "other":"Other",
-    "hindi":"Hindi",
-    "english":"English",
-    "+91":"+91",
-    "+1":"+1"
+  "symptoms_detail_screen": {
+    "title": "Symptom Detail Screen",
+    "conditionDetails": "Condition Details",
+    "symptom": "Symptom",
+    "howCommon": "How common",
+    "overView": "Overview",
+    "riskFactor": "Risk factor",
+    "diagnosedBy": "Diagnosed By",
+    "didYouKnow": "Did you know",
+    "facts": "Facts",
+    "treatmentOption": "Treatment Options",
+    "treatment": "Treatment",
+    "takeCare": "Take Care of Yourself",
+    "madeWorseBy": "Made worse By",
+    "whenToSeeDoctor": "When to see doctor",
+    "questionsAsk": "Questions to ask doctor",
+    "whatToExpect": "What to expect"
   },
-  "medicationJson":{
+  "profileJson": {
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "hindi": "Hindi",
+    "english": "English",
+    "+91": "+91",
+    "+1": "+1"
+  },
+  "medicationJson": {
     "1": "1",
-    "2":"2",
-    "3":"3",
-    "4":"4",
-    "5":"5",
-    "tablet":"Tablet",
-    "pill":"Pill",
-    "drop":"Drop",
-    "inhaler":"Inhaler"
+    "2": "2",
+    "3": "3",
+    "4": "4",
+    "5": "5",
+    "tablet": "Tablet",
+    "pill": "Pill",
+    "drop": "Drop",
+    "inhaler": "Inhaler"
   }
 }

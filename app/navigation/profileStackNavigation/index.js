@@ -17,6 +17,7 @@ import {
   MyAppointments,
   MyCareGiver,
   CareGiver,
+  SymptomDetailScreen,
   MedicalJournalLists,
 } from 'screens';
 
@@ -63,6 +64,8 @@ export const ProfileStackNavigation = () => {
       <Stack.Screen name="myCareGiver" component={MyCareGiver} />
       <Stack.Screen name="careGiver" component={CareGiver} />
       <Stack.Screen
+        name="symptomDetailScreen"
+        component={SymptomDetailScreen}
         name="medicalJournalLists"
         component={MedicalJournalLists}
       />
