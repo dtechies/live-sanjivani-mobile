@@ -204,5 +204,8 @@
     "title": "My Care Giver ",
     "careGiverList": "Care Giver List",
     "save": "Save"
+  },
+  "otherDetails": {
+    "title": "Other Details"
   }
 }
