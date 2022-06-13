@@ -147,11 +147,20 @@ const GetCards = ({
         </Pressable>
       ) : !isDropDown ? (
         <InputBox
-          placeholder={`Enter ${val.name}`}
+          placeholder={
+            val.unit == 'Text' || val.unit == 'Number'
+              ? `Enter ${val.name}`
+              : ''
+          }
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
           placeholderTextColor={color.grayTxt}
           isShadow={true}
+          isRightUnit={
+            val.unit == 'Text' || val.unit == 'Number' ? false : true
+          }
+          unit={val.unit != 'Text' || val.unit != 'Number' ? val.unit : ''}
+          keyboardType={val.unit == 'Number' ? 'number-pad' : 'default'}
           containerStyle={styles.containerStyle()}
           onChangeText={v => {
             let indexK = -1;
@@ -306,7 +315,7 @@ export const OtherScreen = props => {
   const addData = async () => {
     setLoading(true);
     let bodyArray = [];
-    console.log('THIS', thisArray);
+    // console.log('THIS', thisArray);
     let idArray = [];
     thisArray.map(val => {
       if (idArray.length == 0) {
@@ -320,17 +329,17 @@ export const OtherScreen = props => {
         }
       }
     });
-    console.log('ID MALE CHE K..?', idArray);
+    // console.log('ID MALE CHE K..?', idArray);
     let otherDataBody = [];
     idArray.map(idVal => {
       let d = {};
       let dataaa = thisArray.filter(val => {
         if (idVal == val.id) {
           d[val.nm] = val.value;
-          console.log('val 11==>', d);
+          // console.log('val 11==>', d);
         }
       });
-      console.log('d AAVE CHE => ', d);
+      // console.log('d AAVE CHE => ', d);
       otherDataBody.push({
         subcategory_id: idVal,
         user_id: userData.id,
@@ -338,13 +347,13 @@ export const OtherScreen = props => {
       });
       return;
     });
-    console.log('otherDataBody ==> ', otherDataBody);
+    // console.log('otherDataBody ==> ', otherDataBody);
     const getOtherDataResponse = await dispatch(addOtherData(otherDataBody));
     const res = getOtherDataResponse;
-    console.log('getOtherDataResponse ==> ', res);
+    // console.log('getOtherDataResponse ==> ', res);
     if (res != undefined) {
       if (res.status) {
-        console.log('response data ==>', res.data);
+        // console.log('response data ==>', res.data);
         setLoading(false);
         toastMessage(res.message);
         setThisArray([]);
@@ -461,7 +470,9 @@ export const OtherScreen = props => {
             />
           </View>
         ) : (
-          <Text>No Records Found...</Text>
+          <View style={styles.textMsgMain()}>
+            <Text style={styles.errorTxt()}>No Data Found...</Text>
+          </View>
         )}
       </Screen>
     </SafeAreaView>

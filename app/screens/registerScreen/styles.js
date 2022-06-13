@@ -137,6 +137,7 @@ export const countryCodeDropdownContainer = () => ({
   marginTop: size.moderateScale(5),
   borderWidth: 1,
   backgroundColor: color.white,
+  // alignItems: 'center',
 });
 export const countryCodeSeparator = () => ({
   backgroundColor: color.borderBlue,

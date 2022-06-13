@@ -217,7 +217,7 @@ export const AddDetailsScreen = props => {
                                   console.log('parseInt(i.value)', j.value);
                                 }
                               });
-                              console.log('SU', bmiValueData);
+                              // console.log('SU', bmiValueData);
                               setBMIValue(
                                 bmiValueData ? bmiValueData.toString() : '',
                               );

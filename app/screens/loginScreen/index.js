@@ -79,7 +79,7 @@ export const LoginScreen = () => {
         <Text style={styles.labelLoginTxt()} tx={'login_screen.number'} />
         <View style={styles.rowView()}>
           <Dropdown
-            defaultValue={{label: '+91'}}
+            defaultValue={{label: '+91', value: '+91'}}
             data={countryCode}
             labelField="label"
             valueField="value"
