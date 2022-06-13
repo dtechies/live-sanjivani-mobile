@@ -22,7 +22,7 @@ export const ProfileScreen = () => {
     userDetails: state.userDataReducer.userDataResponse.userData,
     age: state.userDataReducer.userDataResponse.age,
   }));
-
+  console.log('userDetails', userDetails);
   const removePlayerId = async () => {
     const removePlayerIdBody = {
       player_id: null,
