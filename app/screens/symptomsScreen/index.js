@@ -33,7 +33,6 @@ export const SymptomsScreen = () => {
   const [symChecker, setSymChecker] = useState(symptomChecker);
   const [allSymptomList, setAllSymptomList] = useState();
   const [loading, setLoading] = useState(false);
-  const [isFocus, setIsFocus] = useState(false);
   const [symptomFilteredValue, setSymptomFilteredValue] = useState();
   const [symptomErr, setSymptomErr] = useState('');
   const [selectedSymptomList, setSelectedSymptomList] = useState([]);
@@ -152,6 +151,7 @@ export const SymptomsScreen = () => {
               <View>
                 <InputBox
                   value={age}
+                  placeHolderVal={'symptoms_screen.age'}
                   onChangeText={val => {
                     setAge(val);
                     setAgeErr('');
@@ -189,15 +189,12 @@ export const SymptomsScreen = () => {
                 maxHeight={size.moderateScale(90)}
                 containerStyle={styles.dropdownContainer()}
                 value={gender}
-                onFocus={() => setIsFocus(true)}
-                onBlur={() => setIsFocus(false)}
                 flatListProps={{
                   bounces: false,
                 }}
                 onChange={item => {
                   setGender(item.value);
                   setGenderErr('');
-                  setIsFocus(false);
                 }}
                 renderItem={item => {
                   return (
@@ -225,6 +222,7 @@ export const SymptomsScreen = () => {
 
         <InputBox
           value={searchText}
+          placeHolderVal={'symptoms_detail_screen.symptom'}
           onChangeText={val => {
             onSymptomSearch(val);
           }}
@@ -239,12 +237,11 @@ export const SymptomsScreen = () => {
             />
           }
           withButton={true}
-          btnName={'Done'}
+          btnTxName={'symptoms_screen.done'}
           onRightIconPress={() => {
             setSymptomDropDown(false);
             setShowSelectedSymptomList(true);
           }}
-          placeholder={'Search Symptom'}
           placeholderTextColor={color.blueTx}
         />
         {symptomErr ? (
@@ -309,17 +306,19 @@ export const SymptomsScreen = () => {
           }}
           mainContainerStyle={styles.inputSearchStyle()}
           inputStyle={styles.inputTxt()}
-          placeholder={'Current Medications'}
+          placeHolderVal={'symptoms_screen.current_medications'}
+          // placeholder={'Current Medications'}
           placeholderTextColor={color.blueTx}
         />
         <InputBox
           value={existingCondition}
+          placeHolderVal={'symptoms_screen.existing_conditions'}
           onChangeText={val => {
             setExistingCondition(val);
           }}
           mainContainerStyle={styles.inputSearchStyle()}
           inputStyle={styles.inputTxt()}
-          placeholder={'Existing Conditions'}
+          // placeholder={'Existing Conditions'}
           placeholderTextColor={color.blueTx}
         />
       </Screen>

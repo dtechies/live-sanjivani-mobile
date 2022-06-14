@@ -49,7 +49,8 @@
     "add_appointment": "Add Appointment"
   },
   "profile_screen": {
-    "profile": "Profile Screen"
+    "profile": "Profile Screen",
+    "change": "Change"
   },
   "appointment_reminder_screen": {
     "title": "Book an Appointment",
@@ -223,7 +224,10 @@
     "female": "Female",
     "whatAreYourSymptoms": "What Are Your Symptoms?",
     "continue": "Continue",
-    "additionalInfo": "Additional info"
+    "additionalInfo": "Additional info",
+    "existing_conditions": "Existing Conditions",
+    "current_medications": "Current Medications",
+    "done": "Done"
   },
   "otp_screen": {
     "verification": "Verification",

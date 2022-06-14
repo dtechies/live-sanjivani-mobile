@@ -49,7 +49,8 @@
     "add_appointment": "अपॉइंटमेंट जोड़ें"
   },
   "profile_screen": {
-    "profile": "प्रोफाइल स्क्रीन"
+    "profile": "प्रोफाइल स्क्रीन",
+    "change": "Change"
   },
   "appointment_reminder_screen": {
     "title": "एक अपॉइंटमेंट बुक करें",
@@ -223,7 +224,10 @@
     "female": "मादा",
     "whatAreYourSymptoms": "आपके लक्षण क्या हैं?",
     "continue": "जारी रखना",
-    "additionalInfo": "अतिरिक्त जानकारी"
+    "additionalInfo": "अतिरिक्त जानकारी",
+    "existing_conditions": "मौजूदा परिस्थितियां",
+    "current_medications": "मौजूदा दवाएं",
+    "done": "पूर्ण"
   },
   "otp_screen": {
     "verification": "सत्यापन",

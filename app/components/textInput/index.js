@@ -29,6 +29,7 @@ export const InputBox = props => {
     isRightUnit,
     unit,
     btnName,
+    btnTxName,
     placeHolderVal,
     buttonStyle,
   } = props;
@@ -59,7 +60,7 @@ export const InputBox = props => {
             selectionColor={color.dimGrey}
             value={value}
             ref={textRef}
-            placeholder={t(placeHolderVal)}
+            placeholder={placeHolderVal ? t(placeHolderVal) : ''}
             // maxLength={4}
             {...props}
           />
@@ -68,7 +69,11 @@ export const InputBox = props => {
               onPress={() => onRightIconPress()}
               {...props}
               style={[styles.rightIconContainer(), buttonStyle]}>
-              <Text style={styles.btnTextRight()}>{btnName}</Text>
+              {btnTxName ? (
+                <Text style={styles.btnTextRight()} tx={btnTxName} />
+              ) : (
+                <Text style={styles.btnTextRight()}>{btnName}</Text>
+              )}
             </Pressable>
           )}
           {rightIcon && (
