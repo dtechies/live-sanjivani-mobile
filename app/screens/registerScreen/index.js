@@ -292,7 +292,7 @@ export const RegisterScreen = () => {
           <Dropdown
             defaultValue={countryCode[0]}
             data={countryCode}
-            labelTxField="label"
+            labelField="label"
             valueField="value"
             placeholder={'+91'}
             dropdownPosition={'bottom'}
@@ -308,7 +308,6 @@ export const RegisterScreen = () => {
             flatListProps={{
               bounces: false,
             }}
-            isTxEnabled={true}
             onChange={item => {
               setCountryCodeVal(item.label);
               setIsFocus(false);
@@ -318,7 +317,7 @@ export const RegisterScreen = () => {
               return (
                 <View>
                   <Text
-                    tx={item.label}
+                    text={item.label}
                     style={styles.countryCodeInsideLabelFieldText()}
                   />
                   <View style={styles.countryCodeSeparator()} />

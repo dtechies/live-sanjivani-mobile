@@ -48,16 +48,14 @@ export const ProfileDetailScreen = () => {
   const [phone, setPhone] = useState(userDetails.mob_no);
   const [phoneErr, setPhoneErr] = useState('');
   const [gender, setGender] = useState(userDetails.gender);
-  const [genderDefault, setGenderDefault] = useState({
-    label: userDetails.gender,
-    value: userDetails.gender,
+  const [genderDefault, setGenderDefault] = useState({});
+  const [countryCodeDefault, setCountryCodeDefault] = useState({
+    label: userDetails.country_code,
+    value: userDetails.country_code,
   });
   const [genderErr, setGenderErr] = useState('');
   const [language, setLanguage] = useState(userDetails.language);
-  const [languageDefault, setLanguageDefault] = useState({
-    label: userDetails.language,
-    value: userDetails.language,
-  });
+  const [languageDefault, setLanguageDefault] = useState({});
   const [languageErr, setLanguageErr] = useState('');
   const [extra, setExtra] = useState(0);
   const [isEditable, setIsEditable] = useState(false);
@@ -83,41 +81,63 @@ export const ProfileDetailScreen = () => {
     toastRef.current.show(msg);
   };
 
-  // const getUserProfileData = async () => {
-  //   // setLoading(true);
-  //   const getOtpResponse = await dispatch(getUserProfile());
-  //   const res = getOtpResponse;
-  //   if (res.status) {
-  //     console.log(
-  //       'getUserProfileData response data ==>',
-  //       res.data.UserProfileData.image,
-  //     );
-  //     setFirstNm(res.data.UserProfileData.first_name);
-  //     setLastNm(res.data.UserProfileData.last_name);
-  //     setDob(res.data.UserProfileData.dob);
-  //     setEmail(res.data.UserProfileData.email);
-  //     setPhone(res.data.UserProfileData.mob_no);
-  //     setGender(res.data.UserProfileData.gender);
-  //     setGenderDefault({
-  //       label: res.data.UserProfileData.gender,
-  //       value: res.data.UserProfileData.gender,
-  //     });
-  //     setLanguage(res.data.UserProfileData.language);
-  //     setLanguageDefault({
-  //       label: res.data.UserProfileData.language,
-  //       value: res.data.UserProfileData.language,
-  //     });
-  //     // console.log(
-  //     //   'res.data.UserProfileData.image ==> ',
-  //     //   res.data.UserProfileData.image,
-  //     // );
-  //     setImageData({path: res.data.UserProfileData.image});
-  //     setExtra(extra + 1);
-  //   } else {
-  //     // setLoading(false);
-  //     // toastMessage(res.message);
-  //   }
-  // };
+  useEffect(() => {
+    genderVal.map(item => {
+      if (item.value == userDetails.gender) {
+        setGenderDefault(item);
+      }
+    });
+    languageVal.map(val => {
+      if (val.value == userDetails.language) {
+        setLanguageDefault(val);
+      }
+    });
+    getUserProfileData();
+    setExtra(extra + 1);
+  }, []);
+  const getUserProfileData = async () => {
+    // setLoading(true);
+    const getOtpResponse = await dispatch(getUserProfile());
+    const res = getOtpResponse;
+    if (res.status) {
+      console.log(
+        'getUserProfileData response data ==>',
+        res.data.UserProfileData.image,
+      );
+      setFirstNm(res.data.UserProfileData.first_name);
+      setLastNm(res.data.UserProfileData.last_name);
+      setDob(res.data.UserProfileData.dob);
+      setEmail(res.data.UserProfileData.email);
+      setPhone(res.data.UserProfileData.mob_no);
+      setGender(res.data.UserProfileData.gender);
+
+      setLanguage(res.data.UserProfileData.language);
+
+      genderVal.map(item => {
+        if (item.value == res.data.UserProfileData.gender) {
+          setGenderDefault(item);
+        }
+      });
+      languageVal.map(val => {
+        if (val.value == res.data.UserProfileData.language) {
+          setLanguageDefault(val);
+        }
+      });
+      setCountryCodeDefault({
+        label: res.data.UserProfileData.country_code,
+        value: res.data.UserProfileData.country_code,
+      });
+      // console.log(
+      //   'res.data.UserProfileData.image ==> ',
+      //   res.data.UserProfileData.image,
+      // );
+      setImageData({path: res.data.UserProfileData.image});
+      setExtra(extra + 1);
+    } else {
+      // setLoading(false);
+      // toastMessage(res.message);
+    }
+  };
 
   const uploadFromGallery = () => {
     ImagePicker.openPicker({
@@ -227,11 +247,11 @@ export const ProfileDetailScreen = () => {
       country_code: countryCodeVal,
       user_id: userDetails.id,
     };
-    // console.log('getOtpBody ==>', getOtpBody);
+    console.log('getOtpBody ==>', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     const res = getOtpResponse.payload;
     if (res.status) {
-      // console.log('response data ==>', res.data);
+      console.log('response data ==>', res.data);
       setLoading(false);
       toastMessage(res.message);
     } else {
@@ -284,7 +304,7 @@ export const ProfileDetailScreen = () => {
       setOtpValue('');
       setOtp(false);
       setIsEditablePhone(false);
-      // getUserProfileData();
+      getUserProfileData();
       setExtra(extra + 1);
 
       // console.log('response RES  data :- ', res.data);
@@ -412,7 +432,7 @@ export const ProfileDetailScreen = () => {
               selectedTextStyle={styles.selectedOptionTextStyle(isEditable)}
               maxHeight={size.moderateScale(55)}
               containerStyle={styles.dropdownContainer()}
-              // value={dropGender}
+              isTxEnabled={true}
               onFocus={() => setIsFocus(true)}
               onBlur={() => setIsFocus(false)}
               flatListProps={{
@@ -426,7 +446,7 @@ export const ProfileDetailScreen = () => {
                 return (
                   <View>
                     <Text
-                      text={item.value}
+                      tx={item.label}
                       style={styles.InsideLabelFieldText()}
                     />
                     <View style={styles.separator()} />
@@ -487,38 +507,48 @@ export const ProfileDetailScreen = () => {
           {emailErr ? <Text style={styles.errorText()}>{emailErr}</Text> : null}
 
           <View style={styles.countryCodeRowView()}>
-            <Dropdown
-              defaultValue={{label: '+91', value: '+91'}}
-              data={countryCode}
-              labelTxField="label"
-              valueField="value"
-              dropdownPosition={'bottom'}
-              style={styles.countryCodeDropdown()}
-              placeholderStyle={styles.labelFieldText()}
-              selectedTextStyle={styles.countryCodeSelectedOptionTextStyle()}
-              maxHeight={size.moderateScale(60)}
-              containerStyle={styles.countryCodeDropdownContainer()}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
-              flatListProps={{
-                bounces: false,
-              }}
-              onChange={item => {
-                setCountryCodeVal(item.value);
-                setIsFocus(false);
-              }}
-              renderItem={item => {
-                return (
-                  <View>
-                    <Text
-                      text={item.value}
-                      style={styles.countryCodeInsideLabelFieldText()}
-                    />
-                    <View style={styles.countryCodeSeparator()} />
-                  </View>
-                );
-              }}
-            />
+            {isEditablePhone ? (
+              <Dropdown
+                defaultValue={countryCodeDefault}
+                data={countryCode}
+                labelField="label"
+                valueField="value"
+                dropdownPosition={'bottom'}
+                style={styles.countryCodeDropdown()}
+                placeholderStyle={styles.labelFieldText()}
+                selectedTextStyle={styles.countryCodeSelectedOptionTextStyle()}
+                maxHeight={size.moderateScale(60)}
+                containerStyle={styles.countryCodeDropdownContainer()}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                flatListProps={{
+                  bounces: false,
+                }}
+                onChange={item => {
+                  setCountryCodeVal(item.value);
+                  setIsFocus(false);
+                }}
+                renderItem={item => {
+                  return (
+                    <View>
+                      <Text
+                        text={item.value}
+                        style={styles.countryCodeInsideLabelFieldText()}
+                      />
+                      <View style={styles.countryCodeSeparator()} />
+                    </View>
+                  );
+                }}
+              />
+            ) : (
+              <InputBox
+                disabled={isEditable ? false : true}
+                editable={isEditablePhone}
+                mainContainerStyle={styles.inputMainCountryCode()}
+                inputStyle={styles.button(isEditablePhone)}
+                value={countryCodeDefault.value}
+              />
+            )}
             <InputBox
               mainContainerStyle={styles.updateMobileNumberInputMain()}
               inputStyle={styles.button(isEditablePhone)}
@@ -528,6 +558,7 @@ export const ProfileDetailScreen = () => {
                 setPhoneErr('');
                 setExtra(extra + 1);
               }}
+              placeholder={'xxxxxxxxxx'}
               withButton={true}
               btnName={changeBtn}
               disabled={isEditable ? false : true}
@@ -597,6 +628,7 @@ export const ProfileDetailScreen = () => {
               // value={language}
               onFocus={() => setIsFocus(true)}
               onBlur={() => setIsFocus(false)}
+              isTxEnabled={true}
               flatListProps={{
                 bounces: false,
               }}
@@ -608,7 +640,7 @@ export const ProfileDetailScreen = () => {
                 return (
                   <View>
                     <Text
-                      text={item.value}
+                      tx={item.label}
                       style={styles.InsideLabelFieldText()}
                     />
                     <View style={styles.separator()} />

@@ -83,7 +83,7 @@ export const LoginScreen = () => {
           <Dropdown
             defaultValue={countryCode[0]}
             data={countryCode}
-            labelTxField="label"
+            labelField="label"
             placeholder={'+91'}
             valueField="value"
             dropdownPosition={'bottom'}
