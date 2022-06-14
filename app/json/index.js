@@ -12,3 +12,4 @@ export * from './profileJson';
 export * from './otherJson';
 export * from './mealTimeJson';
 export * from './bloodGlucoseJson';
+export * from './progressJson';

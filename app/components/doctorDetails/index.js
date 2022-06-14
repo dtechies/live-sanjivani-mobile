@@ -2,8 +2,8 @@ import React from 'react';
 import {View, Image, Pressable} from 'react-native';
 import * as styles from './styles';
 
-import {images, IcArrowNext, IcMoreDetails} from 'theme';
-import {size, color, IcSearch, fontSize} from 'theme';
+import {IcMoreDetails} from 'theme';
+import {size} from 'theme';
 import {Text, StarRating} from 'components';
 
 export const DocDetails = props => {

@@ -16,6 +16,7 @@ export const AddScreen = () => {
   const [loading, setLoading] = useState(false);
   const [allCategory, setAllCategory] = useState([]);
   const [data, setData] = useState(AddNavData);
+
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -50,6 +51,80 @@ export const AddScreen = () => {
     getAllCategoryAndSubCategoryData();
   }, []);
 
+  const OnPressOptions = (item, index) => {
+    // console.log('Asdas');
+    clearData();
+    if (
+      item.name == 'Vitals' ||
+      item.name == 'Measurements' ||
+      item.name == 'Activity'
+    ) {
+      setTimeout(() => {
+        if (allCategory.length != 0) {
+          allCategory.map(val => {
+            if (val.name == item.name) {
+              navigation.navigate('addDetailsScreen', {
+                title: item.name,
+                sub: val.subcategories,
+              });
+            }
+          });
+        } else {
+          navigation.navigate('addDetailsScreen', {
+            title: item.name,
+            sub: [],
+          });
+        }
+      }, 500);
+    }
+    if (item.name == 'Care Giver') {
+      setTimeout(() => {
+        navigation.navigate('careGiver');
+      }, 500);
+    }
+    if (item.name == 'Appointments') {
+      setTimeout(() => {
+        navigation.navigate('appointmentReminderScreen');
+      }, 500);
+    }
+    if (item.name == 'Symptoms Check') {
+      setTimeout(() => {
+        navigation.navigate('symptomsScreen');
+      }, 500);
+    }
+    if (item.name == 'Medical Journal') {
+      setTimeout(() => {
+        navigation.navigate('medicalJournalScreen');
+      }, 500);
+    }
+    if (item.name == 'Others') {
+      setTimeout(() => {
+        if (allCategory.length != 0) {
+          allCategory.map(val => {
+            if (val.name == item.name) {
+              navigation.navigate('otherScreen', {
+                title: item.name,
+                sub: val.subcategories,
+              });
+            }
+          });
+        } else {
+          navigation.navigate('otherScreen', {
+            title: item.name,
+            sub: [],
+          });
+        }
+      }, 500);
+    }
+    if (item.name == 'Medications') {
+      setTimeout(() => {
+        navigation.navigate('medicationReminderScreen');
+      }, 500);
+    }
+    data[index].selected = !item.selected;
+    setExtra(extra + 1);
+  };
+
   return (
     <SafeAreaView style={styles.full()}>
       <Toast
@@ -66,79 +141,7 @@ export const AddScreen = () => {
           {data.map((item, index) => {
             return (
               <Pressable
-                onPress={() => {
-                  // console.log('Asdas');
-                  clearData();
-                  if (
-                    item.name == 'Vitals' ||
-                    item.name == 'Measurements' ||
-                    item.name == 'Activity'
-                  ) {
-                    setTimeout(() => {
-                      if (allCategory.length != 0) {
-                        allCategory.map(val => {
-                          if (val.name == item.name) {
-                            navigation.navigate('addDetailsScreen', {
-                              title: item.name,
-                              sub: val.subcategories,
-                            });
-                          }
-                        });
-                      } else {
-                        navigation.navigate('addDetailsScreen', {
-                          title: item.name,
-                          sub: [],
-                        });
-                      }
-                    }, 500);
-                  }
-                  if (item.name == 'Care Giver') {
-                    setTimeout(() => {
-                      navigation.navigate('careGiver');
-                    }, 500);
-                  }
-                  if (item.name == 'Appointments') {
-                    setTimeout(() => {
-                      navigation.navigate('appointmentReminderScreen');
-                    }, 500);
-                  }
-                  if (item.name == 'Symptoms Check') {
-                    setTimeout(() => {
-                      navigation.navigate('symptomsScreen');
-                    }, 500);
-                  }
-                  if (item.name == 'Medical Journal') {
-                    setTimeout(() => {
-                      navigation.navigate('medicalJournalScreen');
-                    }, 500);
-                  }
-                  if (item.name == 'Others') {
-                    setTimeout(() => {
-                      if (allCategory.length != 0) {
-                        allCategory.map(val => {
-                          if (val.name == item.name) {
-                            navigation.navigate('otherScreen', {
-                              title: item.name,
-                              sub: val.subcategories,
-                            });
-                          }
-                        });
-                      } else {
-                        navigation.navigate('otherScreen', {
-                          title: item.name,
-                          sub: [],
-                        });
-                      }
-                    }, 500);
-                  }
-                  if (item.name == 'Medications') {
-                    setTimeout(() => {
-                      navigation.navigate('medicationReminderScreen');
-                    }, 500);
-                  }
-                  data[index].selected = !item.selected;
-                  setExtra(extra + 1);
-                }}
+                onPress={() => OnPressOptions(item, index)}
                 style={styles.addNavStyle(item.selected)}
                 key={index + 'addMedication'}
                 // disabled={!showSub}

@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import * as styles from './styles';
 
 import {IcStarBlank, IcStarFill} from 'theme';
-import {size, color, IcSearch} from 'theme';
+import {size, color} from 'theme';
 
 export const StarRating = props => {
   return (

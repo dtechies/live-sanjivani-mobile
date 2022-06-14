@@ -18,7 +18,6 @@ export const LoginScreen = () => {
   const [extra, setExtra] = useState(0);
   const [loading, setLoading] = useState(false);
   const [numberCorrect, setNumberCorrect] = useState('');
-  const [isFocus, setIsFocus] = useState(false);
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -83,7 +82,7 @@ export const LoginScreen = () => {
           <Dropdown
             defaultValue={countryCode[0]}
             data={countryCode}
-            labelTxField="label"
+            labelField="label"
             placeholder={'+91'}
             valueField="value"
             dropdownPosition={'bottom'}
@@ -92,14 +91,11 @@ export const LoginScreen = () => {
             selectedTextStyle={styles.selectedOptionTextStyle()}
             maxHeight={size.moderateScale(60)}
             containerStyle={styles.dropdownContainer()}
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
             flatListProps={{
               bounces: false,
             }}
             onChange={item => {
               setCountryCodeVal(item.value);
-              setIsFocus(false);
             }}
             renderItem={item => {
               return (

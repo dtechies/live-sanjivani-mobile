@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {SafeAreaView, View, Pressable, ScrollView} from 'react-native';
+import {SafeAreaView, View, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SvgUri} from 'react-native-svg';
 import {useDispatch, useSelector} from 'react-redux';
@@ -36,48 +36,8 @@ const GetCards = ({
   setShowDate,
   isDateVal,
 }) => {
-  const [defaultData1, setDefaultData] = useState({});
   const [selectedDate, setSelectedDate] = useState('');
-  const getCurrentDate = givenDate => {
-    let day = givenDate.getDate();
-    if (day < 10) {
-      day = '0' + day;
-    }
-    let month = givenDate.getMonth() + 1;
-    if (month < 10) {
-      month = '0' + month;
-    }
-    let year = givenDate.getFullYear();
-    let newDate = day + '/' + month + '/' + year;
-    setSelectedDate(newDate);
-    setShowDate(false);
-    let indexK = -1;
-    if (thisArray.length == 0) {
-      thisArray.push({
-        id: value.id,
-        nm: val.name,
-        value: newDate,
-      });
-    } else {
-      thisArray.map((j, k) => {
-        if (j.nm === val.name) {
-          indexK = k;
-        }
-      });
-      if (indexK == -1) {
-        thisArray.push({
-          id: value.id,
-          nm: val.name,
-          value: newDate,
-        });
-      } else {
-        thisArray[indexK].value = newDate;
-      }
-    }
-    setThisArray(thisArray);
-    console.log('thisArray', thisArray);
-    setExtra(extra + 1);
-  };
+
   return (
     <View style={styles.itemListMain()} key={index + 'other_subcategories'}>
       <Text style={styles.itemListTxt(1)}>{val.name}</Text>
@@ -147,20 +107,11 @@ const GetCards = ({
         </Pressable>
       ) : !isDropDown ? (
         <InputBox
-          placeholder={
-            val.unit == 'Text' || val.unit == 'Number'
-              ? `Enter ${val.name}`
-              : ''
-          }
+          placeholder={`Enter ${val.name}`}
           inputStyle={styles.inputStyle()}
           mainContainerStyle={styles.inputMainContainer()}
           placeholderTextColor={color.grayTxt}
           isShadow={true}
-          isRightUnit={
-            val.unit == 'Text' || val.unit == 'Number' ? false : true
-          }
-          unit={val.unit != 'Text' || val.unit != 'Number' ? val.unit : ''}
-          keyboardType={val.unit == 'Number' ? 'number-pad' : 'default'}
           containerStyle={styles.containerStyle()}
           onChangeText={v => {
             let indexK = -1;
@@ -207,7 +158,7 @@ const GetCards = ({
               : defaultDropDown
           }
           data={dropDownValue}
-          labelTxField="value"
+          labelField="value"
           valueField="label"
           dropdownPosition={'bottom'}
           style={styles.dropdown()}
@@ -220,7 +171,6 @@ const GetCards = ({
           }}
           onChange={item => {
             console.log('item ==>', item);
-            setDefaultData(item);
             let indexK = -1;
             let v = item.value;
             if (thisArray.length == 0) {
@@ -303,7 +253,6 @@ export const OtherScreen = props => {
     let year = givenDate.getFullYear();
     let newDate = day + '/' + month + '/' + year;
     setSelectedDate(newDate);
-    setSelectedDateErr('');
     setExtra(extra + 1);
     // setShowDate(false);
   };
@@ -315,7 +264,7 @@ export const OtherScreen = props => {
   const addData = async () => {
     setLoading(true);
     let bodyArray = [];
-    // console.log('THIS', thisArray);
+    console.log('THIS', thisArray);
     let idArray = [];
     thisArray.map(val => {
       if (idArray.length == 0) {
@@ -329,17 +278,17 @@ export const OtherScreen = props => {
         }
       }
     });
-    // console.log('ID MALE CHE K..?', idArray);
+    console.log('ID MALE CHE K..?', idArray);
     let otherDataBody = [];
     idArray.map(idVal => {
       let d = {};
       let dataaa = thisArray.filter(val => {
         if (idVal == val.id) {
           d[val.nm] = val.value;
-          // console.log('val 11==>', d);
+          console.log('val 11==>', d);
         }
       });
-      // console.log('d AAVE CHE => ', d);
+      console.log('d AAVE CHE => ', d);
       otherDataBody.push({
         subcategory_id: idVal,
         user_id: userData.id,
@@ -347,13 +296,13 @@ export const OtherScreen = props => {
       });
       return;
     });
-    // console.log('otherDataBody ==> ', otherDataBody);
+    console.log('otherDataBody ==> ', otherDataBody);
     const getOtherDataResponse = await dispatch(addOtherData(otherDataBody));
     const res = getOtherDataResponse;
-    // console.log('getOtherDataResponse ==> ', res);
+    console.log('getOtherDataResponse ==> ', res);
     if (res != undefined) {
       if (res.status) {
-        // console.log('response data ==>', res.data);
+        console.log('response data ==>', res.data);
         setLoading(false);
         toastMessage(res.message);
         setThisArray([]);
@@ -470,9 +419,7 @@ export const OtherScreen = props => {
             />
           </View>
         ) : (
-          <View style={styles.textMsgMain()}>
-            <Text style={styles.errorTxt()}>No Data Found...</Text>
-          </View>
+          <Text>No Records Found...</Text>
         )}
       </Screen>
     </SafeAreaView>

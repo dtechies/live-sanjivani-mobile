@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useRef, useCallback} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
@@ -19,8 +19,7 @@ export const CheckMedicationReminderScreen = props => {
   const [data, setData] = useState();
   const [medicineDetail, setMedicineDetail] = useState();
   const param = props.route.params;
-  const {token, userId} = useSelector(state => ({
-    token: state.userDataReducer.userDataResponse.userData.token,
+  const {userId} = useSelector(state => ({
     userId: state.userDataReducer.userDataResponse.userData.id,
   }));
 

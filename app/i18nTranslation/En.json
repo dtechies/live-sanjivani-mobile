@@ -7,7 +7,8 @@
     "back": "Go Back"
   },
   "condition": {
-    "ar": "to Hindi"
+    "hn": "Hindi",
+    "en": "English"
   },
   "landing_screen": {
     "landing": "Landing Screen",
@@ -19,9 +20,9 @@
     "addFav": "Add To Favorite",
     "add_to_favorite": "Add To Favorite",
     "add": "Add",
-    "historical_data": "Historical Data"
+    "historical_data": "Historical Data",
+    "sharing_error": "Please Select at least 1 Field"
   },
-  "progressDetail_screen": {},
   "sharing_screen": {
     "title": "Select Items to share",
     "sharing": "Sharing Screen",
@@ -38,7 +39,8 @@
     "shareDetail": "Select Individual from Contacts or Add new contact",
     "send_pdf": "Send as PDF",
     "downloadPdf": "Download PDF",
-    "shareItems": "Share Items"
+    "shareItems": "Share Items",
+    "email_error": "Enter valid email"
   },
   "add_screen": {
     "title": "Add",
@@ -47,7 +49,8 @@
     "add_appointment": "Add Appointment"
   },
   "profile_screen": {
-    "profile": "Profile Screen"
+    "profile": "Profile Screen",
+    "change": "Change"
   },
   "appointment_reminder_screen": {
     "title": "Book an Appointment",
@@ -221,7 +224,10 @@
     "female": "Female",
     "whatAreYourSymptoms": "What Are Your Symptoms?",
     "continue": "Continue",
-    "additionalInfo": "Additional info"
+    "additionalInfo": "Additional info",
+    "existing_conditions": "Existing Conditions",
+    "current_medications": "Current Medications",
+    "done": "Done"
   },
   "otp_screen": {
     "verification": "Verification",
@@ -307,5 +313,23 @@
     "pill": "Pill",
     "drop": "Drop",
     "inhaler": "Inhaler"
+  },
+  "btb": {
+    "today": "Today",
+    "progress": "Progress",
+    "sharing": "Sharing",
+    "add": "Add",
+    "profile": "Profile"
+  },
+  "profileOptions": {
+    "my_appointments": "My Appointments",
+    "my_medication": "My Medication",
+    "my_care_giver": "My Care Giver",
+    "medical_journal_lists": "Medical Journal Lists",
+    "symptom_checker": "Symptom Checker",
+    "account_settings": "Account Settings",
+    "other_details": "Other Details",
+    "help": "Help",
+    "logout": "Logout"
   }
 }

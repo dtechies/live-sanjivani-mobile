@@ -9,19 +9,9 @@ import {Portal} from 'react-native-portalize';
 import {addEditMedicalJournalNote} from 'redux-actions';
 import {useDispatch} from 'react-redux';
 
-import {
-  Loader,
-  Toast,
-  Text,
-  Button,
-  TitleBox,
-  Screen,
-  InputBox,
-  Header,
-} from 'components';
-import {size, color, images, IcCrossArrow} from 'theme';
+import {Loader, Toast, Text, Button, Screen, Header} from 'components';
+import {size, color, IcCrossArrow} from 'theme';
 import * as styles from './styles';
-import {MedicalJournalListJson} from 'json';
 
 export const MedicalJournalScreen = props => {
   const navigation = useNavigation();

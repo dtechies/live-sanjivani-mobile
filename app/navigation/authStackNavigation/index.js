@@ -7,7 +7,6 @@ import {
   SelectServiceScreen,
   IntroScreen,
   DemoScreen,
-  SplashScreen,
   OtpScreen,
 } from 'screens';
 

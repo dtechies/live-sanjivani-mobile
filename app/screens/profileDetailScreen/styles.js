@@ -117,6 +117,10 @@ export const dropdownContainer = () => ({
 export const inputMainContainer = () => ({
   marginBottom: size.moderateScale(5),
 });
+export const inputMainCountryCode = () => ({
+  width: size.deviceWidth * 0.15,
+  marginRight: size.deviceWidth * 0.02,
+});
 export const labelDisableText = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoBold,

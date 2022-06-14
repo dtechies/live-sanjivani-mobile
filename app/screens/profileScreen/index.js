@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Loader, Text, Screen, Header, Toast} from 'components';
@@ -116,6 +116,11 @@ export const ProfileScreen = () => {
                       navigation.navigate('profileDetailScreen');
                     }, 500);
                   }
+                  if (item.value == 'Other Details') {
+                    setTimeout(() => {
+                      navigation.navigate('OtherDetails');
+                    }, 500);
+                  }
                   if (item.value == 'My Care Giver') {
                     setTimeout(() => {
                       navigation.navigate('myCareGiver');
@@ -141,7 +146,7 @@ export const ProfileScreen = () => {
                   stroke={item.selectedCard ? color.blue : color.white}
                 />
                 <Text
-                  text={item.value}
+                  tx={item.valueTx}
                   style={styles.profileText(item.selectedCard)}
                 />
               </Pressable>

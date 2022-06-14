@@ -8,17 +8,17 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {
-  Loader,
+  // Loader,
   Text,
-  ChangeLanguage,
-  Button,
-  TitleBox,
+  // ChangeLanguage,
+  // Button,
+  // TitleBox,
   InputBox,
-  IcHome,
+  // IcHome,
   // AddItem,
-  DocDetails,
-  ToggleSwitch,
-  MedicalItems,
+  // DocDetails,
+  // ToggleSwitch,
+  // MedicalItems,
   Header,
 } from 'components';
 // import {

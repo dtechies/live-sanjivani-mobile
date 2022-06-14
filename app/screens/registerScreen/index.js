@@ -1,4 +1,4 @@
-import React, {useState, useRef, useContext} from 'react';
+import React, {useState, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
@@ -21,8 +21,6 @@ export const RegisterScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
-  // const [isLoading, seIsLoading] = useState(false);
-  const [isFocus, setIsFocus] = useState(false);
   const [selectedDate, setSelectedDate] = useState('');
   const [showDate, setShowDate] = useState(false);
   const [firstNm, setFirstNm] = useState('');
@@ -225,8 +223,6 @@ export const RegisterScreen = () => {
           maxHeight={size.moderateScale(90)}
           containerStyle={styles.dropdownContainer()}
           value={gender}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
           flatListProps={{
             bounces: false,
           }}
@@ -234,7 +230,6 @@ export const RegisterScreen = () => {
           onChange={item => {
             setGender(item.value);
             setGenderErr('');
-            setIsFocus(false);
             setIsColor(true);
           }}
           renderItem={item => {
@@ -292,7 +287,7 @@ export const RegisterScreen = () => {
           <Dropdown
             defaultValue={countryCode[0]}
             data={countryCode}
-            labelTxField="label"
+            labelField="label"
             valueField="value"
             placeholder={'+91'}
             dropdownPosition={'bottom'}
@@ -303,22 +298,18 @@ export const RegisterScreen = () => {
             )}
             maxHeight={size.moderateScale(60)}
             containerStyle={styles.countryCodeDropdownContainer()}
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
             flatListProps={{
               bounces: false,
             }}
-            isTxEnabled={true}
             onChange={item => {
               setCountryCodeVal(item.label);
-              setIsFocus(false);
               setIsColor1(true);
             }}
             renderItem={item => {
               return (
                 <View>
                   <Text
-                    tx={item.label}
+                    text={item.label}
                     style={styles.countryCodeInsideLabelFieldText()}
                   />
                   <View style={styles.countryCodeSeparator()} />
@@ -361,8 +352,6 @@ export const RegisterScreen = () => {
           maxHeight={size.moderateScale(56)}
           containerStyle={styles.dropdownContainer()}
           value={language}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
           flatListProps={{
             bounces: false,
           }}
@@ -370,7 +359,6 @@ export const RegisterScreen = () => {
           onChange={item => {
             console.log('bansi value..');
             setLanguage(item.value);
-            setIsFocus(false);
             setLanguageErr('');
             setIsColor2(true);
           }}

@@ -1,30 +1,26 @@
 import React, {useState, useRef} from 'react';
 import {View, SafeAreaView, ScrollView, Image} from 'react-native';
 
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {color, size} from 'theme';
-import {images, IcIntro1, IcIntro2, IcIntro3, IcSplashColor} from 'theme';
+import {images, IcIntro2, IcIntro3, IcSplashColor} from 'theme';
 import {Button, Text} from 'components';
 import styles from './styles';
 import {useDoubleBackPressExit} from 'utils';
-import {ChangeLanguage} from '../../components';
 
 export const IntroScreen = () => {
   const scrollRef = useRef(null);
   const navigation = useNavigation();
   const [active, setActive] = useState(0);
-  const route = useRoute();
   // console.log('route', route.name);
   const loginPress = () => {
     if (active < 2) {
       setActive(active + 1);
-      {
-        scrollRef.current.scrollTo({
-          x: size.deviceWidth * (active + 1),
-          y: 0,
-          animated: true,
-        });
-      }
+      scrollRef.current.scrollTo({
+        x: size.deviceWidth * (active + 1),
+        y: 0,
+        animated: true,
+      });
     } else {
       navigation.navigate('loginScreen');
     }

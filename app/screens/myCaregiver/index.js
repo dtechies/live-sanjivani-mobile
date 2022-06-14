@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {GetCareGiverListAction, DeleteCareGiverAction} from 'redux-actions';
 
 import {useDispatch} from 'react-redux';

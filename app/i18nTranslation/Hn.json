@@ -1,31 +1,335 @@
 {
   "demo_screen": {
-    "demo_data": "डेमो"
+    "demo_data": "डेमो",
+    "go_to_landing": "लैंडिंग पेज पर जाएं",
+    "demo_screen": "डेमो स्क्रीन",
+    "go_to_demo": "डेमो पेज पर जाएं",
+    "back": "वापस जाओ"
   },
   "condition": {
-    "en": "to English"
+    "hn": "हिन्दी",
+    "en": "अंग्रेज़ी"
+  },
+  "landing_screen": {
+    "landing": "लैंडिंग स्क्रीन",
+    "get_started": "शुरू करो "
+  },
+  "progress_screen": {
+    "progress": "प्रगति स्क्रीन",
+    "selectFav": "पसंदीदा चुनें",
+    "addFav": "पसंदीदा चुनें",
+    "add_to_favorite": "फेवरेट में जोड़ें",
+    "add": "जोड़ें",
+    "historical_data": "ऐतिहासिक आंकड़ा",
+    "sharing_error": "कृपया कम से कम 1 फ़ील्ड चुनें"
+  },
+  "sharing_screen": {
+    "title": "शेयर करने के लिए आइटम चुनें",
+    "sharing": "शेयर स्क्रीन",
+    "select_item_to_share": "शेयर करने के लिए आइटम चुनें",
+    "select_individual": "संपर्कों से व्यक्तिगत चुनें या नया संपर्क जोड़ें",
+    "send_pdf": "पीडीएफ के रूप में भेजें",
+    "download": "डाउनलोड",
+    "shareItems": "शेयर आइटम"
+  },
+  "sharingDetail_screen": {
+    "title": "आइटम चयनित",
+    "sharing": "शेयरिंग स्क्रीन",
+    "shareTo": "शेयर",
+    "shareDetail": "संपर्कों से व्यक्तिगत चुनें या नया संपर्क जोड़ें",
+    "send_pdf": "पीडीएफ के रूप में भेजें",
+    "downloadPdf": "डाउनलोड पीडीएफ",
+    "shareItems": "शेयर आइटम",
+    "email_error": "मान्य ईमेल दर्ज करें"
+  },
+  "add_screen": {
+    "title": "जोड़ें",
+    "add": "जोड़ें",
+    "add_medication": "दवा जोड़ें",
+    "add_appointment": "अपॉइंटमेंट जोड़ें"
+  },
+  "profile_screen": {
+    "profile": "प्रोफाइल स्क्रीन",
+    "change": "Change"
+  },
+  "appointment_reminder_screen": {
+    "title": "एक अपॉइंटमेंट बुक करें",
+    "name_of_doctor": "चिकित्सक/अभ्यास का नाम",
+    "address_one": "पता 1 (आवश्यक)",
+    "address_two": "पता 2",
+    "city": "शहर",
+    "state": "राज्य",
+    "pinCode": "पिन कोड",
+    "date": "दिनांक",
+    "time": "Time",
+    "add": "जोड़ें",
+    "bookNow": "अभी बुक करें",
+    "appointmentTime": "नियुक्ति के समय",
+    "appointmentReminderTime": "नियुक्ति अनुस्मारक समय",
+    "appointmentConfirmed": "नियुक्ति पक्की!",
+    "yourAppointmentWillBeginAt": "आपकी नियुक्ति यहां से शुरू होगी",
+    "confirm": "पुष्टि करें"
+  },
+  "medication_reminder_screen": {
+    "referred_by": "द्वारा उल्लिखित",
+    "name_of_medicine": "दवा का नाम",
+    "medicine_form": "मेडिसिन फॉर्म",
+    "dose": "खुराक",
+    "medicine_strength": "चिकित्सा शक्ति",
+    "reminder_frequency": "अनुस्मारक आवृत्ति",
+    "reminder_time": "अनुस्मारक समय",
+    "pill_remaining": "गोलियाँ शेष",
+    "title": "दवा अनुस्मारक जोड़ें",
+    "strength": "ताकत का चयन करें",
+    "next": "अगला",
+    "take_picture": "तस्वीर ले लो",
+    "upload_picture": "तसवीर डालें",
+    "reminderName": "अनुस्मारक का नाम",
+    "uploadImage": "अपलोड करें या अपनी दवा की तस्वीर लें",
+    "previewImg": "पूर्वावलोकन छवि",
+    "reminderNameErr": "अनुस्मारक नाम दर्ज करें",
+    "doctorNameErr": "डॉक्टर का नाम दर्ज करें",
+    "medicineName": "दवा का नाम दर्ज करें",
+    "imageErr": "छवि अपलोड करें / लें",
+    "medicineFormErr": "दवा के रूप का चयन करें",
+    "pillsErr": "गोलियां दर्ज करें",
+    "medicineStrengthErr": "दवा शक्ति दर्ज करें",
+    "strengthErr": "ताकत दर्ज करें",
+    "doseErr": "खुराक चुनें",
+    "reminderFrequencyErr": "अनुस्मारक आवृत्ति चुनें",
+    "dateErr": "एक तिथि चुनें",
+    "reminderTimeErr": "अनुस्मारक समय चुनें",
+    "timeErr": "एक समय चुनें",
+    "reminderExample": "उदा. हृदय",
+    "doctorNmExample": "उदा. Dr John",
+    "medicineNmExample": "उदा. Glycomet",
+    "strengthExample": "उदा. 150",
+    "selectForm": "फॉर्म का चयन करें",
+    "selectFrequency": "आवृत्ति का चयन करें",
+    "futureTimeErr": "कृपया भविष्य का समय चुनें",
+    "pillNumber": "गोलियों की संख्या",
+    "changeImg": "चित्र को बदलें"
   },
   "login_screen": {
-    "number": "Demo",
+    "number": "अपना दूरभाष क्रमांक दर्ज करें",
     "countryCode": "+91",
-    "learnMore": "Learn more",
-    "otp": "Enter OTP",
-    "request_otp": "Request OTP",
-    "register_new_user": "Register New User",
-    "request_new_otp": "Request New OTP",
-    "login": "Login",
-    "or": "Or"
+    "learnMore": "और अधिक जानें",
+    "otp": "ओटीपी दर्ज करें",
+    "request_otp": "अनुरोध ओटीपी",
+    "register_new_user": "नया उपयोगकर्ता पंजीकृत करें",
+    "request_new_otp": "नए ओटीपी का अनुरोध करें",
+    "login": "लॉग इन करें",
+    "or": "या",
+    "errorMsg": "फ़ोन नंबर 10 अंकों के बराबर होना चाहिए"
   },
   "register_screen": {
-    "first_name": "First",
-    "last_name": "Last Name",
-    "email": "Email",
-    "phone_Number": "Phone Number",
-    "gender": "Gender",
-    "select_language": "Selected Language",
-    "dob": "DOB",
-    "next": "Register",
-    "title_register": "Lets Create Your Profile",
-    "title": "Register New User"
+    "first_name": "पहला नाम",
+    "last_name": "उपनाम",
+    "email": "ईमेल",
+    "phone_Number": "फ़ोन नंबर",
+    "gender": "लिंग",
+    "language": "भाषा",
+    "dob": "जन्म तिथि",
+    "save": "पंजीकरण करवाना",
+    "title_register": "आइए अपनी प्रोफाइल बनाएं",
+    "title": "नया उपयोगकर्ता पंजीकृत करें",
+    "firstNameError": "कृपया पहला नाम दर्ज करें",
+    "LastNameError": "कृपया अंतिम नाम दर्ज करें",
+    "emailError": "कृपया ईमेल पता दर्ज करें",
+    "invalidEmailError": "अमान्य ईमेल पता",
+    "phoneNameError": "कृपया फ़ोन नंबर दर्ज करें",
+    "invalidPhoneNameError": "कृपया फ़ोन नंबर दर्ज करें",
+    "dobError": "कृपया तिथि चुनें",
+    "genderError": "कृपया लिंग चुनें",
+    "languageError": "कृपया भाषा चुनें"
+  },
+  "help_screen": {
+    "title": "मदद करना",
+    "support": "सहायता",
+    "help_center": "सहायता केंद्र",
+    "contact_us": "संपर्क करें",
+    "disclosures": "खुलासे",
+    "new_terms": "न्यूको शर्तें",
+    "crm": "ग्राहक संबंध सारांश",
+    "Privacy": "गोपनीयता",
+    "licenses": "लाइसेंस"
+  },
+  "today_screen": {
+    "title_today": "दवा अनुस्मारक प्रोफ़ाइल",
+    "tips_for_the_day": "दिन के लिए टिप्स",
+    "medication_Reminder": "दवा अनुस्मारक",
+    "keep_it_up!": "और बेहतर करो!",
+    "you_are_on_the_right_track": "आप सही रास्ते पर हैं",
+    "today_progress": "आज की प्रगति",
+    "today_medication": "आज की दवा",
+    "noMedicationProgressRecords": "कोई दवा प्रगति नहीं मिली।",
+    "noMedicationRecords": "कोई दवा नहीं मिली।",
+    "noAppointmentRecords": "कोई अपॉइंटमेंट नहीं मिला।",
+    "noTipsRecords": "कोई सुझाव नहीं मिला।",
+    "addMedication": "दवा जोड़ें",
+    "addAppointment": "अपॉइंटमेंट जोड़ें",
+    "today_appointment": "आज की नियुक्ति"
+  },
+  "select_service_screen": {
+    "title_select_service": "सेवाओं का चयन करें",
+    "next": "अगला"
+  },
+  "ProfileDetailScreen": {
+    "title": "प्रोफ़ाइल",
+    "Account Settings": "अकाउंट सेटिंग",
+    "Edit": "संपादन करना",
+    "Save": "सहेजें",
+    "Back": "पीछे"
+  },
+  "ViewMedicationScreen": {
+    "title": "दवा अनुस्मारक",
+    "medicationList": "दवा सूची",
+    "SubTitle": "मेरी दवा",
+    "todaysMedication": "आज की दवा",
+    "save": "सहेजें",
+    "searchMedicine": "खोज चिकित्सा"
+  },
+  "myAppointments_screen": {
+    "title": "अपॉइंटमेंट रिमाइंडर",
+    "appointmentList": "नियुक्ति सूची",
+    "SubTitle": "मेरी दवा",
+    "todaysAppointments": "आज की दवा",
+    "save": "सहेजें"
+  },
+  "CheckMedicationReminderScreen": {
+    "title": "दवा अनुस्मारक जोड़ें",
+    "name": "नाम",
+    "benefit": "लाभ",
+    "safetyAdvice": "सुरक्षा सलाह",
+    "sideEffects": "दुष्प्रभाव",
+    "use": "प्रयोग"
+  },
+  "careGiver_screen": {
+    "title": "देखभाल करने वाला",
+    "firstName": "प्रथम नाम",
+    "lastName": "कुलनाम",
+    "contactPhone": "फ़ोन से संपर्क करें",
+    "emailId": "ईमेल आईडी",
+    "nickName": "निक नेम",
+    "save": "रक्षा कर",
+    "continue": "जारी रखना",
+    "search": "ढूँढ"
+  },
+  "symptoms_screen": {
+    "title": "लक्षण परीक्षक",
+    "header": "यह उपकरण चिकित्सा सलाह के लिए एक विकल्प नहीं है।",
+    "age": "उम्र",
+    "gender": "लिंग",
+    "male": "नर",
+    "female": "मादा",
+    "whatAreYourSymptoms": "आपके लक्षण क्या हैं?",
+    "continue": "जारी रखना",
+    "additionalInfo": "अतिरिक्त जानकारी",
+    "existing_conditions": "मौजूदा परिस्थितियां",
+    "current_medications": "मौजूदा दवाएं",
+    "done": "पूर्ण"
+  },
+  "otp_screen": {
+    "verification": "सत्यापन",
+    "otp": "अपना OTP यहाँ डालें:",
+    "continue": "जारी रखना",
+    "enterOtp": "OTP दर्ज करें",
+    "request": "नए OTP का अनुरोध करें",
+    "timerTxt": "OTP का पुन: अनुरोध करने से पहले प्रतीक्षा करें",
+    "login": "लॉगिन पर वापस जाएँ"
+  },
+  "addDetails_Screen": {
+    "save": "रक्षा कर",
+    "order": "पर्चे के साथ आदेश"
+  },
+  "medicalJournal_screen": {
+    "title": "मेडिकल जर्नल",
+    "order": "पर्चे के साथ आदेश",
+    "changeImage": "छवि बदलें",
+    "take_picture": "चित्र लें",
+    "upload_picture": "चित्र अपलोड करें",
+    "save": "रक्षा कर"
+  },
+  "medicationReminderList_Screen": {
+    "title": "दवा अनुस्मारक सूची",
+    "myMedicineList": "मेरी दवा सूची"
+  },
+  "myCareGiver_screen": {
+    "title": "मेरी देखभाल दाता ",
+    "careGiverList": "देखभाल दाता सूची",
+    "save": "रक्षा कर"
+  },
+  "medicalJournalLists_screen": {
+    "title": "मेडिकल जर्नल सूचियाँ",
+    "save": "रक्षा कर",
+    "listAllJournal": "सभी जर्नल की सूची"
+  },
+  "otherDetails": {
+    "title": "अन्य विवरण"
+  },
+  "intro_Screen": {
+    "mainTitle": "लाइव संजीवनी",
+    "subTitle": "हर पल आपके साथ",
+    "getMedicine": "दवा अनुस्मारक प्राप्त करें",
+    "getAppointment": "अपॉइंटमेंट अनुस्मारक प्राप्त करें",
+    "Discuss": "फोरम में चर्चा",
+    "skip": "कूद",
+    "next": "अगला"
+  },
+  "symptoms_detail_screen": {
+    "title": "लक्षण विवरण स्क्रीन",
+    "conditionDetails": "शर्त विवरण",
+    "symptom": "लक्षण",
+    "howCommon": "कितना आम है",
+    "overView": "सिंहावलोकन",
+    "riskFactor": "जोखिम कारक",
+    "diagnosedBy": "द्वारा निदान किया गया",
+    "didYouKnow": "क्या आप जानते हैं",
+    "facts": "तथ्यों",
+    "treatmentOption": "उपचार विकल्प",
+    "treatment": "उपचार",
+    "takeCare": "खुद का ख्याल रखें",
+    "madeWorseBy": "द्वारा बदतर बनाया गया",
+    "whenToSeeDoctor": "जब डॉक्टर को देखने के लिए",
+    "questionsAsk": "डॉक्टर से पूछने के लिए प्रश्न",
+    "whatToExpect": "क्या उम्मीद करने के लिए"
+  },
+  "profileJson": {
+    "male": "नर",
+    "female": "मादा",
+    "other": "दूसरा",
+    "hindi": "हिन्दी",
+    "english": "अंग्रेज़ी",
+    "+91": "+91",
+    "+1": "+1"
+  },
+  "medicationJson": {
+    "1": "1",
+    "2": "2",
+    "3": "3",
+    "4": "4",
+    "5": "5",
+    "tablet": "गोली",
+    "pill": "गोली",
+    "drop": "बूंद",
+    "inhaler": "इन्हेलर"
+  },
+  "btb": {
+    "today": "टुडे",
+    "progress": "प्रगति",
+    "sharing": "शेयरिंग",
+    "add": "ऐड",
+    "profile": "प्रोफ़ाइल"
+  },
+  "profileOptions": {
+    "my_appointments": "मेरे अपॉइंटमेंट्स",
+    "my_medication": "मेरी दवा",
+    "my_care_giver": "मेरी देखभाल दाता",
+    "medical_journal_lists": "मेडिकल जर्नल",
+    "symptom_checker": "लक्षण परीक्षक",
+    "account_settings": "खाता सेटिंग्स",
+    "other_details": "अन्य विवरण",
+    "help": "मदद",
+    "logout": "लॉगआउट"
   }
 }

@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import {View, Pressable, Image, SafeAreaView, TextInput} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import OneSignal from 'react-native-onesignal';
@@ -8,10 +8,12 @@ import {loginUser, userData, getOtp, addEditPlayerId} from 'redux-actions';
 
 import {Loader, Text, Button, Toast, Screen} from 'components';
 import {size, color, IcCrossArrow, images} from 'theme';
+import {LocalizationContext} from '../../App';
 import * as styles from './styles';
 
 export const OtpScreen = props => {
   const dispatch = useDispatch();
+  const {setLocale} = useContext(LocalizationContext);
   const toastRef = useRef();
   const [isRequest, setIsRequest] = useState(true);
   const [iscount, setIsCount] = useState(false);
@@ -42,7 +44,7 @@ export const OtpScreen = props => {
   OneSignal.setLogLevel(6, 0);
   OneSignal.setRequiresUserPrivacyConsent(false);
 
-  const addPlayerId = async previous => {
+  const addPlayerId = async languageAdded => {
     const addEditPlayerIdBody = {
       player_id: playerId,
     };
@@ -57,9 +59,12 @@ export const OtpScreen = props => {
       // console.log('addPlayerId', res);
       // previous.userData.player_id = playerId;
       // await dispatch(userData(previous));
-      setTimeout(() => {
-        navigation.navigate('bottomStackNavigation', {screen: 'Today'});
-      }, 150);
+      if (languageAdded === 'english') {
+        setLocale('en');
+      } else {
+        setLocale('hn');
+      }
+      navigation.navigate('bottomStackNavigation', {screen: 'Today'});
     } else {
       toastMessage(res.message);
     }
@@ -83,10 +88,12 @@ export const OtpScreen = props => {
       var b = moment(currentDate);
       var years = b.diff(a, 'year');
       b.add(years, 'years');
+      console.log('USEDATA', res.data.user);
+
       await dispatch(
         userData({userData: res.data.user, age: years, login: true}),
       );
-      await addPlayerId({userData: res.data.user, age: years, login: true});
+      await addPlayerId(res.data.user.language);
       setLoading(false);
     } else {
       setLoading(false);

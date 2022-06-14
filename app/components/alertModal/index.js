@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Pressable} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {editReminderStatusAction} from 'redux-actions';
+import {EditReminderStatusAction} from 'redux-actions';
 
 import * as styles from './styles';
 import {Text} from '..';
@@ -25,10 +25,11 @@ export const AlertModal = props => {
       id: data?.id,
       reminder_status: status,
     };
+    console.log('editReminderStatusBody ====', editReminderStatusBody);
     const editReminderStatusResponse = await dispatch(
-      editReminderStatusAction(editReminderStatusBody),
+      EditReminderStatusAction(editReminderStatusBody),
     );
-    // console.log('editReminderStatusResponse ====', editReminderStatusResponse);
+    console.log('editReminderStatusResponse ====', editReminderStatusResponse);
     const res = editReminderStatusResponse.payload;
     // console.log('res', res);
     if (res.status) {
