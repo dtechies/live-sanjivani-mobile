@@ -29,15 +29,13 @@ export const SharingDetailScreen = props => {
   const dispatch = useDispatch();
 
   const emailValidation = () => {
-    {
-      const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-      if (reg.test(emailVal) === false) {
-        setEmailCorrect('Enter valid email');
-        return false;
-      } else {
-        sendPDF();
-        setEmailCorrect('');
-      }
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (reg.test(emailVal) === false) {
+      setEmailCorrect('sharingDetail_screen.email_error');
+      return false;
+    } else {
+      sendPDF();
+      setEmailCorrect('');
     }
   };
   const toastMessage = msg => {
@@ -167,7 +165,7 @@ export const SharingDetailScreen = props => {
           placeholder={'Please Enter Email'}
         />
         {emailCorrect ? (
-          <Text style={styles.textValidation()} text={emailCorrect} />
+          <Text style={styles.textValidation()} tx={emailCorrect} />
         ) : null}
         <View style={styles.row()}>
           <Button

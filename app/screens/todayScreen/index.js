@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import {
   View,
   SafeAreaView,
@@ -18,12 +18,14 @@ import {
 import * as styles from './styles';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {useDoubleBackPressExit} from 'utils';
+import {LocalizationContext} from '../../App';
 // import {ChangeLanguage} from '../../components';
 // import LinearGradient from 'react-native-linear-gradient';
 export const TodayScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const toastRef = useRef();
+  const {setLocale} = useContext(LocalizationContext);
   const [activeIndex, setActiveIndex] = useState([]);
   const [medicationData, setMedication] = useState([]);
   const [medicationTrue, setMedicationTrue] = useState(0);
@@ -43,34 +45,6 @@ export const TodayScreen = () => {
   const {userData} = useSelector(state => ({
     userData: state.userDataReducer.userDataResponse.userData,
   }));
-
-  // let currentCount = 0;
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     const backPressHandler = () => {
-  //       if (currentCount < 1) {
-  //         currentCount += 1;
-  //         ToastAndroid.show(
-  //           'Tap back again to exit the App',
-  //           ToastAndroid.SHORT,
-  //         );
-  //         return true;
-  //       } else {
-  //         BackHandler.exitApp();
-  //         // return true;
-  //       }
-  //       setTimeout(() => {
-  //         currentCount = 0;
-  //       }, 2000);
-  //       return true;
-  //     };
-
-  //     BackHandler.addEventListener('hardwareBackPress', backPressHandler);
-
-  //     return () =>
-  //       BackHandler.removeEventListener('hardwareBackPress', backPressHandler);
-  //   }, []),
-  // );
 
   const onMedicineReminderData = async () => {
     setLoading(true);
@@ -180,6 +154,13 @@ export const TodayScreen = () => {
   };
 
   useEffect(() => {
+    if (userData) {
+      if (userData.language == 'english') {
+        setLocale('en');
+      } else {
+        setLocale('hn');
+      }
+    }
     onGetTipForDay();
     getAppointmentReminderData();
     onMedicineReminderData();

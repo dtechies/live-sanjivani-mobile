@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import {Text, Screen, Header} from 'components';
-import {DWMYData} from 'json';
+import {DWMYData, yearList} from 'json';
 import {size, color, images} from 'theme';
 import * as styles from './styles';
 import {LineChart} from 'react-native-chart-kit';
@@ -19,20 +19,7 @@ export const ProgressDetailScreen = props => {
   const [sharingData, setSharingData] = useState({});
   const [dWMYData, setDWMYData] = useState(DWMYData);
   const [isSelected, setSelected] = useState(0);
-  const yearList = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'July',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nav',
-    'Dec',
-  ];
+
   // const [Icon, setIcon] = useState();
   const [isSelectedList, setSelectedList] = useState([]);
   const [isSelectedData, setSelectedData] = useState([]);
@@ -212,9 +199,6 @@ export const ProgressDetailScreen = props => {
             </View>
           </View>
         )}
-        {/* ); */}
-        {/* })} */}
-        <Text style={styles.textItemDate()} text={'May 2020 - March 2022'} />
         <View style={styles.mainDWMYStyle()}>
           {dWMYData.map((item, index) => {
             return (

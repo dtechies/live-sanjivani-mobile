@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import 'react-native-gesture-handler';
 import moment from 'moment';
 import {SafeAreaView, View, Pressable} from 'react-native';
@@ -22,10 +22,12 @@ import {
 } from 'components';
 import {size, color, IcEdit, images} from 'theme';
 import * as styles from './styles';
+import {LocalizationContext} from '../../App';
 import {genderVal, languageVal} from 'json';
 
 export const ProfileDetailScreen = () => {
   const dispatch = useDispatch();
+  const {setLocale} = useContext(LocalizationContext);
   const {
     userDetails = {},
     age = '',
@@ -296,6 +298,12 @@ export const ProfileDetailScreen = () => {
       b.add(years, 'years');
       // res.data.token = userStore.userData.token;
       // userStore.userData = res.data;
+      console.log('VALIUEEEE', res.data);
+      if (res.data.language === 'english') {
+        setLocale('en');
+      } else {
+        setLocale('hn');
+      }
       await dispatch(userData({userData: res.data, age: years, login: true}));
       setLoading(false);
 

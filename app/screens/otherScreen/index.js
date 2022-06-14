@@ -198,7 +198,7 @@ const GetCards = ({
               : defaultDropDown
           }
           data={dropDownValue}
-          labelTxField="value"
+          labelField="value"
           valueField="label"
           dropdownPosition={'bottom'}
           style={styles.dropdown()}

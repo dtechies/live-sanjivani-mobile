@@ -35,6 +35,7 @@ export const ProgressScreen = () => {
   const getAllSubCategoryData = async () => {
     setLoading(true);
     const SubCategoryResponse = await dispatch(getAllSubCategory());
+    console.log('SubCategoryResponse', SubCategoryResponse);
     let res = {status: false, message: 'Connection Error...!'};
     if (SubCategoryResponse) {
       res = SubCategoryResponse;
@@ -130,17 +131,16 @@ export const ProgressScreen = () => {
                   <View>
                     <View style={styles.row()}>
                       {favoriteData.map((item, index) => {
+                        console.log('favoriteData', favoriteData);
                         return (
                           <MedicalItems
                             key={index + 'MedicalItems'}
                             onPress={() => {
-                              setTimeout(() => {
+                              if (item.is_graph) {
                                 navigation.navigate('progressDetailScreen', {
                                   selectedItems: item,
                                 });
-                              }, 100);
-                              // progressData[index].selectedCard = !item.selectedCard;
-                              // setExtra(extra + 1);
+                              }
                             }}
                             containerStyle={styles.listViewStyle()}
                             nameFirst={item.value}
@@ -182,7 +182,7 @@ export const ProgressScreen = () => {
                   })}
                 </View>
                 {sharingDataErr ? (
-                  <Text style={styles.errorText()}>{sharingDataErr}</Text>
+                  <Text style={styles.errorText()} tx={sharingDataErr} />
                 ) : null}
               </View>
             )}
@@ -208,7 +208,7 @@ export const ProgressScreen = () => {
               onPress={() => {
                 let data = progressData.filter(val => val.selectedCard == true);
                 if (data.length == 0) {
-                  setSharingDataErr('Please Select at least 1 Field');
+                  setSharingDataErr('progress_screen.sharing_error');
                 } else {
                   let dataId = data.map(i => i.subcategory_id);
                   setFirst(true);

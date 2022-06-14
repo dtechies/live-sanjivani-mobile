@@ -72,6 +72,7 @@ export const SharingScreen = () => {
   useEffect(() => {
     getAllSubCategoryData();
   }, []);
+
   return (
     <SafeAreaView style={styles.container()}>
       <Toast
