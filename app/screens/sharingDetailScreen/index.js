@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {View, SafeAreaView, Linking} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {GetUserFavSubCategoryPdfAction} from 'redux-actions';
@@ -12,7 +12,7 @@ import {
   Toast,
   Loader,
 } from 'components';
-import {color} from 'theme';
+
 import {useDispatch} from 'react-redux';
 
 import * as styles from './styles';

@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {SafeAreaView, Pressable, View, TextInput, Image} from 'react-native';
+import {SafeAreaView, Pressable, View, TextInput} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 
@@ -15,22 +15,16 @@ export const AddDetailsScreen = props => {
   const dispatch = useDispatch();
   const toastRef = useRef();
   const [extra, setExtra] = useState(0);
-  const [isFocus, setIsFocus] = useState(false);
-  const [bloodGlucoseVal, setBloodGlucoseVal] = useState('');
-  const [isLoading, seIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [BMIValue, setBMIValue] = useState('');
   const [thisArray, setThisArray] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState(
-    props.route.params ? props.route.params.title : '',
-  );
+  const title = props.route.params ? props.route.params.title : '';
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-  const [subCategory, setSubCategory] = useState(
-    props.route.params ? props.route.params.sub : [],
-  );
+  const subCategory = props.route.params ? props.route.params.sub : [];
+
   const refsFocus4 = useRef();
   const validation = () => {
     if (thisArray.length == 0) {
@@ -124,13 +118,10 @@ export const AddDetailsScreen = props => {
                         maxHeight={size.moderateScale(90)}
                         containerStyle={styles.dropdownContainer()}
                         // value={language}
-                        onFocus={() => setIsFocus(true)}
-                        onBlur={() => setIsFocus(false)}
                         flatListProps={{
                           bounces: false,
                         }}
                         onChange={item => {
-                          setBloodGlucoseVal(item.name);
                           let indexK = -1;
                           if (thisArray.length == 0) {
                             thisArray.push({
@@ -155,7 +146,6 @@ export const AddDetailsScreen = props => {
                           setThisArray(thisArray);
                           setIsError('');
                           setExtra(extra + 1);
-                          setIsFocus(false);
                         }}
                         renderItem={item => {
                           return (

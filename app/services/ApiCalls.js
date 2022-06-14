@@ -11,27 +11,18 @@ export const _getAllCategory = async payload => {
   return _api_calls('GET', '/all-category', headers);
 };
 export const _getOTP = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   // console.log('_getOTP_payload ==> ', payload);
   let {_api_calls} = HttpCalls;
   let headers = await headersData({});
   return _api_calls('POST', '/get-OTP', headers, payload);
 };
 export const _userLogin = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   // console.log('_userLogin_payload ==> ', payload);
   let {_api_calls} = HttpCalls;
   let headers = await headersData({});
   return _api_calls('POST', '/user-login', headers, payload);
 };
 export const _registerUser = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   // console.log('_registerUser_payload ==> ', payload);
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
@@ -55,9 +46,6 @@ export const _addOtherData = async payload => {
   );
 };
 export const _getMedicineReminderProfile = async () => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -68,9 +56,6 @@ export const _getMedicineReminderProfile = async () => {
   return _api_calls('GET', '/get-medicine-reminder-profile', headers);
 };
 export const _getMedicineReminderView = async () => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
 
   let headers = await headersData({
@@ -82,9 +67,6 @@ export const _getMedicineReminderView = async () => {
   return _api_calls('GET', '/add-medicine-reminder-view', headers);
 };
 export const _addMedicineReminder = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
 
   let headers = await headersData({
@@ -96,9 +78,6 @@ export const _addMedicineReminder = async payload => {
   return _api_calls('POST', '/add-medicine-reminder', headers, payload);
 };
 export const _getAllCategoryAndSubCategory = async () => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
 
   let headers = await headersData({
@@ -110,9 +89,6 @@ export const _getAllCategoryAndSubCategory = async () => {
   return _api_calls('GET', '/all_cat_subcategory', headers);
 };
 export const _addAppointmentReminderView = async () => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
 
   let headers = await headersData({
@@ -124,9 +100,6 @@ export const _addAppointmentReminderView = async () => {
   return _api_calls('GET', '/add-appointment-reminder-view', headers);
 };
 export const _getAllSubCategory = async () => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -137,9 +110,6 @@ export const _getAllSubCategory = async () => {
   return _api_calls('GET', '/all-subcategory', headers);
 };
 export const _getHelpSupportData = async () => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -151,9 +121,6 @@ export const _getHelpSupportData = async () => {
 };
 
 export const _getUserProfileData = async () => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -165,9 +132,6 @@ export const _getUserProfileData = async () => {
 };
 
 export const _getTipForDayData = async () => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -179,9 +143,6 @@ export const _getTipForDayData = async () => {
 };
 
 export const _addSubcategory = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -191,9 +152,6 @@ export const _addSubcategory = async payload => {
   return _api_calls('POST', '/add-subcategory-value', headers, payload);
 };
 export const _getAppointmentReminder = async () => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -204,9 +162,6 @@ export const _getAppointmentReminder = async () => {
   return _api_calls('GET', '/get-appointment-reminder-profile', headers);
 };
 export const _getTodayMedicationList = async () => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -217,9 +172,6 @@ export const _getTodayMedicationList = async () => {
   return _api_calls('GET', '/medication-list', headers);
 };
 export const _userFavoritesList = async () => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -231,9 +183,6 @@ export const _userFavoritesList = async () => {
 };
 
 export const _addUserFavorites = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   // console.log('_getOTP_payload ==> ', payload);
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
@@ -244,9 +193,6 @@ export const _addUserFavorites = async payload => {
   return _api_calls('POST', '/add-user-favorites', headers, payload);
 };
 export const _addCareGiver = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -256,9 +202,6 @@ export const _addCareGiver = async payload => {
   return _api_calls('POST', '/add-user-CareGiver', headers, payload);
 };
 export const _editProfileDetails = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     type: 'multipart/form-data',
@@ -269,9 +212,6 @@ export const _editProfileDetails = async payload => {
   return _api_calls('POST', '/edit-user-profile', headers, payload);
 };
 export const _addAppointmentReminder = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     type: 'multipart/form-data',
@@ -282,9 +222,6 @@ export const _addAppointmentReminder = async payload => {
   return _api_calls('POST', '/add-appointment-reminder', headers, payload);
 };
 export const _getUserFavSubCategoryPdf = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -294,9 +231,6 @@ export const _getUserFavSubCategoryPdf = async payload => {
   return _api_calls('POST', '/get-user-favSubCategories-pdf', headers, payload);
 };
 export const _editMedicineReminderStatus = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -306,9 +240,6 @@ export const _editMedicineReminderStatus = async payload => {
   return _api_calls('POST', '/edit-medicine-reminder-status', headers, payload);
 };
 export const _editAppointmentReminderStatus = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login
@@ -324,9 +255,6 @@ export const _editAppointmentReminderStatus = async payload => {
   );
 };
 export const _addEditPlayerId = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
 
   let headers = await headersData({
@@ -338,9 +266,6 @@ export const _addEditPlayerId = async payload => {
   return _api_calls('POST', '/add-edit-player-id', headers, payload);
 };
 export const _editReminderStatus = async payload => {
-  // let token = store.getState().userDataReducer.userDataResponse.login
-  //   ? store.getState().userDataReducer.userDataResponse.userData.token
-  //   : '';
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     token: store.getState().userDataReducer.userDataResponse.login

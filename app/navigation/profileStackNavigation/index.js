@@ -3,7 +3,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {
   ProfileScreen,
-  DemoScreen,
   HelpSupportScreen,
   SymptomsScreen,
   MedicalJournalScreen,

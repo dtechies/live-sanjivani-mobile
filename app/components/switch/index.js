@@ -8,7 +8,7 @@ import {
   Platform,
   I18nManager,
 } from 'react-native';
-import {size, color, IcDelete, IcBtnPlus} from 'theme';
+import {color} from 'theme';
 import PropTypes from 'prop-types';
 
 export class ToggleSwitch extends React.Component {

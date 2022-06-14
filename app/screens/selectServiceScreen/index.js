@@ -10,7 +10,6 @@ import * as styles from './styles';
 export const SelectServiceScreen = () => {
   const navigation = useNavigation();
   const [value, setValue] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
 
   return (
     <SafeAreaView style={styles.container()}>
@@ -31,14 +30,11 @@ export const SelectServiceScreen = () => {
           maxHeight={size.moderateScale(82)}
           containerStyle={styles.dropdownContainer()}
           value={value}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
           flatListProps={{
             bounces: false,
           }}
           onChange={item => {
             setValue(item.value);
-            setIsFocus(false);
           }}
         />
         <Button

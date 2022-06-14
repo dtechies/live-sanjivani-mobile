@@ -20,7 +20,7 @@ import {
   Toast,
   Loader,
 } from 'components';
-import {size, color, IcEdit, images} from 'theme';
+import {size, color, IcEdit} from 'theme';
 import * as styles from './styles';
 import {LocalizationContext} from '../../App';
 import {genderVal, languageVal} from 'json';
@@ -28,14 +28,8 @@ import {genderVal, languageVal} from 'json';
 export const ProfileDetailScreen = () => {
   const dispatch = useDispatch();
   const {setLocale} = useContext(LocalizationContext);
-  const {
-    userDetails = {},
-    age = '',
-    userStore,
-  } = useSelector(state => ({
-    userStore: state.userDataReducer.userDataResponse,
+  const {userDetails = {}} = useSelector(state => ({
     userDetails: state.userDataReducer.userDataResponse.userData,
-    age: state.userDataReducer.userDataResponse.age,
   }));
   const [firstNm, setFirstNm] = useState(userDetails.first_name);
   const [firstNmErr, setFirstNmErr] = useState('');

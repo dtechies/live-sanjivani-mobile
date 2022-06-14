@@ -1,10 +1,9 @@
-import React, {useState, useRef, useContext} from 'react';
-import {View, TextInput, Pressable, Animated} from 'react-native';
+import React, {useContext} from 'react';
+import {View, TextInput, Pressable} from 'react-native';
 
 import * as styles from './styles';
 import {Text} from '../';
 import {color} from 'theme';
-import {images, SearchValNew, IcIntro2, IcIntro3, IcSplashColor} from 'theme';
 import 'i18n';
 import {LocalizationContext} from '../../App';
 
@@ -26,7 +25,6 @@ export const InputBox = props => {
     withButton,
     defaultNumber,
     mainContainerStyle,
-    placeholderTextColor,
     leftIconName,
     isRightUnit,
     unit,

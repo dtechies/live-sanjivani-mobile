@@ -6,7 +6,7 @@ import {getAllCategoryAndSubCategory} from 'redux-actions';
 import {Text, Header, Screen, Toast, Loader} from 'components';
 import {SvgUri} from 'react-native-svg';
 import * as styles from './styles';
-import {color, size} from 'theme';
+import {size} from 'theme';
 
 export const OtherDetailsScreen = () => {
   const navigation = useNavigation();

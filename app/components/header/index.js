@@ -3,10 +3,8 @@ import {View, Image, Pressable} from 'react-native';
 import * as styles from './styles';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {IcHeartNew} from 'theme';
 import {
   images,
-  IcArrowNext,
   IcLeftArrow,
   IcCrossArrow,
   IcProfileLogo,

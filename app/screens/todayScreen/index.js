@@ -1,14 +1,8 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
-import {
-  View,
-  SafeAreaView,
-  ScrollView,
-  BackHandler,
-  ToastAndroid,
-} from 'react-native';
+import {View, SafeAreaView, ScrollView} from 'react-native';
 import moment from 'moment';
 import {Text, FabMenu, Loader, Toast} from 'components';
-import {size, color, IcFalse, IcTrue} from 'theme';
+import {color, IcFalse, IcTrue} from 'theme';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   getTipForDay,
@@ -16,7 +10,7 @@ import {
   getTodayMedicationList,
 } from 'redux-actions';
 import * as styles from './styles';
-import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {useDoubleBackPressExit} from 'utils';
 import {LocalizationContext} from '../../App';
 // import {ChangeLanguage} from '../../components';
@@ -26,7 +20,6 @@ export const TodayScreen = () => {
   const dispatch = useDispatch();
   const toastRef = useRef();
   const {setLocale} = useContext(LocalizationContext);
-  const [activeIndex, setActiveIndex] = useState([]);
   const [medicationData, setMedication] = useState([]);
   const [medicationTrue, setMedicationTrue] = useState(0);
   const [medicationUpcoming, setMedicationUpcoming] = useState('');
@@ -283,7 +276,6 @@ export const TodayScreen = () => {
           </View>
           {reminderList.length != 0 &&
             reminderList.map((item, index) => {
-              const isActive = activeIndex.includes(item.id);
               return (
                 <View
                   style={styles.medicationCard()}

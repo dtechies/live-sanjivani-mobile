@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {SafeAreaView, View, Pressable, ScrollView} from 'react-native';
+import {SafeAreaView, View, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SvgUri} from 'react-native-svg';
 import {useDispatch, useSelector} from 'react-redux';
@@ -36,48 +36,8 @@ const GetCards = ({
   setShowDate,
   isDateVal,
 }) => {
-  const [defaultData1, setDefaultData] = useState({});
   const [selectedDate, setSelectedDate] = useState('');
-  const getCurrentDate = givenDate => {
-    let day = givenDate.getDate();
-    if (day < 10) {
-      day = '0' + day;
-    }
-    let month = givenDate.getMonth() + 1;
-    if (month < 10) {
-      month = '0' + month;
-    }
-    let year = givenDate.getFullYear();
-    let newDate = day + '/' + month + '/' + year;
-    setSelectedDate(newDate);
-    setShowDate(false);
-    let indexK = -1;
-    if (thisArray.length == 0) {
-      thisArray.push({
-        id: value.id,
-        nm: val.name,
-        value: newDate,
-      });
-    } else {
-      thisArray.map((j, k) => {
-        if (j.nm === val.name) {
-          indexK = k;
-        }
-      });
-      if (indexK == -1) {
-        thisArray.push({
-          id: value.id,
-          nm: val.name,
-          value: newDate,
-        });
-      } else {
-        thisArray[indexK].value = newDate;
-      }
-    }
-    setThisArray(thisArray);
-    console.log('thisArray', thisArray);
-    setExtra(extra + 1);
-  };
+
   return (
     <View style={styles.itemListMain()} key={index + 'other_subcategories'}>
       <Text style={styles.itemListTxt(1)}>{val.name}</Text>
@@ -211,7 +171,6 @@ const GetCards = ({
           }}
           onChange={item => {
             console.log('item ==>', item);
-            setDefaultData(item);
             let indexK = -1;
             let v = item.value;
             if (thisArray.length == 0) {
@@ -294,7 +253,6 @@ export const OtherScreen = props => {
     let year = givenDate.getFullYear();
     let newDate = day + '/' + month + '/' + year;
     setSelectedDate(newDate);
-    setSelectedDateErr('');
     setExtra(extra + 1);
     // setShowDate(false);
   };

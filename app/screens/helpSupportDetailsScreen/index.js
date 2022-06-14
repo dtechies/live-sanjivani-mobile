@@ -11,12 +11,8 @@ export const HelpSupportDetailsScreen = props => {
 
   const toastRef = useRef();
   const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState(
-    props.route.params ? props.route.params.title : '',
-  );
-  const [description, setDescription] = useState(
-    props.route.params ? props.route.params.description : '',
-  );
+  const title = props.route.params ? props.route.params.title : '';
+  const description = props.route.params ? props.route.params.description : '';
   return (
     <SafeAreaView style={styles.full()}>
       <Toast

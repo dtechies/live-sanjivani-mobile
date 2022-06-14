@@ -13,7 +13,7 @@ import * as styles from './styles';
 
 export const OtpScreen = props => {
   const dispatch = useDispatch();
-  const {locale, setLocale} = useContext(LocalizationContext);
+  const {setLocale} = useContext(LocalizationContext);
   const toastRef = useRef();
   const [isRequest, setIsRequest] = useState(true);
   const [iscount, setIsCount] = useState(false);

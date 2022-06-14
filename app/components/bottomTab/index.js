@@ -7,7 +7,6 @@ import {
   color,
   size,
   IcPlus,
-  IcHome,
   IcProfile,
   IcProgress,
   IcSharing,

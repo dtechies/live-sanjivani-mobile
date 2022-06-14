@@ -1,9 +1,9 @@
-import {View, Pressable, Image} from 'react-native';
+import {View, Pressable} from 'react-native';
 import React from 'react';
 import * as styles from './styles';
 import {Text} from '../';
 import {color, IcSelected, size} from 'theme';
-import {SvgUri, SvgXml} from 'react-native-svg';
+import {SvgUri} from 'react-native-svg';
 
 export const MedicalItems = props => {
   const {
@@ -33,7 +33,7 @@ export const MedicalItems = props => {
 
   return (
     <Pressable style={[styles.container(), containerStyle]} onPress={onPress}>
-      <View style={styles.flexOne()}></View>
+      <View style={styles.flexOne()} />
       <View style={styles.centerView()}>
         {/* <View style={styles.centerLeftView()}>{svgCardItems}</View> */}
         <SvgUri

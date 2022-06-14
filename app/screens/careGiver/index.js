@@ -1,8 +1,8 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef} from 'react';
 import {View, SafeAreaView} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {AddCareGiver, userData} from 'redux-actions';
+import {useDispatch} from 'react-redux';
+import {AddCareGiver} from 'redux-actions';
 import {
   Text,
   Button,
@@ -13,7 +13,6 @@ import {
   Loader,
 } from 'components';
 import * as styles from './styles';
-import {color} from 'theme';
 
 export const CareGiver = () => {
   const navigation = useNavigation();
@@ -26,7 +25,6 @@ export const CareGiver = () => {
   const [lastNameCorrect, setLastNameCorrect] = useState('');
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
-  const [isEdit, setIsEdit] = useState(false);
   const [phoneCorrect, setPhoneCorrect] = useState('');
   const [email, setEmail] = useState('');
   const [emailCorrect, setEmailCorrect] = useState('');

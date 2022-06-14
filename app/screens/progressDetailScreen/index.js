@@ -27,7 +27,6 @@ export const ProgressDetailScreen = props => {
   const [dateDetails, setDateDetails] = useState([]);
   const [monthsDetails, setMonthsDetails] = useState([]);
   const [yearDetails, setYearDetails] = useState([]);
-  const minValue = 0;
   const [maxValue, setMaxValue] = useState(300);
   const [yieldAr, setYieldAr] = useState([]);
   const [showChart, setShowChart] = useState(false);
