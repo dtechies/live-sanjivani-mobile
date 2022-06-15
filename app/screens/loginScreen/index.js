@@ -28,9 +28,9 @@ export const LoginScreen = () => {
       country_code: countryCodeVal,
       user_id: null,
     };
-    console.log('BODYYYY res..', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     let res = {status: false, message: 'Connection Error...!'};
+    console.log('getOtpResponse login..', getOtpResponse);
     if (getOtpResponse) {
       res = getOtpResponse.payload;
     }

@@ -1,7 +1,21 @@
-
 This is a [ReactNative](https://reactnative.dev/) project created with [`npx react-native init appName`].
 
 ## Getting Started
+
+### Config Files
+
+Add Live Base and Map key url to app>config>config.js
+
+```sh
+module.exports = {
+  BASE_URL: 'https://4d53-2405-201-2006-7803-5dbb-7a3-38c5-b39b.ngrok.io',
+  GOOGLE_API_KEY: {
+    key: 'AIzaSyBm1a7GUXngk3vzhzmxronDeDSqr_9drZk',
+    language: 'en',
+    types: 'geocode',
+  },
+};
+```
 
 First, run the metro server:
 

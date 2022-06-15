@@ -154,32 +154,35 @@ export const ProgressScreen = () => {
                     </View>
                   </View>
                 ) : (
-                  <>
-                    <Text style={styles.noData()}>No Records Found...</Text>
-                  </>
+                  <Text style={styles.noData()}>No Favorite Found...</Text>
                 )}
               </View>
             )}
             {!first && (
               <View>
                 <View style={styles.row()}>
-                  {progressData.map((item, index) => {
-                    return (
-                      <MedicalItems
-                        key={index + 'MedicalItems'}
-                        onPress={() => {
-                          progressData[index].selectedCard = !item.selectedCard;
-                          setExtra(extra + 1);
-                        }}
-                        containerStyle={styles.listViewStyle()}
-                        nameFirst={item.value}
-                        nameSecond={item.name}
-                        nameThird={item.unit}
-                        svgCardItems={item.icon}
-                        isSelected={item.selectedCard}
-                      />
-                    );
-                  })}
+                  {progressData.length > 0 ? (
+                    progressData.map((item, index) => {
+                      return (
+                        <MedicalItems
+                          key={index + 'MedicalItems'}
+                          onPress={() => {
+                            progressData[index].selectedCard =
+                              !item.selectedCard;
+                            setExtra(extra + 1);
+                          }}
+                          containerStyle={styles.listViewStyle()}
+                          nameFirst={item.value}
+                          nameSecond={item.name}
+                          nameThird={item.unit}
+                          svgCardItems={item.icon}
+                          isSelected={item.selectedCard}
+                        />
+                      );
+                    })
+                  ) : (
+                    <Text style={styles.noData()}>No Records Found...</Text>
+                  )}
                 </View>
                 {sharingDataErr ? (
                   <Text style={styles.errorText()} tx={sharingDataErr} />
@@ -187,7 +190,7 @@ export const ProgressScreen = () => {
               </View>
             )}
           </Screen>
-          {first && (
+          {first ? (
             <View>
               <Button
                 buttonStyle={styles.button()}
@@ -199,22 +202,29 @@ export const ProgressScreen = () => {
                 }}
               />
             </View>
-          )}
-          {!first && (
+          ) : (
             <Button
               buttonStyle={styles.button()}
               buttonText={styles.buttonTxt()}
-              nameTx={'progress_screen.addFav'}
+              nameTx={
+                progressData.length > 0
+                  ? 'progress_screen.addFav'
+                  : 'demo_screen.back'
+              }
               onPress={() => {
                 let data = progressData.filter(val => val.selectedCard == true);
-                if (data.length == 0) {
-                  setSharingDataErr('progress_screen.sharing_error');
+                if (progressData.length > 0) {
+                  if (data.length == 0) {
+                    setSharingDataErr('progress_screen.sharing_error');
+                  } else {
+                    let dataId = data.map(i => i.subcategory_id);
+                    setFirst(true);
+                    addUserFavoriteData(dataId);
+                    setExtra(extra + 1);
+                    setSharingDataErr('');
+                  }
                 } else {
-                  let dataId = data.map(i => i.subcategory_id);
                   setFirst(true);
-                  addUserFavoriteData(dataId);
-                  setExtra(extra + 1);
-                  setSharingDataErr('');
                 }
               }}
             />

@@ -92,7 +92,7 @@ export const validationView = () => ({
 //drop down style
 
 export const dropdown = () => ({
-  width: size.deviceWidth * 0.15,
+  width: size.deviceWidth * 0.16,
   marginVertical: size.moderateScale(5),
   height: size.deviceHeight * 0.06,
   borderRadius: size.moderateScale(10),

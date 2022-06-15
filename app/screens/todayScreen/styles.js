@@ -76,16 +76,17 @@ export const tipsTxt = val => ({
   color: val ? color.dimGrey : color.blueCard,
   fontSize: fontSize.medium,
 });
-export const tipsMain = () => ({
+export const tipsMain = animatedScale => ({
   backgroundColor: color.white,
   paddingHorizontal: size.moderateScale(15),
   paddingVertical: size.moderateScale(5),
   marginHorizontal: size.moderateScale(20),
   marginVertical: size.moderateScale(10),
   borderRadius: size.moderateScale(10),
+  transform: [{scale: animatedScale}],
 });
 
-export const progressView = () => ({
+export const progressView = animatedScale => ({
   paddingVertical: size.moderateScale(10),
   paddingHorizontal: size.moderateScale(20),
   borderRadius: size.moderateScale(10),
@@ -95,8 +96,9 @@ export const progressView = () => ({
   marginVertical: size.moderateScale(10),
   marginTop: size.moderateScale(30),
   justifyContent: 'space-between',
+  transform: [{scale: animatedScale}],
 });
-export const medicationView = () => ({
+export const medicationView = animatedScale => ({
   paddingHorizontal: size.moderateScale(20),
   paddingVertical: size.moderateScale(10),
   borderRadius: size.moderateScale(10),
@@ -104,6 +106,7 @@ export const medicationView = () => ({
   marginHorizontal: size.moderateScale(20),
   backgroundColor: color.white,
   marginVertical: size.moderateScale(10),
+  transform: [{scale: animatedScale}],
 });
 
 export const reminderText = () => ({
@@ -129,7 +132,7 @@ export const row = isFlex => ({
   justifyContent: 'space-between',
   flex: isFlex ? 1 : 0,
 });
-export const rowImage = () => ({
+export const rowImage = animationScale => ({
   flexDirection: 'row',
   alignItems: 'center',
   // justifyContent: 'space-between',

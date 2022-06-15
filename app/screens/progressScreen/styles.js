@@ -37,7 +37,10 @@ export const errorText = val => ({
 });
 export const noData = () => ({
   color: color.blueCard,
-  fontSize: fontSize.medium,
+  fontSize: fontSize.mediumLarge,
+  marginTop: size.moderateScale(15),
   fontFamily: fonts.latoBold,
   alignSelf: 'center',
+  textAlign: 'center',
+  width: '100%',
 });

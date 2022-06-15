@@ -226,7 +226,7 @@ export const MedicationReminderScreen = () => {
       );
     }
     if (
-      remindFreqDate === <Text tx={'medication_reminder_screen.dateErr'} /> &&
+      remindFreqDate === 'Select a Date' &&
       remindFrequencyValue !== 'EveryDay'
     ) {
       setRemindFrequencyValueErr('medication_reminder_screen.dateErr');
@@ -552,9 +552,7 @@ export const MedicationReminderScreen = () => {
           }}
           onChange={item => {
             setRemindFrequencyValue(item.name);
-            setRemindFreqDate(
-              <Text tx={'medication_reminder_screen.dateErr'} />,
-            );
+            setRemindFreqDate('Select a Date');
             setIsFocus(false);
           }}
           renderItem={item => {

@@ -173,10 +173,9 @@ export const AppointmentReminderScreen = animated => {
     formData.append('user_selected_time', `${selectedTime.slice(0, 5)}:00`);
     formData.append('user_id', userId);
     formData.append('reminder_time', `${reminderTime.slice(0, 5)}:00`);
-    // console.log('formData', formData);
     // return;
     setExtra(extra + 1);
-    // console.log('fevUserBody', formData);
+    console.log('fevUserBody', formData);
     const SubCategoryResponse = await dispatch(
       addAppointmentReminder(formData),
     );
@@ -184,7 +183,7 @@ export const AppointmentReminderScreen = animated => {
     if (SubCategoryResponse) {
       res = SubCategoryResponse;
     }
-    // console.log('addUserFavoriteData res RESSS==>', res);
+    console.log('addUserFavoriteData res RESSS==>', res);
 
     if (res.status) {
       setLoading(false);
