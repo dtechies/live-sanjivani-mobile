@@ -253,7 +253,7 @@ export const containerVal = () => ({
   backgroundColor: color.white,
   padding: size.moderateScale(11),
   paddingTop: size.moderateScale(10),
-  // textAlignVertical: 'top',
+  textAlignVertical: 'top',
   height: size.deviceHeight * 0.2,
   marginHorizontal: size.moderateScale(20),
   borderRadius: size.moderateScale(10),

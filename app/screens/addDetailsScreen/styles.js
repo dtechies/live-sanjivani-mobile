@@ -41,6 +41,12 @@ export const textTitle = () => ({
   fontFamily: fonts.latoBold,
   fontSize: fontSize.medium,
 });
+export const textSubTitle = () => ({
+  color: color.denim,
+  fontFamily: fonts.latoBold,
+  fontSize: fontSize.small,
+  marginLeft: size.moderateScale(15),
+});
 export const cardItem = () => ({
   width: size.deviceWidth * 0.29,
   alignItems: 'flex-start',
@@ -55,10 +61,11 @@ export const cardItem = () => ({
   shadowOpacity: 0.2,
   elevation: size.moderateScale(10),
 });
-export const cardItem1 = () => ({
-  flexDirection: 'row',
+export const cardItem1 = val => ({
+  // flexDirection: 'row',
   alignItems: 'center',
   flex: 1.5,
+  // flexDirection: val ? 'row' : 'colum',
   // backgroundColor: 'red',
 });
 export const mainCardView = () => ({
@@ -77,6 +84,29 @@ export const mainCardView = () => ({
   justifyContent: 'space-around',
   marginHorizontal: size.moderateScale(15),
   paddingRight: size.moderateScale(8),
+});
+export const bpCard = () => ({
+  flex: 1,
+  width: '100%',
+  paddingTop: size.moderateScale(10),
+});
+export const mainCard = () => ({
+  flexDirection: 'row',
+  backgroundColor: color.white,
+  // width: size.moderateScale(125),
+  paddingHorizontal: size.moderateScale(5),
+  paddingVertical: size.moderateScale(2),
+  shadowColor: color.black,
+  shadowRadius: size.moderateScale(5),
+  shadowOffset: {height: 3, width: 0},
+  shadowOpacity: 0.2,
+  elevation: size.moderateScale(10),
+  borderRadius: size.moderateScale(10),
+  color: color.grayTxt,
+  justifyContent: 'space-around',
+  marginHorizontal: size.moderateScale(15),
+  paddingRight: size.moderateScale(8),
+  marginBottom: size.moderateScale(8),
 });
 
 export const cardItemInputBoxMain = val => ({

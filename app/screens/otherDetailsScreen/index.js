@@ -101,7 +101,7 @@ export const OtherDetailsScreen = () => {
       />
       <Screen withScroll>
         <View style={styles.mainContainer()}>
-          {data &&
+          {data && data.length > 0 ? (
             data.map((item, index) => {
               return (
                 <View
@@ -118,7 +118,12 @@ export const OtherDetailsScreen = () => {
                   {GetElementFields(item.nested_subcategories[0].value)}
                 </View>
               );
-            })}
+            })
+          ) : (
+            <View style={styles.emptyData()}>
+              <Text style={styles.errTxt()}>{'No Data Found'}</Text>
+            </View>
+          )}
         </View>
       </Screen>
     </SafeAreaView>

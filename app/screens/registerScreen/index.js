@@ -91,6 +91,7 @@ export const RegisterScreen = () => {
           otpValue: {
             mob_no: res.data.mob_no,
             otp: res.data.otp,
+            country_code: countryCodeVal,
           },
         });
       }, 200);

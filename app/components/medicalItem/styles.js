@@ -1,6 +1,6 @@
 import {size, fontSize, color, fonts} from 'theme';
 
-export const container = () => ({
+export const container = animatedTranslate => ({
   // flex: 1,
   justifyContent: 'center',
   alignItems: 'center',
@@ -11,6 +11,7 @@ export const container = () => ({
   borderColor: color.darkGrey,
   paddingVertical: size.moderateScale(7),
   backgroundColor: color.lavender,
+  transform: [{translateX: animatedTranslate}],
 });
 
 export const TextFirstTxt = () => ({

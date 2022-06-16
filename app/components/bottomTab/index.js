@@ -52,8 +52,8 @@ export const BottomTab = props => {
               onTabBarPress(r, index);
             }}>
             <Icon
-              height={size.moderateScale(20)}
-              width={size.moderateScale(20)}
+              height={size.moderateScale(28)}
+              width={size.moderateScale(28)}
               fill={state.index === index ? color.white : color.darkGrey}
             />
             <Text

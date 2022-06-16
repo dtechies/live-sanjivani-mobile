@@ -9,7 +9,12 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
 import {useDispatch, useSelector} from 'react-redux';
-import {getOtp, getUserProfile, editUserProfile, userData} from 'redux-actions';
+import {
+  StoreOTP,
+  getUserProfile,
+  editUserProfile,
+  userData,
+} from 'redux-actions';
 import {countryCode} from 'json';
 import {
   Text,
@@ -43,6 +48,7 @@ export const ProfileDetailScreen = () => {
   const [changeBtn, setChangeBtn] = useState('Change');
   const [phone, setPhone] = useState(userDetails.mob_no);
   const [phoneErr, setPhoneErr] = useState('');
+  const [OtpErr, setOtpErr] = useState('');
   const [gender, setGender] = useState(userDetails.gender);
   const [genderDefault, setGenderDefault] = useState({});
   const [countryCodeDefault, setCountryCodeDefault] = useState({
@@ -66,6 +72,7 @@ export const ProfileDetailScreen = () => {
   const [showDate, setShowDate] = useState(false);
   const [otp, setOtp] = useState(false);
   const [otpValue, setOtpValue] = useState('');
+  const [otpId, setOtpId] = useState('');
   const [loading, setLoading] = useState(false);
   const currentDate = new moment().format('YYYY-MM-DD');
   const [countryCodeVal, setCountryCodeVal] = useState('+91');
@@ -221,10 +228,10 @@ export const ProfileDetailScreen = () => {
     if (otp) {
       if (otpValue == '') {
         error = true;
-        setPhoneErr('Enter OTP Value');
+        setOtpErr('Enter OTP Value');
       } else if (otpValue.length != 4) {
         error = true;
-        setPhoneErr('Enter 4 Digit OTP Number');
+        setOtpErr('Enter 4 Digit OTP Number');
       }
     }
     if (language === '') {
@@ -244,12 +251,15 @@ export const ProfileDetailScreen = () => {
       user_id: userDetails.id,
     };
     console.log('getOtpBody ==>', getOtpBody);
-    const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    const res = getOtpResponse.payload;
+    const getOtpResponse = await dispatch(StoreOTP(getOtpBody));
+    const res = getOtpResponse;
     if (res.status) {
-      console.log('response data ==>', res.data);
+      console.log('response data ==>', res.data.otp);
+      toastMessage(JSON.stringify(res.data));
+      setOtpId(res.data.id);
+      // toastMessage(res.message);
       setLoading(false);
-      toastMessage(res.message);
+      setExtra(extra + 1);
     } else {
       setLoading(false);
       toastMessage(res.message);
@@ -274,16 +284,17 @@ export const ProfileDetailScreen = () => {
     formData.append('email', email);
     if (otp) {
       formData.append('mob_no', phone);
+      formData.append('otp_id', otpId);
       formData.append('otp', otpValue);
       formData.append('country_code', countryCodeVal);
     }
     formData.append('language', language);
 
-    // console.log('formData', formData);
+    console.log('formData', formData);
 
     const EditUserProfileResponse = await dispatch(editUserProfile(formData));
     const res = EditUserProfileResponse;
-    // console.log('EditUserProfileResponse Res ==>', res);
+    console.log('EditUserProfileResponse Res ==>', res);
     // return;
     if (res.status) {
       var a = moment(res.data.dob);
@@ -327,7 +338,7 @@ export const ProfileDetailScreen = () => {
         ref={toastRef}
         position="top"
         style={styles.toast()}
-        fadeOutDuration={200}
+        fadeOutDuration={1000}
         opacity={0.9}
       />
       {loading && <Loader />}
@@ -348,6 +359,7 @@ export const ProfileDetailScreen = () => {
         isCamera={true}
         isEditDetails={true}
         title={'ProfileDetailScreen.title'}
+        isDisabled={!isEditable}
         // secName={email}
       />
       <Screen style={styles.screenContainer()}>
@@ -582,10 +594,8 @@ export const ProfileDetailScreen = () => {
               keyboardType="numeric"
               editable={isEditablePhone}
             />
-            {phoneErr ? (
-              <Text style={styles.errorText()}>{phoneErr}</Text>
-            ) : null}
           </View>
+          {phoneErr ? <Text style={styles.errorText()}>{phoneErr}</Text> : null}
 
           {otp && (
             <InputBox
@@ -597,11 +607,12 @@ export const ProfileDetailScreen = () => {
               keyboardType="numeric"
               onChangeText={text => {
                 setOtpValue(text);
+                setOtpErr('');
               }}
               editable={isEditable}
             />
           )}
-          {phoneErr ? <Text style={styles.errorText()}>{phoneErr}</Text> : null}
+          {OtpErr ? <Text style={styles.errorText()}>{OtpErr}</Text> : null}
           {!isEditable && (
             <InputBox
               mainContainerStyle={styles.inputMain()}

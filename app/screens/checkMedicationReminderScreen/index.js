@@ -81,17 +81,17 @@ export const CheckMedicationReminderScreen = props => {
     formData.append('user_selected_time', data?.user_selected_time);
     formData.append('pills_remaining', data?.pills_remaining);
 
-    // console.log('addMedicineReminder form data ==>', formData);
+    console.log('addMedicineReminder form data ==>', formData);
     // return;
     const addMedicineReminderResponse = await dispatch(
       addMedicineReminder(formData),
     );
     const res = addMedicineReminderResponse.payload;
-    // console.log('addMedicineReminder Res ==>', res);
+    console.log('addMedicineReminder Res ==>', res);
     setLoading(false);
 
     if (res.status) {
-      // console.log('addMedicineReminder List ==>', res);
+      console.log('addMedicineReminder List ==>', res);
       setData('');
       setDays(daysJson);
       // param.medicineFilteredValue = [];

@@ -344,3 +344,13 @@ export const _getDeleteMedicalJournalNote = async body => {
   // console.log('headers _getUserProfileData ==>', headers);
   return _api_calls('DELETE', '/delete-medical-journal-note', headers, body);
 };
+export const _storeOTP = async body => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
+  });
+  console.log('headers _getUserProfileData ==>', headers,body);
+  return _api_calls('POST', '/store-OTP', headers, body);
+};

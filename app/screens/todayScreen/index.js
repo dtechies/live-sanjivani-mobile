@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
-import {View, SafeAreaView, ScrollView} from 'react-native';
+import {View, SafeAreaView, ScrollView, Animated, Easing} from 'react-native';
 import moment from 'moment';
 import {Text, FabMenu, Loader, Toast} from 'components';
 import {color, IcFalse, IcTrue} from 'theme';
@@ -13,12 +13,17 @@ import * as styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {useDoubleBackPressExit} from 'utils';
 import {LocalizationContext} from '../../App';
+import {size} from 'theme';
 // import {ChangeLanguage} from '../../components';
 // import LinearGradient from 'react-native-linear-gradient';
 export const TodayScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const toastRef = useRef();
+  let animatedValue = new Animated.Value(0);
+  let animatedValue1 = new Animated.Value(0);
+  let animatedValue2 = new Animated.Value(0);
+  let animatedValue3 = new Animated.Value(0);
   const {setLocale} = useContext(LocalizationContext);
   const [medicationData, setMedication] = useState([]);
   const [medicationTrue, setMedicationTrue] = useState(0);
@@ -26,6 +31,7 @@ export const TodayScreen = () => {
   const [reminderList, setReminderList] = useState([]);
   const [tipsForTheDay, setTipsForTheDay] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isStartAnimation, startAnimation] = useState(false);
   const [extra, setExtra] = useState(0);
   const toastMessage = msg => {
     toastRef.current.show(msg);
@@ -38,6 +44,58 @@ export const TodayScreen = () => {
   const {userData} = useSelector(state => ({
     userData: state.userDataReducer.userDataResponse.userData,
   }));
+
+  //Animated Values
+  const animatedScale = animatedValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
+  const animatedScale1 = animatedValue1.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
+  const animatedScale2 = animatedValue2.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
+  const animatedScale3 = animatedValue3.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
+
+  isStartAnimation &&
+    Animated.timing(animatedValue, {
+      toValue: 1,
+      duration: 800,
+      delay: 5,
+      easing: Easing.elastic(1),
+      useNativeDriver: true, // To make use of native driver for performance
+    }).start();
+  isStartAnimation &&
+    Animated.timing(animatedValue1, {
+      toValue: 1,
+      duration: 1000,
+      delay: 5,
+      easing: Easing.elastic(1),
+      useNativeDriver: true, // To make use of native driver for performance
+    }).start();
+  isStartAnimation &&
+    Animated.timing(animatedValue2, {
+      toValue: 1,
+      duration: 1200,
+      delay: 5,
+      easing: Easing.elastic(1),
+      useNativeDriver: true, // To make use of native driver for performance
+    }).start();
+  isStartAnimation &&
+    Animated.timing(animatedValue3, {
+      toValue: 1,
+      duration: 1400,
+      delay: 5,
+      easing: Easing.elastic(1),
+      useNativeDriver: true, // To make use of native driver for performance
+    }).start();
+  //Animated Values
 
   const onMedicineReminderData = async () => {
     setLoading(true);
@@ -87,6 +145,7 @@ export const TodayScreen = () => {
     } else {
       setLoading(false);
     }
+    startAnimation(true);
   };
 
   const getAppointmentReminderData = async () => {
@@ -158,7 +217,9 @@ export const TodayScreen = () => {
     getAppointmentReminderData();
     onMedicineReminderData();
     setExtra(extra + 1);
+    // AnimationStarting();
   }, []);
+
   return (
     <SafeAreaView style={styles.container()}>
       <Toast
@@ -179,7 +240,7 @@ export const TodayScreen = () => {
         tx={'today_screen.you_are_on_the_right_track'}
       />
       <ScrollView>
-        <View style={styles.progressView()}>
+        <Animated.View style={styles.progressView(animatedScale)}>
           <View style={styles.row()}>
             <Text
               style={styles.textTodayProgress()}
@@ -225,8 +286,8 @@ export const TodayScreen = () => {
             </View>
           )}
           <Text style={styles.desTextStyle()} text={medicationUpcoming} />
-        </View>
-        <View style={styles.medicationView()}>
+        </Animated.View>
+        <Animated.View style={styles.medicationView(animatedScale1)}>
           <View style={styles.row()}>
             <Text
               style={styles.textTodayProgress()}
@@ -266,8 +327,8 @@ export const TodayScreen = () => {
               />
             </View>
           )}
-        </View>
-        <View style={styles.medicationView()}>
+        </Animated.View>
+        <Animated.View style={styles.medicationView(animatedScale2)}>
           <View style={styles.row()}>
             <Text
               style={styles.textTodayProgress()}
@@ -315,8 +376,8 @@ export const TodayScreen = () => {
               />
             </View>
           )}
-        </View>
-        <View style={styles.tipsMain()}>
+        </Animated.View>
+        <Animated.View style={styles.tipsMain(animatedScale3)}>
           <Text
             style={styles.medicineName()}
             tx={'today_screen.tips_for_the_day'}
@@ -326,7 +387,7 @@ export const TodayScreen = () => {
             text={tipsForTheDay != '' ? tipsForTheDay : ''}
             tx={tipsForTheDay == '' ? 'today_screen.noTipsRecords' : ''}
           />
-        </View>
+        </Animated.View>
       </ScrollView>
       {/* <ChangeLanguage /> */}
       <FabMenu

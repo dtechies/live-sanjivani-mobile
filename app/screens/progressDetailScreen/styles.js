@@ -8,6 +8,9 @@ export const row = () => ({
   flexDirection: 'row',
   alignItems: 'center',
 });
+export const mainHeadingView = () => ({
+  paddingHorizontal: size.moderateScale(10),
+});
 export const listViewStyle = () => ({
   marginVertical: size.moderateScale(1),
   marginLeft: size.moderateScale(2),
@@ -38,12 +41,11 @@ export const textItemDate = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
   color: color.black,
-  marginTop: size.moderateScale(10),
 });
 export const textItemToShareDetail = () => ({
-  fontSize: fontSize.small,
-  fontFamily: fonts.latoRegular,
-  color: color.blue,
+  fontSize: fontSize.medium,
+  fontFamily: fonts.latoBold,
+  color: color.black,
   marginVertical: size.moderateScale(15),
 });
 export const button = () => ({

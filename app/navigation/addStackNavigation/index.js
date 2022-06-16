@@ -13,6 +13,7 @@ import {
   SymptomsScreen,
   MedicalJournalScreen,
   AddDetailsScreen,
+  SymptomDetailScreen,
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
@@ -44,6 +45,10 @@ export const AddStackNavigation = () => {
       <Stack.Screen
         name="medicalJournalScreen"
         component={MedicalJournalScreen}
+      />
+      <Stack.Screen
+        name="symptomDetailScreen"
+        component={SymptomDetailScreen}
       />
     </Stack.Navigator>
   );

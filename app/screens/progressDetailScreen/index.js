@@ -179,8 +179,7 @@ export const ProgressDetailScreen = props => {
         {/* console.log('itemmmm', item);
           return ( */}
         {sharingData && (
-          <View>
-            <Text style={styles.textItemToShare()} text={sharingData.name} />
+          <View style={styles.mainHeadingView()}>
             <Text
               style={styles.textItemToShareDetail()}
               text={sharingData.name}

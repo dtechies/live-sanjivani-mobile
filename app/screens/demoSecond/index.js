@@ -165,6 +165,7 @@ export const DemoSecond = () => {
           numColumns={2}
           renderItem={({item, index}) => (
             <MedicalItems
+              index={index}
               onPress={() => {
                 detailProfile[index].selectedCard = !item.selectedCard;
                 setExtra(extra + 1);

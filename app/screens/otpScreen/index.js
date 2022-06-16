@@ -33,7 +33,7 @@ export const OtpScreen = props => {
     new moment().add(30, 'seconds').format('X'),
   );
   const currentDate = new moment().format('YYYY-MM-DD');
-  const [otpData, setOtpData] = useState('');
+  const [otpData, setOtpData] = useState({});
   const [loading, setLoading] = useState(false);
   const [playerId, setPlayerId] = useState('');
 
@@ -74,9 +74,9 @@ export const OtpScreen = props => {
     setLoading(true);
     let otpVal = firstDigit + secondDigit + thirdDigit + fourthDigit;
     const loginBody = {
-      mob_no: otpData ? otpData?.mob_no : '',
+      mob_no: otpData ? otpData.mob_no : '',
       otp: otpData ? otpVal : '',
-      country_code: otpData ? otpData?.country_code : '',
+      country_code: otpData ? otpData.country_code : '',
     };
     const loginResponse = await dispatch(loginUser(loginBody));
     let res = {status: false, message: 'Connection Error...!'};
@@ -105,18 +105,19 @@ export const OtpScreen = props => {
     // console.log('getOtpBody ==>');
     setLoading(true);
     const getOtpBody = {
-      mob_no: otpData ? otpData?.mob_no : '',
-      country_code: otpData ? otpData?.country_code : '',
+      mob_no: otpData ? otpData.mob_no : '',
+      country_code: otpData ? otpData.country_code : '',
+      user_id: null,
     };
-    // console.log('getOtpBody ==>', getOtpBody);
+    console.log('getOtpBody ==>', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    // console.log('getOtpBody responses ==>', getOtpResponse);
+    console.log('getOtpBody responses ==>', getOtpResponse);
     let res = {status: false, message: 'Connection Error...!'};
     if (getOtpResponse) {
       res = getOtpResponse.payload;
     }
     if (res.status) {
-      // console.log('getOtp res ==>', res.data.otp);
+      console.log('getOtp res ==>', res.data.otp);
       setLoading(false);
       toastMessage(res.message);
       setCounter(30);

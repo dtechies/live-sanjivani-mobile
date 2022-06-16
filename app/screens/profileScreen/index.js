@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Loader, Text, Screen, Header, Toast} from 'components';
@@ -22,6 +22,17 @@ export const ProfileScreen = () => {
     userDetails: state.userDataReducer.userDataResponse.userData,
     age: state.userDataReducer.userDataResponse.age,
   }));
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setDetailProfile(
+        MainProfileDetail.map(i => {
+          i.selectedCard = false;
+          return i;
+        }),
+      );
+    });
+    return unsubscribe;
+  }, [navigation]);
   const removePlayerId = async () => {
     const removePlayerIdBody = {
       player_id: null,
@@ -87,51 +98,34 @@ export const ProfileScreen = () => {
                 onPress={() => {
                   clearData();
                   if (item.value == 'My Appointments') {
-                    setTimeout(() => {
-                      navigation.navigate('myAppointments');
-                    }, 500);
+                    navigation.navigate('myAppointments');
                   }
                   if (item.value == 'My Medication') {
-                    setTimeout(() => {
-                      navigation.navigate('viewMedicationScreen');
-                    }, 500);
+                    navigation.navigate('viewMedicationScreen');
                   }
                   if (item.value == 'Symptom Checker') {
-                    setTimeout(() => {
-                      navigation.navigate('symptomsScreen');
-                    }, 500);
+                    navigation.navigate('symptomsScreen');
                   }
                   if (item.value == 'Medical Journal Lists') {
-                    setTimeout(() => {
-                      navigation.navigate('medicalJournalLists');
-                    }, 500);
+                    navigation.navigate('medicalJournalLists');
                   }
                   if (item.value == 'Help') {
-                    setTimeout(() => {
-                      navigation.navigate('HelpSupportScreen');
-                    }, 500);
+                    navigation.navigate('HelpSupportScreen');
                   }
                   if (item.value == 'Account Settings') {
-                    setTimeout(() => {
-                      navigation.navigate('profileDetailScreen');
-                    }, 500);
+                    navigation.navigate('profileDetailScreen');
                   }
                   if (item.value == 'Other Details') {
-                    setTimeout(() => {
-                      navigation.navigate('OtherDetails');
-                    }, 500);
+                    navigation.navigate('OtherDetails');
                   }
                   if (item.value == 'My Care Giver') {
-                    setTimeout(() => {
-                      navigation.navigate('myCareGiver');
-                    }, 500);
+                    navigation.navigate('myCareGiver');
                   }
                   if (item.value == 'Logout') {
-                    setTimeout(() => {
-                      onLogoutData();
-                    }, 500);
+                    onLogoutData();
                   }
-                  item.selectedCard = !item.selectedCard;
+                  detailProfile[i].selectedCard = !item.selectedCard;
+                  setDetailProfile(detailProfile);
                   setExtra(extra + 1);
                 }}
                 style={

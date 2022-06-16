@@ -87,6 +87,8 @@ export const mainDetailContainer = () => ({
   // flexDirection: 'row',
   paddingHorizontal: size.moderateScale(20),
   paddingTop: size.moderateScale(20),
+  // minHeight: size.deviceHeight * 0.65,
+  paddingBottom: size.deviceHeight * 0.1,
 });
 export const genderViewContainer = () => ({
   paddingLeft: size.moderateScale(15),

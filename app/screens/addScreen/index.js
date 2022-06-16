@@ -17,6 +17,18 @@ export const AddScreen = () => {
   const [allCategory, setAllCategory] = useState([]);
   const [data, setData] = useState(AddNavData);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setData(
+        data.map(i => {
+          i.selected = false;
+          return i;
+        }),
+      );
+    });
+    return unsubscribe;
+  }, [navigation]);
+
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -59,67 +71,53 @@ export const AddScreen = () => {
       item.name == 'Measurements' ||
       item.name == 'Activity'
     ) {
-      setTimeout(() => {
-        if (allCategory.length != 0) {
-          allCategory.map(val => {
-            if (val.name == item.name) {
-              navigation.navigate('addDetailsScreen', {
-                title: item.name,
-                sub: val.subcategories,
-              });
-            }
-          });
-        } else {
-          navigation.navigate('addDetailsScreen', {
-            title: item.name,
-            sub: [],
-          });
-        }
-      }, 500);
+      if (allCategory.length != 0) {
+        allCategory.map(val => {
+          if (val.name == item.name) {
+            navigation.navigate('addDetailsScreen', {
+              title: item.name,
+              sub: val.subcategories,
+            });
+          }
+        });
+      } else {
+        navigation.navigate('addDetailsScreen', {
+          title: item.name,
+          sub: [],
+        });
+      }
     }
     if (item.name == 'Care Giver') {
-      setTimeout(() => {
-        navigation.navigate('careGiver');
-      }, 500);
+      navigation.navigate('careGiver');
     }
     if (item.name == 'Appointments') {
-      setTimeout(() => {
-        navigation.navigate('appointmentReminderScreen');
-      }, 500);
+      navigation.navigate('appointmentReminderScreen');
     }
     if (item.name == 'Symptoms Check') {
-      setTimeout(() => {
-        navigation.navigate('symptomsScreen');
-      }, 500);
+      navigation.navigate('symptomsScreen');
     }
     if (item.name == 'Medical Journal') {
-      setTimeout(() => {
-        navigation.navigate('medicalJournalScreen');
-      }, 500);
+      navigation.navigate('medicalJournalScreen');
     }
     if (item.name == 'Others') {
-      setTimeout(() => {
-        if (allCategory.length != 0) {
-          allCategory.map(val => {
-            if (val.name == item.name) {
-              navigation.navigate('otherScreen', {
-                title: item.name,
-                sub: val.subcategories,
-              });
-            }
-          });
-        } else {
-          navigation.navigate('otherScreen', {
-            title: item.name,
-            sub: [],
-          });
-        }
-      }, 500);
+      if (allCategory.length != 0) {
+        allCategory.map(val => {
+          if (val.name == item.name) {
+            navigation.navigate('otherScreen', {
+              title: item.name,
+              sub: val.subcategories,
+            });
+          }
+        });
+      } else {
+        navigation.navigate('otherScreen', {
+          title: item.name,
+          sub: [],
+        });
+      }
     }
     if (item.name == 'Medications') {
-      setTimeout(() => {
-        navigation.navigate('medicationReminderScreen');
-      }, 500);
+      navigation.navigate('medicationReminderScreen');
     }
     data[index].selected = !item.selected;
     setExtra(extra + 1);

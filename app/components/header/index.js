@@ -124,7 +124,10 @@ export const Header = props => {
                 marginTop: size.moderateScale(-45),
                 marginLeft: size.moderateScale(75),
               }}>
-              <Pressable onPress={props.iconPress}>
+              <Pressable
+                style={{opacity: props.isDisabled ? 0 : 1}}
+                disabled={props.isDisabled ? props.isDisabled : false}
+                onPress={props.iconPress}>
                 <IcCamera />
               </Pressable>
             </View>
