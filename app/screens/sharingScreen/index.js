@@ -91,6 +91,7 @@ export const SharingScreen = () => {
             sharingDataList.map((item, index) => {
               return (
                 <MedicalItems
+                  index={index}
                   key={index.toString()}
                   onPress={() => {
                     setSharingDataErr('');

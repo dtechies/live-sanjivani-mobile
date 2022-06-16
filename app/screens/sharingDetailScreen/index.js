@@ -137,6 +137,7 @@ export const SharingDetailScreen = props => {
             return (
               // <View></View>
               <MedicalItems
+                index={index}
                 key={index.toString()}
                 containerStyle={styles.listViewStyle()}
                 nameFirst={item.value}

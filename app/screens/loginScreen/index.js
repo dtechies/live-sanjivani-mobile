@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {View, Pressable, Image, SafeAreaView} from 'react-native';
+import {View, Pressable, Image, SafeAreaView, Linking} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {getOtp} from 'redux-actions';
@@ -141,8 +141,9 @@ export const LoginScreen = () => {
           nameTx={'login_screen.register_new_user'}
           onPress={() => navigation.navigate('registerScreen')}
         />
-        <Pressable onPress={() => {}}>
-          <Text style={styles.labelOrTxt()} tx={'login_screen.learnMore'} />
+        <Pressable
+          onPress={() => Linking.openURL('https://livesanjivani.com/')}>
+          <Text style={styles.labelLearn()} tx={'login_screen.learnMore'} />
         </Pressable>
       </View>
       {/* <ChangeLanguage /> */}

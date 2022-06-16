@@ -47,6 +47,13 @@ export const labelOrTxt = () => ({
   color: color.dimGrey,
   alignSelf: 'center',
 });
+export const labelLearn = () => ({
+  marginTop: size.moderateScale(15),
+  fontSize: fontSize.medium,
+  fontFamily: fonts.latoBold,
+  color: color.strongBlue,
+  alignSelf: 'center',
+});
 export const inputMainDisableContainer = editable => ({
   width: size.deviceWidth * 0.9,
   marginVertical: size.moderateScale(10),
@@ -66,7 +73,8 @@ export const btnRegister = () => ({
 export const inputTxt = () => ({
   fontSize: fontSize.medium,
   fontFamily: fonts.latoBold,
-  color: color.dimGrey,
+  color: color.steelBlue,
+  paddingLeft: size.deviceWidth * 0.02,
 });
 
 export const btnRegisterTxt = () => ({

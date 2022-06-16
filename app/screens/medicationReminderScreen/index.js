@@ -1,4 +1,10 @@
-import React, {useState, useRef, useEffect, useCallback} from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+  useContext,
+} from 'react';
 import {SafeAreaView, Pressable, View, Image} from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
@@ -21,10 +27,12 @@ import {size, color, IcCrossArrow} from 'theme';
 import {useDispatch} from 'react-redux';
 import {getMedicineReminderView} from 'redux-actions';
 import * as styles from './styles';
+import {LocalizationContext} from '../../App';
 import {dose, medicineForm} from 'json';
 
 export const MedicationReminderScreen = () => {
   const navigation = useNavigation();
+  const {t} = useContext(LocalizationContext);
   const dispatch = useDispatch();
   const toastRef = useRef();
   const modalRef = useRef();
@@ -659,9 +667,7 @@ export const MedicationReminderScreen = () => {
                   if (new Date(val).getTime() > new Date().getTime()) {
                     getRemindTime(val);
                   } else {
-                    alert(
-                      <Text tx={'medication_reminder_screen.futureTimeErr'} />,
-                    );
+                    alert(t('medication_reminder_screen.futureTimeErr'));
                   }
                 } else {
                   getRemindTime(val);

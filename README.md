@@ -8,9 +8,9 @@ Add Live Base and Map key url to app>config>config.js
 
 ```sh
 module.exports = {
-  BASE_URL: 'https://4d53-2405-201-2006-7803-5dbb-7a3-38c5-b39b.ngrok.io',
+  BASE_URL: 'https://XXXXXXXXXXXXXXXX',
   GOOGLE_API_KEY: {
-    key: 'AIzaSyBm1a7GUXngk3vzhzmxronDeDSqr_9drZk',
+    key: 'XXXXX9_XMJMAS_ASZZZZXXXX',
     language: 'en',
     types: 'geocode',
   },

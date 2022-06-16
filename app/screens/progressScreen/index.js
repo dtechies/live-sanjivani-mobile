@@ -41,7 +41,6 @@ export const ProgressScreen = () => {
       res = SubCategoryResponse;
     }
     if (res.status) {
-      setLoading(false);
       let newData = res.data.map(i => {
         favoriteData.map(j => {
           if (i.subcategory_id == j.id) {
@@ -51,6 +50,7 @@ export const ProgressScreen = () => {
         return i;
       });
       setProgressData(newData);
+      setLoading(false);
       setExtra(extra + 1);
     } else {
       setLoading(false);
@@ -70,10 +70,8 @@ export const ProgressScreen = () => {
     }
 
     if (res.status) {
-      setLoading(false);
       toastMessage(res.message);
       getUserFavoriteListData();
-      setExtra(extra + 1);
     } else {
       setLoading(false);
       toastMessage(res.message);
@@ -87,12 +85,12 @@ export const ProgressScreen = () => {
       res = SubCategoryResponse;
     }
     if (res.status) {
-      setLoading(false);
       let favData = res.data.subCategoryDataN;
       let filterData = favData.filter((val, i) => {
         return val.is_favorite == true;
       });
       setFavoriteData(filterData);
+      setLoading(false);
       setExtra(extra + 1);
     } else {
       setLoading(false);
@@ -125,50 +123,50 @@ export const ProgressScreen = () => {
       ) : (
         <>
           <Screen withScroll>
-            {first && (
+            {first ? (
               <View>
                 {favoriteData.length >= 1 ? (
-                  <View>
-                    <View style={styles.row()}>
-                      {favoriteData.map((item, index) => {
-                        console.log('favoriteData', favoriteData);
-                        return (
-                          <MedicalItems
-                            key={index + 'MedicalItems'}
-                            onPress={() => {
-                              if (item.is_graph) {
-                                navigation.navigate('progressDetailScreen', {
-                                  selectedItems: item,
-                                });
-                              }
-                            }}
-                            containerStyle={styles.listViewStyle()}
-                            nameFirst={item.value}
-                            nameSecond={item.name}
-                            nameThird={item.unit}
-                            svgCardItems={item.icon}
-                            isSelected={item.selectedCard}
-                          />
-                        );
-                      })}
-                    </View>
+                  <View style={styles.row()}>
+                    {favoriteData.map((item, index) => {
+                      console.log('favoriteData', favoriteData);
+                      return (
+                        <MedicalItems
+                          index={index}
+                          key={index + 'MedicalItems'}
+                          onPress={() => {
+                            if (item.is_graph) {
+                              navigation.navigate('progressDetailScreen', {
+                                selectedItems: item,
+                              });
+                            }
+                          }}
+                          containerStyle={styles.listViewStyle()}
+                          nameFirst={item.value}
+                          nameSecond={item.name}
+                          nameThird={item.unit}
+                          svgCardItems={item.icon}
+                          isSelected={item.selectedCard}
+                        />
+                      );
+                    })}
                   </View>
                 ) : (
                   <Text style={styles.noData()}>No Favorite Found...</Text>
                 )}
               </View>
-            )}
-            {!first && (
+            ) : (
               <View>
                 <View style={styles.row()}>
                   {progressData.length > 0 ? (
                     progressData.map((item, index) => {
                       return (
                         <MedicalItems
+                          index={index}
                           key={index + 'MedicalItems'}
                           onPress={() => {
                             progressData[index].selectedCard =
                               !item.selectedCard;
+                            setProgressData(progressData);
                             setExtra(extra + 1);
                           }}
                           containerStyle={styles.listViewStyle()}

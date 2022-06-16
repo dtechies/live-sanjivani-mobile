@@ -354,8 +354,8 @@ export const OtherScreen = props => {
                 key={i + 'subCategory'}>
                 <View style={styles.headOne()}>
                   <SvgUri
-                    height={size.moderateScale(25)}
-                    width={size.moderateScale(25)}
+                    height={size.moderateScale(30)}
+                    width={size.moderateScale(30)}
                     uri={value.icon}
                   />
                   <Text style={styles.headingTxt()}>{value.name}</Text>
