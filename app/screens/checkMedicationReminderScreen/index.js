@@ -239,10 +239,10 @@ export const CheckMedicationReminderScreen = props => {
             </View>
             <View style={styles.infoCard()}>
               <Pressable
-                onPress={() => {
-                  setShowDate(true);
-                  setExtra(extra + 1);
-                }}
+                // onPress={() => {
+                // setShowDate(true);
+                // setExtra(extra + 1);
+                // }}
                 style={styles.cardShort()}>
                 <Text style={styles.startDateTitleTxt()} text={'Frequency'} />
                 <Text style={styles.startDateTxt()}>

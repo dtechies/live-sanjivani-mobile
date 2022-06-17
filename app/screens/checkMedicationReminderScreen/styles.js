@@ -35,7 +35,7 @@ export const cardSecond = () => ({
   elevation: size.moderateScale(5),
 });
 export const cardShort = val => ({
-  height: size.deviceHeight * 0.09,
+  minHeight: size.deviceHeight * 0.09,
   width: val == 1 ? size.deviceWidth * 0.45 : size.deviceWidth * 0.33,
   backgroundColor: color.white,
   borderWidth: 1,

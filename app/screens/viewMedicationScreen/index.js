@@ -33,7 +33,10 @@ export const ViewMedicationScreen = () => {
     let text = val.toLowerCase() || val.toUpperCase();
 
     let FilteredValue = medicineReminderData.filter(item => {
-      return item.medicine_name.toLowerCase().match(text);
+      return (
+        item.medicine_name.toLowerCase().includes(text) ||
+        item.reminder_name.toLowerCase().includes(text)
+      );
     });
     FilteredValue.length == 0 && FilteredValue.push({value: 'null'});
     setFilteredData(FilteredValue);

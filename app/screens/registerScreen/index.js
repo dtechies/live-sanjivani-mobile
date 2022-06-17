@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useContext} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
@@ -17,7 +17,9 @@ import {
 import {size, color} from 'theme';
 import * as styles from './styles';
 import {genderVal, languageVal, countryCode} from 'json';
+import {LocalizationContext} from '../../App';
 export const RegisterScreen = () => {
+  const {t} = useContext(LocalizationContext);
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
@@ -215,8 +217,11 @@ export const RegisterScreen = () => {
           data={genderVal}
           labelTxField="label"
           valueField="value"
-          defaultValue={genderVal[0]}
-          placeholder={<Text tx={'register_screen.gender'} />}
+          defaultValue={{
+            label: 'register_screen.select_gender',
+            value: '',
+          }}
+          placeholder={t('register_screen.gender')}
           dropdownPosition={'bottom'}
           style={styles.dropdown()}
           placeholderStyle={styles.labelFieldText()}

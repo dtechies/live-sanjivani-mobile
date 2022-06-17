@@ -4,6 +4,9 @@ export const container = () => ({
   flex: 1,
   backgroundColor: color.steelBlue,
 });
+export const scrollView = () => ({
+  paddingBottom: size.moderateScale(100),
+});
 export const toast = () => ({
   marginHorizontal: size.moderateScale(20),
   paddingHorizontal: size.moderateScale(20),

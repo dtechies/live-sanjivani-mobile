@@ -128,10 +128,10 @@ export const AppointmentReminderScreen = animated => {
     // console.log('doctorData ==> ', doctorData);
     if (val.length >= 2) {
       let filteredName = doctorData.filter(item => {
-        if (item.doctor_name.toLowerCase().match(text)) {
+        if (item.doctor_name.toLowerCase().includes(text)) {
           address = 'item.doctor_address';
         }
-        return item.doctor_name.toLowerCase().match(text);
+        return item.doctor_name.toLowerCase().includes(text);
       });
 
       // console.log('address ==> ', address);

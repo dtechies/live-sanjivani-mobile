@@ -165,7 +165,7 @@ export const TodayScreen = () => {
           return val.date == selectedDate;
         });
         // let demoArray = reminderListData;
-        const reminderArrayNew = reminderArray.sort((a, b) => {
+        let reminderArrayNew = reminderArray.sort((a, b) => {
           return (
             new moment(a.user_selected_time, 'h:mm').format('X') -
             new moment(b.user_selected_time, 'h:mm').format('X')
@@ -177,8 +177,7 @@ export const TodayScreen = () => {
           ]).format('hh:mm A');
           val.date = new moment(val.date, ['YYYY-MM-D']).format('DD-MM-YYYY');
         });
-
-        // console.log('reminderArrayNew ==> ', reminderArrayNew);
+        reminderArrayNew = reminderArrayNew.filter(i => i.status);
         setReminderList(reminderArrayNew);
         setExtra(extra + 1);
       } else {
@@ -239,7 +238,7 @@ export const TodayScreen = () => {
         style={styles.textLanding()}
         tx={'today_screen.you_are_on_the_right_track'}
       />
-      <ScrollView>
+      <ScrollView contentContainerStyle={styles.scrollView()}>
         <Animated.View style={styles.progressView(animatedScale)}>
           <View style={styles.row()}>
             <Text
@@ -313,7 +312,7 @@ export const TodayScreen = () => {
                 <Text style={styles.medicineName()} text={item.reminder_name} />
                 <Text
                   style={styles.desTextStyle()}
-                  text={`${item.dose} ${item.reminder_name} ${item.medicine_strength} ${item.medicine_strength_unit} ${item.medicine_form},${item.reminder_frequency} ${item.reminder_time}.`}
+                  text={`${item.dose} ${item.medicine_name} ${item.medicine_strength} ${item.medicine_strength_unit} ${item.medicine_form},${item.reminder_frequency} ${item.reminder_time}.`}
                 />
                 <View style={styles.separator()} />
               </View>

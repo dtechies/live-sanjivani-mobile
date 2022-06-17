@@ -107,7 +107,7 @@ export const SymptomsScreen = () => {
     let text = val.toLowerCase() || val.toUpperCase();
     setSymptomDropDown(true);
     let filteredName = allSymptomList.filter(item => {
-      return item.name.toLowerCase().match(text);
+      return item.name.toLowerCase().includes(text);
     });
     setSymptomFilteredValue(filteredName);
     // }

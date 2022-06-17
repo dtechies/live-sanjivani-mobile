@@ -41,7 +41,7 @@ export const MyAppointments = () => {
     let text = val.toLowerCase() || val.toUpperCase();
 
     let FilteredValue = appointmentReminderData.filter(item => {
-      return item.doctor.doctor_name.toLowerCase().match(text);
+      return item.doctor.doctor_name.toLowerCase().includes(text);
     });
     FilteredValue.length == 0 && FilteredValue.push({value: 'null'});
     setFilteredData(FilteredValue);

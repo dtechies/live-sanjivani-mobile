@@ -28,16 +28,22 @@ export const ReminderCard = props => {
           onToggle={() => onTogglePress && onTogglePress()}
         />
       </View>
-      <View>
-        <Text style={styles.cardHeading(data.status)}>
-          {data?.dose} {data?.medicine_name} {data?.medicine_strength}{' '}
-          {data?.medicine_strength_unit}
-        </Text>
-        <Text style={styles.cardText(data.status)}>
-          {data?.user_selected_time.slice(0, 5)}
-          {', '}
-          {data?.reminder_time}
-        </Text>
+      <View style={styles.bottomView()}>
+        <View>
+          <Text style={styles.cardHeading(data.status)}>
+            {data?.dose} {data?.medicine_name} {data?.medicine_strength}{' '}
+            {data?.medicine_strength_unit}
+          </Text>
+          <Text style={styles.cardText(data.status)}>
+            {data.reminder_frequency}{' '}
+            {'at ' + data?.user_selected_time.slice(0, 5) + ' '}
+          </Text>
+        </View>
+        <View>
+          <Text style={styles.cardText(data.status)}>
+            {data?.reminder_time}
+          </Text>
+        </View>
       </View>
     </Pressable>
   );

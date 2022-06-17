@@ -45,7 +45,7 @@ export const headOne = val => ({
   borderBottomWidth: val == 1 ? 0.2 : 0,
   borderBottomColor: color.darkGrey,
   paddingBottom: val == 1 ? size.moderateScale(10) : 0,
-  backgroundColor: 'red',
+  // backgroundColor: 'red',
 });
 export const headingFirst = val => ({
   marginTop: val == 1 ? 0 : size.moderateScale(10),
