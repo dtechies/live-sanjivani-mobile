@@ -26,7 +26,7 @@ export const Header = props => {
     <LinearGradient
       colors={colArray}
       style={styles.containerMain(
-        props.isLogoCenter ? 2 : props.isLogo ? 1 : 0,
+        props.isLogoCenter ? 2 : props.isLogo ? 1 : props.isProfileView ? 3 : 0,
       )}>
       <View
         style={styles.backMain(
@@ -132,25 +132,30 @@ export const Header = props => {
               </Pressable>
             </View>
           )}
-          <View
-            style={
-              props.isEditDetails
-                ? styles.propInfo()
-                : styles.profileInfo1(props.isLogoCenter ? 2 : 1)
-            }>
-            <Text
-              style={styles.profileName(props.isColor || props.isBlue ? 1 : 3)}>
-              {props.name ? props.name : ''}
-            </Text>
-            <Text
+          {
+            <View
               style={
-                props.isCamera
-                  ? styles.profileName(props.isColor || props.isBlue ? 1 : 3)
-                  : styles.profileDetails(props.isColor || props.isBlue ? 1 : 3)
+                props.isEditDetails
+                  ? styles.propInfo()
+                  : styles.profileInfo1(props.isLogoCenter ? 2 : 1)
               }>
-              {props.secName ? props.secName : ''}
-            </Text>
-            {/* {!props.isCamera && (
+              <Text
+                style={styles.profileName(
+                  props.isColor || props.isBlue ? 1 : 3,
+                )}>
+                {props.name ? props.name : ''}
+              </Text>
+              <Text
+                style={
+                  props.isCamera
+                    ? styles.profileName(props.isColor || props.isBlue ? 1 : 3)
+                    : styles.profileDetails(
+                        props.isColor || props.isBlue ? 1 : 3,
+                      )
+                }>
+                {props.secName ? props.secName : ''}
+              </Text>
+              {/* {!props.isCamera && (
                 <Text
                   style={styles.profileDetails(
                     props.isColor || props.isBlue ? 1 : 3,
@@ -158,7 +163,8 @@ export const Header = props => {
                   Pune, MH
                 </Text>
               )} */}
-          </View>
+            </View>
+          }
         </View>
       )}
     </LinearGradient>

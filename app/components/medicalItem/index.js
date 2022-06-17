@@ -44,7 +44,7 @@ export const MedicalItems = props => {
   if (result) {
     something = true;
     result = nameFirst.slice(1, nameFirst.length - 1);
-    result = result.replace(',', '  ').replaceAll("'", '');
+    result = result.replace(',', '  ').replace(/'/g, '');
   }
   let valueHere = something ? result : nameFirst;
   return (

@@ -44,8 +44,8 @@ export const MedicalJournalLists = () => {
 
   //   let FilteredValue = careGiverList.filter(item => {
   //     return (
-  //       item.first_name.toLowerCase().match(text) ||
-  //       item.nick_name.toLowerCase().match(text)
+  //       item.first_name.toLowerCase().includes(text) ||
+  //       item.nick_name.toLowerCase().includes(text)
   //     );
   //   });
   //   FilteredValue.length == 0 && FilteredValue.push({value: 'null'});

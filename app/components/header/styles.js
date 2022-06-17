@@ -52,7 +52,7 @@ export const profileInfo = val => ({
 export const profileInfo1 = val => ({
   paddingHorizontal: val == 4 ? 0 : size.moderateScale(15),
   marginTop:
-    val == 2 ? size.moderateScale(18) : val == 3 ? size.moderateScale(5) : 0,
+    val == 2 ? size.moderateScale(5) : val == 3 ? size.moderateScale(5) : 0,
   alignItems: val == 2 || val == 3 || val == 4 ? 'center' : 'flex-start',
   marginLeft:
     val == 4 ? 0 : val == 3 ? size.moderateScale(1) : size.moderateScale(0),

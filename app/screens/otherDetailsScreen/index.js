@@ -67,13 +67,11 @@ export const OtherDetailsScreen = () => {
         return (
           <View style={styles.itemRow()}>
             <Text style={styles.itemListTxt()}>
-              {stringItem
-                .split(':')[0]
-                .replaceAll('"', '')
-                .replaceAll("'", '') + ' : '}
+              {stringItem.split(':')[0].replace(/"/g, '').replace(/'/g, '') +
+                ' : '}
             </Text>
             <Text style={styles.itemValueTxt()}>
-              {stringItem.split(':')[1].replaceAll('"', '').replaceAll("'", '')}
+              {stringItem.split(':')[1].replace(/"/g, '').replace(/'/g, '')}
             </Text>
           </View>
         );

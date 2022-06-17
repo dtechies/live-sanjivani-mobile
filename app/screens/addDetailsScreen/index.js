@@ -33,10 +33,13 @@ export const AddDetailsScreen = props => {
 
   const validation = () => {
     let error = false;
-    if (thisArray.length == 0) {
+    let thisNewArray = thisArray.filter(item => item.value !== '');
+    setThisArray(thisNewArray);
+    console.log('validation ==>', thisNewArray);
+    if (thisNewArray.length == 0) {
       error = true;
     }
-    thisArray.map(i => {
+    thisNewArray.map(i => {
       if (i.subcategory_id == 7) {
         if (glucoseValue == '' || selectedGlucose == '') {
           error = true;
@@ -64,13 +67,14 @@ export const AddDetailsScreen = props => {
       });
     }
     // setLoading(true);
+
+    console.log('subCategoryBody res ==>', thisArray);
     const subCategoryBody = {
       subcategory_data: thisArray,
     };
     console.log('subCategoryBody ==>', subCategoryBody);
     const allCatResponse = await dispatch(AddSubcategory(subCategoryBody));
     const res = allCatResponse;
-    // console.log('subCategoryBody res ==>', res);
     if (res.payload.status) {
       setLoading(false);
       toastMessage(res.payload.message);
@@ -128,9 +132,17 @@ export const AddDetailsScreen = props => {
                   value: `{'Time':'${item.name}','value':'${glucoseValue}'}`,
                 });
               } else {
-                thisArray[
-                  indexK
-                ].value = `{'Time':'${item.name}','value':'${glucoseValue}'}`;
+                if (item.name == '' && glucoseValue == '') {
+                  thisArray.splice(indexK, 1);
+                } else {
+                  if (item.name == '' && glucoseValue == '') {
+                    thisArray.splice(indexK, 1);
+                  } else {
+                    thisArray[
+                      indexK
+                    ].value = `{'Time':'${item.name}','value':'${glucoseValue}'}`;
+                  }
+                }
               }
             }
             setThisArray(thisArray);
@@ -176,9 +188,13 @@ export const AddDetailsScreen = props => {
                       value: `{'Systolic':'${v}','Diastolic':'${Diastolic}'}`,
                     });
                   } else {
-                    thisArray[
-                      indexK
-                    ].value = `{'Systolic':'${v}','Diastolic':'${Diastolic}'}`;
+                    if (v == '' && Diastolic == '') {
+                      thisArray.splice(indexK, 1);
+                    } else {
+                      thisArray[
+                        indexK
+                      ].value = `{'Systolic':'${v}','Diastolic':'${Diastolic}'}`;
+                    }
                   }
                 }
                 let bmiValue = 0;
@@ -400,9 +416,13 @@ export const AddDetailsScreen = props => {
                                   value: `{'Time':'${selectedGlucose}','value':'${v}'}`,
                                 });
                               } else {
-                                thisArray[
-                                  indexK
-                                ].value = `{'Time':'${selectedGlucose}','value':'${v}'}`;
+                                if (v == '' && selectedGlucose == '') {
+                                  thisArray.splice(indexK, 1);
+                                } else {
+                                  thisArray[
+                                    indexK
+                                  ].value = `{'Time':'${selectedGlucose}','value':'${v}'}`;
+                                }
                               }
                             }
                             let bmiValue = 0;

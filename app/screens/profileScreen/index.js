@@ -77,6 +77,7 @@ export const ProfileScreen = () => {
       />
       {loading && <Loader />}
       <Header
+        isProfileView={true}
         isColor={true}
         isLogoCenter={true}
         isHeading={true}

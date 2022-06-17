@@ -155,6 +155,7 @@ export class ToggleSwitch extends React.Component {
           <Text style={[styles.labelStyle, labelStyle]}>{label}</Text>
         ) : null}
         <TouchableOpacity
+          hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
           style={this.createToggleSwitchStyle()}
           activeOpacity={0.8}
           onPress={() => (disabled ? null : onToggle(!isOn))}>

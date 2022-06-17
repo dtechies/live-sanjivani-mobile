@@ -120,14 +120,16 @@ export const MedicalJournalScreen = props => {
     formData.append('time', selectedTime);
     formData.append('date', selectedDate);
     formData.append('description', description);
-    formData.append('image', {
-      uri: imageUpload.path,
-      name: imageUpload.imageName,
-      type: imageUpload.mime,
-    });
+    Object.keys(imageUpload).length > 0 &&
+      formData.append('image', {
+        uri: imageUpload.path,
+        name: imageUpload.imageName,
+        type: imageUpload.mime,
+      });
     const SubCategoryResponse = await dispatch(
       addEditMedicalJournalNote(formData),
     );
+    console.log('DATAAA', SubCategoryResponse);
     let res = {status: false, message: 'Connection Error...!'};
     if (SubCategoryResponse) {
       res = SubCategoryResponse;
