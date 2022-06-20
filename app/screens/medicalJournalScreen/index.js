@@ -260,7 +260,6 @@ export const MedicalJournalScreen = props => {
             : validation();
         }}
       />
-
       <Portal>
         <Modalize
           ref={modalRef}

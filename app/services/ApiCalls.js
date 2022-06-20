@@ -351,6 +351,16 @@ export const _storeOTP = async body => {
       ? store.getState().userDataReducer.userDataResponse.userData.token
       : '',
   });
-  console.log('headers _getUserProfileData ==>', headers,body);
+  console.log('headers _getUserProfileData ==>', headers, body);
   return _api_calls('POST', '/store-OTP', headers, body);
+};
+export const _addFeedback = async body => {
+  let {_api_calls} = HttpCalls;
+  let headers = await headersData({
+    token: store.getState().userDataReducer.userDataResponse.login
+      ? store.getState().userDataReducer.userDataResponse.userData.token
+      : '',
+  });
+  console.log('headers _getUserProfileData ==>', headers, body);
+  return _api_calls('POST', '/add-feedback', headers, body);
 };

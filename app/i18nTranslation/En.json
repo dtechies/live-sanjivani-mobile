@@ -245,7 +245,7 @@
   },
   "medicalJournal_screen": {
     "title": "Medical Journal",
-    "order": "Order with Prescription",
+    "order": "Upload Prescription",
     "changeImage": "Change Image",
     "take_picture": "Take Picture",
     "upload_picture": "Upload Picture",

@@ -6,6 +6,7 @@ import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
 import {addMedicineReminder} from 'redux-actions';
 import {Loader, Text, Button, Header, Toast, Screen} from 'components';
+import {ConvertToUTC} from 'utils';
 
 import * as styles from './styles';
 
@@ -15,6 +16,7 @@ export const CheckMedicationReminderScreen = props => {
   const toastRef = useRef();
   const [loading, setLoading] = useState(false);
   const [isDateErr, seIsDateErr] = useState('');
+  const [UTCdate, setUTCdate] = useState('');
   const [extra, setExtra] = useState(0);
   const [data, setData] = useState();
   const [medicineDetail, setMedicineDetail] = useState();
@@ -80,6 +82,7 @@ export const CheckMedicationReminderScreen = props => {
     formData.append('reminder_time', data?.reminder_time);
     formData.append('user_selected_time', data?.user_selected_time);
     formData.append('pills_remaining', data?.pills_remaining);
+    formData.append('utc_date_and_time', UTCdate);
 
     console.log('addMedicineReminder form data ==>', formData);
     // return;
@@ -96,7 +99,8 @@ export const CheckMedicationReminderScreen = props => {
       setDays(daysJson);
       // param.medicineFilteredValue = [];
       setLoading(false);
-      navigation.navigate('viewMedicationScreen');
+      navigation.pop();
+      navigation.replace('viewMedicationScreen');
     } else {
       setLoading(false);
       // console.log('addMedicineReminder error ==>', res);
@@ -104,8 +108,15 @@ export const CheckMedicationReminderScreen = props => {
     }
   };
   useEffect(() => {
+    console.log('props fromViewMedication', param);
+    let newDate = ConvertToUTC(
+      param.frequency_value + ' ' + param.user_selected_time,
+    );
+    console.log('props fromViewMedication', newDate);
+    setUTCdate(newDate);
+    console.log('newDate', newDate);
+    console.log('props fromViewMedication', new moment());
     if (param && param.fromViewMedication) {
-      // console.log('props fromViewMedication', props.route.params.reminderData);
       setData(props.route.params.reminderData);
     } else if (param) {
       // console.log('props', props.route.params);

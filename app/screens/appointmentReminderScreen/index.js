@@ -25,6 +25,7 @@ import {GOOGLE_API_KEY} from 'config';
 import {Portal} from 'react-native-portalize';
 import {Modalize} from 'react-native-modalize';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import {ConvertToUTC} from 'utils';
 export const AppointmentReminderScreen = animated => {
   const dispatch = useDispatch();
   const toastRef = useRef();
@@ -163,9 +164,8 @@ export const AppointmentReminderScreen = animated => {
   };
 
   const addAppointmentData = async () => {
-    // setLoading(true);
-    console.log('clicked==>');
-    // let date = new moment(selectedDate, ['Do MMMM YYYY']).format('YYYY-MM-D');
+    setLoading(true);
+    let newDate = ConvertToUTC(selectedDate + ' ' + selectedTime);
     let formData = new FormData();
     formData.append('doctor_name', searchVal);
     formData.append('date', selectedDate);
@@ -173,6 +173,7 @@ export const AppointmentReminderScreen = animated => {
     formData.append('user_selected_time', `${selectedTime.slice(0, 5)}:00`);
     formData.append('user_id', userId);
     formData.append('reminder_time', `${reminderTime.slice(0, 5)}:00`);
+    formData.append('utc_date_and_time', `${newDate}`);
     // return;
     setExtra(extra + 1);
     console.log('fevUserBody', formData);

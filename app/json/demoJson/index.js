@@ -8,6 +8,7 @@ import {
   IcLogout,
   IcHelp,
   IcProfile,
+  IcCareGiver,
 } from 'theme';
 
 export const MainProfileDetail = [
@@ -29,7 +30,7 @@ export const MainProfileDetail = [
     label: '3',
     value: 'My Care Giver',
     valueTx: 'profileOptions.my_care_giver',
-    svg: IcAppointment,
+    svg: IcCareGiver,
     selectedCard: false,
   },
   {

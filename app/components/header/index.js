@@ -26,11 +26,12 @@ export const Header = props => {
     <LinearGradient
       colors={colArray}
       style={styles.containerMain(
-        props.isLogoCenter ? 2 : props.isLogo ? 1 : props.isProfileView ? 3 : 0,
+        props.isLogoCenter ? 2 : props.isLogo ? 1 : 0,
       )}>
       <View
         style={styles.backMain(
           props.isLongArrowLeft ? 3 : props.isProfile ? 1 : 0,
+          props.isProfileView,
         )}>
         <View style={styles.profileInfoMain()}>
           <Pressable onPress={props.leftOnPress} style={styles.leftIconDes()}>
