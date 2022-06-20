@@ -167,6 +167,6 @@ export const AddNavData = [
   {id: 5, name: 'Care Giver', selected: false},
   {id: 6, name: 'Medications', selected: false},
   {id: 7, name: 'Appointments', selected: false},
-  {id: 8, name: 'Symptoms Check', selected: false},
+  // {id: 8, name: 'Symptoms Check', selected: false},
   {id: 9, name: 'Medical Journal', selected: false},
 ];

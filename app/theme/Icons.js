@@ -43,6 +43,7 @@ import {Camera} from './image/svgIcons/IcCamera';
 import {Edit} from './image/svgIcons/Edit';
 import {Logout} from './image/svgIcons/Logout';
 import {SanjivaniLogo} from './image/svgIcons/IcSanjivaniLogo';
+import {CareGiver} from './image/svgIcons/IcCareGiver';
 import {BtnPlus} from './image/svgIcons/IcBtnPlus';
 import {TestTube} from './image/svgIcons/IcTestTube';
 import {Lungs} from './image/svgIcons/IcLungs';
@@ -122,6 +123,9 @@ export const IcJournal = props => (
 );
 export const IcAppointment = props => (
   <Appointment height={props.height} width={props.width} fill={props.fill} />
+);
+export const IcCareGiver = props => (
+  <CareGiver height={props.height} width={props.width} fill={props.fill} />
 );
 export const IcMan = props => (
   <Man height={props.height} width={props.width} fill={props.fill} />

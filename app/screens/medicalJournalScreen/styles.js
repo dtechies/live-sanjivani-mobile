@@ -3,7 +3,7 @@ import {color, size, fonts, fontSize} from 'theme';
 export const container = () => ({
   justifyContent: 'center',
   backgroundColor: color.themeBack,
-  //
+  marginBottom: size.deviceHeight * 0.08,
 });
 export const screenContainer = () => ({
   marginBottom: size.moderateScale(35),
@@ -59,7 +59,6 @@ export const cardItemMain = () => ({
 });
 export const btnContinue = () => ({
   alignSelf: 'center',
-  marginVertical: size.deviceHeight * 0.02,
   width: size.deviceWidth * 0.35,
   backgroundColor: color.blueBtn,
   borderColor: color.blueBtn,
@@ -69,7 +68,6 @@ export const btnContinue = () => ({
   shadowOpacity: 0.2,
   shadowRadius: 1,
   elevation: size.moderateScale(4),
-  marginTop: size.moderateScale(35),
 });
 export const btnContinueTxt = () => ({
   color: color.white,
@@ -260,6 +258,7 @@ export const containerVal = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoRegular,
   color: color.blueTx,
+  marginBottom: size.moderateScale(40),
 });
 export const inputTextStyle = () => ({
   paddingHorizontal: size.moderateScale(9),

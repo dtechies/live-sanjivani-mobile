@@ -19,14 +19,14 @@ export const symptomName = () => ({
   color: color.blueTx,
   fontSize: fontSize.veryLarge,
   fontFamily: fonts.latoBold,
-  textAlign: 'center',
+  // textAlign: 'center',
   marginTop: size.moderateScale(15),
 });
 export const textAgeAndGender = () => ({
   color: color.blueTx,
   fontSize: fontSize.small,
   fontFamily: fonts.latoRegular,
-  textAlign: 'center',
+  // textAlign: 'center',
   marginTop: size.moderateScale(5),
 });
 export const textConditionDetail = () => ({
@@ -52,4 +52,9 @@ export const textDescription = () => ({
   fontFamily: fonts.latoRegular,
   lineHeight: size.moderateScale(20),
   marginVertical: size.moderateScale(12),
+});
+export const pressableButton = () => ({
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
 });

@@ -245,7 +245,7 @@
   },
   "medicalJournal_screen": {
     "title": "मेडिकल जर्नल",
-    "order": "पर्चे के साथ आदेश",
+    "order": "नुस्खे अपलोड करें",
     "changeImage": "छवि बदलें",
     "take_picture": "चित्र लें",
     "upload_picture": "चित्र अपलोड करें",

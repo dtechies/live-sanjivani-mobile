@@ -11,18 +11,19 @@ export const containerMain = val => ({
   // paddingVertical: size.moderateScale(25),
   justifyContent: 'center',
 });
-export const backMain = val => ({
+export const backMain = (val, ss) => ({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: val == 3 ? 'space-between' : 'flex-start',
   marginTop: val == 3 ? size.moderateScale(35) : 0,
+  height: ss ? 0 : size.moderateScale(50),
 });
 export const profileInfoMain = val => ({
   marginTop:
     val == 1
       ? size.moderateScale(40)
       : val == 2
-      ? size.moderateScale(-15)
+      ? size.moderateScale(10)
       : val == 3
       ? size.moderateScale(20)
       : 0,

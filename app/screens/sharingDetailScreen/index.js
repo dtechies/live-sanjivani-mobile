@@ -75,6 +75,7 @@ export const SharingDetailScreen = props => {
     }
   };
   const download = async () => {
+    setLoading(true);
     const pdfData = {
       subcategory_id: sharingId,
     };
@@ -91,7 +92,10 @@ export const SharingDetailScreen = props => {
       toastMessage(res.message);
       let pdf = res.data.link;
       // setLink(res.data.link);
-      Linking.openURL(`http://${pdf.slice(8)}`);
+      setTimeout(() => {
+        setLoading(false);
+        Linking.openURL(`http://${pdf.slice(8)}`);
+      }, 1000);
       // pdfDownload(res.data.link);
     } else {
       // console.log('false');

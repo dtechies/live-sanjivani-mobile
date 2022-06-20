@@ -176,6 +176,15 @@ export const MedicationReminderScreen = () => {
     }
   };
   const onNext = async () => {
+    let givenDate = new Date();
+    let day =
+      givenDate.getDate() > 9 ? givenDate.getDate() : `0${givenDate.getDate()}`;
+    let month =
+      givenDate.getMonth() + 1 > 9
+        ? givenDate.getMonth() + 1
+        : `0${givenDate.getMonth() + 1}`;
+    let year = givenDate.getFullYear();
+    let newDate = year + '-' + month + '-' + day;
     navigation.navigate('checkMedicationReminderScreen', {
       reminder_name: reminderName,
       referredBy: referredBy,
@@ -187,7 +196,12 @@ export const MedicationReminderScreen = () => {
       medicine_strength_unit: medicineStrengthUnit,
       reminder_frequency: remindFrequencyValue,
       reminder_time: remindTimeValue,
-      frequency_value: remindFreqDate,
+      frequency_value:
+        remindFreqDate == ''
+          ? newDate
+          : remindFreqDate == 'Select a Date'
+          ? newDate
+          : remindFreqDate,
       user_selected_time: `${remindTime.slice(0, 5)}:00`,
       pills_remaining: pills,
       medicineFilteredValue:
