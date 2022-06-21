@@ -32,8 +32,8 @@ export const MedicalJournalScreen = props => {
   const [description, setDescription] = useState('');
   const [descriptionErr, setDescriptionErr] = useState('');
   const [showTime, setShowTime] = useState(false);
-  const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState('select time');
+  const [selectedDate, setSelectedDate] = useState('select date');
   const [showDate, setShowDate] = useState(false);
 
   useEffect(() => {
@@ -101,10 +101,10 @@ export const MedicalJournalScreen = props => {
   };
 
   const validation = () => {
-    if (selectedDate === null) {
+    if (selectedDate === 'select date') {
       setDateErr('Please select Date...');
     }
-    if (selectedTime === null) {
+    if (selectedTime === 'select time') {
       setTimeErr('Please select Time...');
     }
     if (description === '') {
@@ -206,14 +206,20 @@ export const MedicalJournalScreen = props => {
             onPress={() => {
               setShowDate(true);
             }}>
-            <Text style={styles.cardTxt(1)} text={selectedDate} />
+            <Text
+              style={styles.cardTxt(1, selectedDate == 'select date')}
+              text={selectedDate}
+            />
           </Pressable>
           <Pressable
             style={styles.cardView(1)}
             onPress={() => {
               setShowTime(!showTime);
             }}>
-            <Text style={styles.cardTxt(1)} text={selectedTime} />
+            <Text
+              style={styles.cardTxt(1, selectedTime == 'select time')}
+              text={selectedTime}
+            />
           </Pressable>
         </View>
 

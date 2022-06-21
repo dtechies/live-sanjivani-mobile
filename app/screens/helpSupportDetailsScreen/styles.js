@@ -41,7 +41,6 @@ export const containerVal = () => ({
   fontSize: fontSize.small,
   fontFamily: fonts.latoRegular,
   color: color.blueTx,
-  marginBottom: size.moderateScale(40),
 });
 export const imageView = val => ({
   marginVertical: size.moderateScale(15),
@@ -97,6 +96,7 @@ export const cardItemMain = () => ({
 export const btnContinue = () => ({
   alignSelf: 'center',
   width: size.deviceWidth * 0.35,
+  marginVertical: size.moderateScale(40),
   backgroundColor: color.blueBtn,
   borderColor: color.blueBtn,
   borderRadius: size.moderateScale(10),
@@ -270,4 +270,11 @@ export const crossIconView = () => ({
 });
 export const inputTextStyle = () => ({
   paddingHorizontal: size.moderateScale(9),
+});
+export const errorText = val => ({
+  color: color.red,
+  fontFamily: fonts.latoRegular,
+  fontSize: fontSize.small,
+  marginLeft:
+    val == 1 ? size.moderateScale(0) : val == 2 ? size.moderateScale(21) : 0,
 });
