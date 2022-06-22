@@ -131,6 +131,7 @@ export const ProgressScreen = () => {
                       console.log('favoriteData', favoriteData);
                       return (
                         <MedicalItems
+                          animateCard={false}
                           index={index}
                           key={index + 'MedicalItems'}
                           onPress={() => {
@@ -161,6 +162,7 @@ export const ProgressScreen = () => {
                     progressData.map((item, index) => {
                       return (
                         <MedicalItems
+                          animateCard={false}
                           index={index}
                           key={index + 'MedicalItems'}
                           onPress={() => {

@@ -1,12 +1,43 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, Pressable, SafeAreaView} from 'react-native';
+import {View, Pressable, SafeAreaView, Animated, Easing} from 'react-native';
 import {Text, Screen, Header, Toast, Loader} from 'components';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {getAllCategoryAndSubCategory} from 'redux-actions';
-import {color, IcBack} from 'theme';
+import {color, IcBack, size} from 'theme';
 import {AddNavData} from 'json';
 import * as styles from './styles';
+
+const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+const AddCard = ({item, index, OnPressOptions}) => {
+  // let translate = new Animated.Value(0);
+  const animatedTranslate = 0;
+  //   const animatedTranslate = translate.interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: [-size.deviceWidth, 0],
+  // });
+  // let duration = index > 10 ? (index + 1) * 50 : (index + 1) * 200;
+  // useEffect(() => {
+  //   Animated.timing(translate, {
+  //     toValue: 1,
+  //     duration: duration,
+  //     easing: Easing.elastic(1),
+  //     useNativeDriver: true, // To make use of native driver for performance
+  //   }).start();
+  // }, [translate]);
+
+  return (
+    <AnimatedPressable
+      onPress={() => OnPressOptions(item, index)}
+      style={styles.addNavStyle(item.selected, animatedTranslate)}
+      key={index + 'addMedication'}
+      // disabled={!showSub}
+    >
+      <Text text={item.name} style={styles.labelAddStyle(item.selected)} />
+      <IcBack fill={item.selected ? color.white : color.blueTx} />
+    </AnimatedPressable>
+  );
+};
 
 export const AddScreen = () => {
   const dispatch = useDispatch();
@@ -15,12 +46,12 @@ export const AddScreen = () => {
   const [extra, setExtra] = useState(0);
   const [loading, setLoading] = useState(false);
   const [allCategory, setAllCategory] = useState([]);
-  const [data, setData] = useState(AddNavData);
+  const [data, setData] = useState();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       setData(
-        data.map(i => {
+        AddNavData.map(i => {
           i.selected = false;
           return i;
         }),
@@ -36,8 +67,8 @@ export const AddScreen = () => {
     data.map((val, i) => {
       data[i].selected = false;
     });
-    AddNavData.map((val, i) => {
-      AddNavData[i].selected = false;
+    data.map((val, i) => {
+      data[i].selected = false;
     });
     setExtra(extra + 1);
   };
@@ -48,12 +79,18 @@ export const AddScreen = () => {
     console.log('allCatResponse_NEW ==>', res);
     if (res != undefined) {
       if (res.status) {
-        // setLoading(false);
         setAllCategory(res.data.categoryData);
+        // setData(
+        //   AddNavData.map(i => {
+        //     i.selected = false;
+        //     return i;
+        //   }),
+        // );
+        setLoading(false);
         setExtra(extra + 1);
       }
     } else {
-      // setLoading(false);
+      setLoading(false);
       setAllCategory([]);
       // toastMessage('Invalid data...');
     }
@@ -65,7 +102,7 @@ export const AddScreen = () => {
 
   const OnPressOptions = (item, index) => {
     // console.log('Asdas');
-    clearData();
+    // clearData();
     if (
       item.name == 'Vitals' ||
       item.name == 'Measurements' ||
@@ -136,22 +173,16 @@ export const AddScreen = () => {
       <Header isColor={true} isHeading={true} title={'add_screen.title'} />
       <Screen withScroll style={styles.container()}>
         <View style={styles.mainCard()}>
-          {data.map((item, index) => {
-            return (
-              <Pressable
-                onPress={() => OnPressOptions(item, index)}
-                style={styles.addNavStyle(item.selected)}
-                key={index + 'addMedication'}
-                // disabled={!showSub}
-              >
-                <Text
-                  text={item.name}
-                  style={styles.labelAddStyle(item.selected)}
+          {data &&
+            data.map((item, index) => {
+              return (
+                <AddCard
+                  item={item}
+                  index={index}
+                  OnPressOptions={() => OnPressOptions(item, index)}
                 />
-                <IcBack fill={item.selected ? color.white : color.blueTx} />
-              </Pressable>
-            );
-          })}
+              );
+            })}
         </View>
       </Screen>
     </SafeAreaView>

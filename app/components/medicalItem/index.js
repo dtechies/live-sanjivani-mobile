@@ -21,23 +21,24 @@ export const MedicalItems = props => {
     nameThirdTx,
     nameThird,
     index,
+    animateCard = true,
   } = props;
 
-  const animatedTranslate = 0;
-  // const animatedTranslate = translate.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: [size.deviceWidth, 0],
-  // });
-  // let duration = index > 10 ? (index + 1) * 20 : (index + 1) * 200;
-  // React.useEffect(() => {
-  //   Animated.timing(translate, {
-  //     toValue: 1,
-  //     duration: duration,
-  //     // delay: index,
-  //     easing: Easing.elastic(1),
-  //     useNativeDriver: true, // To make use of native driver for performance
-  //   }).start();
-  // }, [index]);
+  const notAnimatedTranslate = 0;
+  const animatedTranslate = translate.interpolate({
+    inputRange: [0, 1],
+    outputRange: [size.deviceWidth, 0],
+  });
+  let duration = index > 10 ? (index + 1) * 25 : (index + 1) * 100;
+  React.useEffect(() => {
+    Animated.timing(translate, {
+      toValue: 1,
+      duration: duration,
+      delay: index > 10 ? (index + 1) * 40 : 0,
+      easing: Easing.elastic(1),
+      useNativeDriver: true, // To make use of native driver for performance
+    }).start();
+  }, []);
 
   let result = nameFirst.includes('{');
   let something = false;
@@ -49,7 +50,12 @@ export const MedicalItems = props => {
   let valueHere = something ? result : nameFirst;
   return (
     <AnimatedPressable
-      style={[styles.container(animatedTranslate), containerStyle]}
+      style={[
+        styles.container(
+          animateCard ? animatedTranslate : notAnimatedTranslate,
+        ),
+        containerStyle,
+      ]}
       onPress={onPress}>
       <View style={styles.flexOne()} />
       <View style={styles.centerView()}>
