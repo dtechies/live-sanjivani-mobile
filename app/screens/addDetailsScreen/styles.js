@@ -206,6 +206,7 @@ export const dropdown = () => ({
   paddingVertical: size.moderateScale(5),
   backgroundColor: color.white,
   marginLeft: size.moderateScale(15),
+  marginRight: size.moderateScale(15),
   shadowColor: color.black,
   shadowRadius: size.moderateScale(5),
   shadowOffset: {height: 3, width: 0},

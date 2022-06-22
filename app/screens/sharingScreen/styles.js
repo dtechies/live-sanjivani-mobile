@@ -20,7 +20,7 @@ export const listViewStyle = () => ({
 export const button = opp => ({
   width: size.deviceWidth * 0.9,
   alignSelf: 'center',
-  marginBottom: size.moderateScale(5),
+  marginVertical: size.moderateScale(5),
   opacity: opp ? 0.5 : 1,
 });
 export const buttonTxt = () => ({

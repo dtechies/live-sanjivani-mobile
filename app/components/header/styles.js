@@ -15,8 +15,8 @@ export const backMain = (val, ss) => ({
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: val == 3 ? 'space-between' : 'flex-start',
-  marginTop: val == 3 ? size.moderateScale(35) : 0,
-  height: ss ? 0 : size.moderateScale(50),
+  marginTop: val == 3 ? size.moderateScale(20) : 0,
+  height: ss ? 0 : size.moderateScale(58),
 });
 export const profileInfoMain = val => ({
   marginTop:

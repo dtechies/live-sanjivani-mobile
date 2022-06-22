@@ -25,7 +25,7 @@ export const SharingScreen = () => {
 
   const [sharingData, setSharingData] = useState(SharingData);
   const [sharingDataErr, setSharingDataErr] = useState('');
-  const [sharingDataList, setSharingDataList] = useState([]);
+  const [sharingDataList, setSharingDataList] = useState();
   const clearData = () => {
     sharingData.map((val, i) => {
       sharingData[i].selectedCard = false;
@@ -87,7 +87,7 @@ export const SharingScreen = () => {
 
       <Screen withScroll>
         <View style={styles.row()}>
-          {sharingDataList.length > 0 ? (
+          {sharingDataList && sharingDataList.length > 0 ? (
             sharingDataList.map((item, index) => {
               return (
                 <MedicalItems
@@ -116,8 +116,10 @@ export const SharingScreen = () => {
         ) : null}
       </Screen>
       <Button
-        disabled={sharingDataList.length <= 0}
-        buttonStyle={styles.button(sharingDataList.length <= 0)}
+        disabled={sharingDataList && sharingDataList.length <= 0}
+        buttonStyle={styles.button(
+          sharingDataList && sharingDataList.length <= 0,
+        )}
         buttonText={styles.buttonTxt()}
         nameTx={'sharing_screen.shareItems'}
         onPress={() => {

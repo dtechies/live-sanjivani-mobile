@@ -60,7 +60,6 @@ export const labelFieldText = () => ({
 });
 export const addButtonStyle = () => ({
   paddingVertical: size.moderateScale(10),
-  marginBottom: size.moderateScale(15),
   width: size.deviceWidth * 0.5,
   alignSelf: 'center',
   backgroundColor: color.blueBtn,
@@ -85,7 +84,7 @@ export const textAddButton = () => ({
   color: color.white,
   fontSize: fontSize.medium,
 });
-export const addNavStyle = val => ({
+export const addNavStyle = (val, animatedTranslate) => ({
   backgroundColor: val ? color.blueBtn : color.white,
   justifyContent: 'space-between',
   alignItems: 'center',
@@ -99,6 +98,7 @@ export const addNavStyle = val => ({
   shadowOffset: {height: 5, width: 0},
   shadowOpacity: 0.05,
   elevation: size.moderateScale(2),
+  transform: [{translateX: animatedTranslate}],
 });
 export const labelAddStyle = val => ({
   fontSize: fontSize.medium,

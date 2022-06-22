@@ -97,7 +97,7 @@ export const HelpSupportDetailsScreen = props => {
   };
 
   const validation = () => {
-    if (description === '') {
+    if (descriptionValue === '') {
       setDescriptionErr('Please Enter Description...');
     }
   };
@@ -148,7 +148,7 @@ export const HelpSupportDetailsScreen = props => {
               }}
               style={styles.containerVal()}
             />
-            {descriptionErr ? (
+            {descriptionErr !== '' ? (
               <Text style={styles.errorText(2)}>{descriptionErr}</Text>
             ) : null}
             <Button
@@ -156,7 +156,9 @@ export const HelpSupportDetailsScreen = props => {
               buttonText={styles.btnContinueTxt()}
               nameTx={'medicalJournal_screen.save'}
               onPress={() => {
-                description ? addMedicalJournalData() : validation();
+                descriptionValue !== ''
+                  ? addMedicalJournalData()
+                  : validation();
               }}
             />
           </View>

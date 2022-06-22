@@ -82,8 +82,13 @@ export const cardDesign = val => ({
   flexDirection: 'row',
   alignItems: 'center',
 });
-export const cardTxt = val => ({
-  fontSize: val == 1 ? fontSize.mediumLargeSec : fontSize.medium,
+export const cardTxt = (val, fontsizeChange) => ({
+  fontSize:
+    val == 1
+      ? fontsizeChange
+        ? fontSize.medium
+        : fontSize.mediumLargeSec
+      : fontSize.medium,
   fontFamily: fonts.latoBold,
   color: color.headerBlue,
   marginLeft: size.moderateScale(val == 2 ? 19 : 7),
