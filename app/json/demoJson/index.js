@@ -9,6 +9,7 @@ import {
   IcHelp,
   IcProfile,
   IcCareGiver,
+  IcOtherDetails,
 } from 'theme';
 
 export const MainProfileDetail = [
@@ -58,7 +59,7 @@ export const MainProfileDetail = [
     label: '7',
     value: 'Other Details',
     valueTx: 'profileOptions.other_details',
-    svg: IcJournal,
+    svg: IcOtherDetails,
     selectedCard: false,
   },
   {
