@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {View, Pressable} from 'react-native';
+import {View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SelectCountry} from 'react-native-element-dropdown';
 
-import {Text, Button} from 'components';
+import {Button} from 'components';
 import * as styles from './styles';
 
 export const LandingScreen = () => {
@@ -30,7 +30,7 @@ export const LandingScreen = () => {
         value={languageData}
         data={local_data}
         valueField="value"
-        labelField="lable"
+        labelTxField="lable"
         placeholder="Select Language"
         onChange={e => {
           setLanguageData(e.value);

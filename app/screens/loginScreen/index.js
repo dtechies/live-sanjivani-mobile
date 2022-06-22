@@ -1,134 +1,152 @@
-import React, {useState} from 'react';
-import {View, Pressable, Image, SafeAreaView} from 'react-native';
+import React, {useState, useRef} from 'react';
+import {View, Pressable, Image, SafeAreaView, Linking} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-
-import {images, IcArrowNext} from 'theme';
-import {Loader, Text, Button, TitleBox, Screen, InputBox} from 'components';
-import {size, color, IcSearch} from 'theme';
+import {useDispatch} from 'react-redux';
+import {getOtp} from 'redux-actions';
+import Dropdown from '../../components/Dropdown/src/components/Dropdown';
+import {Loader, Text, Button, InputBox, Toast} from 'components';
+import {size, images, color} from 'theme';
+import {countryCode} from 'json';
 import * as styles from './styles';
+// import {ChangeLanguage} from '../../components';
 export const LoginScreen = () => {
-  const [subScreen, setsubScreen] = useState(false);
-  const [mainScreen, setmainScreen] = useState(true);
-  const [editable, setEditable] = useState(true);
-  const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-
-  const requestOtp = () => {
-    setEditable(false);
-    setmainScreen(false);
-    setsubScreen(true);
+  const toastRef = useRef();
+  const [number, setNumber] = useState('');
+  const [countryCodeVal, setCountryCodeVal] = useState('+91');
+  const [extra, setExtra] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [numberCorrect, setNumberCorrect] = useState('');
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
+  const onGetOtp = async () => {
+    setLoading(true);
+    const getOtpBody = {
+      mob_no: number,
+      country_code: countryCodeVal,
+      user_id: null,
+    };
+    const getOtpResponse = await dispatch(getOtp(getOtpBody));
+    let res = {status: false, message: 'Connection Error...!'};
+    console.log('getOtpResponse login..', getOtpResponse);
+    if (getOtpResponse) {
+      res = getOtpResponse.payload;
+    }
+    if (res.status) {
+      setLoading(false);
+      toastMessage(res.message);
+      setTimeout(() => {
+        navigation.navigate('otpScreen', {
+          otpValue: res.data,
+        });
+      }, 150);
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+    }
   };
 
+  const validateMobile = () => {
+    if (number.length == 10) {
+      setNumberCorrect('');
+      onGetOtp();
+    } else {
+      setNumberCorrect('login_screen.errorMsg');
+    }
+  };
   return (
     <SafeAreaView style={styles.container()}>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
       <View style={styles.imageView()}>
         <Image
           style={{
-            height: size.moderateScale(150),
-            width: size.moderateScale(150),
+            height: size.moderateScale(175),
+            width: size.moderateScale(225),
           }}
-          source={images.icLogo}
+          source={images.icSanjivaniLogoPng}
         />
       </View>
-      {mainScreen && (
-        <Screen bounces={false} style={styles.screenContainer()}>
-          <InputBox
-            titleTx={'login_screen.number'}
-            titleStyle={styles.labelFieldText()}
-            placeholder={'Number'}
-            value={number}
-            onChangeText={value => {
-              setNumber(value);
+
+      <View style={styles.screenContainer()}>
+        <Text style={styles.labelLoginTxt()} tx={'login_screen.number'} />
+        <View style={styles.rowView()}>
+          <Dropdown
+            defaultValue={countryCode[0]}
+            data={countryCode}
+            labelField="label"
+            placeholder={'+91'}
+            valueField="value"
+            dropdownPosition={'bottom'}
+            style={styles.dropdown()}
+            placeholderStyle={styles.labelFieldText()}
+            selectedTextStyle={styles.selectedOptionTextStyle()}
+            maxHeight={size.moderateScale(60)}
+            containerStyle={styles.dropdownContainer()}
+            flatListProps={{
+              bounces: false,
             }}
-            maxLength={10}
-            keyboardType={'number-pad'}
-            inputStyle={styles.inputStyle(editable)}
-            mainContainerStyle={styles.inputMainContainer()}
-            leftIcon={
-              <Text
-                style={styles.labelFieldText()}
-                tx="login_screen.countryCode"
-              />
-            }
+            onChange={item => {
+              setCountryCodeVal(item.value);
+            }}
+            renderItem={item => {
+              return (
+                <View>
+                  <Text
+                    text={item.value}
+                    style={styles.InsideLabelFieldText()}
+                  />
+                  <View style={styles.separator()} />
+                </View>
+              );
+            }}
           />
-          <Button
-            buttonStyle={styles.button()}
-            buttonText={styles.buttonTxt()}
-            nameTx={'login_screen.request_otp'}
-            onPress={() => requestOtp()}
-          />
-          <Button
-            buttonStyle={styles.button()}
-            buttonText={styles.buttonTxt()}
-            nameTx={'login_screen.register_new_user'}
-            onPress={() => navigation.navigate('registerScreen')}
-          />
-          <View style={styles.linkView()}>
-            <Text
-              style={styles.labelFieldLinkText()}
-              tx="login_screen.learnMore"
-            />
-            <IcArrowNext
-              height={size.moderateScale(12)}
-              width={size.moderateScale(12)}
-              fill={color.mediumGreen}
-            />
-          </View>
-        </Screen>
-      )}
-      {subScreen && (
-        <Screen bounces={false} style={styles.screenContainer()}>
           <InputBox
-            titleTx={'login_screen.number'}
-            titleStyle={styles.labelDisableText()}
-            placeholder={'Number'}
             value={number}
-            containerStyle={{borderColor: color.darkGrey}}
-            placeholderTextColor={color.darkGrey}
-            editable={editable}
-            inputStyle={styles.inputDisableStyle()}
-            mainContainerStyle={styles.inputMainDisableContainer()}
-            leftIcon={
-              <Text
-                style={styles.labelDisableText()}
-                tx="login_screen.countryCode"
-              />
-            }
+            placeholderTextColor={color.grayIcon}
+            placeholder={'XXXXXXXXXX'}
+            keyboardType={'phone-pad'}
+            withButton={true}
+            btnName={'Request OTP'}
+            maxLength={10}
+            onChangeText={val => {
+              setNumber(val.replace(/[^0-9]+/g, ''));
+              setNumberCorrect('');
+              setExtra(extra + 1);
+            }}
+            inputStyle={styles.inputTxt()}
+            mainContainerStyle={styles.inputMain()}
+            onRightIconPress={() => {
+              validateMobile();
+            }}
           />
-          <InputBox
-            titleTx={'login_screen.otp'}
-            titleStyle={styles.labelFieldText()}
-            placeholder={'OTP'}
-            maxLength={4}
-            keyboardType={'number-pad'}
-            inputStyle={styles.inputStyle(editable)}
-            mainContainerStyle={styles.inputMainContainer()}
-          />
-          <Button
-            buttonStyle={styles.button()}
-            buttonText={styles.buttonTxt()}
-            nameTx={'login_screen.request_new_otp'}
-            onPress={() => requestOtp()}
-          />
-          <Button
-            buttonStyle={styles.button()}
-            buttonText={styles.buttonTxt()}
-            nameTx={'login_screen.login'}
-            onPress={() => navigation.navigate('bottomStackNavigation')}
-          />
-          <View style={styles.linkView()}>
-            <Text
-              style={styles.labelFieldLinkText()}
-              tx="login_screen.learnMore"
-            />
-            <IcArrowNext
-              height={size.moderateScale(12)}
-              width={size.moderateScale(12)}
-              fill={color.mediumGreen}
-            />
-          </View>
-        </Screen>
-      )}
+        </View>
+        <View style={styles.validationView()}>
+          {numberCorrect ? (
+            <Text style={styles.textValidation()} tx={numberCorrect} />
+          ) : null}
+        </View>
+        <Text style={styles.labelOrTxt()} tx={'login_screen.or'} />
+        <Button
+          buttonStyle={styles.btnRegister()}
+          buttonText={styles.btnRegisterTxt()}
+          nameTx={'login_screen.register_new_user'}
+          onPress={() => navigation.navigate('registerScreen')}
+        />
+        <Pressable
+          onPress={() => Linking.openURL('https://livesanjivani.com/')}>
+          <Text style={styles.labelLearn()} tx={'login_screen.learnMore'} />
+        </Pressable>
+      </View>
+      {/* <ChangeLanguage /> */}
     </SafeAreaView>
   );
 };

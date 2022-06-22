@@ -1,70 +1,46 @@
 import {color, size, fontSize, fonts} from 'theme';
 
-export const full = () => ({
-  flex: 1,
-});
 export const container = () => ({
   flex: 1,
-  backgroundColor: color.white,
+  backgroundColor: color.themeBack,
+});
+export const toast = () => ({
+  marginHorizontal: size.moderateScale(20),
   paddingHorizontal: size.moderateScale(20),
-  paddingTop: size.moderateScale(5),
-});
-// dropdown style
-export const dropdown = () => ({
-  marginBottom: size.moderateScale(10),
-  marginTop: size.moderateScale(5),
-  paddingHorizontal: size.moderateScale(5),
-  borderWidth: size.moderateScale(2),
-  borderColor: color.purple,
-  paddingVertical: size.moderateScale(5),
-  backgroundColor: color.white,
-});
-export const placeHolderStyle = () => ({
-  fontSize: fontSize.small,
-  fontFamily: fonts.openSansRegular,
-  color: color.purple,
-});
-export const selectedOptionTextStyle = () => ({
-  fontFamily: fonts.openSansBold,
-});
-export const dropdownContainer = () => ({
-  backgroundColor: color.lavender,
-});
-export const textItemToShare = () => ({
-  fontSize: fontSize.small,
-  fontFamily: fonts.openSansRegular,
-  color: color.darkGrey,
-  marginTop: size.moderateScale(5),
-});
-export const textInputTitle = () => ({
-  fontFamily: fonts.openSansBold,
-  color: color.purple,
-  fontSize: fontSize.small,
-});
-export const inputMainContainer = () => ({
-  marginTop: size.moderateScale(5),
-});
-export const labelFieldText = () => ({
-  fontFamily: fonts.openSansRegular,
-  color: color.purple,
-  fontSize: fontSize.small,
-  paddingLeft: size.moderateScale(5),
+  paddingVertical: size.moderateScale(12),
 });
 export const row = () => ({
   flexDirection: 'row',
-  justifyContent: 'space-around',
-  marginTop: size.moderateScale(25),
+  flexWrap: 'wrap',
 });
-export const addButtonStyle = email => ({
-  paddingVertical: size.moderateScale(10),
-  width: size.deviceWidth - size.moderateScale(6),
-  margin: size.moderateScale(3),
-  flex: 1,
-  borderColor: color.mediumGreen,
-  backgroundColor: color.lightGreen,
+export const listViewStyle = () => ({
+  marginVertical: size.moderateScale(1),
+  marginLeft: size.moderateScale(2),
 });
-export const textAddButton = () => ({
-  fontFamily: fonts.openSansBold,
-  color: color.mediumGreen,
+export const button = opp => ({
+  width: size.deviceWidth * 0.9,
+  alignSelf: 'center',
+  marginVertical: size.moderateScale(5),
+  opacity: opp ? 0.5 : 1,
+});
+export const buttonTxt = () => ({
+  color: color.white,
+  fontFamily: fonts.latoBold,
+  fontSize: fontSize.medium,
+});
+export const errorText = val => ({
+  color: color.red,
+  fontFamily: fonts.latoRegular,
   fontSize: fontSize.small,
+  marginLeft: size.moderateScale(10),
+  marginTop: size.moderateScale(5),
+  marginBottom: size.moderateScale(5),
+});
+export const emptyText = val => ({
+  color: color.black,
+  fontFamily: fonts.latoRegular,
+  fontSize: fontSize.mediumLarge,
+  marginTop: size.moderateScale(15),
+  textAlign: 'center',
+  width: '100%',
 });

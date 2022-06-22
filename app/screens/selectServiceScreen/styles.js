@@ -25,21 +25,17 @@ export const dropdown = () => ({
   paddingVertical: size.moderateScale(5),
   backgroundColor: color.white,
 });
-
 export const labelFieldText = () => ({
   fontSize: fontSize.small,
-  fontFamily: fonts.openSansRegular,
+  fontFamily: fonts.latoRegular,
   color: color.purple,
 });
-
 export const selectedOptionTextStyle = () => ({
-  fontFamily: fonts.openSansBold,
+  fontFamily: fonts.latoBold,
 });
-
 export const dropdownContainer = () => ({
   backgroundColor: color.lavender,
 });
-
 export const button = () => ({
   width: size.deviceWidth - size.moderateScale(40),
   padding: size.moderateScale(10),
@@ -48,7 +44,6 @@ export const button = () => ({
   borderColor: color.borderBlue,
   marginVertical: size.moderateScale(15),
 });
-
 export const buttonTxt = () => ({
   color: color.borderBlue,
 });

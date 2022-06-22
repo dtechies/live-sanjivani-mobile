@@ -1,4 +1,6 @@
 import {size, color} from 'theme';
+import {fonts} from '../../theme/Fonts';
+import {fontSize} from '../../theme/FontSize';
 
 export const container = () => ({
   // flex: 1,
@@ -12,7 +14,7 @@ export const container = () => ({
 
 export const titleTxt = () => ({
   maxHeight: size.moderateScale(35),
-  fontSize: size.moderateScale(20),
-  color: color.purple,
+  fontSize: fontSize.large,
+  color: color.blueTx,
   paddingHorizontal: size.moderateScale(10),
 });
