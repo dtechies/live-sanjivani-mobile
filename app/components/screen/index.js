@@ -4,13 +4,9 @@ export const Screen = props => {
   return (
     <KeyboardAwareFlatList
       data={['ok']}
-      // enableOnAndroid
-      // extraScrollHeight={130}
-      // extraHeight={130}
       removeClippedSubviews={false}
       ListEmptyComponent={null}
       keyExtractor={(i, k) => 'dummy' + k}
-      // renderItem={null}
       ref={props.screenRef}
       testID={props.screenTestId}
       {...props}

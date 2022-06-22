@@ -29,6 +29,7 @@ import {ConvertToUTC} from 'utils';
 export const AppointmentReminderScreen = animated => {
   const dispatch = useDispatch();
   const toastRef = useRef();
+  const screenRef = useRef();
   const placesAutocompleteRef = useRef();
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
@@ -125,17 +126,17 @@ export const AppointmentReminderScreen = animated => {
   const onDoctorNameType = val => {
     setSearchVal(val);
     let text = val.toLowerCase();
-    let address = 'initial val...';
-    // console.log('doctorData ==> ', doctorData);
+    let address = '';
+    console.log('doctorData ==> ', doctorData);
     if (val.length >= 2) {
       let filteredName = doctorData.filter(item => {
         if (item.doctor_name.toLowerCase().includes(text)) {
-          address = 'item.doctor_address';
+          address = item.doctor_address;
         }
         return item.doctor_name.toLowerCase().includes(text);
       });
 
-      // console.log('address ==> ', address);
+      console.log('address ==> ', address);
       setDoctorFilteredName(filteredName);
       setAddressOne(address);
       setExtra(extra + 1);
@@ -220,6 +221,7 @@ export const AppointmentReminderScreen = animated => {
   const onChangeSearchText = e => {
     // console.log('SU AAVE CHE', e);
     setAddressOne(e);
+    screenRef.current.scrollToPosition(0, size.deviceHeight * 0.5);
   };
 
   const renderRow = row => {
@@ -252,7 +254,7 @@ export const AppointmentReminderScreen = animated => {
         isHeading={true}
         title={'appointment_reminder_screen.title'}
       />
-      <Screen style={styles.container()}>
+      <Screen screenRef={screenRef} style={styles.container()}>
         <View style={styles.mainView()}>
           <View style={styles.dataPickerStyle()}>
             <DatePicker
@@ -406,26 +408,7 @@ export const AppointmentReminderScreen = animated => {
                 </Pressable>
               );
             })}
-          {/* <InputBox
-            value={addressOne}
-            onChangeText={value => {
-              setAddressOne(value);
-              setAddressOneErr('');
-              setExtra(extra + 1);
-            }}
-            mainContainerStyle={styles.inputMain()}
-            inputStyle={styles.inputTxt()}
-            leftIcon={true}
-            leftIconName={
-              <IcAddress
-                height={size.moderateScale(20)}
-                width={size.moderateScale(20)}
-                fill={color.blue}
-              />
-            }
-            placeholder={'Address'}
-            
-          /> */}
+
           <View style={styles.searchPlacesTxt()}>
             <View
               style={{
