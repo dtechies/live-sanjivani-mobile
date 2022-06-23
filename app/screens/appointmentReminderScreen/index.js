@@ -258,6 +258,7 @@ export const AppointmentReminderScreen = animated => {
         <View style={styles.mainView()}>
           <View style={styles.dataPickerStyle()}>
             <DatePicker
+              date={new moment(selectedDate, 'YYYY-MM-DD')._d}
               options={{
                 textHeaderColor: color.black,
                 textDefaultColor: color.black,
@@ -303,6 +304,7 @@ export const AppointmentReminderScreen = animated => {
                 isVisible={showTime}
                 mode="time"
                 locale="en_GB"
+                date={new moment(selectedDate, 'YYYY-MM-DD')._d}
                 onConfirm={val => {
                   if (
                     new Date(val).toDateString() === new Date().toDateString()
@@ -342,7 +344,9 @@ export const AppointmentReminderScreen = animated => {
                 mode="time"
                 locale="en_GB"
                 minimumDate={new Date()}
+                date={new moment(selectedDate, 'YYYY-MM-DD')._d}
                 onConfirm={val => {
+                  console.log('val', new moment(selectedDate, 'YYYY-MM-DD')._d);
                   if (
                     new Date(val).toDateString() === new Date().toDateString()
                   ) {
@@ -356,6 +360,7 @@ export const AppointmentReminderScreen = animated => {
                   }
                 }}
                 onCancel={() => {
+                  console.log('val');
                   setShowTimeReminder(false);
                   setExtra(extra + 1);
                 }}
