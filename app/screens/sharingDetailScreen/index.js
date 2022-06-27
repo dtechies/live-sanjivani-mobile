@@ -92,10 +92,8 @@ export const SharingDetailScreen = props => {
       toastMessage(res.message);
       let pdf = res.data.link;
       // setLink(res.data.link);
-      setTimeout(() => {
-        setLoading(false);
-        Linking.openURL(`http://${pdf.slice(8)}`);
-      }, 1000);
+      setLoading(false);
+      Linking.openURL(`http://${pdf.slice(8)}`);
       // pdfDownload(res.data.link);
     } else {
       // console.log('false');
