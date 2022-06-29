@@ -332,5 +332,15 @@
     "other_details": "अन्य विवरण",
     "help": "मदद",
     "logout": "लॉगआउट"
+  },
+  "addNavData": {
+    "vitals": "नब्ज",
+    "measurements": "मापन",
+    "activity": "गतिविधि",
+    "others": "अन्य",
+    "care_giver": "देखभाल करने वाला",
+    "medications": "दवाओं",
+    "appointments": "नियुक्ति",
+    "medical_journal": "चिकित्सकीय पत्रिका"
   }
 }

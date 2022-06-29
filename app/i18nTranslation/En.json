@@ -332,5 +332,15 @@
     "other_details": "Other Details",
     "help": "Help",
     "logout": "Logout"
+  },
+  "addNavData": {
+    "vitals": "Vitals",
+    "measurements": "Measurements",
+    "activity": "Activity",
+    "others": "Others",
+    "care_giver": "Care Giver",
+    "medications": "Medications",
+    "appointments": "Appointments",
+    "medical_journal": "Medical Journal",
   }
 }

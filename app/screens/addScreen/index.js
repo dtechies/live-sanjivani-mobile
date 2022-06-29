@@ -33,7 +33,7 @@ const AddCard = ({item, index, OnPressOptions}) => {
       key={index + 'addMedication'}
       // disabled={!showSub}
     >
-      <Text text={item.name} style={styles.labelAddStyle(item.selected)} />
+      <Text tx={item.nameTx} style={styles.labelAddStyle(item.selected)} />
       <IcBack fill={item.selected ? color.white : color.blueTx} />
     </AnimatedPressable>
   );
