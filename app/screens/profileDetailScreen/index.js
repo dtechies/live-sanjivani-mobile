@@ -255,9 +255,8 @@ export const ProfileDetailScreen = () => {
     const res = getOtpResponse;
     if (res.status) {
       console.log('response data ==>', res.data.otp);
-      toastMessage(JSON.stringify(res.data));
       setOtpId(res.data.id);
-      // toastMessage(res.message);
+      toastMessage(res.message);
       setLoading(false);
       setExtra(extra + 1);
     } else {

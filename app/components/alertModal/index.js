@@ -13,9 +13,9 @@ export const AlertModal = props => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   console.log('data', data);
-  // }, []);
+  useEffect(() => {
+    console.log('notification', data);
+  }, []);
 
   const updateReminderStatus = async status => {
     // console.log('status ==>', status);
@@ -61,7 +61,7 @@ export const AlertModal = props => {
           {data?.type == 'appointment_reminder' ? (
             <View>
               <Text style={styles.textDate()}>
-                {data?.user_selected_time.slice(0, 5)}
+                {data?.user_selected_time?.slice(0, 5)}
               </Text>
               <Text style={styles.textTitle()}>
                 {data?.doctor_name && data.doctor_name}
@@ -73,7 +73,7 @@ export const AlertModal = props => {
           ) : (
             <View>
               <Text style={styles.textDate()}>
-                {data?.user_selected_time.slice(0, 5)}
+                {data?.user_selected_time?.slice(0, 5)}
               </Text>
               <Text style={styles.textTitle()}>
                 {data?.reminder_name && data.reminder_name}

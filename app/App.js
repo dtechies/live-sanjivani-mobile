@@ -27,7 +27,6 @@ const App = () => {
     }),
     [locale],
   );
-
   LogBox.ignoreAllLogs();
 
   //OneSignal Init Code
