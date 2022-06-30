@@ -48,10 +48,10 @@ export const ViewMedicationScreen = () => {
     const getMedicineReminderProfileResponse = await dispatch(
       getMedicineReminderProfile(),
     );
-    // console.log(
-    //   'getMedicineReminderProfileResponse ==>',
-    //   getMedicineReminderProfileResponse,
-    // );
+    console.log(
+      'getMedicineReminderProfileResponse ==>',
+      getMedicineReminderProfileResponse,
+    );
     const res = getMedicineReminderProfileResponse.payload;
     if (res.status) {
       let data = res.data.MedicineReminderProfileData;

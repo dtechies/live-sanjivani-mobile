@@ -103,7 +103,7 @@ export const TodayScreen = () => {
     const res = getTodayMedicationResponse;
     if (res != undefined) {
       if (res.status) {
-        // console.log('getTodayMedicationResponse ==>', res.data.MedicineData);
+        console.log('getTodayMedicationResponse ==>', res.data.MedicineData);
 
         let medicationList = res.data.MedicineData;
         const medicationListNew = medicationList.sort((a, b) => {
@@ -304,7 +304,14 @@ export const TodayScreen = () => {
                       <View style={styles.circleView()} />
                       <Text
                         style={styles.textTime()}
-                        text={item.user_selected_time}
+                        text={
+                          item.user_selected_local_time
+                            ? moment(
+                                item.user_selected_local_time,
+                                'HH:mm:ss',
+                              ).format('hh:mm A')
+                            : ''
+                        }
                       />
                     </View>
                   </View>
@@ -346,7 +353,14 @@ export const TodayScreen = () => {
                         <View style={styles.circleView()} />
                         <Text
                           style={styles.textTime()}
-                          text={item.user_selected_time}
+                          text={
+                            item.user_selected_local_time
+                              ? moment(
+                                  item.user_selected_local_time,
+                                  'HH:mm:ss',
+                                ).format('hh:mm A')
+                              : ''
+                          }
                         />
                       </View>
                       <View style={styles.row()}>

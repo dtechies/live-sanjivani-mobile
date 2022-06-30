@@ -246,8 +246,6 @@ export const OtpScreen = props => {
           />
         </View>
         <View style={styles.headingMain()}>
-          <Text style={styles.firstHeadingTxt()} text={otpData.otp} />
-
           <Text
             style={styles.firstHeadingTxt()}
             tx={'otp_screen.verification'}
