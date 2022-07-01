@@ -37,7 +37,7 @@ export const TodayScreen = () => {
     toastRef.current.show(msg);
   };
   const [selectedDate, setSelectedDate] = useState(
-    new moment().format('YYYY-MM-D'),
+    new moment().format('YYYY-MM-DD'),
   );
   useDoubleBackPressExit();
 
