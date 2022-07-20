@@ -1,9 +1,9 @@
 import {color, size, fonts, fontSize} from 'theme';
 
 export const container = () => ({
+  flex: 1,
   justifyContent: 'center',
   backgroundColor: color.themeBack,
-  marginBottom: size.deviceHeight * 0.08,
 });
 export const screenContainer = () => ({
   marginBottom: size.moderateScale(35),

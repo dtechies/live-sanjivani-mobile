@@ -166,14 +166,14 @@ export const AppointmentReminderScreen = animated => {
 
   const addAppointmentData = async () => {
     setLoading(true);
-    let newDate = ConvertToUTC(selectedDate + ' ' + selectedTime);
+    let newDate = ConvertToUTC(selectedDate + ' ' + reminderTime);
     let formData = new FormData();
     formData.append('doctor_name', searchVal);
     formData.append('date', selectedDate);
     formData.append('doctor_address', addressOne);
-    formData.append('user_selected_time', `${selectedTime.slice(0, 5)}:00`);
+    formData.append('appointment_time', `${selectedTime.slice(0, 5)}:00`);
     formData.append('user_id', userId);
-    formData.append('reminder_time', `${reminderTime.slice(0, 5)}:00`);
+    formData.append('user_selected_time', `${reminderTime.slice(0, 5)}:00`);
     formData.append('utc_date_and_time', `${newDate}`);
     // return;
     setExtra(extra + 1);

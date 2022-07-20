@@ -28,6 +28,7 @@ export const MainStackNavigation = () => {
         <Stack.Screen
           name="bottomStackNavigation"
           component={BottomStackNavigation}
+          options={{gestureEnabled: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

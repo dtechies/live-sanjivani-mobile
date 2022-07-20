@@ -354,9 +354,9 @@ export const TodayScreen = () => {
                         <Text
                           style={styles.textTime()}
                           text={
-                            item.user_selected_local_time
+                            item.appointment_time
                               ? moment(
-                                  item.user_selected_local_time,
+                                  item.appointment_time,
                                   'HH:mm:ss',
                                 ).format('hh:mm A')
                               : ''
