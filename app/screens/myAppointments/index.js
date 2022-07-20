@@ -173,10 +173,8 @@ export const MyAppointments = () => {
                 data={val}
                 onWholeCardPress={() => console.log('Click...')}
                 time={
-                  val.user_selected_local_time
-                    ? moment(val.user_selected_local_time, 'HH:mm:ss').format(
-                        'hh:mm A',
-                      )
+                  val.appointment_time
+                    ? moment(val.appointment_time, 'HH:mm:ss').format('hh:mm A')
                     : ''
                 }
                 date={val.date}
