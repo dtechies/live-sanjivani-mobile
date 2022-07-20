@@ -255,17 +255,17 @@ export const MedicalJournalScreen = props => {
         {descriptionErr ? (
           <Text style={styles.errorText(2)}>{descriptionErr}</Text>
         ) : null}
+        <Button
+          buttonStyle={styles.btnContinue()}
+          buttonText={styles.btnContinueTxt()}
+          nameTx={'medicalJournal_screen.save'}
+          onPress={() => {
+            selectedDate && selectedTime && description
+              ? addMedicalJournalData()
+              : validation();
+          }}
+        />
       </Screen>
-      <Button
-        buttonStyle={styles.btnContinue()}
-        buttonText={styles.btnContinueTxt()}
-        nameTx={'medicalJournal_screen.save'}
-        onPress={() => {
-          selectedDate && selectedTime && description
-            ? addMedicalJournalData()
-            : validation();
-        }}
-      />
       <Portal>
         <Modalize
           ref={modalRef}
