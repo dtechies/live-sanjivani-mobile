@@ -13,9 +13,7 @@ import * as styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {useDoubleBackPressExit} from 'utils';
 import {LocalizationContext} from '../../App';
-import {size} from 'theme';
-// import {ChangeLanguage} from '../../components';
-// import LinearGradient from 'react-native-linear-gradient';
+
 export const TodayScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -212,12 +210,14 @@ export const TodayScreen = () => {
         setLocale('hn');
       }
     }
-    onGetTipForDay();
-    getAppointmentReminderData();
-    onMedicineReminderData();
-    setExtra(extra + 1);
-    // AnimationStarting();
-  }, []);
+    navigation.addListener('focus', () => {
+      onGetTipForDay();
+      getAppointmentReminderData();
+      onMedicineReminderData();
+      setExtra(extra + 1);
+      // AnimationStarting();
+    });
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.container()}>

@@ -99,10 +99,12 @@ export const ProgressScreen = () => {
   };
 
   useEffect(() => {
-    getAllSubCategoryData();
-    getUserFavoriteListData();
-    // addUserFavoriteData();
-  }, [first]);
+    navigation.addListener('focus', () => {
+      getAllSubCategoryData();
+      getUserFavoriteListData();
+      // addUserFavoriteData();
+    });
+  }, [navigation, first]);
 
   return (
     <SafeAreaView style={styles.container()}>

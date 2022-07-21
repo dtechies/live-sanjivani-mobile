@@ -97,8 +97,10 @@ export const AddScreen = () => {
   };
 
   useEffect(() => {
-    getAllCategoryAndSubCategoryData();
-  }, []);
+    navigation.addListener('focus', () => {
+      getAllCategoryAndSubCategoryData();
+    });
+  }, [navigation]);
 
   const OnPressOptions = (item, index) => {
     // console.log('Asdas');
