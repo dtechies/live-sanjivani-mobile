@@ -86,7 +86,7 @@ export const tipsMain = animatedScale => ({
   marginHorizontal: size.moderateScale(20),
   marginVertical: size.moderateScale(10),
   borderRadius: size.moderateScale(10),
-  transform: [{scale: animatedScale}],
+  // transform: [{scale: animatedScale}],
 });
 
 export const progressView = animatedScale => ({
@@ -99,7 +99,7 @@ export const progressView = animatedScale => ({
   marginVertical: size.moderateScale(10),
   marginTop: size.moderateScale(30),
   justifyContent: 'space-between',
-  transform: [{scale: animatedScale}],
+  // transform: [{scale: animatedScale}],
 });
 export const medicationView = animatedScale => ({
   paddingHorizontal: size.moderateScale(20),
@@ -109,7 +109,7 @@ export const medicationView = animatedScale => ({
   marginHorizontal: size.moderateScale(20),
   backgroundColor: color.white,
   marginVertical: size.moderateScale(10),
-  transform: [{scale: animatedScale}],
+  // transform: [{scale: animatedScale}],
 });
 
 export const reminderText = () => ({
