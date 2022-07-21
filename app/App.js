@@ -126,7 +126,7 @@ const App = () => {
                 <AlertModal
                   closeModal={() => closeModal(false)}
                   data={notificationData}
-                  title={'abdul'}
+                  title={'Live Sanjivani'}
                 />
               )}
             </Host>

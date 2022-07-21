@@ -70,8 +70,10 @@ export const SharingScreen = () => {
   };
 
   useEffect(() => {
-    getAllSubCategoryData();
-  }, []);
+    navigation.addListener('focus', () => {
+      getAllSubCategoryData();
+    });
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.container()}>

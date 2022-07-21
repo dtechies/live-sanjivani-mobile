@@ -99,8 +99,10 @@ export const MyAppointments = () => {
   };
 
   useEffect(() => {
-    getAppointmentReminderData();
-  }, []);
+    navigation.addListener('focus', () => {
+      getAppointmentReminderData();
+    });
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.container()}>
