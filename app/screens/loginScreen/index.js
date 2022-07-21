@@ -1,10 +1,25 @@
 import React, {useState, useRef} from 'react';
-import {View, Pressable, Image, SafeAreaView, Linking} from 'react-native';
+import {
+  View,
+  Pressable,
+  Image,
+  SafeAreaView,
+  Linking,
+  Platform,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {getOtp} from 'redux-actions';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
-import {Loader, Text, Button, InputBox, Toast, Screen} from 'components';
+import {
+  Loader,
+  Text,
+  Button,
+  InputBox,
+  Toast,
+  Screen,
+  CustomStatusBar,
+} from 'components';
 import {size, images, color} from 'theme';
 import {countryCode} from 'json';
 import * as styles from './styles';
@@ -58,6 +73,9 @@ export const LoginScreen = () => {
   };
   return (
     <SafeAreaView style={styles.container()}>
+      <CustomStatusBar
+        barStyle={Platform.OS === 'ios' ? 'dark-content' : 'default'}
+      />
       <Toast
         ref={toastRef}
         position="top"

@@ -9,7 +9,9 @@ import {
   SharingStackNavigation,
   AddStackNavigation,
 } from '../';
-import {BottomTab, AlertModal} from 'components';
+
+import {BottomTab, AlertModal, CustomStatusBar} from 'components';
+import {color} from 'theme';
 
 const Tab = createBottomTabNavigator();
 export const BottomStackNavigation = props => {
@@ -115,8 +117,10 @@ export const BottomStackNavigation = props => {
     }
     return true;
   };
+
   return (
     <View style={{flex: 1}}>
+      <CustomStatusBar backgroundColor={color.black} barStyle="light-content" />
       <Tab.Navigator
         initialRouteName="Today"
         screenOptions={{
