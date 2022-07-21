@@ -19,6 +19,7 @@ async function getVerifiedKeys(keys) {
         //   NOTE: refresh token is not expired
         const res = await getAccessUsingRefresh(keys.refreshToken);
         // console.log('Updated Data ==>', res);
+        console.log('Auth token is now refreshed');
         const currentDate = new moment().format('YYYY-MM-DD');
         var a = moment(res.data.user.dob);
         var b = moment(currentDate);
