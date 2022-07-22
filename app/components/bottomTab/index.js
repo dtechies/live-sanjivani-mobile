@@ -21,7 +21,13 @@ export const BottomTab = props => {
   }
 
   const onTabBarPress = (route, i) => {
-    navigation.navigate(route.name);
+    // NOTE: for pop to top of stack which is nested inside bottom tab navigation
+    navigation.reset({
+      routes: [{name: route.name}],
+    });
+
+    // NOTE: normal navigation
+    // navigation.navigate(route.name);
   };
   return (
     <View style={styles.container()}>
