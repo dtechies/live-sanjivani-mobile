@@ -345,7 +345,11 @@ export const OtherScreen = props => {
         isCamera={false}
         text={title}
       />
-      <Screen withScroll bounces={false} style={styles.screenContainer()}>
+      <Screen
+        withScroll
+        bounces={false}
+        style={styles.screenContainer()}
+        enableResetScrollToCoords={false}>
         {subCategory &&
           subCategory.map((value, i) => {
             return (

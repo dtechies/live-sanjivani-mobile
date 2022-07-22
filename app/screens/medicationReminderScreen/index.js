@@ -311,6 +311,7 @@ export const MedicationReminderScreen = () => {
       <Screen
         showsVerticalScrollIndicator={false}
         bounces={false}
+        enableResetScrollToCoords={false}
         style={styles.screenContainer()}>
         <InputBox
           titleTx={'medication_reminder_screen.reminderName'}

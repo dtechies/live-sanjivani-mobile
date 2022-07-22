@@ -361,7 +361,9 @@ export const ProfileDetailScreen = () => {
         isDisabled={!isEditable}
         // secName={email}
       />
-      <Screen style={styles.screenContainer()}>
+      <Screen
+        style={styles.screenContainer()}
+        enableResetScrollToCoords={false}>
         <View style={styles.settingMain()}>
           <Text
             style={styles.editText()}

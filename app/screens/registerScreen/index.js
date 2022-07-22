@@ -184,7 +184,10 @@ export const RegisterScreen = () => {
         isCamera={true}
         title={'register_screen.title'}
       />
-      <Screen bounces={false} style={styles.screenContainer()}>
+      <Screen
+        bounces={false}
+        style={styles.screenContainer()}
+        enableResetScrollToCoords={false}>
         <InputBox
           placeHolderVal={'register_screen.first_name'}
           inputStyle={styles.inputStyle()}

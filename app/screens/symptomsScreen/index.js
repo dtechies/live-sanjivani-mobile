@@ -137,7 +137,7 @@ export const SymptomsScreen = () => {
       />
       {loading && <Loader />}
       <Text style={styles.labelTextStyle()} tx={'symptoms_screen.header'} />
-      <Screen withScroll bounces={false}>
+      <Screen withScroll bounces={false} enableResetScrollToCoords={false}>
         <View style={styles.mainDetailContainer()}>
           <View style={{flexDirection: 'row'}}>
             <View style={styles.full()}>

@@ -372,7 +372,11 @@ export const AddDetailsScreen = props => {
         isHeading={true}
         text={title}
       />
-      <Screen withScroll bounces={false} style={styles.screenContainer()}>
+      <Screen
+        withScroll
+        bounces={false}
+        enableResetScrollToCoords={false}
+        style={styles.screenContainer()}>
         {subCategory.length != 0 ? (
           <View>
             {subCategory.map((val, i) => {
