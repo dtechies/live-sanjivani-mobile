@@ -72,7 +72,7 @@ export const MedicationReminderScreen = () => {
   const [pills, setPills] = useState('');
   const [pillsErr, setPillsErr] = useState('');
   const [medicineDropDown, setMedicineDropDown] = useState(false);
-  const [medicineFilteredValue, setMedicineFilteredValue] = useState();
+  const [medicineFilteredValue, setMedicineFilteredValue] = useState([]);
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -283,6 +283,7 @@ export const MedicationReminderScreen = () => {
   useEffect(() => {
     onGetMedicineReminderView();
   }, []);
+
   return (
     <SafeAreaView style={styles.container()}>
       <Toast
@@ -539,11 +540,11 @@ export const MedicationReminderScreen = () => {
                 );
               }}
             />
+            {medicineStrengthErr ? (
+              <Text style={styles.errorText()} tx={medicineStrengthErr} />
+            ) : null}
           </View>
         )}
-        {medicineStrengthErr ? (
-          <Text style={styles.errorText()} tx={medicineStrengthErr} />
-        ) : null}
 
         <Text
           style={styles.labelFieldDropText()}
@@ -695,7 +696,7 @@ export const MedicationReminderScreen = () => {
             />
           </>
         )}
-        {medicineValue != 'Drop' && (
+        {medicineValue === 'Tablet' || medicineValue === 'Pill' ? (
           <>
             <InputBox
               titleTx={'medication_reminder_screen.pill_remaining'}
@@ -712,9 +713,11 @@ export const MedicationReminderScreen = () => {
                 setExtra(extra + 1);
               }}
             />
+            {pillsErr ? (
+              <Text style={styles.errorText(1)} tx={pillsErr} />
+            ) : null}
           </>
-        )}
-        {pillsErr ? <Text style={styles.errorText(1)} tx={pillsErr} /> : null}
+        ) : null}
         <Button
           buttonStyle={styles.button()}
           buttonText={styles.buttonTxt()}

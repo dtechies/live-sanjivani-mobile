@@ -58,3 +58,10 @@ export const pressableButton = () => ({
   alignItems: 'center',
   justifyContent: 'space-between',
 });
+export const noData = () => ({
+  color: color.blueCard,
+  fontSize: fontSize.medium,
+  fontFamily: fonts.latoBold,
+  marginVertical: size.moderateScale(15),
+  textAlign: 'center',
+});

@@ -40,7 +40,8 @@ export const AddDetailsScreen = props => {
       error = true;
     }
     thisNewArray.map(i => {
-      if (i.subcategory_id == 7) {
+      // NOTE: Blood glucose
+      if (i.subcategory_id == 6) {
         if (glucoseValue == '' || selectedGlucose == '') {
           error = true;
         }
@@ -61,8 +62,9 @@ export const AddDetailsScreen = props => {
 
   const saveData = async () => {
     if (BMIValue !== '') {
+      // NOTE: adding calculated BMIvalue
       thisArray.push({
-        subcategory_id: 19,
+        subcategory_id: 16,
         value: BMIValue,
       });
     }
@@ -94,7 +96,8 @@ export const AddDetailsScreen = props => {
   }, []);
 
   const ViewAsPerId = val => {
-    if (val.id == 7) {
+    // NOTE: Blood glucose
+    if (val.id == 6) {
       return (
         <Dropdown
           defaultValue={{
@@ -159,7 +162,8 @@ export const AddDetailsScreen = props => {
           }}
         />
       );
-    } else if (val.id == 6) {
+      // NOTE: Blood Pressure
+    } else if (val.id == 5) {
       return (
         <View style={styles.bpCard()}>
           <Text style={styles.textSubTitle()}>{'Systolic'}</Text>
@@ -200,13 +204,15 @@ export const AddDetailsScreen = props => {
                 let bmiValue = 0;
                 let bmiValueData = 0;
                 thisArray.map(i => {
-                  if (i.subcategory_id == 8 || i.subcategory_id == 9) {
+                  // NOTE: 1st height and 2nd weight
+                  if (i.subcategory_id == 7 || i.subcategory_id == 8) {
                     bmiValue = bmiValue + 1;
                   }
                 });
                 if (bmiValue == 2) {
                   thisArray.map(j => {
-                    if (j.subcategory_id == 8 || j.subcategory_id == 9) {
+                    // NOTE: 1st height and 2nd weight
+                    if (j.subcategory_id == 7 || j.subcategory_id == 8) {
                       bmiValueData += parseInt(j.value);
                       console.log('parseInt(i.value)', j.value);
                     }
@@ -257,13 +263,15 @@ export const AddDetailsScreen = props => {
                 let bmiValue = 0;
                 let bmiValueData = 0;
                 thisArray.map(i => {
-                  if (i.subcategory_id == 8 || i.subcategory_id == 9) {
+                  // NOTE: 1st height and 2nd weight
+                  if (i.subcategory_id == 7 || i.subcategory_id == 8) {
                     bmiValue = bmiValue + 1;
                   }
                 });
                 if (bmiValue == 2) {
                   thisArray.map(j => {
-                    if (j.subcategory_id == 8 || j.subcategory_id == 9) {
+                    // NOTE: 1st height and 2nd weight
+                    if (j.subcategory_id == 7 || j.subcategory_id == 8) {
                       bmiValueData += parseInt(j.value);
                       console.log('parseInt(i.value)', j.value);
                     }
@@ -282,7 +290,8 @@ export const AddDetailsScreen = props => {
           </Pressable>
         </View>
       );
-    } else if (val.id !== 19) {
+      // NOTE: Not equal to BMIvalue id
+    } else if (val.id !== 16) {
       return (
         <Pressable style={styles.mainCardView()}>
           <TextInput
@@ -314,13 +323,15 @@ export const AddDetailsScreen = props => {
               let bmiValue = 0;
               let bmiValueData = 0;
               thisArray.map(i => {
-                if (i.subcategory_id == 8 || i.subcategory_id == 9) {
+                // NOTE: 1st height and 2nd weight
+                if (i.subcategory_id == 7 || i.subcategory_id == 8) {
                   bmiValue = bmiValue + 1;
                 }
               });
               if (bmiValue == 2) {
                 thisArray.map(j => {
-                  if (j.subcategory_id == 8 || j.subcategory_id == 9) {
+                  // NOTE: 1st height and 2nd weight
+                  if (j.subcategory_id == 7 || j.subcategory_id == 8) {
                     bmiValueData += parseInt(j.value);
                     console.log('parseInt(i.value)', j.value);
                   }
@@ -339,6 +350,7 @@ export const AddDetailsScreen = props => {
         </Pressable>
       );
     } else {
+      // NOTE:Render auto calculated BMIvalue row
       return (
         <Pressable style={styles.mainCardView()}>
           <TextInput
@@ -392,9 +404,11 @@ export const AddDetailsScreen = props => {
                   <View style={styles.textMain()}>
                     <Text style={styles.textTitle()}>{val.name}</Text>
                   </View>
-                  <View style={styles.cardItem1(val.id == 7)}>
+                  {/* NOTE: Blood Glucose */}
+                  <View style={styles.cardItem1(val.id == 6)}>
                     {ViewAsPerId(val)}
-                    {val.id == 7 && (
+                    {/* NOTE: Blood Glucose */}
+                    {val.id == 6 && (
                       <Pressable style={styles.mainCard()}>
                         <TextInput
                           ref={refsFocus4}
@@ -432,18 +446,20 @@ export const AddDetailsScreen = props => {
                             let bmiValue = 0;
                             let bmiValueData = 0;
                             thisArray.map(i => {
+                              // NOTE: 1st height and 2nd weight
                               if (
-                                i.subcategory_id == 8 ||
-                                i.subcategory_id == 9
+                                i.subcategory_id == 7 ||
+                                i.subcategory_id == 8
                               ) {
                                 bmiValue = bmiValue + 1;
                               }
                             });
                             if (bmiValue == 2) {
                               thisArray.map(j => {
+                                // NOTE: 1st height and 2nd weight
                                 if (
-                                  j.subcategory_id == 8 ||
-                                  j.subcategory_id == 9
+                                  j.subcategory_id == 7 ||
+                                  j.subcategory_id == 8
                                 ) {
                                   bmiValueData += parseInt(j.value);
                                   console.log('parseInt(i.value)', j.value);
