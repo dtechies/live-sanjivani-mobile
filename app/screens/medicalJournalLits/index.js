@@ -53,7 +53,7 @@ export const MedicalJournalLists = () => {
   // };
 
   const getCaregiverData = async () => {
-    // setLoading(true);
+    setLoading(true);
 
     const getAppointmentReminderProfileResponse = await dispatch(
       GetUserMedicalJournalNoteAction(),
