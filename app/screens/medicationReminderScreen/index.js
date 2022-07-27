@@ -72,7 +72,7 @@ export const MedicationReminderScreen = () => {
   const [pills, setPills] = useState('');
   const [pillsErr, setPillsErr] = useState('');
   const [medicineDropDown, setMedicineDropDown] = useState(false);
-  const [medicineFilteredValue, setMedicineFilteredValue] = useState();
+  const [medicineFilteredValue, setMedicineFilteredValue] = useState([]);
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
