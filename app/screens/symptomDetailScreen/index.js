@@ -13,7 +13,7 @@ export const SymptomDetailScreen = props => {
 
   const toastRef = useRef();
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [extra, setExtra] = useState(0);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export const SymptomDetailScreen = props => {
       ) : (
         <Screen bounces={false}>
           <View style={styles.mainView()}>
-            {data &&
+            {data.length > 0 ? (
               data.map((item, index) => {
                 return (
                   <View>
@@ -191,7 +191,10 @@ export const SymptomDetailScreen = props => {
                     )}
                   </View>
                 );
-              })}
+              })
+            ) : (
+              <Text style={styles.noData()}>No Records Found...</Text>
+            )}
           </View>
         </Screen>
       )}

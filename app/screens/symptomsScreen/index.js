@@ -15,7 +15,7 @@ import {
   Loader,
 } from 'components';
 import {size, color, SearchValNew, IcCrossArrow} from 'theme';
-import {genderSysVal, symptomChecker} from 'json';
+import {genderSysVal} from 'json';
 
 import * as styles from './styles';
 
@@ -30,7 +30,6 @@ export const SymptomsScreen = () => {
   const [ageErr, setAgeErr] = useState('');
   const [gender, setGender] = useState('');
   const [genderErr, setGenderErr] = useState('');
-  const [symChecker, setSymChecker] = useState(symptomChecker);
   const [allSymptomList, setAllSymptomList] = useState();
   const [loading, setLoading] = useState(false);
   const [symptomFilteredValue, setSymptomFilteredValue] = useState();
@@ -45,15 +44,20 @@ export const SymptomsScreen = () => {
   };
 
   const onAddPressValidation = () => {
+    let error = false;
     if (age === '') {
       setAgeErr('Enter your Age');
+      error = true;
     }
     if (gender === '') {
       setGenderErr('Select Gender');
+      error = true;
     }
     if (selectedSymptomList.length == 0) {
       setSymptomErr('Select Symptom');
+      error = true;
     }
+    return !error;
   };
   const onSearchPress = () => {
     let symptomId = selectedSymptomList.map((item, index) => {
@@ -61,16 +65,19 @@ export const SymptomsScreen = () => {
     });
     let data = allSymptomList.filter(val => {
       let text = val.age;
-      let startAgeRange = text.split('-')[0];
-      let endAgeRange = text.split('-')[1];
-      if (
-        val.gender == gender.toLowerCase() ||
-        val.id == symptomId ||
-        age > startAgeRange ||
-        age < endAgeRange
-      ) {
-        return val;
-      }
+      let startAgeRange = parseInt(text.split('-')[0]);
+      let endAgeRange = parseInt(text.split('-')[1]);
+      let intAge = parseInt(age);
+
+      let value = null;
+      symptomId.forEach(element => {
+        if (val.gender === gender.toLowerCase() && val.id === element) {
+          if (intAge >= startAgeRange && intAge <= endAgeRange) {
+            value += val;
+          }
+        }
+      });
+      return value;
     });
     navigation.navigate('symptomDetailScreen', {
       data: data,
@@ -78,13 +85,7 @@ export const SymptomsScreen = () => {
       gender: gender,
     });
   };
-  const clearData = () => {
-    let newSymptomChecker = symptomChecker.map(i => {
-      i.isActive = false;
-      return i;
-    });
-    setSymChecker(newSymptomChecker);
-  };
+
   const getAllSymptom = async () => {
     setLoading(true);
     const getAllSymptomResponse = await dispatch(getAllSymptomAction());
@@ -113,7 +114,6 @@ export const SymptomsScreen = () => {
     // }
   };
   useEffect(() => {
-    clearData();
     getAllSymptom();
   }, []);
 
@@ -257,6 +257,8 @@ export const SymptomsScreen = () => {
                       selectedSymptomList.some(item => val.name === item.name)
                     ) {
                       symptomFilteredValue[i].isActive = false;
+                      let findIndex = selectedSymptomList.indexOf(val);
+                      selectedSymptomList.splice(findIndex, 1);
                       setExtra(extra + 1);
                       setSymptomErr('');
                     } else {
@@ -326,7 +328,7 @@ export const SymptomsScreen = () => {
           buttonStyle={styles.buttonFooter()}
           buttonText={styles.buttonTxt()}
           nameTx={'careGiver_screen.search'}
-          onPress={() => (age ? onSearchPress() : onAddPressValidation())}
+          onPress={() => onAddPressValidation() && onSearchPress()}
         />
       </View>
     </SafeAreaView>
