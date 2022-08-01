@@ -119,6 +119,7 @@ export const cardItemInputBoxMain = val => ({
 export const cardItemInputBoxText = () => ({
   color: color.grayTxt,
   // flex: 1,
+  maxWidth: '50%',
   alignSelf: 'center',
   fontSize: fontSize.verySmall,
   fontFamily: fonts.segoeUIBold,
