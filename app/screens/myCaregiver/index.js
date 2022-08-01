@@ -26,13 +26,6 @@ export const MyCareGiver = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getCaregiverData();
-    });
-    return unsubscribe;
-  }, [navigation]);
-
   const toastMessage = msg => {
     console.log('SU0', msg);
     toastRef.current.show(msg);
@@ -94,6 +87,13 @@ export const MyCareGiver = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getCaregiverData();
+    });
+    return unsubscribe;
+  }, [navigation]);
   return (
     <SafeAreaView style={styles.container()}>
       {loading && <Loader />}

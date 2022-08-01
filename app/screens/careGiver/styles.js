@@ -47,6 +47,7 @@ export const mainViewStyle = val => ({
 export const leftViewStyle = () => ({
   flex: 2,
   justifyContent: 'center',
+  alignItems: 'flex-start',
 });
 export const rightViewStyle = () => ({
   flex: 3,
@@ -62,4 +63,54 @@ export const textValidation = () => ({
   fontSize: fontSize.small,
   color: color.red,
   marginTop: size.moderateScale(-3),
+});
+
+export const mapPinIconContainer = () => ({
+  height: size.moderateScale(50),
+  justifyContent: 'center',
+});
+export const searchPlacesTxt = () => ({
+  justifyContent: 'center',
+  paddingLeft: size.moderateScale(15),
+  paddingVertical: 0,
+  paddingHorizontal: 0,
+  overflow: 'hidden',
+  paddingBottom: 0,
+  flex: 1,
+  flexDirection: 'row',
+  // alignItems: 'center',
+  backgroundColor: color.white,
+  borderRadius: size.moderateScale(10),
+});
+
+export const searchPlacesInputTxt = () => ({
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoRegular,
+  color: color.black,
+  minWidth: size.moderateScale(150),
+  // width: size.deviceWidth * 0.77,
+  marginRight: size.moderateScale(15),
+});
+export const searchTitle = () => ({
+  fontFamily: fonts.latoRegular,
+  color: color.black,
+  fontSize: fontSize.small,
+  fontWeight: 'bold',
+});
+export const searchDis = () => ({
+  fontFamily: fonts.latoRegular,
+  color: color.black,
+  fontSize: fontSize.small,
+});
+export const addressLabel = () => ({
+  flex: 2,
+  maxHeight: size.moderateScale(50),
+  justifyContent: 'center',
+});
+export const searchRow = () => ({
+  marginHorizontal: 0,
+  marginLeft: 0,
+  padding: 0,
+  paddingVertical: size.moderateScale(10),
+  width: size.deviceWidth * 0.4,
 });
