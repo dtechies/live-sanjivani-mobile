@@ -48,19 +48,13 @@ export const CareGiver = () => {
       setNickNameCorrect('Please select NickName');
       error = true;
     }
-    if (email === '') {
-      setEmailCorrect('Please Enter Email Address');
-      error = true;
-    } else if (reg.test(email) === false) {
+    if (email.length > 0 && reg.test(email) === false) {
       setEmailCorrect('Invalid email');
       error = true;
     } else {
       setEmailCorrect('');
     }
-    if (phone === '') {
-      setPhoneCorrect('Please Enter Phone number');
-      error = true;
-    } else if (phone.length < 10) {
+    if (phone.length > 0 && phone.length < 10) {
       setPhoneCorrect('Invalid Phone number');
       error = true;
     } else {
