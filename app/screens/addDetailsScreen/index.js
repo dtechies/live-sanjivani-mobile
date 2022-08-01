@@ -95,6 +95,22 @@ export const AddDetailsScreen = props => {
     console.log(subCategory, thisArray, 'thisArray');
   }, []);
 
+  const selectKeyboard = id => {
+    switch (id) {
+      // NOTE: Body Temperature
+      case 3:
+        return 'decimal-pad';
+      // NOTE: height
+      case 7:
+        return 'decimal-pad';
+      // NOTE: weight
+      case 8:
+        return 'decimal-pad';
+
+      default:
+        return 'number-pad';
+    }
+  };
   const ViewAsPerId = val => {
     // NOTE: Blood glucose
     if (val.id == 6) {
@@ -170,7 +186,7 @@ export const AddDetailsScreen = props => {
           <Pressable style={styles.mainCard()}>
             <TextInput
               ref={refsFocus4}
-              keyboardType={'number-pad'}
+              keyboardType={selectKeyboard(val.id)}
               style={styles.cardItemInputBoxMain()}
               onChangeText={v => {
                 setSystolic(v);
@@ -233,7 +249,7 @@ export const AddDetailsScreen = props => {
           <Pressable style={styles.mainCard()}>
             <TextInput
               ref={refsFocus4}
-              keyboardType={'number-pad'}
+              keyboardType={selectKeyboard(val.id)}
               style={styles.cardItemInputBoxMain()}
               onChangeText={v => {
                 setDiastolic(v);
@@ -296,7 +312,7 @@ export const AddDetailsScreen = props => {
         <Pressable style={styles.mainCardView()}>
           <TextInput
             ref={refsFocus4}
-            keyboardType={'number-pad'}
+            keyboardType={selectKeyboard(val.id)}
             style={styles.cardItemInputBoxMain()}
             onChangeText={v => {
               let indexK = -1;
@@ -412,7 +428,7 @@ export const AddDetailsScreen = props => {
                       <Pressable style={styles.mainCard()}>
                         <TextInput
                           ref={refsFocus4}
-                          keyboardType={'number-pad'}
+                          keyboardType={selectKeyboard(val.id)}
                           style={styles.cardItemInputBoxMain()}
                           onChangeText={v => {
                             setGlucoseValue(v);
