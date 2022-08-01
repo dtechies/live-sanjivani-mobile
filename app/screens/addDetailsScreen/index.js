@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {SafeAreaView, Pressable, View, TextInput} from 'react-native';
+import {SafeAreaView, Pressable, View, TextInput, Keyboard} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 
@@ -96,6 +96,10 @@ export const AddDetailsScreen = props => {
     console.log(subCategory, thisArray, 'thisArray');
   }, []);
 
+  const closeKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   const selectKeyboard = id => {
     switch (id) {
       // NOTE: Body Temperature
@@ -129,6 +133,8 @@ export const AddDetailsScreen = props => {
           maxHeight={size.moderateScale(90)}
           containerStyle={styles.dropdownContainer()}
           // value={language}
+          onFocus={() => closeKeyboard()}
+          onBlur={() => closeKeyboard()}
           flatListProps={{
             bounces: false,
           }}

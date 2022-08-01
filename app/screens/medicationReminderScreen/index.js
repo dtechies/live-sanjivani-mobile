@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
-import {SafeAreaView, Pressable, View, Image} from 'react-native';
+import {SafeAreaView, Pressable, View, Image, Keyboard} from 'react-native';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -280,6 +280,9 @@ export const MedicationReminderScreen = () => {
       setPills('');
     }, []),
   );
+  const closeKeyboard = () => {
+    Keyboard.dismiss();
+  };
   useEffect(() => {
     onGetMedicineReminderView();
   }, []);
@@ -410,8 +413,14 @@ export const MedicationReminderScreen = () => {
           showsVerticalScrollIndicator={true}
           containerStyle={styles.dropdownContainer()}
           // value={medicineValue}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
+          onFocus={() => {
+            closeKeyboard();
+            setIsFocus(true);
+          }}
+          onBlur={() => {
+            closeKeyboard();
+            setIsFocus(false);
+          }}
           flatListProps={{
             bounces: false,
             ItemSeparatorComponent: () => {
@@ -456,8 +465,14 @@ export const MedicationReminderScreen = () => {
           showsVerticalScrollIndicator={false}
           containerStyle={styles.dropdownContainer()}
           // value={doseValue}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
+          onFocus={() => {
+            closeKeyboard();
+            setIsFocus(true);
+          }}
+          onBlur={() => {
+            closeKeyboard();
+            setIsFocus(false);
+          }}
           flatListProps={{
             bounces: false,
             ItemSeparatorComponent: () => {
@@ -516,8 +531,14 @@ export const MedicationReminderScreen = () => {
               showsVerticalScrollIndicator={false}
               containerStyle={styles.dropdownContainer()}
               // value={unitValue}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
+              onFocus={() => {
+                closeKeyboard();
+                setIsFocus(true);
+              }}
+              onBlur={() => {
+                closeKeyboard();
+                setIsFocus(false);
+              }}
               flatListProps={{
                 bounces: false,
                 ItemSeparatorComponent: () => {
@@ -566,8 +587,14 @@ export const MedicationReminderScreen = () => {
           showsVerticalScrollIndicator={false}
           containerStyle={styles.dropdownContainer()}
           // value={remindFrequencyValue}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
+          onFocus={() => {
+            closeKeyboard();
+            setIsFocus(true);
+          }}
+          onBlur={() => {
+            closeKeyboard();
+            setIsFocus(false);
+          }}
           flatListProps={{
             bounces: false,
             ItemSeparatorComponent: () => {
@@ -634,8 +661,14 @@ export const MedicationReminderScreen = () => {
           showsVerticalScrollIndicator={true}
           containerStyle={styles.dropdownContainer()}
           value={remindTimeValue}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
+          onFocus={() => {
+            closeKeyboard();
+            setIsFocus(true);
+          }}
+          onBlur={() => {
+            closeKeyboard();
+            setIsFocus(false);
+          }}
           flatListProps={{
             bounces: false,
             ItemSeparatorComponent: () => {
