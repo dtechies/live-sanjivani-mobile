@@ -111,11 +111,12 @@ export const AppointmentReminderScreen = animated => {
     if (searchVal === '') {
       setSearchValErr('Enter doctor name');
     }
-    if (addressOne === '') {
-      setAddressOneErr('Enter address');
-    } else {
-      setAddressOneErr('');
-    }
+    // NOTE: for making address field optional
+    // if (addressOne === '') {
+    //   setAddressOneErr('Enter address');
+    // } else {
+    //   setAddressOneErr('');
+    // }
     if (selectedTime === 'Time') {
       setSelectedTimeErr('Select time');
     }
@@ -231,9 +232,9 @@ export const AppointmentReminderScreen = animated => {
       </View>
     );
   };
-  useEffect(() => {
-    setAddressOneErr('');
-  }, [addressOne]);
+  // useEffect(() => {
+  //   setAddressOneErr('');
+  // }, [addressOne]);
 
   return (
     <SafeAreaView style={styles.full()}>
@@ -558,7 +559,6 @@ export const AppointmentReminderScreen = animated => {
         onPress={() => {
           selectedDate &&
           searchVal &&
-          addressOne &&
           selectedTime != 'Time' &&
           reminderTime != 'Time'
             ? onOpenPopUp()
