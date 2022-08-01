@@ -18,8 +18,12 @@ export const CareGiverCard = props => {
         </TouchableOpacity>
       </View>
       <View style={styles.row()}>
-        <Text style={styles.cardText()}>{data?.first_name}</Text>
+        <Text style={styles.cardText()}>{data?.first_name} </Text>
         <Text style={styles.cardTextLastName()}>{data?.last_name}</Text>
+      </View>
+      <View style={styles.row()}>
+        <Text style={styles.addressLabel()} tx={'myCareGiver_screen.address'} />
+        <Text style={styles.cardTextLastName()}>{data?.address}</Text>
       </View>
       <View style={styles.rowSecond()}>
         <Text style={styles.cardTextEmail()}>{data?.contact_no}</Text>

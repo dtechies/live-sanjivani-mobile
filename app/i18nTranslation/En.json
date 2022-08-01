@@ -214,7 +214,8 @@
     "nickName": "Nick Name",
     "save": "Save",
     "continue": "Continue",
-    "search": "Search"
+    "search": "Search",
+    "address": "Address"
   },
   "symptoms_screen": {
     "title": "Symptom Checker",
@@ -258,7 +259,8 @@
   "myCareGiver_screen": {
     "title": "My Care Giver ",
     "careGiverList": "Care Giver List",
-    "save": "Save"
+    "save": "Save",
+    "address": "Address : "
   },
   "medicalJournalLists_screen": {
     "title": "Medical Journal Lists",
@@ -341,6 +343,6 @@
     "care_giver": "Care Giver",
     "medications": "Medications",
     "appointments": "Appointments",
-    "medical_journal": "Medical Journal",
+    "medical_journal": "Medical Journal"
   }
 }

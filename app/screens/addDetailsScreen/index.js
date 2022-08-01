@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {SafeAreaView, Pressable, View, TextInput} from 'react-native';
+import {SafeAreaView, Pressable, View, TextInput, Keyboard} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 
@@ -14,6 +14,8 @@ export const AddDetailsScreen = props => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const toastRef = useRef();
+  const refsFocus4 = useRef();
+
   const [extra, setExtra] = useState(0);
   const [isError, setIsError] = useState(false);
   const [BMIValue, setBMIValue] = useState('');
@@ -24,12 +26,11 @@ export const AddDetailsScreen = props => {
   const [thisArray, setThisArray] = useState([]);
   const [loading, setLoading] = useState(false);
   const title = props.route.params ? props.route.params.title : '';
+
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
   const subCategory = props.route.params ? props.route.params.sub : [];
-
-  const refsFocus4 = useRef();
 
   const validation = () => {
     let error = false;
@@ -95,6 +96,26 @@ export const AddDetailsScreen = props => {
     console.log(subCategory, thisArray, 'thisArray');
   }, []);
 
+  const closeKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
+  const selectKeyboard = id => {
+    switch (id) {
+      // NOTE: Body Temperature
+      case 3:
+        return 'decimal-pad';
+      // NOTE: height
+      case 7:
+        return 'decimal-pad';
+      // NOTE: weight
+      case 8:
+        return 'decimal-pad';
+
+      default:
+        return 'number-pad';
+    }
+  };
   const ViewAsPerId = val => {
     // NOTE: Blood glucose
     if (val.id == 6) {
@@ -112,6 +133,8 @@ export const AddDetailsScreen = props => {
           maxHeight={size.moderateScale(90)}
           containerStyle={styles.dropdownContainer()}
           // value={language}
+          onFocus={() => closeKeyboard()}
+          onBlur={() => closeKeyboard()}
           flatListProps={{
             bounces: false,
           }}
@@ -170,7 +193,7 @@ export const AddDetailsScreen = props => {
           <Pressable style={styles.mainCard()}>
             <TextInput
               ref={refsFocus4}
-              keyboardType={'number-pad'}
+              keyboardType={selectKeyboard(val.id)}
               style={styles.cardItemInputBoxMain()}
               onChangeText={v => {
                 setSystolic(v);
@@ -203,6 +226,9 @@ export const AddDetailsScreen = props => {
                 }
                 let bmiValue = 0;
                 let bmiValueData = 0;
+                let height = 0;
+                let weight = 0;
+                let meeterHeight = 0;
                 thisArray.map(i => {
                   // NOTE: 1st height and 2nd weight
                   if (i.subcategory_id == 7 || i.subcategory_id == 8) {
@@ -211,20 +237,25 @@ export const AddDetailsScreen = props => {
                 });
                 if (bmiValue == 2) {
                   thisArray.map(j => {
-                    // NOTE: 1st height and 2nd weight
-                    if (j.subcategory_id == 7 || j.subcategory_id == 8) {
-                      bmiValueData += parseInt(j.value);
-                      console.log('parseInt(i.value)', j.value);
+                    if (j.subcategory_id == 7) {
+                      height += parseFloat(j.value);
+                    } else if (j.subcategory_id == 8) {
+                      weight += parseFloat(j.value);
                     }
                   });
-                  // console.log('SU', bmiValueData);
-                  setBMIValue(bmiValueData ? bmiValueData.toString() : '');
+
+                  meeterHeight = height / 3.2808;
+                  bmiValueData = weight / (meeterHeight * meeterHeight);
+                  setBMIValue(
+                    bmiValueData ? bmiValueData.toFixed(5).toString() : '',
+                  );
                 }
                 setThisArray(thisArray);
                 // console.log('thisArray', thisArray);
                 setIsError('');
                 setExtra(extra + 1);
               }}
+              onBlur={() => Keyboard.dismiss()}
               maxLength={4}
             />
             <Text style={styles.cardItemInputBoxText()}>{val.unit}</Text>
@@ -233,7 +264,7 @@ export const AddDetailsScreen = props => {
           <Pressable style={styles.mainCard()}>
             <TextInput
               ref={refsFocus4}
-              keyboardType={'number-pad'}
+              keyboardType={selectKeyboard(val.id)}
               style={styles.cardItemInputBoxMain()}
               onChangeText={v => {
                 setDiastolic(v);
@@ -262,6 +293,9 @@ export const AddDetailsScreen = props => {
                 }
                 let bmiValue = 0;
                 let bmiValueData = 0;
+                let height = 0;
+                let weight = 0;
+                let meeterHeight = 0;
                 thisArray.map(i => {
                   // NOTE: 1st height and 2nd weight
                   if (i.subcategory_id == 7 || i.subcategory_id == 8) {
@@ -270,15 +304,20 @@ export const AddDetailsScreen = props => {
                 });
                 if (bmiValue == 2) {
                   thisArray.map(j => {
-                    // NOTE: 1st height and 2nd weight
-                    if (j.subcategory_id == 7 || j.subcategory_id == 8) {
-                      bmiValueData += parseInt(j.value);
-                      console.log('parseInt(i.value)', j.value);
+                    if (j.subcategory_id == 7) {
+                      height += parseFloat(j.value);
+                    } else if (j.subcategory_id == 8) {
+                      weight += parseFloat(j.value);
                     }
                   });
-                  // console.log('SU', bmiValueData);
-                  setBMIValue(bmiValueData ? bmiValueData.toString() : '');
+
+                  meeterHeight = height / 3.2808;
+                  bmiValueData = weight / (meeterHeight * meeterHeight);
+                  setBMIValue(
+                    bmiValueData ? bmiValueData.toFixed(5).toString() : '',
+                  );
                 }
+
                 setThisArray(thisArray);
                 // console.log('thisArray', thisArray);
                 setIsError('');
@@ -296,7 +335,7 @@ export const AddDetailsScreen = props => {
         <Pressable style={styles.mainCardView()}>
           <TextInput
             ref={refsFocus4}
-            keyboardType={'number-pad'}
+            keyboardType={selectKeyboard(val.id)}
             style={styles.cardItemInputBoxMain()}
             onChangeText={v => {
               let indexK = -1;
@@ -322,6 +361,9 @@ export const AddDetailsScreen = props => {
               }
               let bmiValue = 0;
               let bmiValueData = 0;
+              let height = 0;
+              let weight = 0;
+              let meeterHeight = 0;
               thisArray.map(i => {
                 // NOTE: 1st height and 2nd weight
                 if (i.subcategory_id == 7 || i.subcategory_id == 8) {
@@ -330,14 +372,18 @@ export const AddDetailsScreen = props => {
               });
               if (bmiValue == 2) {
                 thisArray.map(j => {
-                  // NOTE: 1st height and 2nd weight
-                  if (j.subcategory_id == 7 || j.subcategory_id == 8) {
-                    bmiValueData += parseInt(j.value);
-                    console.log('parseInt(i.value)', j.value);
+                  if (j.subcategory_id == 7) {
+                    height += parseFloat(j.value);
+                  } else if (j.subcategory_id == 8) {
+                    weight += parseFloat(j.value);
                   }
                 });
-                // console.log('SU', bmiValueData);
-                setBMIValue(bmiValueData ? bmiValueData.toString() : '');
+
+                meeterHeight = height / 3.2808;
+                bmiValueData = weight / (meeterHeight * meeterHeight);
+                setBMIValue(
+                  bmiValueData ? bmiValueData.toFixed(5).toString() : '',
+                );
               }
               setThisArray(thisArray);
               // console.log('thisArray', thisArray);
@@ -412,7 +458,7 @@ export const AddDetailsScreen = props => {
                       <Pressable style={styles.mainCard()}>
                         <TextInput
                           ref={refsFocus4}
-                          keyboardType={'number-pad'}
+                          keyboardType={selectKeyboard(val.id)}
                           style={styles.cardItemInputBoxMain()}
                           onChangeText={v => {
                             setGlucoseValue(v);
