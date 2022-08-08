@@ -250,7 +250,8 @@
     "changeImage": "Change Image",
     "take_picture": "Take Picture",
     "upload_picture": "Upload Picture",
-    "save": "Save"
+    "save": "Save",
+    "send": "Send"
   },
   "medicationReminderList_Screen": {
     "title": "Medication Reminder List",

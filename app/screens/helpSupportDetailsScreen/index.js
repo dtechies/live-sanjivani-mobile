@@ -157,7 +157,7 @@ export const HelpSupportDetailsScreen = props => {
             <Button
               buttonStyle={styles.btnContinue()}
               buttonText={styles.btnContinueTxt()}
-              nameTx={'medicalJournal_screen.save'}
+              nameTx={'medicalJournal_screen.send'}
               onPress={() => {
                 descriptionValue !== ''
                   ? addMedicalJournalData()

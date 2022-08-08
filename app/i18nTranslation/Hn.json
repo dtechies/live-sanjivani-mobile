@@ -249,7 +249,8 @@
     "changeImage": "छवि बदलें",
     "take_picture": "चित्र लें",
     "upload_picture": "चित्र अपलोड करें",
-    "save": "रक्षा कर"
+    "save": "रक्षा कर",
+    "send": "भेजना"
   },
   "medicationReminderList_Screen": {
     "title": "दवा अनुस्मारक सूची",
