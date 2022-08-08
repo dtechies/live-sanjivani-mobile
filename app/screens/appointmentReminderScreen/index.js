@@ -537,7 +537,7 @@ export const AppointmentReminderScreen = animated => {
               <View style={styles.separator()}></View>
               <Text text={`On ${selectedDate}`} style={styles.txtDate()} />
               <Text text={`${selectedTime}`} style={styles.txtDate1()} />
-              <Text text={`Dr. ${searchVal}`} style={styles.txtDoctor()} />
+              <Text text={`${searchVal}`} style={styles.txtDoctor()} />
               <Text text={`${addressOne}`} style={styles.txtBegin()} />
               <Button
                 nameTx="appointment_reminder_screen.confirm"
