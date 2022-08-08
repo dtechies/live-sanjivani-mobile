@@ -253,6 +253,10 @@ export const TodayScreen = () => {
           <View style={styles.rowImage()}>
             {medicationData.length != 0 &&
               medicationData.map((item, index) => {
+                let timeStamp = moment(
+                  item.user_selected_local_time,
+                  'HH:mm:ss',
+                ).unix();
                 return (
                   <View
                     style={styles.row(medicationData.length > index + 1)}
@@ -263,6 +267,8 @@ export const TodayScreen = () => {
                     ) : item.reminder_status == 'snooze' ? (
                       <IcTrue fill={color.starColor} />
                     ) : item.reminder_status == 'cancel' ? (
+                      <IcFalse />
+                    ) : timeStamp < Date.now() / 1000 ? (
                       <IcFalse />
                     ) : (
                       <View style={styles.upcomingCircle()}>
