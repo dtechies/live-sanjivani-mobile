@@ -156,7 +156,7 @@ export const AppointmentReminderScreen = animated => {
     // console.log('getDoctorData res ==>', res);
     if (res.status) {
       setLoading(false);
-      toastMessage(res.message);
+      // toastMessage(res.message);
       setDoctorData(res.data.DoctorsData);
       setExtra(extra + 1);
     } else {
