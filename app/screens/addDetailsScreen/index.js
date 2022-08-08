@@ -111,6 +111,9 @@ export const AddDetailsScreen = props => {
       // NOTE: weight
       case 8:
         return 'decimal-pad';
+      // NOTE: sleep
+      case 9:
+        return 'decimal-pad';
 
       default:
         return 'number-pad';
