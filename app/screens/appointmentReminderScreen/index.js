@@ -553,7 +553,7 @@ export const AppointmentReminderScreen = animated => {
         </Portal>
       </Screen>
       <Button
-        nameTx="appointment_reminder_screen.bookNow"
+        nameTx="appointment_reminder_screen.saveNow"
         buttonStyle={styles.addButtonStyle()}
         buttonText={styles.textAddButton()}
         onPress={() => {
