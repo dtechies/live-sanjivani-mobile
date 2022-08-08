@@ -124,7 +124,10 @@ export const HelpSupportDetailsScreen = props => {
       <Screen style={styles.container()} showsVerticalScrollIndicator={false}>
         {title == 'Contact US' ? (
           <View style={styles.CContainer()}>
-            <Text style={styles.cardTxt(2)} text="Give Feedback" />
+            <Text
+              style={styles.cardTxt(2)}
+              text={`Use the form below to \nsubmit request to us`}
+            />
             <Pressable
               style={styles.imageView()}
               onPress={() => {
