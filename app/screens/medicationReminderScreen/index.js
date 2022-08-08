@@ -169,7 +169,7 @@ export const MedicationReminderScreen = () => {
       // console.log('response data ==>', res.data);
       setMedicineReminderViewData(res.data);
       setLoading(false);
-      toastMessage(res.message);
+      // toastMessage(res.message);
     } else {
       setLoading(false);
       toastMessage(res.message);
