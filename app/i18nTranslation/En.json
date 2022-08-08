@@ -53,7 +53,7 @@
     "change": "Change"
   },
   "appointment_reminder_screen": {
-    "title": "Book an Appointment",
+    "title": "Add Appointment Reminder",
     "name_of_doctor": "Name of Doctor/Practice",
     "address_one": "Address 1 (Required)",
     "address_two": "Address 2",
