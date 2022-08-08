@@ -324,9 +324,9 @@
   },
   "profileOptions": {
     "my_appointments": "मेरे अपॉइंटमेंट्स",
-    "my_medication": "मेरी दवा",
-    "my_care_giver": "मेरी देखभाल दाता",
-    "medical_journal_lists": "मेडिकल जर्नल",
+    "my_medications": "मेरी दवाएं",
+    "my_care_givers": "माई केयर गिवर्स",
+    "my_medical_journals": "माई मेडिकल जर्नल्स",
     "symptom_checker": "लक्षण परीक्षक",
     "account_settings": "खाता सेटिंग्स",
     "other_details": "अन्य विवरण",

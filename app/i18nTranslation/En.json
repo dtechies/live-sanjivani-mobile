@@ -326,9 +326,9 @@
   },
   "profileOptions": {
     "my_appointments": "My Appointments",
-    "my_medication": "My Medication",
-    "my_care_giver": "My Care Giver",
-    "medical_journal_lists": "Medical Journal Lists",
+    "my_medications": "My Medications",
+    "my_care_givers": "My Care Givers",
+    "my_medical_journals": "My Medical Journals",
     "symptom_checker": "Symptom Checker",
     "account_settings": "Account Settings",
     "other_details": "Other Details",
