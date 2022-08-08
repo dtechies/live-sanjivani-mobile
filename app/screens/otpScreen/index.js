@@ -246,10 +246,10 @@ export const OtpScreen = props => {
           />
         </View>
         <View style={styles.headingMain()}>
-          <Text
+          {/* <Text
             style={styles.firstHeadingTxt()}
             tx={'otp_screen.verification'}
-          />
+          /> */}
           <Text style={styles.subHeadingTxt()} tx={'otp_screen.otp'} />
         </View>
         <View style={styles.optMain()}>
