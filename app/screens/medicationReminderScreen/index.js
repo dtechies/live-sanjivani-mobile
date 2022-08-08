@@ -264,20 +264,20 @@ export const MedicationReminderScreen = () => {
   useFocusEffect(
     useCallback(() => {
       onGetMedicineReminderView();
-      setReminderName('');
-      setReferredBy('');
-      setName('');
+      // setReminderName('');
+      // setReferredBy('');
+      // setName('');
       setImageData(t('medication_reminder_screen.uploadImage'));
-      setImageUpload('');
-      setMedicineValue('');
-      setDoseValue(null);
-      setStrength('');
-      setMedicineStrengthUnit('');
-      setRemindFrequencyValue(null);
-      setRemindTimeValue(null);
-      setRemindFreqDate('');
-      setRemindTime('');
-      setPills('');
+      // setImageUpload('');
+      // setMedicineValue('');
+      // setDoseValue(null);
+      // setStrength('');
+      // setMedicineStrengthUnit('');
+      // setRemindFrequencyValue(null);
+      // setRemindTimeValue(null);
+      // setRemindFreqDate('');
+      // setRemindTime('');
+      // setPills('');
     }, []),
   );
   const closeKeyboard = () => {
