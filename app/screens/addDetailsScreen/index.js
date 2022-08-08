@@ -250,7 +250,7 @@ export const AddDetailsScreen = props => {
                   meeterHeight = height / 3.2808;
                   bmiValueData = weight / (meeterHeight * meeterHeight);
                   setBMIValue(
-                    bmiValueData ? bmiValueData.toFixed(5).toString() : '',
+                    bmiValueData ? bmiValueData.toFixed(2).toString() : '',
                   );
                 }
                 setThisArray(thisArray);
@@ -317,7 +317,7 @@ export const AddDetailsScreen = props => {
                   meeterHeight = height / 3.2808;
                   bmiValueData = weight / (meeterHeight * meeterHeight);
                   setBMIValue(
-                    bmiValueData ? bmiValueData.toFixed(5).toString() : '',
+                    bmiValueData ? bmiValueData.toFixed(2).toString() : '',
                   );
                 }
 
@@ -385,7 +385,7 @@ export const AddDetailsScreen = props => {
                 meeterHeight = height / 3.2808;
                 bmiValueData = weight / (meeterHeight * meeterHeight);
                 setBMIValue(
-                  bmiValueData ? bmiValueData.toFixed(5).toString() : '',
+                  bmiValueData ? bmiValueData.toFixed(2).toString() : '',
                 );
               }
               setThisArray(thisArray);
