@@ -526,10 +526,10 @@ export const AppointmentReminderScreen = animated => {
                 <IcCrossArrow width={18} height={18} fill={color.grayIcon} />
               </Pressable>
 
-              <Text
+              {/* <Text
                 tx={'appointment_reminder_screen.appointmentConfirmed'}
                 style={styles.txtConfirm()}
-              />
+              /> */}
               <Text
                 tx={'appointment_reminder_screen.yourAppointmentWillBeginAt'}
                 style={styles.txtBegin()}
