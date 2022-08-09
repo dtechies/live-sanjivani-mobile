@@ -517,7 +517,7 @@ export const MedicationReminderScreen = () => {
             ) : null}
             <Dropdown
               defaultValue={{
-                unit: t('medication_reminder_screen.strength'),
+                unit: t('medication_reminder_screen.selectStrengthUnit'),
               }}
               data={medicineReminderViewData?.MedicineStrengthData}
               labelField="unit"
