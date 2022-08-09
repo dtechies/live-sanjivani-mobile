@@ -707,7 +707,7 @@ export const MedicationReminderScreen = () => {
               isVisible={showTime}
               mode="time"
               date={selectedDate}
-              minimumDate={new Date()}
+              // minimumDate={new Date()}
               locale="en_GB"
               onConfirm={val => {
                 if (
