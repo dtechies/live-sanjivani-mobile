@@ -124,7 +124,7 @@ export const TodayScreen = () => {
         }
         let tot = 0;
         medicationListNew.map(val => {
-          if (val.is_done != '0') {
+          if (val.reminder_status == 'take') {
             // || val.is_done != null
             tot = tot + 1;
           }
