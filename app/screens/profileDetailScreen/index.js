@@ -47,6 +47,7 @@ export const ProfileDetailScreen = () => {
   const [emailErr, setEmailErr] = useState('');
   const [changeBtn, setChangeBtn] = useState('Change');
   const [phone, setPhone] = useState(userDetails.mob_no);
+  const [initialPhone, setInitialPhone] = useState('');
   const [phoneErr, setPhoneErr] = useState('');
   const [OtpErr, setOtpErr] = useState('');
   const [gender, setGender] = useState(userDetails.gender);
@@ -112,6 +113,7 @@ export const ProfileDetailScreen = () => {
       setDob(res.data.UserProfileData.dob);
       setEmail(res.data.UserProfileData.email);
       setPhone(res.data.UserProfileData.mob_no);
+      setInitialPhone(res.data.UserProfileData.mob_no);
       setGender(res.data.UserProfileData.gender);
 
       setLanguage(res.data.UserProfileData.language);
@@ -240,6 +242,7 @@ export const ProfileDetailScreen = () => {
     }
 
     if (!error) {
+      setChangeBtn('Change');
       editProfileDetails();
     }
   };
@@ -387,6 +390,8 @@ export const ProfileDetailScreen = () => {
                 setIsEditable(false);
                 setIsEditablePhone(false);
                 setChangeBtn('Change');
+                setPhone(initialPhone);
+                setOtp(false);
                 setExtra(extra + 1);
               }}>
               <Text style={styles.editText()} tx="ProfileDetailScreen.Back" />
