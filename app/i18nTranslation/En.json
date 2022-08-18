@@ -53,7 +53,7 @@
     "change": "Change"
   },
   "appointment_reminder_screen": {
-    "title": "Book an Appointment",
+    "title": "Add Appointment Reminder",
     "name_of_doctor": "Name of Doctor/Practice",
     "address_one": "Address 1 (Required)",
     "address_two": "Address 2",
@@ -63,7 +63,7 @@
     "date": "Date",
     "time": "Time",
     "add": "Add",
-    "bookNow": "BOOK NOW",
+    "saveNow": "Save Now",
     "appointmentTime": "Appointment Time",
     "appointmentReminderTime": "Appointment Reminder Time",
     "appointmentConfirmed": "Appointment Confirmed!",
@@ -81,6 +81,7 @@
     "pill_remaining": "Pills Remaining",
     "title": "Add Medication Reminder",
     "strength": "Select Strength",
+    "selectStrengthUnit": "Select Strength Unit",
     "next": "Next",
     "take_picture": "Take Picture",
     "upload_picture": "Upload Picture",
@@ -157,7 +158,7 @@
   },
   "today_screen": {
     "title_today": "Medication Reminder Profile",
-    "tips_for_the_day": "Tips for the Day",
+    "tips_for_the_day": "Tip for the day",
     "medication_Reminder": "Medication Reminder",
     "keep_it_up!": "Keep It Up!",
     "you_are_on_the_right_track": "You are on the right track",
@@ -250,7 +251,8 @@
     "changeImage": "Change Image",
     "take_picture": "Take Picture",
     "upload_picture": "Upload Picture",
-    "save": "Save"
+    "save": "Save",
+    "send": "Send"
   },
   "medicationReminderList_Screen": {
     "title": "Medication Reminder List",
@@ -326,9 +328,9 @@
   },
   "profileOptions": {
     "my_appointments": "My Appointments",
-    "my_medication": "My Medication",
-    "my_care_giver": "My Care Giver",
-    "medical_journal_lists": "Medical Journal Lists",
+    "my_medications": "My Medications",
+    "my_care_givers": "My Care Givers",
+    "my_medical_journals": "My Medical Journals",
     "symptom_checker": "Symptom Checker",
     "account_settings": "Account Settings",
     "other_details": "Other Details",

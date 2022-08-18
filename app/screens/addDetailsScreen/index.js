@@ -111,6 +111,9 @@ export const AddDetailsScreen = props => {
       // NOTE: weight
       case 8:
         return 'decimal-pad';
+      // NOTE: sleep
+      case 9:
+        return 'decimal-pad';
 
       default:
         return 'number-pad';
@@ -247,7 +250,7 @@ export const AddDetailsScreen = props => {
                   meeterHeight = height / 3.2808;
                   bmiValueData = weight / (meeterHeight * meeterHeight);
                   setBMIValue(
-                    bmiValueData ? bmiValueData.toFixed(5).toString() : '',
+                    bmiValueData ? bmiValueData.toFixed(2).toString() : '',
                   );
                 }
                 setThisArray(thisArray);
@@ -314,7 +317,7 @@ export const AddDetailsScreen = props => {
                   meeterHeight = height / 3.2808;
                   bmiValueData = weight / (meeterHeight * meeterHeight);
                   setBMIValue(
-                    bmiValueData ? bmiValueData.toFixed(5).toString() : '',
+                    bmiValueData ? bmiValueData.toFixed(2).toString() : '',
                   );
                 }
 
@@ -382,7 +385,7 @@ export const AddDetailsScreen = props => {
                 meeterHeight = height / 3.2808;
                 bmiValueData = weight / (meeterHeight * meeterHeight);
                 setBMIValue(
-                  bmiValueData ? bmiValueData.toFixed(5).toString() : '',
+                  bmiValueData ? bmiValueData.toFixed(2).toString() : '',
                 );
               }
               setThisArray(thisArray);

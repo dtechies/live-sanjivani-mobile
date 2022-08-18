@@ -124,7 +124,10 @@ export const HelpSupportDetailsScreen = props => {
       <Screen style={styles.container()} showsVerticalScrollIndicator={false}>
         {title == 'Contact US' ? (
           <View style={styles.CContainer()}>
-            <Text style={styles.cardTxt(2)} text="Give Feedback" />
+            <Text
+              style={styles.cardTxt(2)}
+              text={`Use the form below to \nsubmit request to us`}
+            />
             <Pressable
               style={styles.imageView()}
               onPress={() => {
@@ -154,7 +157,7 @@ export const HelpSupportDetailsScreen = props => {
             <Button
               buttonStyle={styles.btnContinue()}
               buttonText={styles.btnContinueTxt()}
-              nameTx={'medicalJournal_screen.save'}
+              nameTx={'medicalJournal_screen.send'}
               onPress={() => {
                 descriptionValue !== ''
                   ? addMedicalJournalData()

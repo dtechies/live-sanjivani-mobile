@@ -169,7 +169,7 @@ export const MedicationReminderScreen = () => {
       // console.log('response data ==>', res.data);
       setMedicineReminderViewData(res.data);
       setLoading(false);
-      toastMessage(res.message);
+      // toastMessage(res.message);
     } else {
       setLoading(false);
       toastMessage(res.message);
@@ -264,20 +264,20 @@ export const MedicationReminderScreen = () => {
   useFocusEffect(
     useCallback(() => {
       onGetMedicineReminderView();
-      setReminderName('');
-      setReferredBy('');
-      setName('');
+      // setReminderName('');
+      // setReferredBy('');
+      // setName('');
       setImageData(t('medication_reminder_screen.uploadImage'));
-      setImageUpload('');
-      setMedicineValue('');
-      setDoseValue(null);
-      setStrength('');
-      setMedicineStrengthUnit('');
-      setRemindFrequencyValue(null);
-      setRemindTimeValue(null);
-      setRemindFreqDate('');
-      setRemindTime('');
-      setPills('');
+      // setImageUpload('');
+      // setMedicineValue('');
+      // setDoseValue(null);
+      // setStrength('');
+      // setMedicineStrengthUnit('');
+      // setRemindFrequencyValue(null);
+      // setRemindTimeValue(null);
+      // setRemindFreqDate('');
+      // setRemindTime('');
+      // setPills('');
     }, []),
   );
   const closeKeyboard = () => {
@@ -517,7 +517,7 @@ export const MedicationReminderScreen = () => {
             ) : null}
             <Dropdown
               defaultValue={{
-                unit: t('medication_reminder_screen.strength'),
+                unit: t('medication_reminder_screen.selectStrengthUnit'),
               }}
               data={medicineReminderViewData?.MedicineStrengthData}
               labelField="unit"
@@ -707,7 +707,7 @@ export const MedicationReminderScreen = () => {
               isVisible={showTime}
               mode="time"
               date={selectedDate}
-              minimumDate={new Date()}
+              // minimumDate={new Date()}
               locale="en_GB"
               onConfirm={val => {
                 if (

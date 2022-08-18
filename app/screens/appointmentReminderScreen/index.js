@@ -156,7 +156,7 @@ export const AppointmentReminderScreen = animated => {
     // console.log('getDoctorData res ==>', res);
     if (res.status) {
       setLoading(false);
-      toastMessage(res.message);
+      // toastMessage(res.message);
       setDoctorData(res.data.DoctorsData);
       setExtra(extra + 1);
     } else {
@@ -526,10 +526,10 @@ export const AppointmentReminderScreen = animated => {
                 <IcCrossArrow width={18} height={18} fill={color.grayIcon} />
               </Pressable>
 
-              <Text
+              {/* <Text
                 tx={'appointment_reminder_screen.appointmentConfirmed'}
                 style={styles.txtConfirm()}
-              />
+              /> */}
               <Text
                 tx={'appointment_reminder_screen.yourAppointmentWillBeginAt'}
                 style={styles.txtBegin()}
@@ -537,7 +537,7 @@ export const AppointmentReminderScreen = animated => {
               <View style={styles.separator()}></View>
               <Text text={`On ${selectedDate}`} style={styles.txtDate()} />
               <Text text={`${selectedTime}`} style={styles.txtDate1()} />
-              <Text text={`Dr. ${searchVal}`} style={styles.txtDoctor()} />
+              <Text text={`${searchVal}`} style={styles.txtDoctor()} />
               <Text text={`${addressOne}`} style={styles.txtBegin()} />
               <Button
                 nameTx="appointment_reminder_screen.confirm"
@@ -553,7 +553,7 @@ export const AppointmentReminderScreen = animated => {
         </Portal>
       </Screen>
       <Button
-        nameTx="appointment_reminder_screen.bookNow"
+        nameTx="appointment_reminder_screen.saveNow"
         buttonStyle={styles.addButtonStyle()}
         buttonText={styles.textAddButton()}
         onPress={() => {
