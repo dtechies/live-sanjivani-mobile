@@ -11,6 +11,8 @@ import {LineChart} from 'react-native-chart-kit';
 import {SvgUri} from 'react-native-svg';
 import {GetSubCategoryGraphs} from 'redux-actions';
 import moment from 'moment';
+import momentTz from 'moment-timezone';
+import {getTimeZone} from 'react-native-localize';
 
 export const ProgressDetailScreen = props => {
   const dispatch = useDispatch();
@@ -60,7 +62,7 @@ export const ProgressDetailScreen = props => {
       setYieldAr(minValueHereAyy);
       // console.log('res', maxValueHere / 3, minValueHereAyy);
 
-      setSelectedList(dateDetails.map(i => i.time.split('-')[0]));
+      setSelectedList(dateDetails.map(i => i.time.split('-')[1]));
       setSelectedData(dateDetails.map(i => i.data));
     } else if (index == 1) {
       let maxValueHere = Math.max(...weekDetails.map(i => i.data));
@@ -118,8 +120,13 @@ export const ProgressDetailScreen = props => {
   };
   // const Icon = props.route.params && props.route.params.selectedItems.svg;
   const GetSubCategoryGraph = async () => {
+    const deviceTimeZone = getTimeZone();
+    // Make moment of right now, using the device timezone
+    const timeZone = momentTz().tz(deviceTimeZone).format('Z');
+
     const graphBody = {
       subcategory_id: props.route.params.selectedItems.id,
+      timestamp: timeZone,
     };
     const subCatGraphRes = await dispatch(GetSubCategoryGraphs(graphBody));
     // console.log('subCatGraphRes', subCatGraphRes);
