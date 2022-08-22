@@ -13,6 +13,8 @@ import * as styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {useDoubleBackPressExit} from 'utils';
 import {LocalizationContext} from '../../App';
+import momentTz from 'moment-timezone';
+import {getTimeZone} from 'react-native-localize';
 
 export const TodayScreen = () => {
   const navigation = useNavigation();
@@ -31,6 +33,7 @@ export const TodayScreen = () => {
   const [loading, setLoading] = useState(false);
   const [isStartAnimation, startAnimation] = useState(false);
   const [extra, setExtra] = useState(0);
+  const [timeStamp, setTimeStamp] = useState([]);
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -97,67 +100,98 @@ export const TodayScreen = () => {
 
   const onMedicineReminderData = async () => {
     setLoading(true);
-    const getTodayMedicationResponse = await dispatch(getTodayMedicationList());
+    const deviceTimeZone = getTimeZone();
+    // Make moment of right now, using the device timezone
+    const timeZoneBody = {
+      timestamp: momentTz().tz(deviceTimeZone).format('Z'),
+    };
+    const getTodayMedicationResponse = await dispatch(
+      getTodayMedicationList(timeZoneBody),
+    );
     const res = getTodayMedicationResponse;
+    console.log('res ==>data ', res);
     if (res != undefined) {
       if (res.status) {
-        console.log('getTodayMedicationResponse ==>', res.data.MedicineData);
+        console.log(
+          'getTodayMedicationResponse 121212 ==>',
+          res.data.medicineData,
+        );
 
-        let medicationList = res.data.MedicineData;
+        let medicationList = res.data.medicineData;
         const medicationListNew = medicationList.sort((a, b) => {
           return (
             new moment(a.user_selected_time, 'h:mm a').format('X') -
             new moment(b.user_selected_time, 'h:mm a').format('X')
           );
         });
+        console.log('medicationListNew first ==', medicationListNew);
+        console.log('medicationListNew first ==', medicationList);
         medicationListNew.map(val => {
           val.user_selected_time = new moment(val.user_selected_time, [
             'hh:mm a',
           ]).format('hh:mm A');
         });
-        let upcoming = medicationListNew.find(item => item.is_done == '0');
-        // console.log('upcoming ==> ', upcoming);
+        let upcoming = medicationList.find(item => item.is_done == '0');
+        console.log('upcoming ==> ', upcoming);
         if (upcoming != undefined) {
           setMedicationUpcoming(
             `${upcoming.dose} ${upcoming.reminder_name} ${upcoming.medicine_strength} ${upcoming.medicine_strength_unit} ${upcoming.medicine_form},${upcoming.reminder_frequency} ${upcoming.reminder_time}.`,
           );
         }
         let tot = 0;
+        let timeStampArr = [];
+        let dateVal = new moment().format('MM/DD/YYYY');
         medicationListNew.map(val => {
+          let timeStamp = moment(
+            val.user_selected_local_time,
+            'HH:mm:ss',
+          ).unix();
+          let demoData = moment(new moment().add(1, 'days')).unix();
+          if (dateVal == moment.unix(timeStamp).format('MM/DD/YYYY')) {
+            timeStampArr.push(timeStamp);
+          }
+          // if (dateVal == moment(demoData).format('MM/DD/YYYY')) {
+          //   timeStampArr.push(timeStamp);
+          // }
           if (val.reminder_status == 'take') {
-            // || val.is_done != null
             tot = tot + 1;
           }
         });
+        setTimeStamp(timeStampArr);
         setMedicationTrue(tot);
-        // console.log('medicationListNew ===> ', medicationListNew);
-        setMedication(medicationListNew);
+        console.log('medicationListNew ===> ', medicationListNew);
+        setMedication(medicationList);
         // console.log('medicationListNew ==> ', medicationListNew);
         setLoading(false);
         // toastMessage(res.message);
         setExtra(extra + 1);
       } else {
         setLoading(false);
-        // toastMessage(res.message);
       }
     } else {
       setLoading(false);
+      toastMessage('connection Error !!!');
     }
     startAnimation(true);
   };
 
   const getAppointmentReminderData = async () => {
     // setLoading(true);
+    const deviceTimeZone = getTimeZone();
+    // Make moment of right now, using the device timezone
+    const timeZoneBody = {
+      timestamp: momentTz().tz(deviceTimeZone).format('Z'),
+    };
     const getAppointmentRmdResponse = await dispatch(
-      getAppointmentReminderProfile(),
+      getAppointmentReminderProfile(timeZoneBody),
     );
-    // console.log('getAppointmentReminderProfile', getAppointmentRmdResponse);
+    console.log('getAppointmentReminderProfile ==>', getAppointmentRmdResponse);
     if (getAppointmentRmdResponse) {
       if (getAppointmentRmdResponse.status) {
         // setLoading(false);
         // toastMessage(res.message);
         let reminderArray =
-          getAppointmentRmdResponse.data.AppointmentReminderProfileData;
+          getAppointmentRmdResponse.data.appointmentReminderProfileData;
 
         reminderArray = reminderArray.filter(val => {
           return val.date == selectedDate;
@@ -169,6 +203,7 @@ export const TodayScreen = () => {
             new moment(b.user_selected_time, 'h:mm').format('X')
           );
         });
+        console.log('reminderArrayNew ==>', reminderArrayNew);
         reminderArrayNew.map(val => {
           val.user_selected_time = new moment(val.user_selected_time, [
             'hh:mm',
@@ -247,28 +282,28 @@ export const TodayScreen = () => {
             />
             <Text
               style={styles.textTodayProgress()}
-              text={medicationTrue + '/' + medicationData.length}
+              text={
+                timeStamp.length != 0
+                  ? medicationTrue + '/' + medicationData.length
+                  : '0/0'
+              }
             />
           </View>
           <View style={styles.rowImage()}>
-            {medicationData.length != 0 &&
+            {timeStamp.length != 0 &&
+              medicationData.length != 0 &&
               medicationData.map((item, index) => {
-                let timeStamp = moment(
-                  item.user_selected_local_time,
-                  'HH:mm:ss',
-                ).unix();
                 return (
                   <View
                     style={styles.row(medicationData.length > index + 1)}
                     key={index + 'medicationData'}>
-                    {/* {console.log('item.status ==> ', item.status, item.id)} */}
                     {item.is_done != '0' && item.reminder_status == 'take' ? (
                       <IcTrue fill={color.trueIcon} />
                     ) : item.reminder_status == 'snooze' ? (
                       <IcTrue fill={color.starColor} />
                     ) : item.reminder_status == 'cancel' ? (
                       <IcFalse />
-                    ) : timeStamp < Date.now() / 1000 ? (
+                    ) : timeStamp[index] < Date.now() / 1000 ? (
                       <IcFalse />
                     ) : (
                       <View style={styles.upcomingCircle()}>
@@ -282,7 +317,7 @@ export const TodayScreen = () => {
                 );
               })}
           </View>
-          {medicationData.length == 0 && (
+          {(timeStamp.length == 0 || medicationData.length == 0) && (
             <View>
               <Text
                 style={styles.textError()}
@@ -290,7 +325,9 @@ export const TodayScreen = () => {
               />
             </View>
           )}
-          <Text style={styles.desTextStyle()} text={medicationUpcoming} />
+          {timeStamp.length != 0 && (
+            <Text style={styles.desTextStyle()} text={medicationUpcoming} />
+          )}
         </Animated.View>
         <Animated.View style={styles.medicationView(animatedScale1)}>
           <View style={styles.row()}>
@@ -299,39 +336,43 @@ export const TodayScreen = () => {
               tx={'today_screen.today_medication'}
             />
           </View>
-          {medicationData.map((item, index) => {
-            return (
-              <View
-                style={styles.medicationCard()}
-                key={index + 'medicationData'}>
-                <View style={styles.row()}>
-                  <View style={styles.onlyRow()}>
-                    <View style={styles.row()}>
-                      <View style={styles.circleView()} />
-                      <Text
-                        style={styles.textTime()}
-                        text={
-                          item.user_selected_local_time
-                            ? moment(
-                                item.user_selected_local_time,
-                                'HH:mm:ss',
-                              ).format('hh:mm A')
-                            : ''
-                        }
-                      />
+          {timeStamp.length != 0 &&
+            medicationData.map((item, index) => {
+              return (
+                <View
+                  style={styles.medicationCard()}
+                  key={index + 'medicationData'}>
+                  <View style={styles.row()}>
+                    <View style={styles.onlyRow()}>
+                      <View style={styles.row()}>
+                        <View style={styles.circleView()} />
+                        <Text
+                          style={styles.textTime()}
+                          text={
+                            item.user_selected_local_time
+                              ? moment(
+                                  item.user_selected_local_time,
+                                  'HH:mm:ss',
+                                ).format('hh:mm A')
+                              : ''
+                          }
+                        />
+                      </View>
                     </View>
                   </View>
+                  <Text
+                    style={styles.medicineName()}
+                    text={item.reminder_name}
+                  />
+                  <Text
+                    style={styles.desTextStyle()}
+                    text={`${item.dose} ${item.medicine_name} ${item.medicine_strength} ${item.medicine_strength_unit} ${item.medicine_form},${item.reminder_frequency} ${item.reminder_time}.`}
+                  />
+                  <View style={styles.separator()} />
                 </View>
-                <Text style={styles.medicineName()} text={item.reminder_name} />
-                <Text
-                  style={styles.desTextStyle()}
-                  text={`${item.dose} ${item.medicine_name} ${item.medicine_strength} ${item.medicine_strength_unit} ${item.medicine_form},${item.reminder_frequency} ${item.reminder_time}.`}
-                />
-                <View style={styles.separator()} />
-              </View>
-            );
-          })}
-          {medicationData.length == 0 && (
+              );
+            })}
+          {(timeStamp.length == 0 || medicationData.length == 0) && (
             <View>
               <Text
                 style={styles.textError()}

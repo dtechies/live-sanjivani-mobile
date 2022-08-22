@@ -84,17 +84,16 @@ export const CheckMedicationReminderScreen = props => {
     formData.append('pills_remaining', data?.pills_remaining);
     formData.append('utc_date_and_time', UTCdate);
 
-    console.log('addMedicineReminder form data ==>', formData);
-    // return;
+    // console.log('addMedicineReminder form data ==>', formData);
     const addMedicineReminderResponse = await dispatch(
       addMedicineReminder(formData),
     );
     const res = addMedicineReminderResponse.payload;
-    console.log('addMedicineReminder Res ==>', res);
+    // console.log('addMedicineReminder Res ==>', res);
     setLoading(false);
 
     if (res.status) {
-      console.log('addMedicineReminder List ==>', res);
+      // console.log('addMedicineReminder List ==>', res);
       setData('');
       setDays(daysJson);
       // param.medicineFilteredValue = [];
@@ -108,14 +107,14 @@ export const CheckMedicationReminderScreen = props => {
     }
   };
   useEffect(() => {
-    console.log('props fromViewMedication', param);
+    // console.log('props fromViewMedication', param);
     let newDate = ConvertToUTC(
       param.frequency_value + ' ' + param.user_selected_time,
     );
-    console.log('props fromViewMedication', newDate);
+    // console.log('props fromViewMedication', newDate);
     setUTCdate(newDate);
-    console.log('newDate', newDate);
-    console.log('props fromViewMedication', new moment());
+    // console.log('newDate', newDate);
+    // console.log('props fromViewMedication', new moment());
     if (param && param.fromViewMedication) {
       setData(props.route.params.reminderData);
     } else if (param) {

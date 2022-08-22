@@ -10,6 +10,9 @@ import {Loader, Text, Button, Screen, Header, Toast} from 'components';
 import {size} from 'theme';
 import * as styles from './styles';
 import {BloodGlucoseData} from 'json';
+import momentTz from 'moment-timezone';
+import {getTimeZone} from 'react-native-localize';
+
 export const AddDetailsScreen = props => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -72,8 +75,11 @@ export const AddDetailsScreen = props => {
     // setLoading(true);
 
     console.log('subCategoryBody res ==>', thisArray);
+    const deviceTimeZone = getTimeZone();
+    // Make moment of right now, using the device timezone
     const subCategoryBody = {
       subcategory_data: thisArray,
+      timestamp: momentTz().tz(deviceTimeZone).format('Z'),
     };
     console.log('subCategoryBody ==>', subCategoryBody);
     const allCatResponse = await dispatch(AddSubcategory(subCategoryBody));

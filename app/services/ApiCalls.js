@@ -25,7 +25,6 @@ export const _getAllCategory = async () => {
   return _api_calls('GET', '/all-category', headers);
 };
 export const _getOTP = async payload => {
-  // console.log('_getOTP_payload ==> ', payload);
   let {_api_calls} = HttpCalls;
   let headers = await headersData({});
   return _api_calls('POST', '/get-OTP', headers, payload);
@@ -38,13 +37,11 @@ export const _refreshToken = async payload => {
 };
 
 export const _userLogin = async payload => {
-  // console.log('_userLogin_payload ==> ', payload);
   let {_api_calls} = HttpCalls;
   let headers = await headersData({});
   return _api_calls('POST', '/user-login', headers, payload);
 };
 export const _registerUser = async payload => {
-  // console.log('_registerUser_payload ==> ', payload);
   let {_api_calls} = HttpCalls;
   let headers = await headersData({
     type: 'application/json',
@@ -52,7 +49,6 @@ export const _registerUser = async payload => {
   return _api_calls('POST', '/register-user', headers, payload);
 };
 export const _addOtherData = async payload => {
-  // console.log('_addOtherData ==> ', payload);
   let {_api_calls} = HttpCalls;
   const token = await getToken();
 
@@ -73,7 +69,6 @@ export const _getMedicineReminderProfile = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers ==>', headers);
   return _api_calls('GET', '/get-medicine-reminder-profile', headers);
 };
 export const _getMedicineReminderView = async () => {
@@ -83,7 +78,6 @@ export const _getMedicineReminderView = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers ==>', headers);
   return _api_calls('GET', '/add-medicine-reminder-view', headers);
 };
 export const _addMedicineReminder = async payload => {
@@ -103,7 +97,6 @@ export const _getAllCategoryAndSubCategory = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers ==> ', headers, token);
   return _api_calls('GET', '/all_cat_subcategory', headers);
 };
 export const _addAppointmentReminderView = async () => {
@@ -113,7 +106,6 @@ export const _addAppointmentReminderView = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers _addAppointmentReminderView ==>', headers);
   return _api_calls('GET', '/add-appointment-reminder-view', headers);
 };
 export const _getAllSubCategory = async () => {
@@ -123,7 +115,6 @@ export const _getAllSubCategory = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('header-all-subcategory', headers);
   return _api_calls('GET', '/all-subcategory', headers);
 };
 export const _getHelpSupportData = async () => {
@@ -133,7 +124,6 @@ export const _getHelpSupportData = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers _getHelpSupportData ==>', headers);
   return _api_calls('GET', '/get-helpsupport-data', headers);
 };
 
@@ -144,7 +134,6 @@ export const _getUserProfileData = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers _getUserProfileData ==>', headers);
   return _api_calls('GET', '/get-user-profile-data', headers);
 };
 
@@ -168,25 +157,23 @@ export const _addSubcategory = async payload => {
   });
   return _api_calls('POST', '/add-subcategory-value', headers, payload);
 };
-export const _getAppointmentReminder = async () => {
+export const _getAppointmentReminder = async body => {
   let {_api_calls} = HttpCalls;
   const token = await getToken();
 
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers ==>', headers);
-  return _api_calls('GET', '/get-appointment-reminder-profile', headers);
+  return _api_calls('POST', '/get-appointment-reminder-profile', headers, body);
 };
-export const _getTodayMedicationList = async () => {
+export const _getTodayMedicationList = async payload => {
   let {_api_calls} = HttpCalls;
   const token = await getToken();
 
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers ==>', headers);
-  return _api_calls('GET', '/medication-list', headers);
+  return _api_calls('POST', '/medication-list', headers, payload);
 };
 export const _userFavoritesList = async () => {
   let {_api_calls} = HttpCalls;
@@ -195,12 +182,10 @@ export const _userFavoritesList = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers ==>', headers);
   return _api_calls('GET', '/user-favorites-list', headers);
 };
 
 export const _addUserFavorites = async payload => {
-  // console.log('_getOTP_payload ==> ', payload);
   let {_api_calls} = HttpCalls;
   const token = await getToken();
 
@@ -263,7 +248,6 @@ export const _editAppointmentReminderStatus = async payload => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers ==>', headers);
   return _api_calls(
     'POST',
     '/edit-appointment-reminder-status',
@@ -278,7 +262,6 @@ export const _addEditPlayerId = async payload => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('vvvv', 'POST', '/add-edit-player-id', headers, payload);
   return _api_calls('POST', '/add-edit-player-id', headers, payload);
 };
 export const _editReminderStatus = async payload => {
@@ -306,18 +289,16 @@ export const _getCareGiverList = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers _getUserProfileData ==>', headers);
   return _api_calls('GET', '/get-caregiver', headers);
 };
-export const _getCareGiverDelete = async body => {
+export const _getCareGiverDelete = async payload => {
   let {_api_calls} = HttpCalls;
   const token = await getToken();
 
   let headers = await headersData({
     token: token,
   });
-  console.log('headers _getCareGiverDelete ==>', headers);
-  return _api_calls('DELETE', '/delete-caregiver', headers, body);
+  return _api_calls('DELETE', '/delete-caregiver', headers, payload);
 };
 export const _getAllSymptom = async () => {
   let {_api_calls} = HttpCalls;
@@ -326,7 +307,6 @@ export const _getAllSymptom = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('header-all-symptom', headers);
   return _api_calls('GET', '/all-symptom', headers);
 };
 export const _addEditMedicalJournalNote = async payload => {
@@ -346,36 +326,32 @@ export const _getUserMedicalJournalNote = async () => {
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers _getUserProfileData ==>', headers);
   return _api_calls('GET', '/get-user-medical-journal-note', headers);
 };
-export const _getDeleteMedicalJournalNote = async body => {
+export const _getDeleteMedicalJournalNote = async payload => {
   let {_api_calls} = HttpCalls;
   const token = await getToken();
 
   let headers = await headersData({
     token: token,
   });
-  // console.log('headers _getUserProfileData ==>', headers);
-  return _api_calls('DELETE', '/delete-medical-journal-note', headers, body);
+  return _api_calls('DELETE', '/delete-medical-journal-note', headers, payload);
 };
-export const _storeOTP = async body => {
+export const _storeOTP = async payload => {
   let {_api_calls} = HttpCalls;
   const token = await getToken();
 
   let headers = await headersData({
     token: token,
   });
-  console.log('headers _getUserProfileData ==>', headers, body);
-  return _api_calls('POST', '/store-OTP', headers, body);
+  return _api_calls('POST', '/store-OTP', headers, payload);
 };
-export const _addFeedback = async body => {
+export const _addFeedback = async payload => {
   let {_api_calls} = HttpCalls;
   const token = await getToken();
 
   let headers = await headersData({
     token: token,
   });
-  console.log('headers _getUserProfileData ==>', headers, body);
-  return _api_calls('POST', '/add-feedback', headers, body);
+  return _api_calls('POST', '/add-feedback', headers, payload);
 };

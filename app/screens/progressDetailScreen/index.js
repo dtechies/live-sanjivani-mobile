@@ -1,18 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {View, SafeAreaView, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-
-import {Text, Screen, Header} from 'components';
-import {DWMYData, yearList} from 'json';
-import {size, color, images} from 'theme';
-import * as styles from './styles';
 import {LineChart} from 'react-native-chart-kit';
 import {SvgUri} from 'react-native-svg';
-import {GetSubCategoryGraphs} from 'redux-actions';
 import moment from 'moment';
 import momentTz from 'moment-timezone';
 import {getTimeZone} from 'react-native-localize';
+import {useDispatch} from 'react-redux';
+
+import {GetSubCategoryGraphs} from 'redux-actions';
+import {Text, Screen, Header} from 'components';
+import {DWMYData, yearList} from 'json';
+import {size, color, images} from 'theme';
+
+import * as styles from './styles';
 
 export const ProgressDetailScreen = props => {
   const dispatch = useDispatch();
@@ -21,8 +22,6 @@ export const ProgressDetailScreen = props => {
   const [sharingData, setSharingData] = useState({});
   const [dWMYData, setDWMYData] = useState(DWMYData);
   const [isSelected, setSelected] = useState(0);
-
-  // const [Icon, setIcon] = useState();
   const [isSelectedList, setSelectedList] = useState([]);
   const [isSelectedData, setSelectedData] = useState([]);
   const [weekDetails, setWeekDetails] = useState([]);
@@ -128,11 +127,12 @@ export const ProgressDetailScreen = props => {
       subcategory_id: props.route.params.selectedItems.id,
       timestamp: timeZone,
     };
+    console.log('graphBody', graphBody);
     const subCatGraphRes = await dispatch(GetSubCategoryGraphs(graphBody));
-    // console.log('subCatGraphRes', subCatGraphRes);
+    console.log('subCatGraphRes', subCatGraphRes);
     let res = subCatGraphRes.data;
     if (subCatGraphRes.status) {
-      // console.log('res', res);
+      console.log('res ==>', res);
       setWeekDetails(res.WeeklyData);
       setDateDetails(res.DailyData);
       setMonthsDetails(res.MonthlyData);
