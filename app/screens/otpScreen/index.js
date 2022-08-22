@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import {View, Pressable, Image, SafeAreaView, TextInput} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import OneSignal from 'react-native-onesignal';
@@ -8,10 +8,12 @@ import {loginUser, userData, getOtp, addEditPlayerId} from 'redux-actions';
 
 import {Loader, Text, Button, Toast, Screen} from 'components';
 import {size, color, IcCrossArrow, images} from 'theme';
+import {LocalizationContext} from '../../App';
 import * as styles from './styles';
 
 export const OtpScreen = props => {
   const dispatch = useDispatch();
+  const {setLocale} = useContext(LocalizationContext);
   const toastRef = useRef();
   const [isRequest, setIsRequest] = useState(true);
   const [iscount, setIsCount] = useState(false);
@@ -31,7 +33,7 @@ export const OtpScreen = props => {
     new moment().add(30, 'seconds').format('X'),
   );
   const currentDate = new moment().format('YYYY-MM-DD');
-  const [otpData, setOtpData] = useState('');
+  const [otpData, setOtpData] = useState({});
   const [loading, setLoading] = useState(false);
   const [playerId, setPlayerId] = useState('');
 
@@ -42,7 +44,7 @@ export const OtpScreen = props => {
   OneSignal.setLogLevel(6, 0);
   OneSignal.setRequiresUserPrivacyConsent(false);
 
-  const addPlayerId = async previous => {
+  const addPlayerId = async languageAdded => {
     const addEditPlayerIdBody = {
       player_id: playerId,
     };
@@ -57,9 +59,12 @@ export const OtpScreen = props => {
       // console.log('addPlayerId', res);
       // previous.userData.player_id = playerId;
       // await dispatch(userData(previous));
-      setTimeout(() => {
-        navigation.navigate('bottomStackNavigation', {screen: 'Today'});
-      }, 150);
+      if (languageAdded === 'english') {
+        setLocale('en');
+      } else {
+        setLocale('hn');
+      }
+      navigation.navigate('bottomStackNavigation', {screen: 'Today'});
     } else {
       toastMessage(res.message);
     }
@@ -69,9 +74,9 @@ export const OtpScreen = props => {
     setLoading(true);
     let otpVal = firstDigit + secondDigit + thirdDigit + fourthDigit;
     const loginBody = {
-      mob_no: otpData ? otpData?.mob_no : '',
+      mob_no: otpData ? otpData.mob_no : '',
       otp: otpData ? otpVal : '',
-      country_code: otpData ? otpData?.country_code : '',
+      country_code: otpData ? otpData.country_code : '',
     };
     const loginResponse = await dispatch(loginUser(loginBody));
     let res = {status: false, message: 'Connection Error...!'};
@@ -83,10 +88,12 @@ export const OtpScreen = props => {
       var b = moment(currentDate);
       var years = b.diff(a, 'year');
       b.add(years, 'years');
+      console.log('USEDATA', res.data.user);
+
       await dispatch(
         userData({userData: res.data.user, age: years, login: true}),
       );
-      await addPlayerId({userData: res.data.user, age: years, login: true});
+      await addPlayerId(res.data.user.language);
       setLoading(false);
     } else {
       setLoading(false);
@@ -98,18 +105,19 @@ export const OtpScreen = props => {
     // console.log('getOtpBody ==>');
     setLoading(true);
     const getOtpBody = {
-      mob_no: otpData ? otpData?.mob_no : '',
-      country_code: otpData ? otpData?.country_code : '',
+      mob_no: otpData ? otpData.mob_no : '',
+      country_code: otpData ? otpData.country_code : '',
+      user_id: null,
     };
-    // console.log('getOtpBody ==>', getOtpBody);
+    console.log('getOtpBody ==>', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    // console.log('getOtpBody responses ==>', getOtpResponse);
+    console.log('getOtpBody responses ==>', getOtpResponse);
     let res = {status: false, message: 'Connection Error...!'};
     if (getOtpResponse) {
       res = getOtpResponse.payload;
     }
     if (res.status) {
-      // console.log('getOtp res ==>', res.data.otp);
+      console.log('getOtp res ==>', res.data.otp);
       setLoading(false);
       toastMessage(res.message);
       setCounter(30);
@@ -238,12 +246,10 @@ export const OtpScreen = props => {
           />
         </View>
         <View style={styles.headingMain()}>
-          <Text style={styles.firstHeadingTxt()} text={otpData.otp} />
-
-          <Text
+          {/* <Text
             style={styles.firstHeadingTxt()}
             tx={'otp_screen.verification'}
-          />
+          /> */}
           <Text style={styles.subHeadingTxt()} tx={'otp_screen.otp'} />
         </View>
         <View style={styles.optMain()}>

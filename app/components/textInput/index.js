@@ -1,10 +1,9 @@
-import React, {useState, useRef, useContext} from 'react';
-import {View, TextInput, Pressable, Animated} from 'react-native';
+import React, {useContext} from 'react';
+import {View, TextInput, Pressable} from 'react-native';
 
 import * as styles from './styles';
 import {Text} from '../';
 import {color} from 'theme';
-import {images, SearchValNew, IcIntro2, IcIntro3, IcSplashColor} from 'theme';
 import 'i18n';
 import {LocalizationContext} from '../../App';
 
@@ -26,11 +25,11 @@ export const InputBox = props => {
     withButton,
     defaultNumber,
     mainContainerStyle,
-    placeholderTextColor,
     leftIconName,
     isRightUnit,
     unit,
     btnName,
+    btnTxName,
     placeHolderVal,
     buttonStyle,
   } = props;
@@ -61,7 +60,7 @@ export const InputBox = props => {
             selectionColor={color.dimGrey}
             value={value}
             ref={textRef}
-            placeholder={t(placeHolderVal)}
+            placeholder={placeHolderVal ? t(placeHolderVal) : ''}
             // maxLength={4}
             {...props}
           />
@@ -70,7 +69,11 @@ export const InputBox = props => {
               onPress={() => onRightIconPress()}
               {...props}
               style={[styles.rightIconContainer(), buttonStyle]}>
-              <Text style={styles.btnTextRight()}>{btnName}</Text>
+              {btnTxName ? (
+                <Text style={styles.btnTextRight()} tx={btnTxName} />
+              ) : (
+                <Text style={styles.btnTextRight()}>{btnName}</Text>
+              )}
             </Pressable>
           )}
           {rightIcon && (

@@ -6,7 +6,7 @@ import {getAllCategoryAndSubCategory} from 'redux-actions';
 import {Text, Header, Screen, Toast, Loader} from 'components';
 import {SvgUri} from 'react-native-svg';
 import * as styles from './styles';
-import {color, size} from 'theme';
+import {size} from 'theme';
 
 export const OtherDetailsScreen = () => {
   const navigation = useNavigation();
@@ -67,13 +67,11 @@ export const OtherDetailsScreen = () => {
         return (
           <View style={styles.itemRow()}>
             <Text style={styles.itemListTxt()}>
-              {stringItem
-                .split(':')[0]
-                .replaceAll('"', '')
-                .replaceAll("'", '') + ' : '}
+              {stringItem.split(':')[0].replace(/"/g, '').replace(/'/g, '') +
+                ' : '}
             </Text>
             <Text style={styles.itemValueTxt()}>
-              {stringItem.split(':')[1].replaceAll('"', '').replaceAll("'", '')}
+              {stringItem.split(':')[1].replace(/"/g, '').replace(/'/g, '')}
             </Text>
           </View>
         );
@@ -101,7 +99,7 @@ export const OtherDetailsScreen = () => {
       />
       <Screen withScroll>
         <View style={styles.mainContainer()}>
-          {data &&
+          {data && data.length > 0 ? (
             data.map((item, index) => {
               return (
                 <View
@@ -118,7 +116,12 @@ export const OtherDetailsScreen = () => {
                   {GetElementFields(item.nested_subcategories[0].value)}
                 </View>
               );
-            })}
+            })
+          ) : (
+            <View style={styles.emptyData()}>
+              <Text style={styles.errTxt()}>{'No Data Found'}</Text>
+            </View>
+          )}
         </View>
       </Screen>
     </SafeAreaView>

@@ -17,6 +17,12 @@ export const cardFirst = () => ({
   justifyContent: 'space-between',
   marginHorizontal: size.moderateScale(15),
 });
+export const bottomView = () => ({
+  flexDirection: 'row',
+  alignItems: 'flex-end',
+  justifyContent: 'space-between',
+  paddingRight: size.deviceWidth * 0.15,
+});
 export const cardHeading = val => ({
   marginLeft: size.moderateScale(34),
   color: val ? color.darkBlue : color.blueLight,

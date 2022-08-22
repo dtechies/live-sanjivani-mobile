@@ -33,7 +33,6 @@ const onClickButton = () => {
     useNativeDriver: true, // To make use of native driver for performance
   }).start(() => spinValue.setValue(spinValue._value === 0 ? 1 : 0));
 };
-
 export const FabMenu = ({addAppointment, addReminder}) => {
   return (
     <View style={styles.demoView()}>

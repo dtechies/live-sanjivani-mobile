@@ -9,19 +9,9 @@ import {Portal} from 'react-native-portalize';
 import {addEditMedicalJournalNote} from 'redux-actions';
 import {useDispatch} from 'react-redux';
 
-import {
-  Loader,
-  Toast,
-  Text,
-  Button,
-  TitleBox,
-  Screen,
-  InputBox,
-  Header,
-} from 'components';
-import {size, color, images, IcCrossArrow} from 'theme';
+import {Loader, Toast, Text, Button, Screen, Header} from 'components';
+import {size, color, IcCrossArrow} from 'theme';
 import * as styles from './styles';
-import {MedicalJournalListJson} from 'json';
 
 export const MedicalJournalScreen = props => {
   const navigation = useNavigation();
@@ -42,8 +32,8 @@ export const MedicalJournalScreen = props => {
   const [description, setDescription] = useState('');
   const [descriptionErr, setDescriptionErr] = useState('');
   const [showTime, setShowTime] = useState(false);
-  const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState('select time');
+  const [selectedDate, setSelectedDate] = useState('select date');
   const [showDate, setShowDate] = useState(false);
 
   useEffect(() => {
@@ -111,10 +101,10 @@ export const MedicalJournalScreen = props => {
   };
 
   const validation = () => {
-    if (selectedDate === null) {
+    if (selectedDate === 'select date') {
       setDateErr('Please select Date...');
     }
-    if (selectedTime === null) {
+    if (selectedTime === 'select time') {
       setTimeErr('Please select Time...');
     }
     if (description === '') {
@@ -130,14 +120,16 @@ export const MedicalJournalScreen = props => {
     formData.append('time', selectedTime);
     formData.append('date', selectedDate);
     formData.append('description', description);
-    formData.append('image', {
-      uri: imageUpload.path,
-      name: imageUpload.imageName,
-      type: imageUpload.mime,
-    });
+    Object.keys(imageUpload).length > 0 &&
+      formData.append('image', {
+        uri: imageUpload.path,
+        name: imageUpload.imageName,
+        type: imageUpload.mime,
+      });
     const SubCategoryResponse = await dispatch(
       addEditMedicalJournalNote(formData),
     );
+    console.log('DATAAA', SubCategoryResponse);
     let res = {status: false, message: 'Connection Error...!'};
     if (SubCategoryResponse) {
       res = SubCategoryResponse;
@@ -214,14 +206,20 @@ export const MedicalJournalScreen = props => {
             onPress={() => {
               setShowDate(true);
             }}>
-            <Text style={styles.cardTxt(1)} text={selectedDate} />
+            <Text
+              style={styles.cardTxt(1, selectedDate == 'select date')}
+              text={selectedDate}
+            />
           </Pressable>
           <Pressable
             style={styles.cardView(1)}
             onPress={() => {
               setShowTime(!showTime);
             }}>
-            <Text style={styles.cardTxt(1)} text={selectedTime} />
+            <Text
+              style={styles.cardTxt(1, selectedTime == 'select time')}
+              text={selectedTime}
+            />
           </Pressable>
         </View>
 
@@ -257,18 +255,17 @@ export const MedicalJournalScreen = props => {
         {descriptionErr ? (
           <Text style={styles.errorText(2)}>{descriptionErr}</Text>
         ) : null}
+        <Button
+          buttonStyle={styles.btnContinue()}
+          buttonText={styles.btnContinueTxt()}
+          nameTx={'medicalJournal_screen.save'}
+          onPress={() => {
+            selectedDate && selectedTime && description
+              ? addMedicalJournalData()
+              : validation();
+          }}
+        />
       </Screen>
-      <Button
-        buttonStyle={styles.btnContinue()}
-        buttonText={styles.btnContinueTxt()}
-        nameTx={'medicalJournal_screen.save'}
-        onPress={() => {
-          selectedDate && selectedTime && description
-            ? addMedicalJournalData()
-            : validation();
-        }}
-      />
-
       <Portal>
         <Modalize
           ref={modalRef}

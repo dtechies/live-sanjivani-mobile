@@ -25,9 +25,11 @@ import {GOOGLE_API_KEY} from 'config';
 import {Portal} from 'react-native-portalize';
 import {Modalize} from 'react-native-modalize';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import {ConvertToUTC} from 'utils';
 export const AppointmentReminderScreen = animated => {
   const dispatch = useDispatch();
   const toastRef = useRef();
+  const screenRef = useRef();
   const placesAutocompleteRef = useRef();
   const navigation = useNavigation();
   const [extra, setExtra] = useState(0);
@@ -109,11 +111,12 @@ export const AppointmentReminderScreen = animated => {
     if (searchVal === '') {
       setSearchValErr('Enter doctor name');
     }
-    if (addressOne === '') {
-      setAddressOneErr('Enter address');
-    } else {
-      setAddressOneErr('');
-    }
+    // NOTE: for making address field optional
+    // if (addressOne === '') {
+    //   setAddressOneErr('Enter address');
+    // } else {
+    //   setAddressOneErr('');
+    // }
     if (selectedTime === 'Time') {
       setSelectedTimeErr('Select time');
     }
@@ -124,17 +127,17 @@ export const AppointmentReminderScreen = animated => {
   const onDoctorNameType = val => {
     setSearchVal(val);
     let text = val.toLowerCase();
-    let address = 'initial val...';
-    // console.log('doctorData ==> ', doctorData);
+    let address = '';
+    console.log('doctorData ==> ', doctorData);
     if (val.length >= 2) {
       let filteredName = doctorData.filter(item => {
-        if (item.doctor_name.toLowerCase().match(text)) {
-          address = 'item.doctor_address';
+        if (item.doctor_name.toLowerCase().includes(text)) {
+          address = item.doctor_address;
         }
-        return item.doctor_name.toLowerCase().match(text);
+        return item.doctor_name.toLowerCase().includes(text);
       });
 
-      // console.log('address ==> ', address);
+      console.log('address ==> ', address);
       setDoctorFilteredName(filteredName);
       setAddressOne(address);
       setExtra(extra + 1);
@@ -153,7 +156,7 @@ export const AppointmentReminderScreen = animated => {
     // console.log('getDoctorData res ==>', res);
     if (res.status) {
       setLoading(false);
-      toastMessage(res.message);
+      // toastMessage(res.message);
       setDoctorData(res.data.DoctorsData);
       setExtra(extra + 1);
     } else {
@@ -163,20 +166,19 @@ export const AppointmentReminderScreen = animated => {
   };
 
   const addAppointmentData = async () => {
-    // setLoading(true);
-    console.log('clicked==>');
-    // let date = new moment(selectedDate, ['Do MMMM YYYY']).format('YYYY-MM-D');
+    setLoading(true);
+    let newDate = ConvertToUTC(selectedDate + ' ' + reminderTime);
     let formData = new FormData();
     formData.append('doctor_name', searchVal);
     formData.append('date', selectedDate);
     formData.append('doctor_address', addressOne);
-    formData.append('user_selected_time', `${selectedTime.slice(0, 5)}:00`);
+    formData.append('appointment_time', `${selectedTime.slice(0, 5)}:00`);
     formData.append('user_id', userId);
-    formData.append('reminder_time', `${reminderTime.slice(0, 5)}:00`);
-    // console.log('formData', formData);
+    formData.append('user_selected_time', `${reminderTime.slice(0, 5)}:00`);
+    formData.append('utc_date_and_time', `${newDate}`);
     // return;
     setExtra(extra + 1);
-    // console.log('fevUserBody', formData);
+    console.log('fevUserBody', formData);
     const SubCategoryResponse = await dispatch(
       addAppointmentReminder(formData),
     );
@@ -184,7 +186,7 @@ export const AppointmentReminderScreen = animated => {
     if (SubCategoryResponse) {
       res = SubCategoryResponse;
     }
-    // console.log('addUserFavoriteData res RESSS==>', res);
+    console.log('addUserFavoriteData res RESSS==>', res);
 
     if (res.status) {
       setLoading(false);
@@ -220,6 +222,7 @@ export const AppointmentReminderScreen = animated => {
   const onChangeSearchText = e => {
     // console.log('SU AAVE CHE', e);
     setAddressOne(e);
+    screenRef.current.scrollToPosition(0, size.deviceHeight * 0.5);
   };
 
   const renderRow = row => {
@@ -229,9 +232,9 @@ export const AppointmentReminderScreen = animated => {
       </View>
     );
   };
-  useEffect(() => {
-    setAddressOneErr('');
-  }, [addressOne]);
+  // useEffect(() => {
+  //   setAddressOneErr('');
+  // }, [addressOne]);
 
   return (
     <SafeAreaView style={styles.full()}>
@@ -252,10 +255,11 @@ export const AppointmentReminderScreen = animated => {
         isHeading={true}
         title={'appointment_reminder_screen.title'}
       />
-      <Screen style={styles.container()}>
+      <Screen screenRef={screenRef} style={styles.container()}>
         <View style={styles.mainView()}>
           <View style={styles.dataPickerStyle()}>
             <DatePicker
+              date={new moment(selectedDate, 'YYYY-MM-DD')._d}
               options={{
                 textHeaderColor: color.black,
                 textDefaultColor: color.black,
@@ -301,6 +305,7 @@ export const AppointmentReminderScreen = animated => {
                 isVisible={showTime}
                 mode="time"
                 locale="en_GB"
+                date={new moment(selectedDate, 'YYYY-MM-DD')._d}
                 onConfirm={val => {
                   if (
                     new Date(val).toDateString() === new Date().toDateString()
@@ -340,7 +345,9 @@ export const AppointmentReminderScreen = animated => {
                 mode="time"
                 locale="en_GB"
                 minimumDate={new Date()}
+                date={new moment(selectedDate, 'YYYY-MM-DD')._d}
                 onConfirm={val => {
+                  console.log('val', new moment(selectedDate, 'YYYY-MM-DD')._d);
                   if (
                     new Date(val).toDateString() === new Date().toDateString()
                   ) {
@@ -354,6 +361,7 @@ export const AppointmentReminderScreen = animated => {
                   }
                 }}
                 onCancel={() => {
+                  console.log('val');
                   setShowTimeReminder(false);
                   setExtra(extra + 1);
                 }}
@@ -406,26 +414,7 @@ export const AppointmentReminderScreen = animated => {
                 </Pressable>
               );
             })}
-          {/* <InputBox
-            value={addressOne}
-            onChangeText={value => {
-              setAddressOne(value);
-              setAddressOneErr('');
-              setExtra(extra + 1);
-            }}
-            mainContainerStyle={styles.inputMain()}
-            inputStyle={styles.inputTxt()}
-            leftIcon={true}
-            leftIconName={
-              <IcAddress
-                height={size.moderateScale(20)}
-                width={size.moderateScale(20)}
-                fill={color.blue}
-              />
-            }
-            placeholder={'Address'}
-            
-          /> */}
+
           <View style={styles.searchPlacesTxt()}>
             <View
               style={{
@@ -537,10 +526,10 @@ export const AppointmentReminderScreen = animated => {
                 <IcCrossArrow width={18} height={18} fill={color.grayIcon} />
               </Pressable>
 
-              <Text
+              {/* <Text
                 tx={'appointment_reminder_screen.appointmentConfirmed'}
                 style={styles.txtConfirm()}
-              />
+              /> */}
               <Text
                 tx={'appointment_reminder_screen.yourAppointmentWillBeginAt'}
                 style={styles.txtBegin()}
@@ -548,7 +537,7 @@ export const AppointmentReminderScreen = animated => {
               <View style={styles.separator()}></View>
               <Text text={`On ${selectedDate}`} style={styles.txtDate()} />
               <Text text={`${selectedTime}`} style={styles.txtDate1()} />
-              <Text text={`Dr. ${searchVal}`} style={styles.txtDoctor()} />
+              <Text text={`${searchVal}`} style={styles.txtDoctor()} />
               <Text text={`${addressOne}`} style={styles.txtBegin()} />
               <Button
                 nameTx="appointment_reminder_screen.confirm"
@@ -564,13 +553,12 @@ export const AppointmentReminderScreen = animated => {
         </Portal>
       </Screen>
       <Button
-        nameTx="appointment_reminder_screen.bookNow"
+        nameTx="appointment_reminder_screen.saveNow"
         buttonStyle={styles.addButtonStyle()}
         buttonText={styles.textAddButton()}
         onPress={() => {
           selectedDate &&
           searchVal &&
-          addressOne &&
           selectedTime != 'Time' &&
           reminderTime != 'Time'
             ? onOpenPopUp()

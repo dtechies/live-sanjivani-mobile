@@ -1,9 +1,9 @@
 import {color, size, fonts, fontSize} from 'theme';
 
 export const container = () => ({
+  flex: 1,
   justifyContent: 'center',
   backgroundColor: color.themeBack,
-  //
 });
 export const screenContainer = () => ({
   marginBottom: size.moderateScale(35),
@@ -59,7 +59,6 @@ export const cardItemMain = () => ({
 });
 export const btnContinue = () => ({
   alignSelf: 'center',
-  marginVertical: size.deviceHeight * 0.02,
   width: size.deviceWidth * 0.35,
   backgroundColor: color.blueBtn,
   borderColor: color.blueBtn,
@@ -69,7 +68,6 @@ export const btnContinue = () => ({
   shadowOpacity: 0.2,
   shadowRadius: 1,
   elevation: size.moderateScale(4),
-  marginTop: size.moderateScale(35),
 });
 export const btnContinueTxt = () => ({
   color: color.white,
@@ -84,8 +82,13 @@ export const cardDesign = val => ({
   flexDirection: 'row',
   alignItems: 'center',
 });
-export const cardTxt = val => ({
-  fontSize: val == 1 ? fontSize.mediumLargeSec : fontSize.medium,
+export const cardTxt = (val, fontsizeChange) => ({
+  fontSize:
+    val == 1
+      ? fontsizeChange
+        ? fontSize.medium
+        : fontSize.mediumLargeSec
+      : fontSize.medium,
   fontFamily: fonts.latoBold,
   color: color.headerBlue,
   marginLeft: size.moderateScale(val == 2 ? 19 : 7),
@@ -253,13 +256,14 @@ export const containerVal = () => ({
   backgroundColor: color.white,
   padding: size.moderateScale(11),
   paddingTop: size.moderateScale(10),
-  // textAlignVertical: 'top',
+  textAlignVertical: 'top',
   height: size.deviceHeight * 0.2,
   marginHorizontal: size.moderateScale(20),
   borderRadius: size.moderateScale(10),
   fontSize: fontSize.small,
   fontFamily: fonts.latoRegular,
   color: color.blueTx,
+  marginBottom: size.moderateScale(40),
 });
 export const inputTextStyle = () => ({
   paddingHorizontal: size.moderateScale(9),

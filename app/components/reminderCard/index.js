@@ -4,6 +4,7 @@ import * as styles from './styles';
 import {Text} from '..';
 import {color, size, IcDot} from 'theme';
 import {ToggleSwitch} from '../switch';
+import moment from 'moment';
 
 export const ReminderCard = props => {
   const {onTogglePress, onWholeCardPress, data} = props;
@@ -28,16 +29,26 @@ export const ReminderCard = props => {
           onToggle={() => onTogglePress && onTogglePress()}
         />
       </View>
-      <View>
-        <Text style={styles.cardHeading(data.status)}>
-          {data?.dose} {data?.medicine_name} {data?.medicine_strength}{' '}
-          {data?.medicine_strength_unit}
-        </Text>
-        <Text style={styles.cardText(data.status)}>
-          {data?.user_selected_time.slice(0, 5)}
-          {', '}
-          {data?.reminder_time}
-        </Text>
+      <View style={styles.bottomView()}>
+        <View>
+          <Text style={styles.cardHeading(data.status)}>
+            {data?.dose} {data?.medicine_name} {data?.medicine_strength}{' '}
+            {data?.medicine_strength_unit}
+          </Text>
+          <Text style={styles.cardText(data.status)}>
+            {data.reminder_frequency}{' '}
+            {'at ' + data.user_selected_local_time
+              ? moment(data.user_selected_local_time, 'HH:mm:ss').format(
+                  'hh:mm A',
+                )
+              : '' + ' '}
+          </Text>
+        </View>
+        <View>
+          <Text style={styles.cardText(data.status)}>
+            {data?.reminder_time}
+          </Text>
+        </View>
       </View>
     </Pressable>
   );

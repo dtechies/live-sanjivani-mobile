@@ -18,6 +18,7 @@ import {
 } from 'components';
 import {size, color, IcBtnPlus, SearchValNew} from 'theme';
 import * as styles from './styles';
+import moment from 'moment';
 
 export const MyAppointments = () => {
   const navigation = useNavigation();
@@ -41,7 +42,7 @@ export const MyAppointments = () => {
     let text = val.toLowerCase() || val.toUpperCase();
 
     let FilteredValue = appointmentReminderData.filter(item => {
-      return item.doctor.doctor_name.toLowerCase().match(text);
+      return item.doctor.doctor_name.toLowerCase().includes(text);
     });
     FilteredValue.length == 0 && FilteredValue.push({value: 'null'});
     setFilteredData(FilteredValue);
@@ -53,10 +54,10 @@ export const MyAppointments = () => {
     const getAppointmentReminderProfileResponse = await dispatch(
       getAppointmentReminderProfile(),
     );
-    // console.log(
-    //   'getAppointmentReminderProfile',
-    //   getAppointmentReminderProfileResponse,
-    // );
+    console.log(
+      'getAppointmentReminderProfile',
+      getAppointmentReminderProfileResponse,
+    );
     const res = getAppointmentReminderProfileResponse;
     // console.log('res', res);
     if (res.status) {
@@ -98,8 +99,10 @@ export const MyAppointments = () => {
   };
 
   useEffect(() => {
-    getAppointmentReminderData();
-  }, []);
+    navigation.addListener('focus', () => {
+      getAppointmentReminderData();
+    });
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.container()}>
@@ -171,7 +174,11 @@ export const MyAppointments = () => {
                 key={i + 'My appointment'}
                 data={val}
                 onWholeCardPress={() => console.log('Click...')}
-                time={val.user_selected_time}
+                time={
+                  val.appointment_time
+                    ? moment(val.appointment_time, 'HH:mm:ss').format('hh:mm A')
+                    : ''
+                }
                 date={val.date}
                 address={val.doctor.doctor_address}
                 doctor={val.doctor.doctor_name}

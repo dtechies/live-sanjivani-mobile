@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {SafeAreaView, Pressable, View, Image} from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {
   GetUserMedicalJournalNoteAction,
   GetDeleteMedicalJournalNoteAction,
@@ -9,16 +9,8 @@ import {
 import {useDispatch} from 'react-redux';
 import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
-import {
-  Loader,
-  Text,
-  Screen,
-  InputBox,
-  Header,
-  JournalCard,
-  Button,
-} from 'components';
-import {size, color, IcBtnPlus, SearchValNew, IcCrossArrow} from 'theme';
+import {Loader, Text, Screen, Header, JournalCard} from 'components';
+import {size, color, IcBtnPlus, IcCrossArrow} from 'theme';
 import * as styles from './styles';
 
 export const MedicalJournalLists = () => {
@@ -29,8 +21,8 @@ export const MedicalJournalLists = () => {
   const [imageUpload, setImageUpload] = useState('');
 
   const [extra, setExtra] = useState(0);
-  const [searchText, setSearchText] = useState('');
-  const [careGiverList, setCareGiverList] = useState([]);
+  // const [searchText, setSearchText] = useState('');
+  // const [careGiverList, setCareGiverList] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -46,22 +38,22 @@ export const MedicalJournalLists = () => {
     toastRef.current.show(msg);
   };
 
-  const onSearch = val => {
-    setSearchText(val);
-    let text = val.toLowerCase() || val.toUpperCase();
+  // const onSearch = val => {
+  //   setSearchText(val);
+  //   let text = val.toLowerCase() || val.toUpperCase();
 
-    let FilteredValue = careGiverList.filter(item => {
-      return (
-        item.first_name.toLowerCase().match(text) ||
-        item.nick_name.toLowerCase().match(text)
-      );
-    });
-    FilteredValue.length == 0 && FilteredValue.push({value: 'null'});
-    setFilteredData(FilteredValue);
-  };
+  //   let FilteredValue = careGiverList.filter(item => {
+  //     return (
+  //       item.first_name.toLowerCase().includes(text) ||
+  //       item.nick_name.toLowerCase().includes(text)
+  //     );
+  //   });
+  //   FilteredValue.length == 0 && FilteredValue.push({value: 'null'});
+  //   setFilteredData(FilteredValue);
+  // };
 
   const getCaregiverData = async () => {
-    // setLoading(true);
+    setLoading(true);
 
     const getAppointmentReminderProfileResponse = await dispatch(
       GetUserMedicalJournalNoteAction(),
@@ -74,7 +66,7 @@ export const MedicalJournalLists = () => {
     if (res.status) {
       let data = res.data.MedicalJournalNoteData;
       console.log('DataJournal', data);
-      setCareGiverList(data);
+      // setCareGiverList(data);
       setFilteredData(data);
       setLoading(false);
       setExtra(extra + 1);

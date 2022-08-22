@@ -3,7 +3,7 @@ import {View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {SelectCountry} from 'react-native-element-dropdown';
 
-import {Text, Button} from 'components';
+import {Button} from 'components';
 import * as styles from './styles';
 
 export const LandingScreen = () => {

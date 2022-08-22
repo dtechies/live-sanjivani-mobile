@@ -7,7 +7,6 @@ import {
   color,
   size,
   IcPlus,
-  IcHome,
   IcProfile,
   IcProgress,
   IcSharing,
@@ -22,22 +21,34 @@ export const BottomTab = props => {
   }
 
   const onTabBarPress = (route, i) => {
-    navigation.navigate(route.name);
+    // NOTE: for pop to top of stack which is nested inside bottom tab navigation
+    navigation.reset({
+      routes: [{name: route.name}],
+    });
+
+    // NOTE: normal navigation
+    // navigation.navigate(route.name);
   };
   return (
     <View style={styles.container()}>
       {state.routes.map((r, index) => {
         var Icon;
+        let tabName = '';
         if (r.name === 'Today') {
           Icon = IcHeartCare;
+          tabName = 'btb.today';
         } else if (r.name === 'Progress') {
           Icon = IcProgress;
+          tabName = 'btb.progress';
         } else if (r.name === 'Sharing') {
           Icon = IcSharing;
+          tabName = 'btb.sharing';
         } else if (r.name === 'Add') {
           Icon = IcPlus;
+          tabName = 'btb.add';
         } else if (r.name === 'Profile') {
           Icon = IcProfile;
+          tabName = 'btb.profile';
         }
         return (
           <Pressable
@@ -47,13 +58,14 @@ export const BottomTab = props => {
               onTabBarPress(r, index);
             }}>
             <Icon
-              height={size.moderateScale(20)}
-              width={size.moderateScale(20)}
+              height={size.moderateScale(28)}
+              width={size.moderateScale(28)}
               fill={state.index === index ? color.white : color.darkGrey}
             />
-            <Text style={styles.textLabel(state.index === index)}>
-              {r.name}
-            </Text>
+            <Text
+              tx={tabName}
+              style={styles.textLabel(state.index === index)}
+            />
           </Pressable>
         );
       })}

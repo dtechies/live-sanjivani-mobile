@@ -25,7 +25,7 @@ export const SharingScreen = () => {
 
   const [sharingData, setSharingData] = useState(SharingData);
   const [sharingDataErr, setSharingDataErr] = useState('');
-  const [sharingDataList, setSharingDataList] = useState([]);
+  const [sharingDataList, setSharingDataList] = useState();
   const clearData = () => {
     sharingData.map((val, i) => {
       sharingData[i].selectedCard = false;
@@ -70,8 +70,11 @@ export const SharingScreen = () => {
   };
 
   useEffect(() => {
-    getAllSubCategoryData();
-  }, []);
+    navigation.addListener('focus', () => {
+      getAllSubCategoryData();
+    });
+  }, [navigation]);
+
   return (
     <SafeAreaView style={styles.container()}>
       <Toast
@@ -86,31 +89,39 @@ export const SharingScreen = () => {
 
       <Screen withScroll>
         <View style={styles.row()}>
-          {sharingDataList.map((item, index) => {
-            return (
-              <MedicalItems
-                key={index.toString()}
-                onPress={() => {
-                  setSharingDataErr('');
-                  sharingDataList[index].selectedCard = !item.selectedCard;
-                  setExtra(extra + 1);
-                }}
-                containerStyle={styles.listViewStyle()}
-                nameFirst={item.value}
-                nameSecond={item.name}
-                nameThird={item.unit}
-                svgCardItems={item.icon}
-                isSelected={item.selectedCard}
-              />
-            );
-          })}
+          {sharingDataList && sharingDataList.length > 0 ? (
+            sharingDataList.map((item, index) => {
+              return (
+                <MedicalItems
+                  index={index}
+                  key={index.toString()}
+                  onPress={() => {
+                    setSharingDataErr('');
+                    sharingDataList[index].selectedCard = !item.selectedCard;
+                    setExtra(extra + 1);
+                  }}
+                  containerStyle={styles.listViewStyle()}
+                  nameFirst={item.value}
+                  nameSecond={item.name}
+                  nameThird={item.unit}
+                  svgCardItems={item.icon}
+                  isSelected={item.selectedCard}
+                />
+              );
+            })
+          ) : (
+            <Text style={styles.emptyText()}>{'No Records Found...'}</Text>
+          )}
         </View>
         {sharingDataErr ? (
           <Text style={styles.errorText()}>{sharingDataErr}</Text>
         ) : null}
       </Screen>
       <Button
-        buttonStyle={styles.button()}
+        disabled={sharingDataList && sharingDataList.length <= 0}
+        buttonStyle={styles.button(
+          sharingDataList && sharingDataList.length <= 0,
+        )}
         buttonText={styles.buttonTxt()}
         nameTx={'sharing_screen.shareItems'}
         onPress={() => {

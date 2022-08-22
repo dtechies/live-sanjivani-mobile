@@ -64,13 +64,17 @@
   bridge.surfacePresenter = _bridgeAdapter.surfacePresenter;
 #endif
 
-  UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"LiveSanjivani", nil);
+  UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"Live Sanjivani", nil);
 
   if (@available(iOS 13.0, *)) {
     rootView.backgroundColor = [UIColor systemBackgroundColor];
   } else {
     rootView.backgroundColor = [UIColor whiteColor];
   }
+  
+  // Force DatePicker locale to current language (for: 24h or 12h format, full day names etc...)
+  NSString *currentLanguage = [[NSLocale preferredLanguages] firstObject];
+  [[UIDatePicker appearance] setLocale:[[NSLocale alloc]initWithLocaleIdentifier:currentLanguage]];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];

@@ -7,7 +7,6 @@ import {
   AppointmentReminderScreen,
   LoginScreen,
   HelpSupportScreen,
-  HelpSupportDetailsScreen,
   RegisterScreen,
   SelectServiceScreen,
   ViewMedicationScreen,

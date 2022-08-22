@@ -40,3 +40,5 @@ export * from './DeleteCareGiverAction';
 export * from './GetUserMedicalJournalNoteAction';
 export * from './GetDeleteMedicalJournalNoteAction';
 export * from './GetAllSymptomAction';
+export * from './StoreOtp';
+export * from './AddFeedbackAction';

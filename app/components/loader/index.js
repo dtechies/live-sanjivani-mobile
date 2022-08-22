@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, ActivityIndicator} from 'react-native';
+import {View} from 'react-native';
 import * as styles from './styles';
 import {lottieIcons} from 'theme';
 import LottieView from 'lottie-react-native';

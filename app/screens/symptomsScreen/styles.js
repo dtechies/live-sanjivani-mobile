@@ -87,6 +87,8 @@ export const mainDetailContainer = () => ({
   // flexDirection: 'row',
   paddingHorizontal: size.moderateScale(20),
   paddingTop: size.moderateScale(20),
+  // minHeight: size.deviceHeight * 0.65,
+  paddingBottom: size.deviceHeight * 0.1,
 });
 export const genderViewContainer = () => ({
   paddingLeft: size.moderateScale(15),
@@ -114,9 +116,9 @@ export const dotImgSymptom = val => ({
   marginLeft: size.moderateScale(15),
   marginRight: size.moderateScale(10),
 });
-export const cardTxt = () => ({
+export const cardTxt = val => ({
   fontSize: fontSize.small,
-  color: color.darkBlue,
+  color: val ? color.white : color.darkBlue,
 });
 export const circleBtnView = () => ({
   borderWidth: 1,
@@ -141,7 +143,7 @@ export const cardDesign = isActive => ({
   marginHorizontal: size.moderateScale(20),
   paddingVertical: size.moderateScale(10),
   paddingHorizontal: size.moderateScale(5),
-  backgroundColor: isActive ? color.blueLightDark : color.white,
+  backgroundColor: isActive ? color.denim : color.white,
   shadowColor: color.black,
   shadowRadius: size.moderateScale(5),
   shadowOffset: {height: size.moderateScale(5), width: 0},
@@ -200,7 +202,7 @@ export const selectedSymptomMainView = () => ({
 export const selectedSymptomRowView = () => ({
   flexDirection: 'row',
   alignItems: 'center',
-  borderColor: color.headerBorder,
+  borderColor: color.borderBlue,
   borderWidth: size.moderateScale(1),
   margin: size.moderateScale(5),
   paddingHorizontal: size.moderateScale(8),
@@ -208,7 +210,7 @@ export const selectedSymptomRowView = () => ({
   borderRadius: size.moderateScale(5),
 });
 export const textSymptomName = () => ({
-  color: color.blueCard,
+  color: color.blueTx,
   fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
   marginRight: size.moderateScale(5),

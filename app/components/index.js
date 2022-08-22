@@ -19,3 +19,4 @@ export * from './alertModal';
 export * from './appointmentCart';
 export * from './careGiverCard';
 export * from './journalCard';
+export * from './customStatusBar';

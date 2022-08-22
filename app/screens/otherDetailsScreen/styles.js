@@ -8,6 +8,12 @@ export const mainContainer = () => ({
   flex: 1,
   paddingHorizontal: size.moderateScale(20),
 });
+export const emptyData = () => ({
+  height: size.deviceHeight * 0.1,
+  alignItems: 'center',
+  justifyContent: 'center',
+  // backgroundColor: 'red',
+});
 export const toast = () => ({
   marginHorizontal: size.moderateScale(20),
   paddingHorizontal: size.moderateScale(20),
@@ -29,6 +35,12 @@ export const headingTxt = () => ({
   fontSize: fontSize.mediumLarge,
   fontFamily: fonts.latoBold,
   marginLeft: size.moderateScale(12),
+});
+export const errTxt = () => ({
+  color: color.blueTx,
+  fontSize: fontSize.mediumLarge,
+  fontFamily: fonts.latoBold,
+  textAlign: 'center',
 });
 export const itemListTxt = () => ({
   color: color.black,
@@ -56,7 +68,9 @@ export const mainRow = last => ({
   backgroundColor: color.themeBack,
   borderBottomWidth: 1,
   borderLeftWidth: 1,
-  borderColor: color.dimGrey,
+  borderColor: color.borderLight,
   borderRadius: size.moderateScale(10),
-  marginBottom: size.moderateScale(10),
+  paddingLeft: size.moderateScale(10),
+  marginVertical: size.moderateScale(10),
+  paddingVertical: size.moderateScale(5),
 });

@@ -1,4 +1,4 @@
-import {View, Pressable, Image} from 'react-native';
+import {View, Pressable} from 'react-native';
 import React from 'react';
 import * as styles from './styles';
 import {Text} from '../';

@@ -15,7 +15,7 @@ import {
   Loader,
 } from 'components';
 import {size, color, SearchValNew, IcCrossArrow} from 'theme';
-import {genderVal, symptomChecker} from 'json';
+import {genderSysVal} from 'json';
 
 import * as styles from './styles';
 
@@ -30,43 +30,62 @@ export const SymptomsScreen = () => {
   const [ageErr, setAgeErr] = useState('');
   const [gender, setGender] = useState('');
   const [genderErr, setGenderErr] = useState('');
-  const [symChecker, setSymChecker] = useState(symptomChecker);
   const [allSymptomList, setAllSymptomList] = useState();
   const [loading, setLoading] = useState(false);
-  const [isFocus, setIsFocus] = useState(false);
   const [symptomFilteredValue, setSymptomFilteredValue] = useState();
   const [symptomErr, setSymptomErr] = useState('');
   const [selectedSymptomList, setSelectedSymptomList] = useState([]);
   const [showSelectedSymptomList, setShowSelectedSymptomList] = useState(false);
   const [symptomDropDown, setSymptomDropDown] = useState(false);
-
+  const [currentMedication, setCurrentMedication] = useState('');
+  const [existingCondition, setExistingCondition] = useState('');
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
 
   const onAddPressValidation = () => {
+    let error = false;
     if (age === '') {
       setAgeErr('Enter your Age');
+      error = true;
     }
     if (gender === '') {
       setGenderErr('Select Gender');
+      error = true;
     }
     if (selectedSymptomList.length == 0) {
       setSymptomErr('Select Symptom');
+      error = true;
     }
+    return !error;
   };
   const onSearchPress = () => {
-    // console.log('selectedSymptomList', selectedSymptomList);
-    // console.log('gender ==>', gender);
-    // console.log('age ==>', age);
-  };
-  const clearData = () => {
-    let newSymptomChecker = symptomChecker.map(i => {
-      i.isActive = false;
-      return i;
+    let symptomId = selectedSymptomList.map((item, index) => {
+      return item.id;
     });
-    setSymChecker(newSymptomChecker);
+    let data = allSymptomList.filter(val => {
+      let text = val.age;
+      let startAgeRange = parseInt(text.split('-')[0]);
+      let endAgeRange = parseInt(text.split('-')[1]);
+      let intAge = parseInt(age);
+
+      let value = null;
+      symptomId.forEach(element => {
+        if (val.gender === gender.toLowerCase() && val.id === element) {
+          if (intAge >= startAgeRange && intAge <= endAgeRange) {
+            value += val;
+          }
+        }
+      });
+      return value;
+    });
+    navigation.navigate('symptomDetailScreen', {
+      data: data,
+      age: age,
+      gender: gender,
+    });
   };
+
   const getAllSymptom = async () => {
     setLoading(true);
     const getAllSymptomResponse = await dispatch(getAllSymptomAction());
@@ -89,13 +108,12 @@ export const SymptomsScreen = () => {
     let text = val.toLowerCase() || val.toUpperCase();
     setSymptomDropDown(true);
     let filteredName = allSymptomList.filter(item => {
-      return item.name.toLowerCase().match(text);
+      return item.name.toLowerCase().includes(text);
     });
     setSymptomFilteredValue(filteredName);
     // }
   };
   useEffect(() => {
-    clearData();
     getAllSymptom();
   }, []);
 
@@ -119,7 +137,7 @@ export const SymptomsScreen = () => {
       />
       {loading && <Loader />}
       <Text style={styles.labelTextStyle()} tx={'symptoms_screen.header'} />
-      <Screen>
+      <Screen withScroll bounces={false} enableResetScrollToCoords={false}>
         <View style={styles.mainDetailContainer()}>
           <View style={{flexDirection: 'row'}}>
             <View style={styles.full()}>
@@ -133,6 +151,7 @@ export const SymptomsScreen = () => {
               <View>
                 <InputBox
                   value={age}
+                  placeHolderVal={'symptoms_screen.age'}
                   onChangeText={val => {
                     setAge(val);
                     setAgeErr('');
@@ -158,7 +177,7 @@ export const SymptomsScreen = () => {
                 />
               </View>
               <Dropdown
-                data={genderVal}
+                data={genderSysVal}
                 labelField="label"
                 valueField="value"
                 placeholder={'Gender'}
@@ -170,15 +189,12 @@ export const SymptomsScreen = () => {
                 maxHeight={size.moderateScale(90)}
                 containerStyle={styles.dropdownContainer()}
                 value={gender}
-                onFocus={() => setIsFocus(true)}
-                onBlur={() => setIsFocus(false)}
                 flatListProps={{
                   bounces: false,
                 }}
                 onChange={item => {
                   setGender(item.value);
                   setGenderErr('');
-                  setIsFocus(false);
                 }}
                 renderItem={item => {
                   return (
@@ -197,109 +213,122 @@ export const SymptomsScreen = () => {
               ) : null}
             </View>
           </View>
-        </View>
+          <Text
+            style={styles.labelTextStyle()}
+            tx={'symptoms_screen.whatAreYourSymptoms'}
+          />
 
-        <Text
-          style={styles.labelTextStyle()}
-          tx={'symptoms_screen.whatAreYourSymptoms'}
-        />
-        <InputBox
-          value={searchText}
-          onChangeText={val => {
-            onSymptomSearch(val);
-          }}
-          mainContainerStyle={styles.inputSearchStyle()}
-          inputStyle={styles.inputTxt()}
-          leftIcon={true}
-          leftIconName={
-            <SearchValNew
-              height={size.moderateScale(20)}
-              width={size.moderateScale(20)}
-              fill={color.blue}
-            />
-          }
-          withButton={true}
-          btnName={'Done'}
-          onRightIconPress={() => {
-            setSymptomDropDown(false);
-            setShowSelectedSymptomList(true);
-          }}
-          placeholder={'Search Symptom'}
-          placeholderTextColor={color.blueTx}
-        />
-        {symptomErr ? (
-          <Text style={styles.textValidation(symptomErr)} text={symptomErr} />
-        ) : null}
+          <InputBox
+            value={searchText}
+            placeHolderVal={'symptoms_detail_screen.symptom'}
+            onChangeText={val => {
+              onSymptomSearch(val);
+            }}
+            mainContainerStyle={styles.inputSearchStyle()}
+            inputStyle={styles.inputTxt()}
+            leftIcon={true}
+            leftIconName={
+              <SearchValNew
+                height={size.moderateScale(20)}
+                width={size.moderateScale(20)}
+                fill={color.blue}
+              />
+            }
+            withButton={true}
+            btnTxName={'symptoms_screen.done'}
+            onRightIconPress={() => {
+              setSymptomDropDown(false);
+              setShowSelectedSymptomList(true);
+            }}
+            placeholderTextColor={color.blueTx}
+          />
+          {symptomErr ? (
+            <Text style={styles.textValidation(symptomErr)} text={symptomErr} />
+          ) : null}
 
-        {symptomDropDown &&
-          symptomFilteredValue.map((val, i) => {
-            return (
-              <Pressable
-                key={i.toString()}
-                style={styles.cardDesign(val.isActive)}
-                onPress={() => {
-                  if (
-                    selectedSymptomList.some(item => val.name === item.name)
-                  ) {
-                    symptomFilteredValue[i].isActive = false;
-                    setExtra(extra + 1);
-                    setSymptomErr('');
-                  } else {
-                    symptomFilteredValue[i].isActive = true;
-                    selectedSymptomList.push(val);
-                    setSymptomErr('');
-                    setExtra(extra + 1);
-                  }
-                }}>
-                <Text style={styles.cardTxt()} text={val.name} />
-              </Pressable>
-            );
-          })}
-        {symptomFilteredValue && symptomFilteredValue.length == 0 && (
-          <Text style={styles.noData()}>No Records Found...</Text>
-        )}
-
-        <View style={styles.selectedSymptomMainView()}>
-          {showSelectedSymptomList &&
-            selectedSymptomList.map((item, index) => {
+          {symptomDropDown &&
+            symptomFilteredValue.map((val, i) => {
               return (
-                <View style={styles.selectedSymptomRowView()}>
-                  <Text style={styles.textSymptomName()}>{item.name}</Text>
-                  <Pressable
-                    onPress={() => {
-                      selectedSymptomList[index].isActive = !item.isActive;
-                      selectedSymptomList.splice(index, 1);
-                      setSelectedSymptomList(selectedSymptomList);
+                <Pressable
+                  key={i.toString()}
+                  style={styles.cardDesign(val.isActive)}
+                  onPress={() => {
+                    if (
+                      selectedSymptomList.some(item => val.name === item.name)
+                    ) {
+                      symptomFilteredValue[i].isActive = false;
+                      let findIndex = selectedSymptomList.indexOf(val);
+                      selectedSymptomList.splice(findIndex, 1);
                       setExtra(extra + 1);
-                    }}>
-                    <IcCrossArrow
-                      width={size.moderateScale(10)}
-                      height={size.moderateScale(10)}
-                      fill={color.black}
-                    />
-                  </Pressable>
-                </View>
+                      setSymptomErr('');
+                    } else {
+                      symptomFilteredValue[i].isActive = true;
+                      selectedSymptomList.push(val);
+                      setSymptomErr('');
+                      setExtra(extra + 1);
+                    }
+                  }}>
+                  <Text style={styles.cardTxt(val.isActive)} text={val.name} />
+                </Pressable>
               );
             })}
+          {symptomFilteredValue && symptomFilteredValue.length == 0 && (
+            <Text style={styles.noData()}>No Records Found...</Text>
+          )}
+
+          <View style={styles.selectedSymptomMainView()}>
+            {showSelectedSymptomList &&
+              selectedSymptomList.map((item, index) => {
+                return (
+                  <View style={styles.selectedSymptomRowView()}>
+                    <Text style={styles.textSymptomName()}>{item.name}</Text>
+                    <Pressable
+                      onPress={() => {
+                        selectedSymptomList[index].isActive = !item.isActive;
+                        selectedSymptomList.splice(index, 1);
+                        setSelectedSymptomList(selectedSymptomList);
+                        setExtra(extra + 1);
+                      }}>
+                      <IcCrossArrow
+                        width={size.moderateScale(10)}
+                        height={size.moderateScale(10)}
+                        fill={color.blueTx}
+                      />
+                    </Pressable>
+                  </View>
+                );
+              })}
+          </View>
+          <InputBox
+            value={currentMedication}
+            onChangeText={val => {
+              setCurrentMedication(val);
+            }}
+            mainContainerStyle={styles.inputSearchStyle()}
+            inputStyle={styles.inputTxt()}
+            placeHolderVal={'symptoms_screen.current_medications'}
+            // placeholder={'Current Medications'}
+            placeholderTextColor={color.blueTx}
+          />
+          <InputBox
+            value={existingCondition}
+            placeHolderVal={'symptoms_screen.existing_conditions'}
+            onChangeText={val => {
+              setExistingCondition(val);
+            }}
+            mainContainerStyle={styles.inputSearchStyle()}
+            inputStyle={styles.inputTxt()}
+            // placeholder={'Existing Conditions'}
+            placeholderTextColor={color.blueTx}
+          />
         </View>
       </Screen>
-
-      {/* <Pressable
-        style={styles.circleBtnView()}
-        onPress={() => {
-          // console.log('add symptom');
-        }}>
-        <IcBtnPlus
-          height={size.moderateScale(69)}
-          width={size.moderateScale(69)}
-        />
-      </Pressable> */}
       <View style={styles.footerView()}>
         <Button
           buttonStyle={styles.buttonFooter()}
           buttonText={styles.buttonTxt()}
           nameTx={'careGiver_screen.search'}
-          onPress={() => (age ? onSearchPress() : onAddPressValidation())}
+          onPress={() => onAddPressValidation() && onSearchPress()}
         />
       </View>
     </SafeAreaView>

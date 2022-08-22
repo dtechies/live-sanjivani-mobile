@@ -11,12 +11,14 @@ export const SplashScreen = props => {
     login: state.userDataReducer.userDataResponse.login,
   }));
   useEffect(() => {
-    setTimeout(() => {
-      login === true
-        ? navigation.navigate('bottomStackNavigation')
-        : navigation.navigate('authStackNavigation');
-    }, 1000);
-  }, []);
+    navigation.addListener('focus', () => {
+      setTimeout(() => {
+        login === true
+          ? navigation.navigate('bottomStackNavigation')
+          : navigation.navigate('authStackNavigation');
+      }, 1000);
+    });
+  }, [navigation]);
 
   return (
     <View style={styles.container()}>

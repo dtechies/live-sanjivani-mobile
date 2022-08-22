@@ -1,5 +1,5 @@
 import React, {useState, useMemo, createContext, useEffect} from 'react';
-import {LogBox, Alert, BackHandler, Platform} from 'react-native';
+import {LogBox, StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import * as RNLocalize from 'react-native-localize';
@@ -27,7 +27,6 @@ const App = () => {
     }),
     [locale],
   );
-
   LogBox.ignoreAllLogs();
 
   //OneSignal Init Code
@@ -127,7 +126,7 @@ const App = () => {
                 <AlertModal
                   closeModal={() => closeModal(false)}
                   data={notificationData}
-                  title={'abdul'}
+                  title={'Live Sanjivani'}
                 />
               )}
             </Host>

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {SafeAreaView, Pressable, View} from 'react-native';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {GetCareGiverListAction, DeleteCareGiverAction} from 'redux-actions';
 
 import {useDispatch} from 'react-redux';
@@ -26,13 +26,6 @@ export const MyCareGiver = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getCaregiverData();
-    });
-    return unsubscribe;
-  }, [navigation]);
-
   const toastMessage = msg => {
     console.log('SU0', msg);
     toastRef.current.show(msg);
@@ -44,8 +37,8 @@ export const MyCareGiver = () => {
 
     let FilteredValue = careGiverList.filter(item => {
       return (
-        item.first_name.toLowerCase().match(text) ||
-        item.nick_name.toLowerCase().match(text)
+        item.first_name.toLowerCase().includes(text) ||
+        item.nick_name.toLowerCase().includes(text)
       );
     });
     FilteredValue.length == 0 && FilteredValue.push({value: 'null'});
@@ -94,6 +87,13 @@ export const MyCareGiver = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getCaregiverData();
+    });
+    return unsubscribe;
+  }, [navigation]);
   return (
     <SafeAreaView style={styles.container()}>
       {loading && <Loader />}

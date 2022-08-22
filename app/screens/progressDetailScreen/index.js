@@ -4,13 +4,15 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import {Text, Screen, Header} from 'components';
-import {DWMYData} from 'json';
+import {DWMYData, yearList} from 'json';
 import {size, color, images} from 'theme';
 import * as styles from './styles';
 import {LineChart} from 'react-native-chart-kit';
 import {SvgUri} from 'react-native-svg';
 import {GetSubCategoryGraphs} from 'redux-actions';
 import moment from 'moment';
+import momentTz from 'moment-timezone';
+import {getTimeZone} from 'react-native-localize';
 
 export const ProgressDetailScreen = props => {
   const dispatch = useDispatch();
@@ -19,20 +21,7 @@ export const ProgressDetailScreen = props => {
   const [sharingData, setSharingData] = useState({});
   const [dWMYData, setDWMYData] = useState(DWMYData);
   const [isSelected, setSelected] = useState(0);
-  const yearList = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'July',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nav',
-    'Dec',
-  ];
+
   // const [Icon, setIcon] = useState();
   const [isSelectedList, setSelectedList] = useState([]);
   const [isSelectedData, setSelectedData] = useState([]);
@@ -40,7 +29,6 @@ export const ProgressDetailScreen = props => {
   const [dateDetails, setDateDetails] = useState([]);
   const [monthsDetails, setMonthsDetails] = useState([]);
   const [yearDetails, setYearDetails] = useState([]);
-  const minValue = 0;
   const [maxValue, setMaxValue] = useState(300);
   const [yieldAr, setYieldAr] = useState([]);
   const [showChart, setShowChart] = useState(false);
@@ -74,7 +62,7 @@ export const ProgressDetailScreen = props => {
       setYieldAr(minValueHereAyy);
       // console.log('res', maxValueHere / 3, minValueHereAyy);
 
-      setSelectedList(dateDetails.map(i => i.time.split('-')[0]));
+      setSelectedList(dateDetails.map(i => i.time.split('-')[1]));
       setSelectedData(dateDetails.map(i => i.data));
     } else if (index == 1) {
       let maxValueHere = Math.max(...weekDetails.map(i => i.data));
@@ -132,8 +120,13 @@ export const ProgressDetailScreen = props => {
   };
   // const Icon = props.route.params && props.route.params.selectedItems.svg;
   const GetSubCategoryGraph = async () => {
+    const deviceTimeZone = getTimeZone();
+    // Make moment of right now, using the device timezone
+    const timeZone = momentTz().tz(deviceTimeZone).format('Z');
+
     const graphBody = {
       subcategory_id: props.route.params.selectedItems.id,
+      timestamp: timeZone,
     };
     const subCatGraphRes = await dispatch(GetSubCategoryGraphs(graphBody));
     // console.log('subCatGraphRes', subCatGraphRes);
@@ -193,8 +186,7 @@ export const ProgressDetailScreen = props => {
         {/* console.log('itemmmm', item);
           return ( */}
         {sharingData && (
-          <View>
-            <Text style={styles.textItemToShare()} text={sharingData.name} />
+          <View style={styles.mainHeadingView()}>
             <Text
               style={styles.textItemToShareDetail()}
               text={sharingData.name}
@@ -212,9 +204,6 @@ export const ProgressDetailScreen = props => {
             </View>
           </View>
         )}
-        {/* ); */}
-        {/* })} */}
-        <Text style={styles.textItemDate()} text={'May 2020 - March 2022'} />
         <View style={styles.mainDWMYStyle()}>
           {dWMYData.map((item, index) => {
             return (

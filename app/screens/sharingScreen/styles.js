@@ -17,10 +17,11 @@ export const listViewStyle = () => ({
   marginVertical: size.moderateScale(1),
   marginLeft: size.moderateScale(2),
 });
-export const button = () => ({
+export const button = opp => ({
   width: size.deviceWidth * 0.9,
   alignSelf: 'center',
-  marginBottom: size.moderateScale(5),
+  marginVertical: size.moderateScale(5),
+  opacity: opp ? 0.5 : 1,
 });
 export const buttonTxt = () => ({
   color: color.white,
@@ -34,4 +35,12 @@ export const errorText = val => ({
   marginLeft: size.moderateScale(10),
   marginTop: size.moderateScale(5),
   marginBottom: size.moderateScale(5),
+});
+export const emptyText = val => ({
+  color: color.black,
+  fontFamily: fonts.latoRegular,
+  fontSize: fontSize.mediumLarge,
+  marginTop: size.moderateScale(15),
+  textAlign: 'center',
+  width: '100%',
 });

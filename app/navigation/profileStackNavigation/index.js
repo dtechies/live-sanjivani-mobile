@@ -3,7 +3,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {
   ProfileScreen,
-  DemoScreen,
   HelpSupportScreen,
   SymptomsScreen,
   MedicalJournalScreen,
@@ -18,7 +17,9 @@ import {
   MyCareGiver,
   CareGiver,
   OtherDetailsScreen,
+  SymptomDetailScreen,
   MedicalJournalLists,
+  OtherScreen,
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
@@ -65,9 +66,14 @@ export const ProfileStackNavigation = () => {
       <Stack.Screen name="careGiver" component={CareGiver} />
       <Stack.Screen name="OtherDetails" component={OtherDetailsScreen} />
       <Stack.Screen
+        name="symptomDetailScreen"
+        component={SymptomDetailScreen}
+      />
+      <Stack.Screen
         name="medicalJournalLists"
         component={MedicalJournalLists}
       />
+      <Stack.Screen name="otherScreen" component={OtherScreen} />
     </Stack.Navigator>
   );
 };

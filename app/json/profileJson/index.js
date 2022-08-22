@@ -3,11 +3,16 @@ export const genderVal = [
   {label: 'profileJson.female', value: 'Female'},
   {label: 'profileJson.other', value: 'Other'},
 ];
+export const genderSysVal = [
+  {label: 'Male', value: 'Male'},
+  {label: 'Female', value: 'Female'},
+  {label: 'Other', value: 'Other'},
+];
 export const languageVal = [
-  {label: 'profileJson.hindi', value: 'Hindi'},
-  {label: 'profileJson.english', value: 'English'},
+  {label: 'profileJson.hindi', value: 'hindi'},
+  {label: 'profileJson.english', value: 'english'},
 ];
 export const countryCode = [
-  {label: 'profileJson.+91', value: '+91'},
-  {label: 'profileJson.+1', value: '+1'},
+  {label: '+91', value: '+91'},
+  {label: '+1', value: '+1'},
 ];

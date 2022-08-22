@@ -1,10 +1,25 @@
 import React, {useState, useRef} from 'react';
-import {View, Pressable, Image, SafeAreaView} from 'react-native';
+import {
+  View,
+  Pressable,
+  Image,
+  SafeAreaView,
+  Linking,
+  Platform,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {getOtp} from 'redux-actions';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
-import {Loader, Text, Button, InputBox, Toast} from 'components';
+import {
+  Loader,
+  Text,
+  Button,
+  InputBox,
+  Toast,
+  Screen,
+  CustomStatusBar,
+} from 'components';
 import {size, images, color} from 'theme';
 import {countryCode} from 'json';
 import * as styles from './styles';
@@ -18,7 +33,6 @@ export const LoginScreen = () => {
   const [extra, setExtra] = useState(0);
   const [loading, setLoading] = useState(false);
   const [numberCorrect, setNumberCorrect] = useState('');
-  const [isFocus, setIsFocus] = useState(false);
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
@@ -29,9 +43,9 @@ export const LoginScreen = () => {
       country_code: countryCodeVal,
       user_id: null,
     };
-    console.log('BODYYYY res..', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     let res = {status: false, message: 'Connection Error...!'};
+    console.log('getOtpResponse login..', getOtpResponse);
     if (getOtpResponse) {
       res = getOtpResponse.payload;
     }
@@ -59,6 +73,9 @@ export const LoginScreen = () => {
   };
   return (
     <SafeAreaView style={styles.container()}>
+      <CustomStatusBar
+        barStyle={Platform.OS === 'ios' ? 'dark-content' : 'default'}
+      />
       <Toast
         ref={toastRef}
         position="top"
@@ -67,23 +84,22 @@ export const LoginScreen = () => {
         opacity={0.9}
       />
       {loading && <Loader />}
-      <View style={styles.imageView()}>
-        <Image
-          style={{
-            height: size.moderateScale(175),
-            width: size.moderateScale(225),
-          }}
-          source={images.icSanjivaniLogoPng}
-        />
-      </View>
-
-      <View style={styles.screenContainer()}>
+      <Screen withScroll style={styles.screenContainer()}>
+        <View style={styles.imageView()}>
+          <Image
+            style={{
+              height: size.moderateScale(175),
+              width: size.moderateScale(225),
+            }}
+            source={images.icSanjivaniLogoPng}
+          />
+        </View>
         <Text style={styles.labelLoginTxt()} tx={'login_screen.number'} />
         <View style={styles.rowView()}>
           <Dropdown
             defaultValue={countryCode[0]}
             data={countryCode}
-            labelTxField="label"
+            labelField="label"
             placeholder={'+91'}
             valueField="value"
             dropdownPosition={'bottom'}
@@ -92,14 +108,11 @@ export const LoginScreen = () => {
             selectedTextStyle={styles.selectedOptionTextStyle()}
             maxHeight={size.moderateScale(60)}
             containerStyle={styles.dropdownContainer()}
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
             flatListProps={{
               bounces: false,
             }}
             onChange={item => {
               setCountryCodeVal(item.value);
-              setIsFocus(false);
             }}
             renderItem={item => {
               return (
@@ -145,10 +158,11 @@ export const LoginScreen = () => {
           nameTx={'login_screen.register_new_user'}
           onPress={() => navigation.navigate('registerScreen')}
         />
-        <Pressable onPress={() => {}}>
-          <Text style={styles.labelOrTxt()} tx={'login_screen.learnMore'} />
+        <Pressable
+          onPress={() => Linking.openURL('https://livesanjivani.com/')}>
+          <Text style={styles.labelLearn()} tx={'login_screen.learnMore'} />
         </Pressable>
-      </View>
+      </Screen>
       {/* <ChangeLanguage /> */}
     </SafeAreaView>
   );

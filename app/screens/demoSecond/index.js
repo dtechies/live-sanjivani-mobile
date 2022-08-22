@@ -8,22 +8,21 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Dropdown} from 'react-native-element-dropdown';
-import moment from 'moment';
 import {Text, Button, MedicalItems} from 'components';
 import {
   size,
   color,
-  IcWeb,
-  IcTick,
-  IcPlus,
-  IcSearch,
-  IcMan,
-  IcAppointment,
-  IcJournal,
+  // IcWeb,
+  // IcTick,
+  // IcPlus,
+  // IcSearch,
+  // IcMan,
+  // IcAppointment,
+  // IcJournal,
   IcHeartNew,
-  IcPills,
-  images,
-  IcArrowNext,
+  // IcPills,
+  // images,
+  // IcArrowNext,
   IcBack,
 } from 'theme';
 import {dose, MainProfileDetail, DWMYData, AddNavData} from 'json';
@@ -166,6 +165,7 @@ export const DemoSecond = () => {
           numColumns={2}
           renderItem={({item, index}) => (
             <MedicalItems
+              index={index}
               onPress={() => {
                 detailProfile[index].selectedCard = !item.selectedCard;
                 setExtra(extra + 1);

@@ -160,13 +160,33 @@ import {
 // ];
 
 export const AddNavData = [
-  {id: 1, name: 'Vitals', selected: true},
-  {id: 2, name: 'Measurements', selected: false},
-  {id: 3, name: 'Activity', selected: false},
-  {id: 4, name: 'Others', selected: false},
-  {id: 5, name: 'Care Giver', selected: false},
-  {id: 6, name: 'Medications', selected: false},
-  {id: 7, name: 'Appointments', selected: false},
-  {id: 8, name: 'Symptoms Check', selected: false},
-  {id: 9, name: 'Medical Journal', selected: false},
+  {id: 1, name: 'Vitals', selected: true, nameTx: 'addNavData.vitals'},
+  {
+    id: 2,
+    name: 'Measurements',
+    selected: false,
+    nameTx: 'addNavData.measurements',
+  },
+  {id: 3, name: 'Activity', selected: false, nameTx: 'addNavData.activity'},
+  {id: 4, name: 'Others', selected: false, nameTx: 'addNavData.others'},
+  {id: 5, name: 'Care Giver', selected: false, nameTx: 'addNavData.care_giver'},
+  {
+    id: 6,
+    name: 'Medications',
+    selected: false,
+    nameTx: 'addNavData.medications',
+  },
+  {
+    id: 7,
+    name: 'Appointments',
+    selected: false,
+    nameTx: 'addNavData.appointments',
+  },
+  // {id: 8, name: 'Symptoms Check', selected: false},
+  {
+    id: 9,
+    name: 'Medical Journal',
+    selected: false,
+    nameTx: 'addNavData.medical_journal',
+  },
 ];

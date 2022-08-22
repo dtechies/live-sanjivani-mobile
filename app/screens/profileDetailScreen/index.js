@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useContext} from 'react';
 import 'react-native-gesture-handler';
 import moment from 'moment';
 import {SafeAreaView, View, Pressable} from 'react-native';
@@ -9,7 +9,12 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {Modalize} from 'react-native-modalize';
 import {Portal} from 'react-native-portalize';
 import {useDispatch, useSelector} from 'react-redux';
-import {getOtp, getUserProfile, editUserProfile, userData} from 'redux-actions';
+import {
+  StoreOTP,
+  getUserProfile,
+  editUserProfile,
+  userData,
+} from 'redux-actions';
 import {countryCode} from 'json';
 import {
   Text,
@@ -20,20 +25,16 @@ import {
   Toast,
   Loader,
 } from 'components';
-import {size, color, IcEdit, images} from 'theme';
+import {size, color, IcEdit} from 'theme';
 import * as styles from './styles';
+import {LocalizationContext} from '../../App';
 import {genderVal, languageVal} from 'json';
 
 export const ProfileDetailScreen = () => {
   const dispatch = useDispatch();
-  const {
-    userDetails = {},
-    age = '',
-    userStore,
-  } = useSelector(state => ({
-    userStore: state.userDataReducer.userDataResponse,
+  const {setLocale} = useContext(LocalizationContext);
+  const {userDetails = {}} = useSelector(state => ({
     userDetails: state.userDataReducer.userDataResponse.userData,
-    age: state.userDataReducer.userDataResponse.age,
   }));
   const [firstNm, setFirstNm] = useState(userDetails.first_name);
   const [firstNmErr, setFirstNmErr] = useState('');
@@ -46,18 +47,18 @@ export const ProfileDetailScreen = () => {
   const [emailErr, setEmailErr] = useState('');
   const [changeBtn, setChangeBtn] = useState('Change');
   const [phone, setPhone] = useState(userDetails.mob_no);
+  const [initialPhone, setInitialPhone] = useState('');
   const [phoneErr, setPhoneErr] = useState('');
+  const [OtpErr, setOtpErr] = useState('');
   const [gender, setGender] = useState(userDetails.gender);
-  const [genderDefault, setGenderDefault] = useState({
-    label: userDetails.gender,
-    value: userDetails.gender,
+  const [genderDefault, setGenderDefault] = useState({});
+  const [countryCodeDefault, setCountryCodeDefault] = useState({
+    label: userDetails.country_code,
+    value: userDetails.country_code,
   });
   const [genderErr, setGenderErr] = useState('');
   const [language, setLanguage] = useState(userDetails.language);
-  const [languageDefault, setLanguageDefault] = useState({
-    label: userDetails.language,
-    value: userDetails.language,
-  });
+  const [languageDefault, setLanguageDefault] = useState({});
   const [languageErr, setLanguageErr] = useState('');
   const [extra, setExtra] = useState(0);
   const [isEditable, setIsEditable] = useState(false);
@@ -72,6 +73,7 @@ export const ProfileDetailScreen = () => {
   const [showDate, setShowDate] = useState(false);
   const [otp, setOtp] = useState(false);
   const [otpValue, setOtpValue] = useState('');
+  const [otpId, setOtpId] = useState('');
   const [loading, setLoading] = useState(false);
   const currentDate = new moment().format('YYYY-MM-DD');
   const [countryCodeVal, setCountryCodeVal] = useState('+91');
@@ -83,41 +85,64 @@ export const ProfileDetailScreen = () => {
     toastRef.current.show(msg);
   };
 
-  // const getUserProfileData = async () => {
-  //   // setLoading(true);
-  //   const getOtpResponse = await dispatch(getUserProfile());
-  //   const res = getOtpResponse;
-  //   if (res.status) {
-  //     console.log(
-  //       'getUserProfileData response data ==>',
-  //       res.data.UserProfileData.image,
-  //     );
-  //     setFirstNm(res.data.UserProfileData.first_name);
-  //     setLastNm(res.data.UserProfileData.last_name);
-  //     setDob(res.data.UserProfileData.dob);
-  //     setEmail(res.data.UserProfileData.email);
-  //     setPhone(res.data.UserProfileData.mob_no);
-  //     setGender(res.data.UserProfileData.gender);
-  //     setGenderDefault({
-  //       label: res.data.UserProfileData.gender,
-  //       value: res.data.UserProfileData.gender,
-  //     });
-  //     setLanguage(res.data.UserProfileData.language);
-  //     setLanguageDefault({
-  //       label: res.data.UserProfileData.language,
-  //       value: res.data.UserProfileData.language,
-  //     });
-  //     // console.log(
-  //     //   'res.data.UserProfileData.image ==> ',
-  //     //   res.data.UserProfileData.image,
-  //     // );
-  //     setImageData({path: res.data.UserProfileData.image});
-  //     setExtra(extra + 1);
-  //   } else {
-  //     // setLoading(false);
-  //     // toastMessage(res.message);
-  //   }
-  // };
+  useEffect(() => {
+    genderVal.map(item => {
+      if (item.value == userDetails.gender) {
+        setGenderDefault(item);
+      }
+    });
+    languageVal.map(val => {
+      if (val.value == userDetails.language) {
+        setLanguageDefault(val);
+      }
+    });
+    getUserProfileData();
+    setExtra(extra + 1);
+  }, []);
+  const getUserProfileData = async () => {
+    // setLoading(true);
+    const getOtpResponse = await dispatch(getUserProfile());
+    const res = getOtpResponse;
+    if (res.status) {
+      console.log(
+        'getUserProfileData response data ==>',
+        res.data.UserProfileData.image,
+      );
+      setFirstNm(res.data.UserProfileData.first_name);
+      setLastNm(res.data.UserProfileData.last_name);
+      setDob(res.data.UserProfileData.dob);
+      setEmail(res.data.UserProfileData.email);
+      setPhone(res.data.UserProfileData.mob_no);
+      setInitialPhone(res.data.UserProfileData.mob_no);
+      setGender(res.data.UserProfileData.gender);
+
+      setLanguage(res.data.UserProfileData.language);
+
+      genderVal.map(item => {
+        if (item.value == res.data.UserProfileData.gender) {
+          setGenderDefault(item);
+        }
+      });
+      languageVal.map(val => {
+        if (val.value == res.data.UserProfileData.language) {
+          setLanguageDefault(val);
+        }
+      });
+      setCountryCodeDefault({
+        label: res.data.UserProfileData.country_code,
+        value: res.data.UserProfileData.country_code,
+      });
+      // console.log(
+      //   'res.data.UserProfileData.image ==> ',
+      //   res.data.UserProfileData.image,
+      // );
+      setImageData({path: res.data.UserProfileData.image});
+      setExtra(extra + 1);
+    } else {
+      // setLoading(false);
+      // toastMessage(res.message);
+    }
+  };
 
   const uploadFromGallery = () => {
     ImagePicker.openPicker({
@@ -205,10 +230,10 @@ export const ProfileDetailScreen = () => {
     if (otp) {
       if (otpValue == '') {
         error = true;
-        setPhoneErr('Enter OTP Value');
+        setOtpErr('Enter OTP Value');
       } else if (otpValue.length != 4) {
         error = true;
-        setPhoneErr('Enter 4 Digit OTP Number');
+        setOtpErr('Enter 4 Digit OTP Number');
       }
     }
     if (language === '') {
@@ -217,6 +242,7 @@ export const ProfileDetailScreen = () => {
     }
 
     if (!error) {
+      setChangeBtn('Change');
       editProfileDetails();
     }
   };
@@ -227,13 +253,15 @@ export const ProfileDetailScreen = () => {
       country_code: countryCodeVal,
       user_id: userDetails.id,
     };
-    // console.log('getOtpBody ==>', getOtpBody);
-    const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    const res = getOtpResponse.payload;
+    console.log('getOtpBody ==>', getOtpBody);
+    const getOtpResponse = await dispatch(StoreOTP(getOtpBody));
+    const res = getOtpResponse;
     if (res.status) {
-      // console.log('response data ==>', res.data);
-      setLoading(false);
+      console.log('response data ==>', res.data.otp);
+      setOtpId(res.data.id);
       toastMessage(res.message);
+      setLoading(false);
+      setExtra(extra + 1);
     } else {
       setLoading(false);
       toastMessage(res.message);
@@ -258,16 +286,17 @@ export const ProfileDetailScreen = () => {
     formData.append('email', email);
     if (otp) {
       formData.append('mob_no', phone);
+      formData.append('otp_id', otpId);
       formData.append('otp', otpValue);
       formData.append('country_code', countryCodeVal);
     }
     formData.append('language', language);
 
-    // console.log('formData', formData);
+    console.log('formData', formData);
 
     const EditUserProfileResponse = await dispatch(editUserProfile(formData));
     const res = EditUserProfileResponse;
-    // console.log('EditUserProfileResponse Res ==>', res);
+    console.log('EditUserProfileResponse Res ==>', res);
     // return;
     if (res.status) {
       var a = moment(res.data.dob);
@@ -276,6 +305,12 @@ export const ProfileDetailScreen = () => {
       b.add(years, 'years');
       // res.data.token = userStore.userData.token;
       // userStore.userData = res.data;
+      console.log('VALIUEEEE', res.data);
+      if (res.data.language === 'english') {
+        setLocale('en');
+      } else {
+        setLocale('hn');
+      }
       await dispatch(userData({userData: res.data, age: years, login: true}));
       setLoading(false);
 
@@ -284,7 +319,7 @@ export const ProfileDetailScreen = () => {
       setOtpValue('');
       setOtp(false);
       setIsEditablePhone(false);
-      // getUserProfileData();
+      getUserProfileData();
       setExtra(extra + 1);
 
       // console.log('response RES  data :- ', res.data);
@@ -305,7 +340,7 @@ export const ProfileDetailScreen = () => {
         ref={toastRef}
         position="top"
         style={styles.toast()}
-        fadeOutDuration={200}
+        fadeOutDuration={1000}
         opacity={0.9}
       />
       {loading && <Loader />}
@@ -326,9 +361,12 @@ export const ProfileDetailScreen = () => {
         isCamera={true}
         isEditDetails={true}
         title={'ProfileDetailScreen.title'}
+        isDisabled={!isEditable}
         // secName={email}
       />
-      <Screen style={styles.screenContainer()}>
+      <Screen
+        style={styles.screenContainer()}
+        enableResetScrollToCoords={false}>
         <View style={styles.settingMain()}>
           <Text
             style={styles.editText()}
@@ -352,6 +390,8 @@ export const ProfileDetailScreen = () => {
                 setIsEditable(false);
                 setIsEditablePhone(false);
                 setChangeBtn('Change');
+                setPhone(initialPhone);
+                setOtp(false);
                 setExtra(extra + 1);
               }}>
               <Text style={styles.editText()} tx="ProfileDetailScreen.Back" />
@@ -412,7 +452,7 @@ export const ProfileDetailScreen = () => {
               selectedTextStyle={styles.selectedOptionTextStyle(isEditable)}
               maxHeight={size.moderateScale(55)}
               containerStyle={styles.dropdownContainer()}
-              // value={dropGender}
+              isTxEnabled={true}
               onFocus={() => setIsFocus(true)}
               onBlur={() => setIsFocus(false)}
               flatListProps={{
@@ -426,7 +466,7 @@ export const ProfileDetailScreen = () => {
                 return (
                   <View>
                     <Text
-                      text={item.value}
+                      tx={item.label}
                       style={styles.InsideLabelFieldText()}
                     />
                     <View style={styles.separator()} />
@@ -487,38 +527,48 @@ export const ProfileDetailScreen = () => {
           {emailErr ? <Text style={styles.errorText()}>{emailErr}</Text> : null}
 
           <View style={styles.countryCodeRowView()}>
-            <Dropdown
-              defaultValue={{label: '+91', value: '+91'}}
-              data={countryCode}
-              labelTxField="label"
-              valueField="value"
-              dropdownPosition={'bottom'}
-              style={styles.countryCodeDropdown()}
-              placeholderStyle={styles.labelFieldText()}
-              selectedTextStyle={styles.countryCodeSelectedOptionTextStyle()}
-              maxHeight={size.moderateScale(60)}
-              containerStyle={styles.countryCodeDropdownContainer()}
-              onFocus={() => setIsFocus(true)}
-              onBlur={() => setIsFocus(false)}
-              flatListProps={{
-                bounces: false,
-              }}
-              onChange={item => {
-                setCountryCodeVal(item.value);
-                setIsFocus(false);
-              }}
-              renderItem={item => {
-                return (
-                  <View>
-                    <Text
-                      text={item.value}
-                      style={styles.countryCodeInsideLabelFieldText()}
-                    />
-                    <View style={styles.countryCodeSeparator()} />
-                  </View>
-                );
-              }}
-            />
+            {isEditablePhone ? (
+              <Dropdown
+                defaultValue={countryCodeDefault}
+                data={countryCode}
+                labelField="label"
+                valueField="value"
+                dropdownPosition={'bottom'}
+                style={styles.countryCodeDropdown()}
+                placeholderStyle={styles.labelFieldText()}
+                selectedTextStyle={styles.countryCodeSelectedOptionTextStyle()}
+                maxHeight={size.moderateScale(60)}
+                containerStyle={styles.countryCodeDropdownContainer()}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                flatListProps={{
+                  bounces: false,
+                }}
+                onChange={item => {
+                  setCountryCodeVal(item.value);
+                  setIsFocus(false);
+                }}
+                renderItem={item => {
+                  return (
+                    <View>
+                      <Text
+                        text={item.value}
+                        style={styles.countryCodeInsideLabelFieldText()}
+                      />
+                      <View style={styles.countryCodeSeparator()} />
+                    </View>
+                  );
+                }}
+              />
+            ) : (
+              <InputBox
+                disabled={isEditable ? false : true}
+                editable={isEditablePhone}
+                mainContainerStyle={styles.inputMainCountryCode()}
+                inputStyle={styles.button(isEditablePhone)}
+                value={countryCodeDefault.value}
+              />
+            )}
             <InputBox
               mainContainerStyle={styles.updateMobileNumberInputMain()}
               inputStyle={styles.button(isEditablePhone)}
@@ -528,6 +578,7 @@ export const ProfileDetailScreen = () => {
                 setPhoneErr('');
                 setExtra(extra + 1);
               }}
+              placeholder={'xxxxxxxxxx'}
               withButton={true}
               btnName={changeBtn}
               disabled={isEditable ? false : true}
@@ -549,10 +600,8 @@ export const ProfileDetailScreen = () => {
               keyboardType="numeric"
               editable={isEditablePhone}
             />
-            {phoneErr ? (
-              <Text style={styles.errorText()}>{phoneErr}</Text>
-            ) : null}
           </View>
+          {phoneErr ? <Text style={styles.errorText()}>{phoneErr}</Text> : null}
 
           {otp && (
             <InputBox
@@ -564,11 +613,12 @@ export const ProfileDetailScreen = () => {
               keyboardType="numeric"
               onChangeText={text => {
                 setOtpValue(text);
+                setOtpErr('');
               }}
               editable={isEditable}
             />
           )}
-          {phoneErr ? <Text style={styles.errorText()}>{phoneErr}</Text> : null}
+          {OtpErr ? <Text style={styles.errorText()}>{OtpErr}</Text> : null}
           {!isEditable && (
             <InputBox
               mainContainerStyle={styles.inputMain()}
@@ -597,6 +647,7 @@ export const ProfileDetailScreen = () => {
               // value={language}
               onFocus={() => setIsFocus(true)}
               onBlur={() => setIsFocus(false)}
+              isTxEnabled={true}
               flatListProps={{
                 bounces: false,
               }}
@@ -608,7 +659,7 @@ export const ProfileDetailScreen = () => {
                 return (
                   <View>
                     <Text
-                      text={item.value}
+                      tx={item.label}
                       style={styles.InsideLabelFieldText()}
                     />
                     <View style={styles.separator()} />

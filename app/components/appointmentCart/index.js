@@ -2,7 +2,6 @@ import {View, Pressable} from 'react-native';
 import React from 'react';
 import * as styles from './styles';
 import {Text} from '..';
-import {color, size, IcDot} from 'theme';
 import {ToggleSwitch} from '../switch';
 
 export const AppointmentCard = props => {

@@ -3,10 +3,8 @@ import {View, Image, Pressable} from 'react-native';
 import * as styles from './styles';
 import LinearGradient from 'react-native-linear-gradient';
 
-import {IcHeartNew} from 'theme';
 import {
   images,
-  IcArrowNext,
   IcLeftArrow,
   IcCrossArrow,
   IcProfileLogo,
@@ -33,6 +31,7 @@ export const Header = props => {
       <View
         style={styles.backMain(
           props.isLongArrowLeft ? 3 : props.isProfile ? 1 : 0,
+          props.isProfileView,
         )}>
         <View style={styles.profileInfoMain()}>
           <Pressable onPress={props.leftOnPress} style={styles.leftIconDes()}>
@@ -126,30 +125,38 @@ export const Header = props => {
                 marginTop: size.moderateScale(-45),
                 marginLeft: size.moderateScale(75),
               }}>
-              <Pressable onPress={props.iconPress}>
+              <Pressable
+                style={{opacity: props.isDisabled ? 0 : 1}}
+                disabled={props.isDisabled ? props.isDisabled : false}
+                onPress={props.iconPress}>
                 <IcCamera />
               </Pressable>
             </View>
           )}
-          <View
-            style={
-              props.isEditDetails
-                ? styles.propInfo()
-                : styles.profileInfo1(props.isLogoCenter ? 2 : 1)
-            }>
-            <Text
-              style={styles.profileName(props.isColor || props.isBlue ? 1 : 3)}>
-              {props.name ? props.name : ''}
-            </Text>
-            <Text
+          {
+            <View
               style={
-                props.isCamera
-                  ? styles.profileName(props.isColor || props.isBlue ? 1 : 3)
-                  : styles.profileDetails(props.isColor || props.isBlue ? 1 : 3)
+                props.isEditDetails
+                  ? styles.propInfo()
+                  : styles.profileInfo1(props.isLogoCenter ? 2 : 1)
               }>
-              {props.secName ? props.secName : ''}
-            </Text>
-            {/* {!props.isCamera && (
+              <Text
+                style={styles.profileName(
+                  props.isColor || props.isBlue ? 1 : 3,
+                )}>
+                {props.name ? props.name : ''}
+              </Text>
+              <Text
+                style={
+                  props.isCamera
+                    ? styles.profileName(props.isColor || props.isBlue ? 1 : 3)
+                    : styles.profileDetails(
+                        props.isColor || props.isBlue ? 1 : 3,
+                      )
+                }>
+                {props.secName ? props.secName : ''}
+              </Text>
+              {/* {!props.isCamera && (
                 <Text
                   style={styles.profileDetails(
                     props.isColor || props.isBlue ? 1 : 3,
@@ -157,7 +164,8 @@ export const Header = props => {
                   Pune, MH
                 </Text>
               )} */}
-          </View>
+            </View>
+          }
         </View>
       )}
     </LinearGradient>

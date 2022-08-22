@@ -8,14 +8,15 @@ import {Text} from '..';
 import {Button} from '../button';
 import {Loader} from '../loader';
 import {IcCrossArrow, color, size} from 'theme';
+import moment from 'moment';
 export const AlertModal = props => {
   const {closeModal, data} = props;
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   console.log('data', data);
-  // }, []);
+  useEffect(() => {
+    console.log('notification', data);
+  }, []);
 
   const updateReminderStatus = async status => {
     // console.log('status ==>', status);
@@ -61,7 +62,10 @@ export const AlertModal = props => {
           {data?.type == 'appointment_reminder' ? (
             <View>
               <Text style={styles.textDate()}>
-                {data?.user_selected_time.slice(0, 5)}
+                {`Appointment-time : ${moment(
+                  data?.appointment_time.slice(0, 5),
+                  'HH:mm',
+                ).format('hh:mm A')}`}
               </Text>
               <Text style={styles.textTitle()}>
                 {data?.doctor_name && data.doctor_name}
@@ -73,7 +77,9 @@ export const AlertModal = props => {
           ) : (
             <View>
               <Text style={styles.textDate()}>
-                {data?.user_selected_time.slice(0, 5)}
+                {moment(data?.user_selected_time.slice(0, 5), 'HH:mm').format(
+                  'hh:mm A',
+                )}
               </Text>
               <Text style={styles.textTitle()}>
                 {data?.reminder_name && data.reminder_name}
