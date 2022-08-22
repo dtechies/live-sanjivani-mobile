@@ -77,7 +77,7 @@ export const RegisterScreen = () => {
       language: language,
       country_code: countryCodeVal,
     };
-    console.log('RegisterBody ==>', RegisterBody);
+    // console.log('RegisterBody ==>', RegisterBody);
     const RegisterResponse = await dispatch(registerUser(RegisterBody));
     let res = {status: false, message: 'Connection Error...!'};
     if (RegisterResponse) {
@@ -366,7 +366,6 @@ export const RegisterScreen = () => {
           }}
           isTxEnabled={true}
           onChange={item => {
-            console.log('bansi value..');
             setLanguage(item.value);
             setLanguageErr('');
             setIsColor2(true);
