@@ -59,21 +59,12 @@ export const MedicalItems = props => {
       onPress={onPress}>
       <View style={styles.flexOne()} />
       <View style={styles.centerView()}>
-        {/* <View style={styles.centerLeftView()}>{svgCardItems}</View> */}
         <SvgUri
           height={size.moderateScale(35)}
           width={size.moderateScale(35)}
           // color={'red'}
           uri={svgCardItems}
         />
-        {/* <SvgXml
-          xml={imgXml}
-          // .replace(/fill="#[0-9a-f]{6}"/g, `fill="${color.turquoiseNew}"`)
-          // .replace(/stroke="#[0-9a-f]{6}"/g, `stroke="${'green'}"`)
-
-          height={size.moderateScale(35)}
-          width={size.moderateScale(35)}
-        /> */}
         <View style={styles.centerRightView()}>
           <View style={styles.flexDirectionStyle()}>
             <Text

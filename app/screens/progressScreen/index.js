@@ -16,6 +16,7 @@ import {
   Loader,
   Text,
 } from 'components';
+
 import * as styles from './styles';
 
 export const ProgressScreen = () => {
@@ -35,11 +36,12 @@ export const ProgressScreen = () => {
   const getAllSubCategoryData = async () => {
     setLoading(true);
     const SubCategoryResponse = await dispatch(getAllSubCategory());
-    console.log('SubCategoryResponse', SubCategoryResponse);
+    // console.log('SubCategoryResponse', SubCategoryResponse);
     let res = {status: false, message: 'Connection Error...!'};
     if (SubCategoryResponse) {
       res = SubCategoryResponse;
     }
+    // console.log('getAllSubCategoryData res ==>', res);
     if (res.status) {
       let newData = res.data.map(i => {
         favoriteData.map(j => {
@@ -84,12 +86,9 @@ export const ProgressScreen = () => {
     if (SubCategoryResponse) {
       res = SubCategoryResponse;
     }
+    // console.log('getUserFavoriteListData res ==>', res);
     if (res.status) {
-      let favData = res.data.subCategoryDataN;
-      let filterData = favData.filter((val, i) => {
-        return val.is_favorite == true;
-      });
-      setFavoriteData(filterData);
+      setFavoriteData(res.data.subcategoryInfo ? res.data.subcategoryInfo : []);
       setLoading(false);
       setExtra(extra + 1);
     } else {
@@ -102,7 +101,6 @@ export const ProgressScreen = () => {
     navigation.addListener('focus', () => {
       getAllSubCategoryData();
       getUserFavoriteListData();
-      // addUserFavoriteData();
     });
   }, [navigation, first]);
 
@@ -130,7 +128,6 @@ export const ProgressScreen = () => {
                 {favoriteData.length >= 1 ? (
                   <View style={styles.row()}>
                     {favoriteData.map((item, index) => {
-                      console.log('favoriteData', favoriteData);
                       return (
                         <MedicalItems
                           animateCard={false}
@@ -154,7 +151,7 @@ export const ProgressScreen = () => {
                     })}
                   </View>
                 ) : (
-                  <Text style={styles.noData()}>No Favorite Found...</Text>
+                  <Text style={styles.noData()}>No Favorite Found.</Text>
                 )}
               </View>
             ) : (
@@ -183,7 +180,7 @@ export const ProgressScreen = () => {
                       );
                     })
                   ) : (
-                    <Text style={styles.noData()}>No Records Found...</Text>
+                    <Text style={styles.noData()}>No Records Found.</Text>
                   )}
                 </View>
                 {sharingDataErr ? (
@@ -199,8 +196,8 @@ export const ProgressScreen = () => {
                 buttonText={styles.buttonTxt()}
                 nameTx={'progress_screen.selectFav'}
                 onPress={() => {
-                  // console.log('favoriteData',favoriteData)
                   setFirst(false);
+                  setExtra(extra + 1);
                 }}
               />
             </View>

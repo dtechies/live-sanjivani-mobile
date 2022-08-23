@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import {useDispatch, useSelector} from 'react-redux';
+
 import {addMedicineReminder} from 'redux-actions';
 import {Loader, Text, Button, Header, Toast, Screen} from 'components';
 import {ConvertToUTC} from 'utils';
@@ -39,7 +40,6 @@ export const CheckMedicationReminderScreen = props => {
   ];
   const [days, setDays] = useState(daysJson);
   const [showDate, setShowDate] = useState(false);
-  const [remindFreqDate, setRemindFreqDate] = useState('');
 
   const getRemindFreqCurrentDate = givenDate => {
     let day = givenDate.getDate();
@@ -49,17 +49,10 @@ export const CheckMedicationReminderScreen = props => {
       .set('month', month - 1)
       .format('MMMM');
     let newDate = day + ' ' + monthChar + ' ' + year;
-    setRemindFreqDate(newDate);
     seIsDateErr('');
     setShowDate(false);
   };
-  // const validation = () => {
-  //   if (remindFreqDate === null || remindFreqDate === '') {
-  //     seIsDateErr('Please select Date...');
-  //   } else {
-  //     onSave();
-  //   }
-  // };
+
   const onSave = async () => {
     setLoading(true);
     let formData = new FormData();
@@ -89,32 +82,25 @@ export const CheckMedicationReminderScreen = props => {
       addMedicineReminder(formData),
     );
     const res = addMedicineReminderResponse.payload;
-    // console.log('addMedicineReminder Res ==>', res);
     setLoading(false);
-
+    // console.log('addMedicineReminder List ==>', res);
     if (res.status) {
-      // console.log('addMedicineReminder List ==>', res);
       setData('');
       setDays(daysJson);
-      // param.medicineFilteredValue = [];
       setLoading(false);
       navigation.pop();
       navigation.replace('viewMedicationScreen');
     } else {
       setLoading(false);
-      // console.log('addMedicineReminder error ==>', res);
       toastMessage(res.message);
     }
   };
   useEffect(() => {
-    // console.log('props fromViewMedication', param);
     let newDate = ConvertToUTC(
       param.frequency_value + ' ' + param.user_selected_time,
     );
     // console.log('props fromViewMedication', newDate);
     setUTCdate(newDate);
-    // console.log('newDate', newDate);
-    // console.log('props fromViewMedication', new moment());
     if (param && param.fromViewMedication) {
       setData(props.route.params.reminderData);
     } else if (param) {
@@ -129,15 +115,11 @@ export const CheckMedicationReminderScreen = props => {
       : param?.reminder_frequency;
 
     //Once A Week
-
     if (reminderFrequencyValue == 'Once A Week') {
       let dateValue = param.reminderData
         ? param.reminderData?.frequency_value
         : param?.frequency_value;
-      // let weekNumber = moment(dateValue, 'YYYY-MM-DD').isoWeek();
       let dayNumber = moment(dateValue, 'YYYY-MM-DD').isoWeekday();
-      // console.log('weekNumber =>', weekNumber);
-      // console.log('dayNumber =>', dayNumber);
       let newValue = days.map((i, k) => {
         if (k == dayNumber) {
           i.isSelected = true;
@@ -155,7 +137,6 @@ export const CheckMedicationReminderScreen = props => {
       setDays(newValue);
     }
     //alternateDay
-
     if (reminderFrequencyValue == 'Alternate Day') {
       let dateValue = param.reminderData
         ? param.reminderData?.frequency_value
@@ -188,13 +169,7 @@ export const CheckMedicationReminderScreen = props => {
       setDays(newValue);
     }
   }, []);
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     console.log('check ');
-  //     setData('');
-  //     setDays(daysJson);
-  //   }, []),
-  // );
+
   return (
     <SafeAreaView style={styles.container()}>
       <Toast
@@ -248,17 +223,12 @@ export const CheckMedicationReminderScreen = props => {
               })}
             </View>
             <View style={styles.infoCard()}>
-              <Pressable
-                // onPress={() => {
-                // setShowDate(true);
-                // setExtra(extra + 1);
-                // }}
-                style={styles.cardShort()}>
+              <View style={styles.cardShort()}>
                 <Text style={styles.startDateTitleTxt()} text={'Frequency'} />
                 <Text style={styles.startDateTxt()}>
                   {data?.reminder_frequency}
                 </Text>
-              </Pressable>
+              </View>
               {data?.medicine_form !== 'Drop' && (
                 <View style={styles.cardShort(1)}>
                   <Text style={styles.startDateTitleTxt()} text={'Inventory'} />
@@ -295,7 +265,7 @@ export const CheckMedicationReminderScreen = props => {
               />
               <Text text={':'} />
               <Text numberOfLines={2} style={styles.description()}>
-                {medicineDetail?.name}
+                {medicineDetail.name ? medicineDetail.name : '---'}
               </Text>
             </View>
             <View style={styles.rowView()}>
@@ -305,7 +275,7 @@ export const CheckMedicationReminderScreen = props => {
               />
               <Text text={':'} />
               <Text numberOfLines={2} style={styles.description()}>
-                {medicineDetail?.benefits}
+                {medicineDetail.benefits ? medicineDetail.benefits : '---'}
               </Text>
             </View>
             <View style={styles.rowView()}>
@@ -315,7 +285,9 @@ export const CheckMedicationReminderScreen = props => {
               />
               <Text text={':'} />
               <Text numberOfLines={2} style={styles.description()}>
-                {medicineDetail?.safety_advice}
+                {medicineDetail.safety_advice
+                  ? medicineDetail.safety_advice
+                  : '---'}
               </Text>
             </View>
             <View style={styles.rowView()}>
@@ -325,7 +297,9 @@ export const CheckMedicationReminderScreen = props => {
               />
               <Text text={':'} />
               <Text numberOfLines={2} style={styles.description()}>
-                {medicineDetail?.side_effects}
+                {medicineDetail.side_effects
+                  ? medicineDetail.side_effects
+                  : '---'}
               </Text>
             </View>
             <View style={styles.rowView()}>
@@ -335,7 +309,7 @@ export const CheckMedicationReminderScreen = props => {
               />
               <Text text={':'} />
               <Text numberOfLines={2} style={styles.description()}>
-                {medicineDetail?.use}
+                {medicineDetail.use ? medicineDetail.use : '---'}
               </Text>
             </View>
           </View>

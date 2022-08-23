@@ -19,6 +19,8 @@ import {
 import {size, color, IcBtnPlus, SearchValNew} from 'theme';
 import * as styles from './styles';
 import moment from 'moment';
+import momentTz from 'moment-timezone';
+import {getTimeZone} from 'react-native-localize';
 
 export const MyAppointments = () => {
   const navigation = useNavigation();
@@ -50,26 +52,28 @@ export const MyAppointments = () => {
 
   const getAppointmentReminderData = async () => {
     setLoading(true);
-
+    // setLoading(true);
+    const deviceTimeZone = getTimeZone();
+    // Make moment of right now, using the device timezone
+    const timeZoneBody = {
+      timestamp: momentTz().tz(deviceTimeZone).format('Z'),
+      isToday: false,
+    };
     const getAppointmentReminderProfileResponse = await dispatch(
-      getAppointmentReminderProfile(),
-    );
-    console.log(
-      'getAppointmentReminderProfile',
-      getAppointmentReminderProfileResponse,
+      getAppointmentReminderProfile(timeZoneBody),
     );
     const res = getAppointmentReminderProfileResponse;
-    // console.log('res', res);
+    // console.log('getAppointmentReminderProfile res', res);
     if (res.status) {
-      let data = res.data.AppointmentReminderProfileData;
-      // console.log('data', data);
+      let data = res.data.appointmentReminderProfileData;
+      // console.log('getAppointmentReminderProfile data', data);
       // console.table(data);
       const trueFirst = data.sort((x, y) => {
         let demo = x.status === y.status;
         return demo ? 0 : x.status ? -1 : 1;
       });
       setAppointmentReminderData(trueFirst);
-      setFilteredData(res.data.AppointmentReminderProfileData);
+      setFilteredData(res.data.appointmentReminderProfileData);
       setLoading(false);
       setExtra(extra + 1);
       toastMessage(res.message);
@@ -89,6 +93,7 @@ export const MyAppointments = () => {
       editAppointmentReminderStatus(editMedicineReminderStatusBody),
     );
     const res = editMedicineReminderStatusResponse.payload;
+    // console.log('res ===>', res);
     if (res.status) {
       setLoading(false);
       getAppointmentReminderData();

@@ -62,8 +62,8 @@ export const profileInfo1 = val => ({
 export const propInfo = () => ({
   marginBottom: size.moderateScale(10),
 });
-export const profileName = val => ({
-  fontSize: fontSize.medium,
+export const profileName = (val, isProgress) => ({
+  fontSize: isProgress ? fontSize.small : fontSize.medium,
   fontFamily: fonts.latoRegular,
   color: val == 1 ? color.white : color.black,
 });

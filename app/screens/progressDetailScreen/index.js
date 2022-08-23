@@ -117,22 +117,20 @@ export const ProgressDetailScreen = props => {
     }
     setExtra(extra + 1);
   };
-  // const Icon = props.route.params && props.route.params.selectedItems.svg;
   const GetSubCategoryGraph = async () => {
     const deviceTimeZone = getTimeZone();
-    // Make moment of right now, using the device timezone
     const timeZone = momentTz().tz(deviceTimeZone).format('Z');
 
     const graphBody = {
       subcategory_id: props.route.params.selectedItems.id,
       timestamp: timeZone,
     };
-    console.log('graphBody', graphBody);
+    // console.log('graphBody', graphBody);
     const subCatGraphRes = await dispatch(GetSubCategoryGraphs(graphBody));
-    console.log('subCatGraphRes', subCatGraphRes);
+    // console.log('subCatGraphRes', subCatGraphRes);
     let res = subCatGraphRes.data;
     if (subCatGraphRes.status) {
-      console.log('res ==>', res);
+      // console.log('res ==>', res);
       setWeekDetails(res.WeeklyData);
       setDateDetails(res.DailyData);
       setMonthsDetails(res.MonthlyData);
@@ -162,14 +160,7 @@ export const ProgressDetailScreen = props => {
       setExtra(extra + 1);
     }
   }, []);
-  const imageUrl = props.route.params
-    ? {uri: props.route.params.selectedItems.icon}
-    : images.icLogo;
-  // useEffect(() => {
-  //   console.log('sharingData', sharingData);
-  //   // Icon = sharingData.svg;
-  //   console.log('Icon', Icon);
-  // }, [sharingData]);
+
   return (
     <SafeAreaView style={styles.container()}>
       <Header

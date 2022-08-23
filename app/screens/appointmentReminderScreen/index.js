@@ -48,15 +48,13 @@ export const AppointmentReminderScreen = animated => {
   const [reminderTime, setReminderTime] = useState('Time');
   const [selectedTimeErrSecond, setSelectedTimeErrSecond] = useState('');
   const [userId, setUserId] = useState('');
-
   const [doctorData, setDoctorData] = useState([]);
   const [loading, setLoading] = useState(false);
   const popUpRef = useRef();
   const [doctorFilteredName, setDoctorFilteredName] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
-  // const [selectedDate, setSelectedDate] = useState(new Date());
+
   const onOpenPopUp = () => {
-    // alert('hiiii');
     popUpRef.current?.open();
   };
 
@@ -68,9 +66,7 @@ export const AppointmentReminderScreen = animated => {
     popUpRef.current?.close();
   };
   const getAppointmentTime = givenTime => {
-    console.log('givenTime=>', givenTime);
     let newTime = givenTime.toTimeString().slice(0, 5);
-    console.log('givenTime=>', newTime);
     // var hours = givenTime.getHours();
     // var m = givenTime.getMinutes();
     // var ampm = hours >= 12 ? 'PM' : 'AM';
@@ -128,7 +124,7 @@ export const AppointmentReminderScreen = animated => {
     setSearchVal(val);
     let text = val.toLowerCase();
     let address = '';
-    console.log('doctorData ==> ', doctorData);
+    // console.log('doctorData ==> ', doctorData);
     if (val.length >= 2) {
       let filteredName = doctorData.filter(item => {
         if (item.doctor_name.toLowerCase().includes(text)) {
@@ -137,7 +133,7 @@ export const AppointmentReminderScreen = animated => {
         return item.doctor_name.toLowerCase().includes(text);
       });
 
-      console.log('address ==> ', address);
+      // console.log('address ==> ', address);
       setDoctorFilteredName(filteredName);
       setAddressOne(address);
       setExtra(extra + 1);
@@ -178,7 +174,7 @@ export const AppointmentReminderScreen = animated => {
     formData.append('utc_date_and_time', `${newDate}`);
     // return;
     setExtra(extra + 1);
-    console.log('fevUserBody', formData);
+    // console.log('fevUserBody', formData);
     const SubCategoryResponse = await dispatch(
       addAppointmentReminder(formData),
     );
@@ -186,7 +182,7 @@ export const AppointmentReminderScreen = animated => {
     if (SubCategoryResponse) {
       res = SubCategoryResponse;
     }
-    console.log('addUserFavoriteData res RESSS==>', res);
+    // console.log('addUserFavoriteData res RESSS==>', res);
 
     if (res.status) {
       setLoading(false);
@@ -347,7 +343,6 @@ export const AppointmentReminderScreen = animated => {
                 minimumDate={new Date()}
                 date={new moment(selectedDate, 'YYYY-MM-DD')._d}
                 onConfirm={val => {
-                  console.log('val', new moment(selectedDate, 'YYYY-MM-DD')._d);
                   if (
                     new Date(val).toDateString() === new Date().toDateString()
                   ) {
@@ -361,7 +356,6 @@ export const AppointmentReminderScreen = animated => {
                   }
                 }}
                 onCancel={() => {
-                  console.log('val');
                   setShowTimeReminder(false);
                   setExtra(extra + 1);
                 }}
