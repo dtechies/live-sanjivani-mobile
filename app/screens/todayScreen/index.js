@@ -112,6 +112,14 @@ export const TodayScreen = () => {
     // console.log('onMedicineReminderData res ==>data ', res);
     if (res != undefined) {
       if (res.status) {
+        // let demoData = moment(new moment().add(1, 'days')).unix();
+        // if (dateVal == moment.unix(timeStamp).format('MM/DD/YYYY')) {
+        //   timeStampArr.push(timeStamp);
+        // }
+        // if (dateVal == moment(demoData).format('MM/DD/YYYY')) {
+        //   timeStampArr.push(timeStamp);
+        // }
+
         let medicationList = res.data.medicineData;
         const medicationListNew = medicationList.sort((a, b) => {
           return (
@@ -121,6 +129,14 @@ export const TodayScreen = () => {
         });
         // console.log('medicationList val ==', medicationList);
         medicationListNew.map(val => {
+          let dateVal = moment().unix();
+          let timeStamp = moment(
+            val.user_selected_local_time,
+            'HH:mm:ss',
+          ).unix();
+          if (dateVal > timeStamp && val.reminder_status == null) {
+            val.reminder_status = 'cancel';
+          }
           val.user_selected_time = new moment(val.user_selected_time, [
             'hh:mm a',
           ]).format('hh:mm A');

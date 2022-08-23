@@ -111,7 +111,7 @@ const App = () => {
       const deviceState = await OneSignal.getDeviceState();
     };
     ONESIGNAL();
-    console.log('RNLocalize.locale', RNLocalize.locale);
+    // console.log('RNLocalize.locale', RNLocalize.locale);
   }, []);
 
   return (
