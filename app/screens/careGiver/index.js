@@ -16,6 +16,7 @@ import {
   Loader,
 } from 'components';
 import {IcAddress, size, color} from 'theme';
+
 import * as styles from './styles';
 
 export const CareGiver = () => {

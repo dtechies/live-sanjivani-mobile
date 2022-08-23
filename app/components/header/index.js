@@ -61,7 +61,10 @@ export const Header = props => {
                   : 0,
               )}>
               <Text
-                style={styles.profileName(props.isColor ? 1 : 3)}
+                style={styles.profileName(
+                  props.isColor ? 1 : 3,
+                  props.title === 'progress_screen.progress' ? true : false,
+                )}
                 tx={props.title}
                 text={props.text}
               />

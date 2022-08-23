@@ -39,7 +39,7 @@ export const AddDetailsScreen = props => {
     let error = false;
     let thisNewArray = thisArray.filter(item => item.value !== '');
     setThisArray(thisNewArray);
-    console.log('validation ==>', thisNewArray);
+    // console.log('validation ==>', thisNewArray);
     if (thisNewArray.length == 0) {
       error = true;
     }
@@ -74,14 +74,14 @@ export const AddDetailsScreen = props => {
     }
     // setLoading(true);
 
-    console.log('subCategoryBody res ==>', thisArray);
+    // console.log('subCategoryBody res ==>', thisArray);
     const deviceTimeZone = getTimeZone();
     // Make moment of right now, using the device timezone
     const subCategoryBody = {
       subcategory_data: thisArray,
       timestamp: momentTz().tz(deviceTimeZone).format('Z'),
     };
-    console.log('subCategoryBody ==>', subCategoryBody);
+    // console.log('subCategoryBody ==>', subCategoryBody);
     const allCatResponse = await dispatch(AddSubcategory(subCategoryBody));
     const res = allCatResponse;
     if (res.payload.status) {
@@ -97,10 +97,6 @@ export const AddDetailsScreen = props => {
       toastMessage(res.payload.message);
     }
   };
-
-  useEffect(() => {
-    console.log(subCategory, thisArray, 'thisArray');
-  }, []);
 
   const closeKeyboard = () => {
     Keyboard.dismiss();
@@ -517,7 +513,7 @@ export const AddDetailsScreen = props => {
                                   j.subcategory_id == 8
                                 ) {
                                   bmiValueData += parseInt(j.value);
-                                  console.log('parseInt(i.value)', j.value);
+                                  // console.log('parseInt(i.value)', j.value);
                                 }
                               });
                               // console.log('SU', bmiValueData);

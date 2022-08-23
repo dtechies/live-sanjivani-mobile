@@ -51,7 +51,6 @@ export const cardShort = val => ({
   paddingTop: size.moderateScale(7),
   padding: val == 1 ? size.moderateScale(10) : 0,
 });
-
 export const button = val => ({
   width: size.deviceWidth * 0.85,
   alignSelf: 'center',
@@ -63,8 +62,6 @@ export const buttonTxt = () => ({
   fontFamily: fonts.latoBold,
   padding: size.moderateScale(5),
 });
-
-//  Input style....
 export const inputMain = () => ({
   width: size.deviceWidth * 0.89,
 });
@@ -87,7 +84,6 @@ export const titleDetails = () => ({
   marginHorizontal: size.moderateScale(57),
   marginTop: size.moderateScale(12),
 });
-
 export const dayMain = () => ({
   flexDirection: 'row',
   justifyContent: 'space-evenly',
@@ -133,14 +129,11 @@ export const errorText = val => ({
   color: color.red,
   fontFamily: fonts.latoRegular,
   fontSize: fontSize.small,
-  // marginRight: val == 0 ? 50 : 0,
   marginLeft: 15,
   marginTop: 5,
   marginBottom: 15,
 });
-
 // medicine description card
-
 export const medicineDescriptionCard = () => ({
   padding: size.moderateScale(15),
   marginTop: size.moderateScale(20),
@@ -163,7 +156,7 @@ export const title = () => ({
   fontSize: fontSize.medium,
   fontFamily: fonts.latoBold,
   color: color.blue,
-  width: size.deviceWidth * 0.25,
+  width: size.deviceWidth * 0.35,
   textTransform: 'capitalize',
 });
 export const description = () => ({

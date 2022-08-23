@@ -109,14 +109,9 @@ export const TodayScreen = () => {
       getTodayMedicationList(timeZoneBody),
     );
     const res = getTodayMedicationResponse;
-    console.log('res ==>data ', res);
+    // console.log('onMedicineReminderData res ==>data ', res);
     if (res != undefined) {
       if (res.status) {
-        console.log(
-          'getTodayMedicationResponse 121212 ==>',
-          res.data.medicineData,
-        );
-
         let medicationList = res.data.medicineData;
         const medicationListNew = medicationList.sort((a, b) => {
           return (
@@ -124,15 +119,15 @@ export const TodayScreen = () => {
             new moment(b.user_selected_time, 'h:mm a').format('X')
           );
         });
-        console.log('medicationListNew first ==', medicationListNew);
-        console.log('medicationListNew first ==', medicationList);
+        // console.log('medicationList val ==', medicationList);
         medicationListNew.map(val => {
           val.user_selected_time = new moment(val.user_selected_time, [
             'hh:mm a',
           ]).format('hh:mm A');
         });
+        // console.log('medicationListNew ==', medicationListNew);
         let upcoming = medicationList.find(item => item.is_done == '0');
-        console.log('upcoming ==> ', upcoming);
+        // console.log('upcoming ==> ', upcoming);
         if (upcoming != undefined) {
           setMedicationUpcoming(
             `${upcoming.dose} ${upcoming.reminder_name} ${upcoming.medicine_strength} ${upcoming.medicine_strength_unit} ${upcoming.medicine_form},${upcoming.reminder_frequency} ${upcoming.reminder_time}.`,
@@ -140,28 +135,18 @@ export const TodayScreen = () => {
         }
         let tot = 0;
         let timeStampArr = [];
-        let dateVal = new moment().format('MM/DD/YYYY');
         medicationListNew.map(val => {
-          let timeStamp = moment(
-            val.user_selected_local_time,
-            'HH:mm:ss',
-          ).unix();
-          let demoData = moment(new moment().add(1, 'days')).unix();
-          if (dateVal == moment.unix(timeStamp).format('MM/DD/YYYY')) {
-            timeStampArr.push(timeStamp);
-          }
-          // if (dateVal == moment(demoData).format('MM/DD/YYYY')) {
-          //   timeStampArr.push(timeStamp);
-          // }
+          timeStampArr.push(
+            moment(val.user_selected_local_time, 'HH:mm:ss').unix(),
+          );
           if (val.reminder_status == 'take') {
             tot = tot + 1;
           }
         });
         setTimeStamp(timeStampArr);
         setMedicationTrue(tot);
-        console.log('medicationListNew ===> ', medicationListNew);
+        // console.log('medicationListNew ===> ', medicationListNew);
         setMedication(medicationList);
-        // console.log('medicationListNew ==> ', medicationListNew);
         setLoading(false);
         // toastMessage(res.message);
         setExtra(extra + 1);
@@ -181,11 +166,12 @@ export const TodayScreen = () => {
     // Make moment of right now, using the device timezone
     const timeZoneBody = {
       timestamp: momentTz().tz(deviceTimeZone).format('Z'),
+      isToday: true,
     };
     const getAppointmentRmdResponse = await dispatch(
       getAppointmentReminderProfile(timeZoneBody),
     );
-    console.log('getAppointmentReminderProfile ==>', getAppointmentRmdResponse);
+    // console.log('getAppointmentReminder ==>', getAppointmentRmdResponse);
     if (getAppointmentRmdResponse) {
       if (getAppointmentRmdResponse.status) {
         // setLoading(false);
@@ -203,7 +189,7 @@ export const TodayScreen = () => {
             new moment(b.user_selected_time, 'h:mm').format('X')
           );
         });
-        console.log('reminderArrayNew ==>', reminderArrayNew);
+        // console.log('reminderArrayNew ==>', reminderArrayNew);
         reminderArrayNew.map(val => {
           val.user_selected_time = new moment(val.user_selected_time, [
             'hh:mm',
@@ -302,8 +288,6 @@ export const TodayScreen = () => {
                     ) : item.reminder_status == 'snooze' ? (
                       <IcTrue fill={color.starColor} />
                     ) : item.reminder_status == 'cancel' ? (
-                      <IcFalse />
-                    ) : timeStamp[index] < Date.now() / 1000 ? (
                       <IcFalse />
                     ) : (
                       <View style={styles.upcomingCircle()}>

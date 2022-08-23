@@ -158,15 +158,15 @@ export const MedicationReminderScreen = () => {
   const onGetMedicineReminderView = async () => {
     setLoading(true);
 
-    const getOtpResponse = await dispatch(getMedicineReminderView());
+    const getMedicineReminderViewResponse = await dispatch(
+      getMedicineReminderView(),
+    );
     let res = {status: false, message: 'Connection Error...!'};
-    if (getOtpResponse) {
-      res = getOtpResponse.payload;
+    if (getMedicineReminderViewResponse) {
+      res = getMedicineReminderViewResponse.payload;
     }
-
-    // console.log('response data ==>', res.data);
+    // console.log('getMedicineReminderViewResponse data ==>', res.data);
     if (res.status) {
-      // console.log('response data ==>', res.data);
       setMedicineReminderViewData(res.data);
       setLoading(false);
       // toastMessage(res.message);

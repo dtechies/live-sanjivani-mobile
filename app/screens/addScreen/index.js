@@ -76,7 +76,7 @@ export const AddScreen = () => {
     // setLoading(true);
     const allCatResponse = await dispatch(getAllCategoryAndSubCategory());
     const res = allCatResponse;
-    console.log('allCatResponse_NEW ==>', res);
+    // console.log('allCatResponse_NEW ==>', res);
     if (res != undefined) {
       if (res.status) {
         setAllCategory(res.data.categoryData);
@@ -103,8 +103,6 @@ export const AddScreen = () => {
   }, [navigation]);
 
   const OnPressOptions = (item, index) => {
-    // console.log('Asdas');
-    // clearData();
     if (
       item.name == 'Vitals' ||
       item.name == 'Measurements' ||
@@ -179,6 +177,7 @@ export const AddScreen = () => {
             data.map((item, index) => {
               return (
                 <AddCard
+                  key={index + 'data'}
                   item={item}
                   index={index}
                   OnPressOptions={() => OnPressOptions(item, index)}
