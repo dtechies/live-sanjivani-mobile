@@ -88,7 +88,7 @@ export const ProgressScreen = () => {
     }
     // console.log('getUserFavoriteListData res ==>', res);
     if (res.status) {
-      setFavoriteData(res.data.subcategoryInfo);
+      setFavoriteData(res.data.subcategoryInfo ? res.data.subcategoryInfo : []);
       setLoading(false);
       setExtra(extra + 1);
     } else {
