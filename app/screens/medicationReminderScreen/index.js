@@ -11,6 +11,7 @@ import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Modalize} from 'react-native-modalize';
+import moment from 'moment';
 import {Portal} from 'react-native-portalize';
 import 'react-native-gesture-handler';
 
@@ -136,18 +137,14 @@ export const MedicationReminderScreen = () => {
   };
 
   const getRemindFreqCurrentDate = givenDate => {
-    let day =
-      givenDate.getDate() > 9 ? givenDate.getDate() : `0${givenDate.getDate()}`;
-    let month =
-      givenDate.getMonth() + 1 > 9
-        ? givenDate.getMonth() + 1
-        : `0${givenDate.getMonth() + 1}`;
-    let year = givenDate.getFullYear();
-    let newDate = year + '-' + month + '-' + day;
-    setRemindFreqDate(newDate);
+    setRemindFreqDate(moment(givenDate).format('YYYY-MM-DD'));
     setSelectedDate(givenDate);
     setRemindFrequencyValueErr('');
     setShowDate(false);
+    let currentDay = moment(new moment()).format('DD/MM/YYYY');
+    if (moment(givenDate).format('DD/MM/YYYY') === currentDay) {
+      setRemindTime('Select a Time');
+    }
   };
   const getRemindTime = givenTime => {
     let newTime = givenTime.toTimeString().slice(0, 5);
@@ -632,7 +629,7 @@ export const MedicationReminderScreen = () => {
               date={selectedDate}
               isVisible={showDate}
               mode="date"
-              minimumDate={new Date()}
+              // minimumDate={new Date()}
               onConfirm={val => getRemindFreqCurrentDate(val)}
               onCancel={() => {
                 setShowDate(false);
@@ -706,17 +703,24 @@ export const MedicationReminderScreen = () => {
             <DateTimePickerModal
               isVisible={showTime}
               mode="time"
-              date={selectedDate}
-              // minimumDate={new Date()}
+              date={new moment(selectedDate)._d}
               locale="en_GB"
               onConfirm={val => {
+                let currentDay = moment(new moment()).format('DD/MM/YYYY');
+                let incomingDay = moment(new moment(selectedDate)).format(
+                  'DD/MM/YYYY',
+                );
                 if (
-                  new Date(val).toDateString() === new Date().toDateString()
+                  currentDay === incomingDay &&
+                  remindFrequencyValue == 'Fixed Date'
                 ) {
-                  if (new Date(val).getTime() > new Date().getTime()) {
+                  if (
+                    moment(val, ['hh:mm']).format('hh:mm:ss') >
+                    moment(new moment()).format('hh:mm:ss')
+                  ) {
                     getRemindTime(val);
                   } else {
-                    alert(t('medication_reminder_screen.futureTimeErr'));
+                    alert('Please Select Future Time !!');
                   }
                 } else {
                   getRemindTime(val);
