@@ -66,36 +66,12 @@ export const AppointmentReminderScreen = animated => {
     popUpRef.current?.close();
   };
   const getAppointmentTime = givenTime => {
-    let newTime = givenTime.toTimeString().slice(0, 5);
-    // var hours = givenTime.getHours();
-    // var m = givenTime.getMinutes();
-    // var ampm = hours >= 12 ? 'PM' : 'AM';
-    // var h = hours;
-    // if (h >= 12) {
-    //   h = hours - 12;
-    // }
-    // if (h == 0) {
-    //   h = 12;
-    // }
-    // m = m < 10 ? '0' + m : m;
-    setSelectedTime(newTime);
+    setSelectedTime(moment(givenTime).format('HH:mm'));
     setSelectedTimeErr('');
     setShowTime(false);
   };
   const getReminderTime = givenTime => {
-    // var hours = givenTime.getHours();
-    // var m = givenTime.getMinutes();
-    // var ampm = hours >= 12 ? 'PM' : 'AM';
-    // var h = hours;
-    // if (h >= 12) {
-    //   h = hours - 12;
-    // }
-    // if (h == 0) {
-    //   h = 12;
-    // }
-    // m = m < 10 ? '0' + m : m;
-    let newTime = givenTime.toTimeString().slice(0, 5);
-    setReminderTime(newTime);
+    setReminderTime(moment(givenTime).format('HH:mm'));
     setSelectedTimeErrSecond('');
     setShowTimeReminder(false);
   };
@@ -303,13 +279,19 @@ export const AppointmentReminderScreen = animated => {
                 locale="en_GB"
                 date={new moment(selectedDate, 'YYYY-MM-DD')._d}
                 onConfirm={val => {
-                  if (
-                    new Date(val).toDateString() === new Date().toDateString()
-                  ) {
-                    if (new Date(val).getTime() > new Date().getTime()) {
+                  setReminderTime('Time');
+                  let currentDay = moment(new moment()).format('DD/MM/YYYY');
+                  let incomingDay = moment(new moment(val)).format(
+                    'DD/MM/YYYY',
+                  );
+                  if (currentDay === incomingDay) {
+                    if (
+                      moment(val, ['hh:mm']).format('hh:mm:ss') >
+                      moment(new moment()).format('hh:mm:ss')
+                    ) {
                       getAppointmentTime(val);
                     } else {
-                      alert('Please Select Future Time');
+                      alert('Please Select Future Time !!');
                     }
                   } else {
                     getAppointmentTime(val);
@@ -340,19 +322,38 @@ export const AppointmentReminderScreen = animated => {
                 isVisible={showTimeReminder}
                 mode="time"
                 locale="en_GB"
-                minimumDate={new Date()}
                 date={new moment(selectedDate, 'YYYY-MM-DD')._d}
                 onConfirm={val => {
-                  if (
-                    new Date(val).toDateString() === new Date().toDateString()
-                  ) {
-                    if (new Date(val).getTime() > new Date().getTime()) {
+                  let currentDay = moment(new moment()).format('DD/MM/YYYY');
+                  let incomingDay = moment(new moment(val)).format(
+                    'DD/MM/YYYY',
+                  );
+                  if (selectedTime == 'Time') {
+                    alert(`Please Select Appointment Time !!`);
+                    return;
+                  }
+                  if (currentDay === incomingDay) {
+                    if (
+                      moment(val, ['hh:mm']).format('HH:mm:ss') <
+                      moment(selectedTime, ['hh:mm']).format('HH:mm:ss')
+                    ) {
                       getReminderTime(val);
                     } else {
-                      alert('Please Select Future Time');
+                      alert(
+                        `Please Select Appropriate Appointment Reminder Time`,
+                      );
                     }
                   } else {
-                    getReminderTime(val);
+                    if (
+                      moment(val, ['hh:mm']).format('HH:mm:ss') <
+                      moment(selectedTime, ['hh:mm']).format('HH:mm:ss')
+                    ) {
+                      getReminderTime(val);
+                    } else {
+                      alert(
+                        `Please Select Appropriate Appointment Reminder Time`,
+                      );
+                    }
                   }
                 }}
                 onCancel={() => {
@@ -424,7 +425,6 @@ export const AppointmentReminderScreen = animated => {
             <GooglePlacesAutocomplete
               ref={placesAutocompleteRef}
               placeholder="search location"
-              // minLength={2}
               query={GOOGLE_API_KEY}
               fetchDetails={true}
               returnKeyType={'search'}
