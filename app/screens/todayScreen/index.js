@@ -155,7 +155,10 @@ export const TodayScreen = () => {
           timeStampArr.push(
             moment(val.user_selected_local_time, 'HH:mm:ss').unix(),
           );
-          if (val.reminder_status == 'take') {
+          if (
+            val.reminder_status == 'take' ||
+            val.reminder_status == 'cancel'
+          ) {
             tot = tot + 1;
           }
         });

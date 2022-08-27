@@ -45,8 +45,8 @@ export const LoginScreen = () => {
     };
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
     let res = {status: false, message: 'Connection Error...!'};
-    console.log('getOtpResponse login..', getOtpResponse);
-    if (getOtpResponse) {
+    // console.log('getOtpResponse login..getOtpResponse', getOtpResponse);
+    if (getOtpResponse.payload != undefined) {
       res = getOtpResponse.payload;
     }
     if (res.status) {
