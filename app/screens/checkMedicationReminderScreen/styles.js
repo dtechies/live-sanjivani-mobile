@@ -21,7 +21,7 @@ export const cardFirst = () => ({
   marginBottom: size.moderateScale(8),
 });
 export const cardSecond = () => ({
-  height: size.moderateScale(200),
+  height: size.moderateScale(180),
   marginTop: size.moderateScale(-55),
   backgroundColor: color.white,
   borderWidth: 1,

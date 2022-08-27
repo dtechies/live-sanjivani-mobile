@@ -9,11 +9,21 @@ function _post(url, headers, data) {
         ? data
         : JSON.stringify(data),
   };
-  return fetch(url, options)
-    .then(r => {
-      return r.json();
-    })
-    .catch(e => console.log('error', e));
+  // console.log('_post url ==>', url);
+  // console.log('_post headers ==>', headers);
+  // console.log('_post data ==>', data);
+  // console.log('_post options ==>', options);
+  return (
+    fetch(url, options)
+      .then(r => {
+        return r.json();
+      })
+      // .then(respJson => {
+      //   console.log('POST API RESPONSE ==>', respJson);
+      //   return respJson;
+      // })
+      .catch(e => console.log('error', e))
+  );
 }
 
 function _get(url, headers) {
@@ -21,7 +31,7 @@ function _get(url, headers) {
   return fetch(url, options)
     .then(r => r.json())
     .catch(e => {
-      // console.log('KYAAAError', e);
+      console.log('KYAAAError', e);
     });
 }
 
