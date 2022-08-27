@@ -163,10 +163,11 @@ export const ViewMedicationScreen = () => {
         <View style={styles.bottomStyle()}>
           {reminderList.map((val, i) => {
             if (val.value == 'null') {
-              return <Text style={styles.noData()}>No Records Found...</Text>;
+              return <Text style={styles.noData()}>No Records Found.</Text>;
             }
             return (
               <ReminderCard
+                key={i + 'reminderList'}
                 data={val}
                 onWholeCardPress={() =>
                   navigation.navigate('checkMedicationReminderScreen', {
