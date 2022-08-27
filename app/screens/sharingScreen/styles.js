@@ -37,10 +37,11 @@ export const errorText = val => ({
   marginBottom: size.moderateScale(5),
 });
 export const emptyText = val => ({
-  color: color.black,
-  fontFamily: fonts.latoRegular,
+  color: color.blueCard,
   fontSize: fontSize.mediumLarge,
-  marginTop: size.moderateScale(15),
+  marginTop: size.moderateScale(30),
+  fontFamily: fonts.latoBold,
+  alignSelf: 'center',
   textAlign: 'center',
   width: '100%',
 });
