@@ -110,7 +110,7 @@ export const SharingScreen = () => {
               );
             })
           ) : (
-            <Text style={styles.emptyText()}>{'No Records Found...'}</Text>
+            <Text style={styles.emptyText()}>{'No Records Found.'}</Text>
           )}
         </View>
         {sharingDataErr ? (

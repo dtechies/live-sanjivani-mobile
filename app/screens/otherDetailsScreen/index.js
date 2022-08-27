@@ -118,9 +118,7 @@ export const OtherDetailsScreen = () => {
               );
             })
           ) : (
-            <View style={styles.emptyData()}>
-              <Text style={styles.errTxt()}>{'No Data Found'}</Text>
-            </View>
+            <Text style={styles.errTxt()}>{'No Data Found.'}</Text>
           )}
         </View>
       </Screen>

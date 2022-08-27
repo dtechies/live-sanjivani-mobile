@@ -37,10 +37,13 @@ export const headingTxt = () => ({
   marginLeft: size.moderateScale(12),
 });
 export const errTxt = () => ({
-  color: color.blueTx,
+  color: color.blueCard,
   fontSize: fontSize.mediumLarge,
+  marginTop: size.moderateScale(20),
   fontFamily: fonts.latoBold,
+  alignSelf: 'center',
   textAlign: 'center',
+  width: '100%',
 });
 export const itemListTxt = () => ({
   color: color.black,
