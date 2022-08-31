@@ -123,8 +123,8 @@ export const TodayScreen = () => {
         let medicationList = res.data.medicineData;
         const medicationListNew = medicationList.sort((a, b) => {
           return (
-            new moment(a.user_selected_time, 'h:mm a').format('X') -
-            new moment(b.user_selected_time, 'h:mm a').format('X')
+            new moment(a.user_selected_local_time, 'HH:mm:ss').format('X') -
+            new moment(b.user_selected_local_time, 'HH:mm:ss').format('X')
           );
         });
         // console.log('medicationList val ==', medicationList);
@@ -204,8 +204,8 @@ export const TodayScreen = () => {
         // let demoArray = reminderListData;
         let reminderArrayNew = reminderArray.sort((a, b) => {
           return (
-            new moment(a.user_selected_time, 'h:mm').format('X') -
-            new moment(b.user_selected_time, 'h:mm').format('X')
+            new moment(a.user_selected_local_time, 'HH:mm:ss').format('X') -
+            new moment(b.user_selected_local_time, 'HH:mm:ss').format('X')
           );
         });
         // console.log('reminderArrayNew ==>', reminderArrayNew);
