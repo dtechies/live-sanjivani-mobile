@@ -94,6 +94,7 @@ export const btnContinue = val => ({
   marginBottom: size.moderateScale(25),
 });
 
+export const crossArrowStyle = () => ({alignItems: 'flex-end'});
 export const btnContinueTxt = () => ({
   color: color.white,
   fontSize: fontSize.medium,

@@ -4,6 +4,7 @@ import {useNavigation} from '@react-navigation/native';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useDispatch} from 'react-redux';
+
 import {registerUser} from 'redux-actions';
 import {
   Loader,
@@ -15,9 +16,11 @@ import {
   Toast,
 } from 'components';
 import {size, color} from 'theme';
-import * as styles from './styles';
 import {genderVal, languageVal, countryCode} from 'json';
 import {LocalizationContext} from '../../App';
+
+import * as styles from './styles';
+
 export const RegisterScreen = () => {
   const {t} = useContext(LocalizationContext);
   const dispatch = useDispatch();
@@ -57,9 +60,6 @@ export const RegisterScreen = () => {
         : `0${givenDate.getMonth() + 1}`;
     let year = givenDate.getFullYear();
     let newDate = year + '-' + month + '-' + day;
-
-    // console.log('givenDate', givenDate);
-    // console.log('new date', newDate);
     setSelectedDate(newDate);
     setShowDate(false);
     setDobErr('');
@@ -77,16 +77,16 @@ export const RegisterScreen = () => {
       language: language,
       country_code: countryCodeVal,
     };
-    // console.log('RegisterBody ==>', RegisterBody);
+    console.log('RegisterBody ==>', RegisterBody);
     const RegisterResponse = await dispatch(registerUser(RegisterBody));
     let res = {status: false, message: 'Connection Error...!'};
-    if (RegisterResponse) {
+    if (RegisterResponse.payload !== undefined) {
       res = RegisterResponse.payload;
     }
+    console.log('RES register ==>', RegisterResponse);
     if (res.status) {
       setLoading(false);
-      // dispatch(userData({userData: res.data.user, login: true}));
-      // console.log('Register response data ==>', res.data);
+      console.log('Register response data ==>', res.data);
       toastMessage(res.message);
       setTimeout(() => {
         navigation.navigate('otpScreen', {
@@ -100,7 +100,6 @@ export const RegisterScreen = () => {
     } else {
       setLoading(false);
       toastMessage(res.message);
-      // setOtpErr(res.message);
     }
   };
 
@@ -156,9 +155,6 @@ export const RegisterScreen = () => {
     }
   };
 
-  // const editProfileDetails = () => {
-  //   navigation.goBack();
-  // };
   return (
     <SafeAreaView style={styles.container()}>
       <Toast
@@ -255,7 +251,6 @@ export const RegisterScreen = () => {
           style={styles.dateMainView()}
           onPress={() => {
             setShowDate(true);
-            // setDobErr('');
             setExtra(extra + 1);
           }}>
           <Text
@@ -287,7 +282,6 @@ export const RegisterScreen = () => {
           onChangeText={text => {
             setEmail(text);
             setEmailErr('');
-            // emailValidate();
           }}
           maxLength={45}
         />
