@@ -56,9 +56,6 @@ export const OtpScreen = props => {
       res = addEditPlayerIdResponse.payload;
     }
     if (res.status) {
-      // console.log('addPlayerId', res);
-      // previous.userData.player_id = playerId;
-      // await dispatch(userData(previous));
       if (languageAdded === 'english') {
         setLocale('en');
       } else {
@@ -78,15 +75,17 @@ export const OtpScreen = props => {
       otp: otpData ? otpVal : '',
       country_code: otpData ? otpData.country_code : '',
     };
+    console.log('login body ==>', loginBody);
     const loginResponse = await dispatch(loginUser(loginBody));
     let res = {status: false, message: 'Connection Error...!'};
-    if (loginResponse) {
+    if (loginResponse.payload !== undefined) {
       res = loginResponse.payload;
     }
+    console.log('login res ==>', res);
     if (res.status) {
-      var a = moment(res.data.user.dob);
-      var b = moment(currentDate);
-      var years = b.diff(a, 'year');
+      let a = moment(res.data.user.dob);
+      let b = moment(currentDate);
+      let years = b.diff(a, 'year');
       b.add(years, 'years');
       console.log('USEDATA', res.data.user);
 
@@ -102,7 +101,6 @@ export const OtpScreen = props => {
   };
 
   const onGetOtp = async () => {
-    // console.log('getOtpBody ==>');
     setLoading(true);
     const getOtpBody = {
       mob_no: otpData ? otpData.mob_no : '',
@@ -143,7 +141,6 @@ export const OtpScreen = props => {
   useEffect(() => {
     const ONESIGNAL = async () => {
       const deviceState = await OneSignal.getDeviceState();
-      // console.log('deviceState player Id ==>', deviceState.userId);
       setPlayerId(deviceState.userId);
     };
     ONESIGNAL();
@@ -156,7 +153,6 @@ export const OtpScreen = props => {
       counter > 0 &&
         setTimeout(() => {
           if (counter <= 10) {
-            // console.log('${timerDiff} 111==>', `${timerDiff}`);
             setCounter(`0${timerDiff}`);
           } else {
             setCounter(timerDiff);
@@ -332,7 +328,7 @@ export const OtpScreen = props => {
               refInputFirst.current.focus();
               setExtra(extra + 1);
             }}
-            style={{alignItems: 'flex-end'}}>
+            style={styles.crossArrowStyle()}>
             <IcCrossArrow width={13} height={13} fill={color.grayIcon} />
           </Pressable>
         </View>
