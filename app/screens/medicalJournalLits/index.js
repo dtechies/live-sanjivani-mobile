@@ -158,13 +158,18 @@ export const MedicalJournalLists = () => {
       </View>
       <Screen style={styles.screenContainer()}>
         {filteredData.length == 0 && (
-          <Text style={styles.noData()}>No Records Found...</Text>
+          <Text style={styles.noData()} tx={'ViewMedicationScreen.noData'} />
         )}
         <View style={styles.bottomStyle()}>
           {filteredData.map((val, i) => {
             console.log('val', val);
             if (val.value == 'null') {
-              return <Text style={styles.noData()}>No Records Found...</Text>;
+              return (
+                <Text
+                  style={styles.noData()}
+                  tx={'ViewMedicationScreen.noData'}
+                />
+              );
             }
             return (
               <View key={i + 'careGiver'}>

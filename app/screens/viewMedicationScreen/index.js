@@ -127,7 +127,6 @@ export const ViewMedicationScreen = () => {
             inputStyle={styles.buttonNew()}
             leftIcon={true}
             containerStyle={styles.mainInputStyle()}
-            placeholder={'Search Medicine'}
             placeHolderVal={'ViewMedicationScreen.searchMedicine'}
             leftIconName={
               <SearchValNew
@@ -158,12 +157,17 @@ export const ViewMedicationScreen = () => {
       </View>
       <Screen style={styles.screenContainer()} bounces={false}>
         {filteredData.length == 0 && (
-          <Text style={styles.noData()}>No Records Found...</Text>
+          <Text style={styles.noData()} tx={'ViewMedicationScreen.noData'} />
         )}
         <View style={styles.bottomStyle()}>
           {reminderList.map((val, i) => {
             if (val.value == 'null') {
-              return <Text style={styles.noData()}>No Records Found.</Text>;
+              return (
+                <Text
+                  style={styles.noData()}
+                  tx={'ViewMedicationScreen.noData'}
+                />
+              );
             }
             return (
               <ReminderCard

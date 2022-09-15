@@ -189,14 +189,16 @@
     "SubTitle": "मेरी दवा",
     "todaysMedication": "आज की दवा",
     "save": "सहेजें",
-    "searchMedicine": "खोज चिकित्सा"
+    "searchMedicine": "खोज चिकित्सा",
+    "noData": "कोई रिकॉर्ड नहीं मिला।"
   },
   "myAppointments_screen": {
     "title": "अपॉइंटमेंट रिमाइंडर",
     "appointmentList": "नियुक्ति सूची",
     "SubTitle": "मेरी दवा",
     "todaysAppointments": "आज की दवा",
-    "save": "सहेजें"
+    "save": "सहेजें",
+    "searchData": "नियुक्ति विवरण खोजें"
   },
   "CheckMedicationReminderScreen": {
     "title": "दवा अनुस्मारक जोड़ें",
@@ -260,7 +262,8 @@
   "myCareGiver_screen": {
     "title": "मेरी देखभाल दाता ",
     "careGiverList": "देखभाल दाता सूची",
-    "save": "रक्षा कर"
+    "save": "रक्षा कर",
+    "searchData": "खोज देखभाल दाता विवरण"
   },
   "medicalJournalLists_screen": {
     "title": "मेडिकल जर्नल सूचियाँ",

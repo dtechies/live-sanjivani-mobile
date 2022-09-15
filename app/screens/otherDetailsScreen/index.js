@@ -23,7 +23,7 @@ export const OtherDetailsScreen = () => {
     setLoading(true);
     const allCatResponse = await dispatch(getAllCategoryAndSubCategory());
     let res = allCatResponse;
-    console.log('allCatResponse_NEW ==>', res);
+    // console.log('allCatResponse_NEW ==>', res);
 
     if (res != undefined) {
       setLoading(false);
@@ -32,12 +32,12 @@ export const OtherDetailsScreen = () => {
     if (res.status) {
       setLoading(false);
       const othersData = res.data.categoryData.filter(i => i.name === 'Others');
-      console.log('addedSubCat ==>', othersData);
+      // console.log('addedSubCat ==>', othersData);
       if (othersData.length > 0) {
         const addedSubCat = othersData[0].subcategories.filter(
           j => j.nested_subcategories.length > 0,
         );
-        console.log('addedSubCat ==>', addedSubCat);
+        // console.log('addedSubCat ==>', addedSubCat);
         setData(addedSubCat);
         setExtra(extra + 1);
       }
@@ -63,7 +63,7 @@ export const OtherDetailsScreen = () => {
       .substring(1, dataString.length - 1)
       .split(',')
       .map(stringItem => {
-        console.log('SSUUU', stringItem.split(':')[0]);
+        // console.log('SSUUU', stringItem.split(':')[0]);
         return (
           <View style={styles.itemRow()}>
             <Text style={styles.itemListTxt()}>
@@ -118,7 +118,7 @@ export const OtherDetailsScreen = () => {
               );
             })
           ) : (
-            <Text style={styles.errTxt()}>{'No Data Found.'}</Text>
+            <Text style={styles.errTxt()} tx={'ViewMedicationScreen.noData'} />
           )}
         </View>
       </Screen>

@@ -151,7 +151,10 @@ export const ProgressScreen = () => {
                     })}
                   </View>
                 ) : (
-                  <Text style={styles.noData()}>No Favorite Found.</Text>
+                  <Text
+                    style={styles.noData()}
+                    tx={'ViewMedicationScreen.noData'}
+                  />
                 )}
               </View>
             ) : (
@@ -180,7 +183,10 @@ export const ProgressScreen = () => {
                       );
                     })
                   ) : (
-                    <Text style={styles.noData()}>No Records Found.</Text>
+                    <Text
+                      style={styles.noData()}
+                      tx={'ViewMedicationScreen.noData'}
+                    />
                   )}
                 </View>
                 {sharingDataErr ? (
