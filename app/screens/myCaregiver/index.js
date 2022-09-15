@@ -122,7 +122,7 @@ export const MyCareGiver = () => {
             inputStyle={styles.buttonNew()}
             leftIcon={true}
             containerStyle={styles.mainInputStyle()}
-            placeholder={'Search Care Giver'}
+            placeHolderVal={'myCareGiver_screen.searchData'}
             leftIconName={
               <SearchValNew
                 height={size.moderateScale(20)}
@@ -152,12 +152,17 @@ export const MyCareGiver = () => {
       </View>
       <Screen style={styles.screenContainer()}>
         {filteredData.length == 0 && (
-          <Text style={styles.noData()}>No Records Found...</Text>
+          <Text style={styles.noData()} tx={'ViewMedicationScreen.noData'} />
         )}
         <View style={styles.bottomStyle()}>
           {filteredData.map((val, i) => {
             if (val.value == 'null') {
-              return <Text style={styles.noData()}>No Records Found...</Text>;
+              return (
+                <Text
+                  style={styles.noData()}
+                  tx={'ViewMedicationScreen.noData'}
+                />
+              );
             }
             return (
               <View key={i + 'careGiver'}>

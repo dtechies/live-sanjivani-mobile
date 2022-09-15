@@ -273,7 +273,7 @@ export const SymptomsScreen = () => {
               );
             })}
           {symptomFilteredValue && symptomFilteredValue.length == 0 && (
-            <Text style={styles.noData()}>No Records Found...</Text>
+            <Text style={styles.noData()} tx={'ViewMedicationScreen.noData'} />
           )}
 
           <View style={styles.selectedSymptomMainView()}>

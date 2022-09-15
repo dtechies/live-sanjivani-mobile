@@ -189,14 +189,16 @@
     "SubTitle": "My Medicine",
     "todaysMedication": "Today's Medication",
     "save": "Save",
-    "searchMedicine": "Search Medicine"
+    "searchMedicine": "Search Medicine",
+    "noData": "No Records Found."
   },
   "myAppointments_screen": {
     "title": "Appointment Reminder",
     "appointmentList": "Appointment List",
     "SubTitle": "My Medicine",
     "todaysAppointments": "Today's Medication",
-    "save": "Save"
+    "save": "Save",
+    "searchData": "Search Appointment"
   },
   "CheckMedicationReminderScreen": {
     "title": "Add Medicine Reminder",
@@ -262,7 +264,8 @@
     "title": "My Care Giver ",
     "careGiverList": "Care Giver List",
     "save": "Save",
-    "address": "Address : "
+    "address": "Address : ",
+    "searchData": "Search Care Giver"
   },
   "medicalJournalLists_screen": {
     "title": "Medical Journal Lists",

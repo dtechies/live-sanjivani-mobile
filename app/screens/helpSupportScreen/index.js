@@ -97,7 +97,10 @@ export const HelpSupportScreen = () => {
                 );
               })
             ) : (
-              <Text style={styles.noData()}>No Data Found.</Text>
+              <Text
+                style={styles.noData()}
+                tx={'ViewMedicationScreen.noData'}
+              />
             )}
           </View>
           <View style={styles.dashView()} />
@@ -128,7 +131,10 @@ export const HelpSupportScreen = () => {
                 );
               })
             ) : (
-              <Text style={styles.noData()}>No Data Found.</Text>
+              <Text
+                style={styles.noData()}
+                tx={'ViewMedicationScreen.noData'}
+              />
             )}
           </View>
         </View>

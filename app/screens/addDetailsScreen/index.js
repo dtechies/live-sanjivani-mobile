@@ -551,7 +551,10 @@ export const AddDetailsScreen = props => {
           </View>
         ) : (
           <View style={styles.textMsgMain()}>
-            <Text style={styles.errorTxt()}>No Data Found...</Text>
+            <Text
+              style={styles.errorTxt()}
+              tx={'ViewMedicationScreen.noData'}
+            />
           </View>
         )}
       </Screen>
