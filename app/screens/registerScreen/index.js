@@ -73,29 +73,34 @@ export const RegisterScreen = () => {
       gender: gender,
       dob: selectedDate,
       mob_no: phone,
-      email: email,
+      email: email.toLowerCase(),
       language: language,
       country_code: countryCodeVal,
     };
-    console.log('RegisterBody ==>', RegisterBody);
+    // console.log('RegisterBody ==>', RegisterBody);
     const RegisterResponse = await dispatch(registerUser(RegisterBody));
     let res = {status: false, message: 'Connection Error...!'};
     if (RegisterResponse.payload !== undefined) {
       res = RegisterResponse.payload;
     }
-    console.log('RES register ==>', RegisterResponse);
+    // console.log('RES register ==>', RegisterResponse);
     if (res.status) {
       setLoading(false);
-      console.log('Register response data ==>', res.data);
+      // console.log('Register response data ==>', res.data);
       toastMessage(res.message);
       setTimeout(() => {
-        navigation.navigate('otpScreen', {
-          otpValue: {
-            mob_no: res.data.mob_no,
-            otp: res.data.otp,
-            country_code: countryCodeVal,
-          },
+        navigation.navigate('otpSelectionScreen', {
+          mob_no: res.data.mob_no,
+          country_code: countryCodeVal,
+          email: email.toLowerCase(),
         });
+        // navigation.navigate('otpScreen', {
+        //   otpValue: {
+        //     mob_no: res.data.mob_no,
+        //     otp: res.data.otp,
+        //     country_code: countryCodeVal,
+        //   },
+        // });
       }, 200);
     } else {
       setLoading(false);
@@ -377,10 +382,18 @@ export const RegisterScreen = () => {
           <Text style={styles.errorText()} tx={languageErr} />
         ) : null}
 
-        <Button
+        {/* <Button
           buttonStyle={styles.button()}
           buttonText={styles.buttonTxt()}
           nameTx={'register_screen.save'}
+          onPress={() => {
+            validation();
+          }}
+        /> */}
+        <Button
+          buttonStyle={styles.button()}
+          buttonText={styles.buttonTxt()}
+          nameTx={'register_screen.next'}
           onPress={() => {
             validation();
           }}

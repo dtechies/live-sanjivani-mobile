@@ -30,7 +30,7 @@ import * as styles from './styles';
 import {LocalizationContext} from '../../App';
 import {genderVal, languageVal} from 'json';
 
-export const ProfileDetailScreen = () => {
+export const ProfileDetailScreen = props => {
   const dispatch = useDispatch();
   const {setLocale} = useContext(LocalizationContext);
   const {userDetails = {}} = useSelector(state => ({
@@ -77,6 +77,7 @@ export const ProfileDetailScreen = () => {
   const [loading, setLoading] = useState(false);
   const currentDate = new moment().format('YYYY-MM-DD');
   const [countryCodeVal, setCountryCodeVal] = useState('+91');
+  const [id, setId] = useState(null);
 
   const modalRef = useRef();
   const toastRef = useRef();
@@ -87,12 +88,12 @@ export const ProfileDetailScreen = () => {
 
   useEffect(() => {
     genderVal.map(item => {
-      if (item.value == userDetails.gender) {
+      if (item.value === userDetails.gender) {
         setGenderDefault(item);
       }
     });
     languageVal.map(val => {
-      if (val.value == userDetails.language) {
+      if (val.value === userDetails.language) {
         setLanguageDefault(val);
       }
     });
@@ -102,11 +103,14 @@ export const ProfileDetailScreen = () => {
   const getUserProfileData = async () => {
     // setLoading(true);
     const getOtpResponse = await dispatch(getUserProfile());
-    const res = getOtpResponse;
+    let res = {status: false, message: 'Connection Error...!'};
+    if (getOtpResponse !== undefined) {
+      res = getOtpResponse;
+    }
     if (res.status) {
       console.log(
-        'getUserProfileData response data ==>',
-        res.data.UserProfileData.image,
+        'getUserProfileData GET USER NO RESPONSE response data ==>',
+        res.data,
       );
       setFirstNm(res.data.UserProfileData.first_name);
       setLastNm(res.data.UserProfileData.last_name);
@@ -115,11 +119,11 @@ export const ProfileDetailScreen = () => {
       setPhone(res.data.UserProfileData.mob_no);
       setInitialPhone(res.data.UserProfileData.mob_no);
       setGender(res.data.UserProfileData.gender);
-
+      setId(res.data.UserProfileData.id);
       setLanguage(res.data.UserProfileData.language);
 
       genderVal.map(item => {
-        if (item.value == res.data.UserProfileData.gender) {
+        if (item.value === res.data.UserProfileData.gender) {
           setGenderDefault(item);
         }
       });
@@ -132,14 +136,10 @@ export const ProfileDetailScreen = () => {
         label: res.data.UserProfileData.country_code,
         value: res.data.UserProfileData.country_code,
       });
-      // console.log(
-      //   'res.data.UserProfileData.image ==> ',
-      //   res.data.UserProfileData.image,
-      // );
       setImageData({path: res.data.UserProfileData.image});
       setExtra(extra + 1);
     } else {
-      // setLoading(false);
+      setLoading(false);
       // toastMessage(res.message);
     }
   };
@@ -246,27 +246,28 @@ export const ProfileDetailScreen = () => {
       editProfileDetails();
     }
   };
-  const onGetOtp = async () => {
-    setLoading(true);
-    const getOtpBody = {
-      mob_no: phone,
-      country_code: countryCodeVal,
-      user_id: userDetails.id,
-    };
-    console.log('getOtpBody ==>', getOtpBody);
-    const getOtpResponse = await dispatch(StoreOTP(getOtpBody));
-    const res = getOtpResponse;
-    if (res.status) {
-      console.log('response data ==>', res.data.otp);
-      setOtpId(res.data.id);
-      toastMessage(res.message);
-      setLoading(false);
-      setExtra(extra + 1);
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
-    }
-  };
+  // const onGetOtp = async () => {
+  //   setLoading(true);
+  //   const getOtpBody = {
+  //     mob_no: phone,
+  //     country_code: countryCodeVal,
+  //     user_id: userDetails.id,
+  //   };
+  //   console.log('getOtpBody ==>', getOtpBody);
+  //   const getOtpResponse = await dispatch(StoreOTP(getOtpBody));
+  //   const res = getOtpResponse;
+  //   if (res.status) {
+  //     console.log('response data ==>', res.data.otp);
+  //     setOtpId(res.data.id);
+  //     toastMessage(res.message);
+  //     setLoading(false);
+  //     setExtra(extra + 1);
+  //   } else {
+  //     setLoading(false);
+  //     toastMessage(res.message);
+  //   }
+  // };
+
   const editProfileDetails = async () => {
     setLoading(true);
     let formData = new FormData();
@@ -292,20 +293,21 @@ export const ProfileDetailScreen = () => {
     }
     formData.append('language', language);
 
-    console.log('formData', formData);
+    // console.log('editUserProfile formData =>', formData);
 
     const EditUserProfileResponse = await dispatch(editUserProfile(formData));
     const res = EditUserProfileResponse;
-    console.log('EditUserProfileResponse Res ==>', res);
+    // console.log('EditUserProfileResponse Res ==>', res);
     // return;
     if (res.status) {
+      // console.log('response RES  data :- ', res.data);
       var a = moment(res.data.dob);
       var b = moment(currentDate);
       var years = b.diff(a, 'year');
       b.add(years, 'years');
       // res.data.token = userStore.userData.token;
       // userStore.userData = res.data;
-      console.log('VALIUEEEE', res.data);
+      // console.log('VALIUEEEE', res.data);
       if (res.data.language === 'english') {
         setLocale('en');
       } else {
@@ -322,8 +324,6 @@ export const ProfileDetailScreen = () => {
       getUserProfileData();
       setExtra(extra + 1);
 
-      // console.log('response RES  data :- ', res.data);
-
       var a = moment(res.data.dob);
       var b = moment(currentDate);
       var years = b.diff(a, 'year');
@@ -334,6 +334,13 @@ export const ProfileDetailScreen = () => {
       toastMessage(res.message);
     }
   };
+
+  useEffect(() => {
+    if (props.route.params) {
+      setPhone(props.route.params?.mob_no);
+    }
+  }, []);
+
   return (
     <SafeAreaView>
       <Toast
@@ -589,7 +596,15 @@ export const ProfileDetailScreen = () => {
                 if (changeBtn == 'Send OTP') {
                   if (phone.length == 10) {
                     setOtp(true);
-                    onGetOtp();
+                    // onGetOtp();
+                    setOtpValue('');
+                    navigation.navigate('otpSelectionScreen', {
+                      mob_no: phone,
+                      country_code: countryCodeVal,
+                      email: email.toLowerCase(),
+                      isProfile: true,
+                      id: id,
+                    });
                   } else {
                     setPhoneErr('Invalid Phone number');
                   }

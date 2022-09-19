@@ -42,3 +42,4 @@ export * from './GetDeleteMedicalJournalNoteAction';
 export * from './GetAllSymptomAction';
 export * from './StoreOtp';
 export * from './AddFeedbackAction';
+export * from './SendOtpAction';

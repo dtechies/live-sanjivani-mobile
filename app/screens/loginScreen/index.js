@@ -22,7 +22,9 @@ import {
 } from 'components';
 import {size, images, color} from 'theme';
 import {countryCode} from 'json';
+
 import * as styles from './styles';
+
 // import {ChangeLanguage} from '../../components';
 export const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -36,37 +38,44 @@ export const LoginScreen = () => {
   const toastMessage = msg => {
     toastRef.current.show(msg);
   };
-  const onGetOtp = async () => {
-    setLoading(true);
-    const getOtpBody = {
-      mob_no: number,
-      country_code: countryCodeVal,
-      user_id: null,
-    };
-    const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    let res = {status: false, message: 'Connection Error...!'};
-    // console.log('getOtpResponse login..getOtpResponse', getOtpResponse);
-    if (getOtpResponse.payload != undefined) {
-      res = getOtpResponse.payload;
-    }
-    if (res.status) {
-      setLoading(false);
-      toastMessage(res.message);
-      setTimeout(() => {
-        navigation.navigate('otpScreen', {
-          otpValue: res.data,
-        });
-      }, 150);
-    } else {
-      setLoading(false);
-      toastMessage(res.message);
-    }
-  };
+  // const onGetOtp = async () => {
+  //   setLoading(true);
+  //   const getOtpBody = {
+  //     mob_no: number,
+  //     country_code: countryCodeVal,
+  //     user_id: null,
+  //   };
+  //   const getOtpResponse = await dispatch(getOtp(getOtpBody));
+  //   let res = {status: false, message: 'Connection Error...!'};
+  //   // console.log('getOtpResponse login..getOtpResponse ', getOtpResponse);
+  //   if (getOtpResponse.payload != undefined) {
+  //     res = getOtpResponse.payload;
+  //   }
+
+  //   if (res.status) {
+  //     setLoading(false);
+  //     toastMessage(res.message);
+  //     setTimeout(() => {
+  //       navigation.navigate('otpScreen', {
+  //         otpValue: res.data,
+  //       });
+  //     }, 150);
+  //   } else {
+  //     setLoading(false);
+  //     toastMessage(res.message);
+  //   }
+  // };
 
   const validateMobile = () => {
     if (number.length == 10) {
       setNumberCorrect('');
-      onGetOtp();
+      // onGetOtp();
+      navigation.navigate('otpSelectionScreen', {
+        mob_no: number,
+        country_code: countryCodeVal,
+        email: '',
+        isLogin: true,
+      });
     } else {
       setNumberCorrect('login_screen.errorMsg');
     }

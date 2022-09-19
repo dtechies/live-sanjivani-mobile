@@ -203,6 +203,16 @@ export const _addCareGiver = async payload => {
   });
   return _api_calls('POST', '/add-user-CareGiver', headers, payload);
 };
+// send Otp data
+export const _sendOtp = async payload => {
+  let {_api_calls} = HttpCalls;
+  const token = await getToken();
+
+  let headers = await headersData({
+    token: token,
+  });
+  return _api_calls('POST', '/send-otp', headers, payload);
+};
 export const _editProfileDetails = async payload => {
   let {_api_calls} = HttpCalls;
   const token = await getToken();

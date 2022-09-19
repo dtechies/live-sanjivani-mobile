@@ -44,6 +44,7 @@ import DeleteCareGiverReducer from './DeleteCareGiverReducer';
 import GetUserMedicalJournalNoteReducer from './GetUserMedicalJournalNoteReducer';
 import GetDeleteMedicalJournalNoteReducer from './GetDeleteMedicalJournalNoteReducer';
 import getAllSymptomReducer from './GetAllSymptomReducer';
+import sendOtpReducer from './SendOtpReducer';
 
 const persistConfig = {
   key: 'root',
@@ -91,6 +92,7 @@ const appReducer = combineReducers({
   GetUserMedicalJournalNoteReducer: GetUserMedicalJournalNoteReducer,
   GetDeleteMedicalJournalNoteReducer: GetDeleteMedicalJournalNoteReducer,
   getAllSymptomReducer: getAllSymptomReducer,
+  sendOtpReducer: sendOtpReducer,
 });
 const rootReducer = (state, action) => {
   // Clear all data in redux store to initial.

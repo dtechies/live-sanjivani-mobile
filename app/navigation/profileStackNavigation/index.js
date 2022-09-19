@@ -20,6 +20,7 @@ import {
   SymptomDetailScreen,
   MedicalJournalLists,
   OtherScreen,
+  OtpSelectionScreen,
 } from 'screens';
 
 const Stack = createNativeStackNavigator();
@@ -73,6 +74,7 @@ export const ProfileStackNavigation = () => {
         name="medicalJournalLists"
         component={MedicalJournalLists}
       />
+      <Stack.Screen name="otpSelectionScreen" component={OtpSelectionScreen} />
       <Stack.Screen name="otherScreen" component={OtherScreen} />
     </Stack.Navigator>
   );

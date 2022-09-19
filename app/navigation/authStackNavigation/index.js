@@ -9,6 +9,7 @@ import {
   IntroScreen,
   DemoScreen,
   OtpScreen,
+  OtpSelectionScreen,
 } from 'screens';
 import {color} from 'theme';
 import {CustomStatusBar} from 'components';
@@ -32,6 +33,10 @@ export const AuthStackNavigation = () => {
         <Stack.Screen name="demoScreen" component={DemoScreen} />
         <Stack.Screen name="loginScreen" component={LoginScreen} />
         <Stack.Screen name="otpScreen" component={OtpScreen} />
+        <Stack.Screen
+          name="otpSelectionScreen"
+          component={OtpSelectionScreen}
+        />
 
         <Stack.Screen
           name="selectServiceScreen"

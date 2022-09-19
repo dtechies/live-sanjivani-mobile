@@ -143,7 +143,8 @@
     "invalidPhoneNameError": "Invalid Phone number",
     "dobError": "Please select Date",
     "genderError": "Please select Gender",
-    "languageError": "Please select Language"
+    "languageError": "Please select Language",
+    "next":"Next"
   },
   "help_screen": {
     "title": "Help",
@@ -349,5 +350,18 @@
     "medications": "Medications",
     "appointments": "Appointments",
     "medical_journal": "Medical Journal"
+  },
+  "otp_selection_screen": {
+   "title":"Register New User",
+   "textMsg":"Text message",
+   "headingTx":"How do you want to receive MFA Messages? Choose one option.",
+   "email":"Email",
+   "infoTx":"Message and data rates may apply. If you choose to receive OTP via text message, we will send one message per login attempt. To stop receiving text 'STOP' to +18448999393. For more information text 'HELP'.",
+   "termsTx":"Terms of Usage",
+   "privacyPolicyTx":"Privacy Policy",
+   "infoVerifyTx":"When you press the Next button, we'll send you an MFA password to verify your phone number.",
+   "next":"Next",
+   "profile_user":"Profile User",
+   "login_user":"Login User"
   }
 }

@@ -47,3 +47,4 @@ export const USER_MEDICAL_JOURNAL_DELETE = 'USER_MEDICAL_JOURNAL_DELETE';
 export const GET_ALL_SYMPTOM = 'GET_ALL_SYMPTOM';
 export const STORE_OTP = 'STORE_OTP';
 export const ADD_FEEDBACK = 'ADD_FEEDBACK';
+export const SEND_OTP = 'SEND_OTP';
