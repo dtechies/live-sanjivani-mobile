@@ -33,3 +33,4 @@ export * from './myCaregiver';
 export * from './otherDetailsScreen';
 export * from './symptomDetailScreen';
 export * from './medicalJournalLits';
+export * from './otpSelectionScreen';

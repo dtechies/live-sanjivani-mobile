@@ -75,19 +75,19 @@ export const OtpScreen = props => {
       otp: otpData ? otpVal : '',
       country_code: otpData ? otpData.country_code : '',
     };
-    console.log('login body ==>', loginBody);
+    // console.log('login body ==>', loginBody);
     const loginResponse = await dispatch(loginUser(loginBody));
     let res = {status: false, message: 'Connection Error...!'};
     if (loginResponse.payload !== undefined) {
       res = loginResponse.payload;
     }
-    console.log('login res ==>', res);
+    // console.log('login res ==>', res);
     if (res.status) {
       let a = moment(res.data.user.dob);
       let b = moment(currentDate);
       let years = b.diff(a, 'year');
       b.add(years, 'years');
-      console.log('USEDATA', res.data.user);
+      // console.log('USEDATA', res.data.user);
 
       await dispatch(
         userData({userData: res.data.user, age: years, login: true}),
@@ -107,15 +107,15 @@ export const OtpScreen = props => {
       country_code: otpData ? otpData.country_code : '',
       user_id: null,
     };
-    console.log('getOtpBody ==>', getOtpBody);
+    // console.log('getOtpBody ==>', getOtpBody);
     const getOtpResponse = await dispatch(getOtp(getOtpBody));
-    console.log('getOtpBody responses ==>', getOtpResponse);
+    // console.log('getOtpBody responses ==>', getOtpResponse);
     let res = {status: false, message: 'Connection Error...!'};
     if (getOtpResponse) {
       res = getOtpResponse.payload;
     }
     if (res.status) {
-      console.log('getOtp res ==>', res.data.otp);
+      // console.log('getOtp res ==>', res.data.otp);
       setLoading(false);
       toastMessage(res.message);
       setCounter(30);
