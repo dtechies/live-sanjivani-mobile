@@ -42,17 +42,17 @@ export const OtpSelectionScreen = props => {
       email: email.toLowerCase(),
       countryCode: countryCodeVal,
     };
-    // console.log('sendOtpBody ==>', sendOtpBody);
+    console.log('sendOtpBody ==>', sendOtpBody);
 
     const sendOtpResponse = await dispatch(SendOtp(sendOtpBody));
     let res = {status: false, message: 'Connection Error...!'};
     if (sendOtpResponse !== undefined) {
       res = sendOtpResponse;
     }
-    // console.log('RES sendOtpData data==>', sendOtpResponse);
+    console.log('RES sendOtpData data==>', sendOtpResponse);
     if (res.status) {
       setLoading(false);
-      // console.log('sendOtpData response data ==>', res.data);
+      console.log('sendOtpData response data ==>', res.data);
       toastMessage(res.message);
       setTimeout(() => {
         isBack
@@ -84,7 +84,7 @@ export const OtpSelectionScreen = props => {
         }
       }
       if (props.route.params.isLogin) {
-        setIsBack(true);
+        // setIsBack(true);
         setTitle('otp_selection_screen.login_user');
       }
       // console.log('props.route.params ==>', props.route.params);
@@ -137,6 +137,35 @@ export const OtpSelectionScreen = props => {
           </View>
           <Text style={styles.radioText()} tx={'otp_selection_screen.email'} />
         </Pressable>
+        {otpMethod == 'mail' && (
+          <View>
+            <Text
+              style={styles.headingTx(true)}
+              tx={'otp_selection_screen.infoEmailTx'}
+            />
+            <View style={styles.linkContainer()}>
+              <Pressable
+                onPress={() =>
+                  Linking.openURL('(https://livesanjivani.com/terms-of-use/')
+                }>
+                <Text
+                  style={styles.labelLearn()}
+                  tx={'otp_selection_screen.termsTx'}
+                />
+              </Pressable>
+              <View style={styles.line()} />
+              <Pressable
+                onPress={() =>
+                  Linking.openURL('https://livesanjivani.com/privacy-policy/')
+                }>
+                <Text
+                  style={styles.labelLearn()}
+                  tx={'otp_selection_screen.privacyPolicyTx'}
+                />
+              </Pressable>
+            </View>
+          </View>
+        )}
         <Pressable
           style={styles.radioContainer()}
           onPress={() => {
@@ -153,31 +182,36 @@ export const OtpSelectionScreen = props => {
             tx={'otp_selection_screen.textMsg'}
           />
         </Pressable>
-        <Text
-          style={styles.headingTx(true)}
-          tx={'otp_selection_screen.infoTx'}
-        />
-        <View style={styles.linkContainer()}>
-          <Pressable
-            onPress={() =>
-              Linking.openURL('(https://livesanjivani.com/terms-of-use/')
-            }>
+        {otpMethod == 'sms' && (
+          <View>
             <Text
-              style={styles.labelLearn()}
-              tx={'otp_selection_screen.termsTx'}
+              style={styles.headingTx(true)}
+              tx={'otp_selection_screen.infoTx'}
             />
-          </Pressable>
-          <View style={styles.line()} />
-          <Pressable
-            onPress={() =>
-              Linking.openURL('https://livesanjivani.com/privacy-policy/')
-            }>
-            <Text
-              style={styles.labelLearn()}
-              tx={'otp_selection_screen.privacyPolicyTx'}
-            />
-          </Pressable>
-        </View>
+            <View style={styles.linkContainer()}>
+              <Pressable
+                onPress={() =>
+                  Linking.openURL('(https://livesanjivani.com/terms-of-use/')
+                }>
+                <Text
+                  style={styles.labelLearn()}
+                  tx={'otp_selection_screen.termsTx'}
+                />
+              </Pressable>
+              <View style={styles.line()} />
+              <Pressable
+                onPress={() =>
+                  Linking.openURL('https://livesanjivani.com/privacy-policy/')
+                }>
+                <Text
+                  style={styles.labelLearn()}
+                  tx={'otp_selection_screen.privacyPolicyTx'}
+                />
+              </Pressable>
+            </View>
+          </View>
+        )}
+
         {otpMethod === 'sms' && (
           <View style={styles.inputBoxMain()}>
             <Text style={styles.termsTx(true)}>
@@ -186,7 +220,9 @@ export const OtpSelectionScreen = props => {
             <InputBox
               inputStyle={styles.inputStyle()}
               mainContainerStyle={styles.inputMainContainer()}
-              value={otpMethod === 'sms' ? phone : email}
+              value={
+                otpMethod === 'sms' ? `${countryCodeVal}  ${phone}` : email
+              }
               editable={false}
             />
           </View>

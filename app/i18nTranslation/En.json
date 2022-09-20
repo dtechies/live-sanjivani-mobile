@@ -356,6 +356,7 @@
    "textMsg":"Text message",
    "headingTx":"How do you want to receive MFA Messages? Choose one option.",
    "email":"Email",
+   "infoEmailTx":"If you choose to receive OTP via email, we will send one email per login attempt. To stop receiving email please send email 'STOP' or For more information send an email 'HELP' to support@livesanjivani.com.",
    "infoTx":"Message and data rates may apply. If you choose to receive OTP via text message, we will send one message per login attempt. To stop receiving text 'STOP' to +18448999393. For more information text 'HELP'.",
    "termsTx":"Terms of Usage",
    "privacyPolicyTx":"Privacy Policy",

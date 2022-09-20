@@ -26,7 +26,7 @@ export const inputMainContainer = val => ({
   width: size.deviceWidth * 0.6,
 });
 export const button = val => ({
-  width: size.deviceWidth * 0.35,
+  width: size.deviceWidth * 0.3,
   alignSelf: 'center',
   marginTop: size.moderateScale(30),
 });
@@ -65,7 +65,7 @@ export const radioText = () => ({
 export const headingTx = val => ({
   color: color.dimGrey,
   // fontSize: val ? fontSize.verySmall : fontSize.small,
-  fontSize: val ? fontSize.small : fontSize.medium,
+  fontSize: val ? fontSize.mediumSec : fontSize.medium,
   fontFamily: fonts.latoBold,
   marginTop: val ? size.moderateScale(18) : 0,
   marginLeft: val ? size.moderateScale(20) : 0,

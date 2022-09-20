@@ -197,7 +197,7 @@ export const dropdown1 = () => ({
 // country Code drop down style
 
 export const countryCodeDropdown = () => ({
-  width: size.deviceWidth * 0.16,
+  width: size.deviceWidth * 0.18,
   marginVertical: size.moderateScale(5),
   height: size.deviceHeight * 0.06,
   borderRadius: size.moderateScale(10),

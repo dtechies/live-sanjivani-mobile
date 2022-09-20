@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, View} from 'react-native';
+import {Platform, SafeAreaView, View} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {
@@ -18,12 +18,11 @@ const Stack = createNativeStackNavigator();
 export const AuthStackNavigation = () => {
   return (
     <View style={{flex: 1}}>
-      {Platform.OS === 'android' && (
-        <CustomStatusBar
-          backgroundColor={color.black}
-          barStyle="light-content"
-        />
-      )}
+      <CustomStatusBar
+        backgroundColor={color.black}
+        barStyle={Platform.OS === 'ios' ? 'dark-content' : 'default'}
+      />
+
       <Stack.Navigator
         screenOptions={{
           headerShown: false,

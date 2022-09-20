@@ -104,7 +104,6 @@ export const CheckMedicationReminderScreen = props => {
     if (param && param.fromViewMedication) {
       setData(props.route.params.reminderData);
     } else if (param) {
-      // console.log('props', props.route.params);
       setData(props.route.params);
       let obj = props.route.params.medicineFilteredValue;
       let isEmptyObject = Object.keys(obj).length > 0;
@@ -264,7 +263,7 @@ export const CheckMedicationReminderScreen = props => {
                 tx={'CheckMedicationReminderScreen.name'}
               />
               <Text text={':'} />
-              <Text numberOfLines={2} style={styles.description()}>
+              <Text style={styles.description()}>
                 {medicineDetail.name ? medicineDetail.name : '---'}
               </Text>
             </View>
@@ -274,7 +273,7 @@ export const CheckMedicationReminderScreen = props => {
                 tx={'CheckMedicationReminderScreen.benefit'}
               />
               <Text text={':'} />
-              <Text numberOfLines={2} style={styles.description()}>
+              <Text style={styles.description()}>
                 {medicineDetail.benefits ? medicineDetail.benefits : '---'}
               </Text>
             </View>
@@ -284,7 +283,7 @@ export const CheckMedicationReminderScreen = props => {
                 tx={'CheckMedicationReminderScreen.safetyAdvice'}
               />
               <Text text={':'} />
-              <Text numberOfLines={2} style={styles.description()}>
+              <Text style={styles.description()}>
                 {medicineDetail.safety_advice
                   ? medicineDetail.safety_advice
                   : '---'}
@@ -296,7 +295,7 @@ export const CheckMedicationReminderScreen = props => {
                 tx={'CheckMedicationReminderScreen.sideEffects'}
               />
               <Text text={':'} />
-              <Text numberOfLines={2} style={styles.description()}>
+              <Text style={styles.description()}>
                 {medicineDetail.side_effects
                   ? medicineDetail.side_effects
                   : '---'}
@@ -308,7 +307,7 @@ export const CheckMedicationReminderScreen = props => {
                 tx={'CheckMedicationReminderScreen.use'}
               />
               <Text text={':'} />
-              <Text numberOfLines={2} style={styles.description()}>
+              <Text style={styles.description()}>
                 {medicineDetail.use ? medicineDetail.use : '---'}
               </Text>
             </View>

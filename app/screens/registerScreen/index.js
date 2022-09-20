@@ -1,5 +1,5 @@
 import React, {useState, useRef, useContext} from 'react';
-import {SafeAreaView, Pressable, View} from 'react-native';
+import {SafeAreaView, Pressable, View, Platform} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Dropdown from '../../components/Dropdown/src/components/Dropdown';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
@@ -14,6 +14,7 @@ import {
   InputBox,
   Header,
   Toast,
+  CustomStatusBar,
 } from 'components';
 import {size, color} from 'theme';
 import {genderVal, languageVal, countryCode} from 'json';

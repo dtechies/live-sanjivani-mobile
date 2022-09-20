@@ -120,7 +120,10 @@ export const BottomStackNavigation = props => {
 
   return (
     <View style={{flex: 1}}>
-      <CustomStatusBar backgroundColor={color.black} barStyle="light-content" />
+      <CustomStatusBar
+        backgroundColor={color.black}
+        barStyle={Platform.OS === 'ios' ? 'dark-content' : 'default'}
+      />
       <Tab.Navigator
         initialRouteName="Today"
         screenOptions={{
