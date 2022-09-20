@@ -15,9 +15,10 @@ export const inputMain = () => ({
   // width: size.deviceWidth * 0.89,
   borderColor: color.white,
   shadowColor: color.black,
-  shadowOffset: {width: 1, height: 1},
-  shadowOpacity: 0.8,
+  shadowOffset: {width: 0, height: 0.5},
+  shadowOpacity: 0.5,
   shadowRadius: 1,
+  borderRadius: size.moderateScale(10),
   elevation: size.moderateScale(4),
 });
 export const imageView = () => ({
@@ -71,7 +72,7 @@ export const btnRegister = () => ({
   elevation: size.moderateScale(4),
 });
 export const inputTxt = () => ({
-  fontSize: fontSize.medium,
+  fontSize: fontSize.small,
   fontFamily: fonts.latoBold,
   color: color.steelBlue,
   paddingLeft: size.deviceWidth * 0.02,

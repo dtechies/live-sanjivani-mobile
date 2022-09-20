@@ -27,9 +27,10 @@ import {
 import {size, color, IcCrossArrow} from 'theme';
 import {useDispatch} from 'react-redux';
 import {getMedicineReminderView} from 'redux-actions';
-import * as styles from './styles';
 import {LocalizationContext} from '../../App';
 import {dose, medicineForm} from 'json';
+
+import * as styles from './styles';
 
 export const MedicationReminderScreen = () => {
   const navigation = useNavigation();
@@ -162,7 +163,6 @@ export const MedicationReminderScreen = () => {
     if (getMedicineReminderViewResponse) {
       res = getMedicineReminderViewResponse.payload;
     }
-    // console.log('getMedicineReminderViewResponse data ==>', res.data);
     if (res.status) {
       setMedicineReminderViewData(res.data);
       setLoading(false);
@@ -363,6 +363,7 @@ export const MedicationReminderScreen = () => {
           medicineFilteredValue.map((item, index) => {
             return (
               <Pressable
+                key={index + 'medicineFilteredValue'}
                 style={styles.searchedValueList()}
                 onPress={() => {
                   setName(item.name);

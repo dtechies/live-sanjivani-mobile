@@ -93,7 +93,9 @@ export const rightIcon = () => ({
 
 export const btnTextRight = () => ({
   color: color.white,
-  fontSize: fontSize.small,
+  // fontSize: fontSize.small,
+  fontSize: size.moderateScale(13),
+  fontFamily: fonts.latoRegular,
   // fontFamily: fonts.segoeUIBold,
 });
 export const btnTextUnit = () => ({
