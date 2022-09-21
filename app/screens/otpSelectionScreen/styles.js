@@ -62,6 +62,13 @@ export const radioText = () => ({
   fontFamily: fonts.latoBold,
   marginLeft: size.moderateScale(5),
 });
+export const errorMsg = () => ({
+  marginTop: size.moderateScale(15),
+  color: color.red,
+  fontSize: fontSize.small,
+  fontFamily: fonts.latoRegular,
+  marginLeft: size.moderateScale(5),
+});
 export const headingTx = val => ({
   color: color.dimGrey,
   // fontSize: val ? fontSize.verySmall : fontSize.small,
