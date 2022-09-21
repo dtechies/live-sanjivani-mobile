@@ -22,7 +22,8 @@ export const OtpSelectionScreen = props => {
   const [extra, setExtra] = useState(0);
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [otpMethod, setOtpMethod] = useState('mail');
+  const [otpMethod, setOtpMethod] = useState('');
+  const [otpMethodErr, setOtpMethodErr] = useState(null);
   const [countryCodeVal, setCountryCodeVal] = useState('');
   const [isBack, setIsBack] = useState('');
   const [title, setTitle] = useState('otp_selection_screen.title');
@@ -34,40 +35,44 @@ export const OtpSelectionScreen = props => {
   };
 
   const sendOtpData = async () => {
-    setLoading(true);
-    const sendOtpBody = {
-      mob_no: phone,
-      otpMethod: otpMethod,
-      id: isId,
-      email: email.toLowerCase(),
-      countryCode: countryCodeVal,
-    };
-    console.log('sendOtpBody ==>', sendOtpBody);
-
-    const sendOtpResponse = await dispatch(SendOtp(sendOtpBody));
-    let res = {status: false, message: 'Connection Error...!'};
-    if (sendOtpResponse !== undefined) {
-      res = sendOtpResponse;
-    }
-    console.log('RES sendOtpData data==>', sendOtpResponse);
-    if (res.status) {
-      setLoading(false);
-      console.log('sendOtpData response data ==>', res.data);
-      toastMessage(res.message);
-      setTimeout(() => {
-        isBack
-          ? navigation.navigate('profileDetailScreen', {mob_no: phone})
-          : navigation.navigate('otpScreen', {
-              otpValue: {
-                mob_no: phone,
-                otp: res.isTokenExpired.otp,
-                country_code: countryCodeVal,
-              },
-            });
-      }, 200);
+    if (otpMethod == '') {
+      setOtpMethodErr('Please select at least one radio button !');
     } else {
-      setLoading(false);
-      toastMessage(res.message);
+      setLoading(true);
+      const sendOtpBody = {
+        mob_no: phone,
+        otpMethod: otpMethod,
+        id: isId,
+        email: email.toLowerCase(),
+        countryCode: countryCodeVal,
+      };
+      // console.log('sendOtpBody ==>', sendOtpBody);
+
+      const sendOtpResponse = await dispatch(SendOtp(sendOtpBody));
+      let res = {status: false, message: 'Connection Error...!'};
+      if (sendOtpResponse !== undefined) {
+        res = sendOtpResponse;
+      }
+      // console.log('RES sendOtpData data==>', sendOtpResponse);
+      if (res.status) {
+        setLoading(false);
+        // console.log('sendOtpData response data ==>', res.data);
+        toastMessage(res.message);
+        setTimeout(() => {
+          isBack
+            ? navigation.navigate('profileDetailScreen', {mob_no: phone})
+            : navigation.navigate('otpScreen', {
+                otpValue: {
+                  mob_no: phone,
+                  otp: res.isTokenExpired.otp,
+                  country_code: countryCodeVal,
+                },
+              });
+        }, 200);
+      } else {
+        setLoading(false);
+        toastMessage(res.message);
+      }
     }
   };
 
@@ -128,6 +133,7 @@ export const OtpSelectionScreen = props => {
           style={styles.radioContainer()}
           onPress={() => {
             setOtpMethod('mail');
+            setOtpMethodErr(null);
             setExtra(extra + 1);
           }}>
           <View style={styles.circleView(otpMethod === 'mail' ? true : false)}>
@@ -170,6 +176,7 @@ export const OtpSelectionScreen = props => {
           style={styles.radioContainer()}
           onPress={() => {
             setOtpMethod('sms');
+            setOtpMethodErr(null);
             setExtra(extra + 1);
           }}>
           <View style={styles.circleView(otpMethod === 'sms' ? true : false)}>
@@ -211,7 +218,7 @@ export const OtpSelectionScreen = props => {
             </View>
           </View>
         )}
-
+        {otpMethodErr && <Text style={styles.errorMsg()}>{otpMethodErr}</Text>}
         {otpMethod === 'sms' && (
           <View style={styles.inputBoxMain()}>
             <Text style={styles.termsTx(true)}>
