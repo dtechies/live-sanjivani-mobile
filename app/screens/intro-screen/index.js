@@ -52,7 +52,7 @@ export const IntroScreen = () => {
                     style={styles.welcomeTextMain}
                     tx="intro_Screen.mainTitle"
                   />
-                  <Text style={styles.welcomeText} tx="intro_Screen.subTitle" />
+                  {/* <Text style={styles.welcomeText} tx="intro_Screen.subTitle" /> */}
                   <Text
                     style={styles.welcomeTextSub}
                     tx={
