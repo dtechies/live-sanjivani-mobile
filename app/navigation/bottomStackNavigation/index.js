@@ -177,7 +177,7 @@ export const BottomStackNavigation = props => {
         <AlertModal
           closeModal={() => closeModal(false)}
           data={notificationDetail}
-          title={'abdul'}
+          title={'liveSanjivani'}
         />
       )}
     </View>
