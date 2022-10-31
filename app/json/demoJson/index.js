@@ -41,6 +41,7 @@ export const MainProfileDetail = [
     svg: IcJournal,
     selectedCard: false,
   },
+/*
   {
     label: '5',
     value: 'Symptom Checker',
@@ -48,6 +49,7 @@ export const MainProfileDetail = [
     svg: IcMan,
     selectedCard: false,
   },
+  */
   {
     label: '6',
     value: 'Account Settings',

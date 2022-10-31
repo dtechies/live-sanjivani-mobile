@@ -113,7 +113,7 @@
   },
   "login_screen": {
     "number": "Enter Your Phone Number",
-    "countryCode": "+91",
+    "countryCode": "+1",
     "learnMore": "Learn more",
     "otp": "Enter OTP",
     "request_otp": "Request OTP",
@@ -309,8 +309,8 @@
     "other": "Other",
     "hindi": "Hindi",
     "english": "English",
-    "+91": "+91",
-    "+1": "+1"
+    "+1": "+1",
+    "+91": "+91"
   },
   "medicationJson": {
     "1": "1",

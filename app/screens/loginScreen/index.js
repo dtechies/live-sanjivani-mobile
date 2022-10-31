@@ -31,7 +31,7 @@ export const LoginScreen = () => {
   const navigation = useNavigation();
   const toastRef = useRef();
   const [number, setNumber] = useState('');
-  const [countryCodeVal, setCountryCodeVal] = useState('+91');
+  const [countryCodeVal, setCountryCodeVal] = useState('+1');
   const [extra, setExtra] = useState(0);
   const [loading, setLoading] = useState(false);
   const [numberCorrect, setNumberCorrect] = useState('');
@@ -106,10 +106,10 @@ export const LoginScreen = () => {
         <Text style={styles.labelLoginTxt()} tx={'login_screen.number'} />
         <View style={styles.rowView()}>
           <Dropdown
-            defaultValue={countryCode[0]}
+            defaultValue={countryCode[1]}
             data={countryCode}
             labelField="label"
-            placeholder={'+91'}
+            placeholder={'+1'}
             valueField="value"
             dropdownPosition={'bottom'}
             style={styles.dropdown()}

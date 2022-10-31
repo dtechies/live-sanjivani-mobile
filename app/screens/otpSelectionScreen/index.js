@@ -218,11 +218,14 @@ export const OtpSelectionScreen = props => {
             </View>
           </View>
         )}
+        
         {otpMethodErr && <Text style={styles.errorMsg()}>{otpMethodErr}</Text>}
         {otpMethod === 'sms' && (
+          
           <View style={styles.inputBoxMain()}>
             <Text style={styles.termsTx(true)}>
               {otpMethod === 'sms' ? 'Mobile number' : 'Email'}
+
             </Text>
             <InputBox
               inputStyle={styles.inputStyle()}

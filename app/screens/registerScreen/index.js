@@ -42,7 +42,7 @@ export const RegisterScreen = () => {
   const [genderErr, setGenderErr] = useState('');
   const [language, setLanguage] = useState('');
   const [languageErr, setLanguageErr] = useState('');
-  const [countryCodeVal, setCountryCodeVal] = useState('+91');
+  const [countryCodeVal, setCountryCodeVal] = useState('+1');
   const [loading, setLoading] = useState(false);
   const [isColor, setIsColor] = useState(false);
   const [isColor1, setIsColor1] = useState(false);
@@ -294,11 +294,11 @@ export const RegisterScreen = () => {
         {emailErr ? <Text style={styles.errorText()} tx={emailErr} /> : null}
         <View style={styles.countryCodeRowView()}>
           <Dropdown
-            defaultValue={countryCode[0]}
+            defaultValue={countryCode[1]}
             data={countryCode}
             labelField="label"
             valueField="value"
-            placeholder={'+91'}
+            placeholder={'+1'}
             dropdownPosition={'bottom'}
             style={styles.countryCodeDropdown()}
             placeholderStyle={styles.countryCodeLabelFieldText()}
