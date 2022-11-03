@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>LiveSanjivani</string>
+	<string>Live Sanjivani</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -21,7 +21,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -35,13 +35,28 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>We need this permission to use camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>We need this permission for fetching doctor's location.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need this permission while posting an issue in your constituency as a video we record the video with microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need this permission when user want to post an issue and user want to update profile image</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>PollerOne-Regular.ttf</string>
+		<string>Segoe-UI-Bold.ttf</string>
+		<string>Segoe-UI.ttf</string>
+		<string>Lato-Bold.ttf</string>
+		<string>Lato-Regular.ttf</string>
 		<string>OpenSans-Regular.ttf</string>
-		<string>OpenSans-Medium.ttf</string>
 		<string>OpenSans-Bold.ttf</string>
+		<string>OpenSans-Medium.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

@@ -7,6 +7,44 @@ import thunk from 'redux-thunk';
 import themeMode from './AppThemeReducer';
 import languageMode from './AppLanguageReducer';
 import loginReducer from './LoginReducer';
+import registerReducer from './RegisterReducer';
+import userDataReducer from './UserDataReducer';
+import getReminderOptionReducer from './GetReminderOptionReducer';
+import getMedicalJournalNoteReducer from './GetMedicalJournalNoteReducer';
+import addEditMedicalJournalNoteReducer from './AddEditMedicalJournalNoteReducer';
+import getAllCategoryReducer from './GetAllCategoryReducer';
+import getAllCategoryAndSubCategoryReducer from './getAllCategoryAndSubCategoryReducer';
+import getHelpSupportReducer from './GetHelpSupportReducer';
+import getUserFavoriteListReducer from './GetUserFavoriteListReducer';
+import addUserFavoriteReducer from './AddUserFavoriteReducer';
+import getAllSubCategoryReducer from './GetAllSubCategoryReducer';
+import getTipForDayReducer from './GetTipForDayReducer';
+import addMedicineReminderReducer from './AddMedicineReminderReducer';
+import getMedicineReminderProfileReducer from './GetMedicineReminderProfileReducer';
+import getMedicineReminderViewReducer from './GetMedicineReminderViewReducer';
+import getMedicineAllDetailReducer from './GetMedicineReminderAllDetailReducer';
+import getAppointmentReminderProfileReducer from './GetAppointmentReminderProfileReducer';
+import addAppointmentReminderReducer from './AddAppointmentReminderReducer';
+import getAppointmentReminderAllDetailReducer from './GetAppointmentReminderAllDetailReducer';
+import getSubCategoryDataReducer from './getSubCategoryDataReducer';
+import getOtpReducer from './GetOtpReducer';
+import addSubcategoryReducer from './AddSubcategoryReducer';
+import addCareGiverReducer from './AddCareGiverReducer';
+import EditUserProfileReducer from './EditUserProfileReducer';
+import userLogOutReducer from './UserLogoutReducer';
+import getUserProfileReducer from './GetUserProfileReducer';
+import GetUserFavSubCategoryPdfReducer from './GetUserFavSubCategoryPdfReducer';
+import getTodayMedicationListReducer from './GetTodayMedicationListReducer';
+import addEditPlayerIdReducer from './AddEditPlayerIdReducer';
+import EditReminderStatusReducer from './EditReminderStatusReducer';
+import GetSubCatGraph from './SubCategoryGraphReducer';
+import GetCareGiverListReducer from './GetCareGiverListReducer';
+import addOtherScreenReducer from './AddOtherDataReducer';
+import DeleteCareGiverReducer from './DeleteCareGiverReducer';
+import GetUserMedicalJournalNoteReducer from './GetUserMedicalJournalNoteReducer';
+import GetDeleteMedicalJournalNoteReducer from './GetDeleteMedicalJournalNoteReducer';
+import getAllSymptomReducer from './GetAllSymptomReducer';
+import sendOtpReducer from './SendOtpReducer';
 
 const persistConfig = {
   key: 'root',
@@ -17,16 +55,52 @@ const appReducer = combineReducers({
   currentThemeMode: themeMode,
   currentLanguageMode: languageMode,
   loginReducer: loginReducer,
+  registerReducer: registerReducer,
+  userDataReducer: userDataReducer,
+  getReminderOptionReducer: getReminderOptionReducer,
+  getMedicalJournalNoteReducer: getMedicalJournalNoteReducer,
+  addEditMedicalJournalNoteReducer: addEditMedicalJournalNoteReducer,
+  getAllCategoryReducer: getAllCategoryReducer,
+  getAllCategoryAndSubCategoryReducer: getAllCategoryAndSubCategoryReducer,
+  getHelpSupportReducer: getHelpSupportReducer,
+  getUserFavoriteListReducer: getUserFavoriteListReducer,
+  addUserFavoriteReducer: addUserFavoriteReducer,
+  getAllSubCategoryReducer: getAllSubCategoryReducer,
+  getTipForDayReducer: getTipForDayReducer,
+  addMedicineReminderReducer: addMedicineReminderReducer,
+  getMedicineReminderProfileReducer: getMedicineReminderProfileReducer,
+  getMedicineReminderViewReducer: getMedicineReminderViewReducer,
+  getMedicineAllDetailReducer: getMedicineAllDetailReducer,
+  getAppointmentReminderProfileReducer: getAppointmentReminderProfileReducer,
+  addAppointmentReminderReducer: addAppointmentReminderReducer,
+  getAppointmentReminderAllDetailReducer:
+    getAppointmentReminderAllDetailReducer,
+  getSubCategoryDataReducer: getSubCategoryDataReducer,
+  getOtpReducer: getOtpReducer,
+  addSubcategoryReducer: addSubcategoryReducer,
+  addCareGiverReducer: addCareGiverReducer,
+  editUserProfileReducer: EditUserProfileReducer,
+  userLogOutReducer: userLogOutReducer,
+  getUserProfileReducer: getUserProfileReducer,
+  GetUserFavSubCategoryPdfReducer: GetUserFavSubCategoryPdfReducer,
+  getTodayMedicationListReducer: getTodayMedicationListReducer,
+  addEditPlayerIdReducer: addEditPlayerIdReducer,
+  addOtherScreenReducer: addOtherScreenReducer,
+  GetSubCatGraph: GetSubCatGraph,
+  GetCareGiverListReducer: GetCareGiverListReducer,
+  DeleteCareGiverReducer: DeleteCareGiverReducer,
+  GetUserMedicalJournalNoteReducer: GetUserMedicalJournalNoteReducer,
+  GetDeleteMedicalJournalNoteReducer: GetDeleteMedicalJournalNoteReducer,
+  getAllSymptomReducer: getAllSymptomReducer,
+  sendOtpReducer: sendOtpReducer,
 });
-
 const rootReducer = (state, action) => {
-  console.log('ACTIONS', action);
-
   // Clear all data in redux store to initial.
-  // if (action.type === 'USER_LOGOUT') {
-  //   AsyncStorage.removeItem('persist:root');
-  // }
+  if (action.type === 'USER_LOGOUT') {
+    AsyncStorage.removeItem('persist:root');
 
+    return appReducer(undefined, action);
+  }
   return appReducer(state, action);
 };
 

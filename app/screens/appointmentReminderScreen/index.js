@@ -1,0 +1,564 @@
+import React, {useState, useRef, useEffect} from 'react';
+import {View, Pressable, SafeAreaView} from 'react-native';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import {useDispatch} from 'react-redux';
+import {store} from '../../redux';
+import moment from 'moment';
+import {
+  getAppointmentReminderAllDetail,
+  addAppointmentReminder,
+} from 'redux-actions';
+import {
+  Text,
+  Screen,
+  InputBox,
+  Button,
+  Header,
+  Toast,
+  Loader,
+} from 'components';
+import {useNavigation} from '@react-navigation/native';
+import DatePicker from 'react-native-modern-datepicker';
+import {IcAddress, color, size, SearchValNew, IcCrossArrow} from 'theme';
+import * as styles from './styles';
+import {GOOGLE_API_KEY} from 'config';
+import {Portal} from 'react-native-portalize';
+import {Modalize} from 'react-native-modalize';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import {ConvertToUTC} from 'utils';
+export const AppointmentReminderScreen = animated => {
+  const dispatch = useDispatch();
+  const toastRef = useRef();
+  const screenRef = useRef();
+  const placesAutocompleteRef = useRef();
+  const navigation = useNavigation();
+  const [extra, setExtra] = useState(0);
+  const [showTime, setShowTime] = useState(false);
+  const [showTimeReminder, setShowTimeReminder] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(
+    new moment().format('YYYY-MM-DD'),
+  );
+  const [selectedDateErr, setSelectedDateErr] = useState('');
+  const [searchVal, setSearchVal] = useState('');
+  const [searchValErr, setSearchValErr] = useState('');
+  const [addressOne, setAddressOne] = useState('');
+  const [addressOneErr, setAddressOneErr] = useState('');
+  const [selectedTime, setSelectedTime] = useState('Time');
+  const [selectedTimeErr, setSelectedTimeErr] = useState('');
+  const [reminderTime, setReminderTime] = useState('Time');
+  const [selectedTimeErrSecond, setSelectedTimeErrSecond] = useState('');
+  const [userId, setUserId] = useState('');
+  const [doctorData, setDoctorData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const popUpRef = useRef();
+  const [doctorFilteredName, setDoctorFilteredName] = useState([]);
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  const onOpenPopUp = () => {
+    popUpRef.current?.open();
+  };
+
+  const toastMessage = msg => {
+    toastRef.current.show(msg);
+  };
+
+  const onClosePopUp = () => {
+    popUpRef.current?.close();
+  };
+  const getAppointmentTime = givenTime => {
+    setSelectedTime(moment(givenTime).format('HH:mm'));
+    setSelectedTimeErr('');
+    setShowTime(false);
+  };
+  const getReminderTime = givenTime => {
+    setReminderTime(moment(givenTime).format('HH:mm'));
+    setSelectedTimeErrSecond('');
+    setShowTimeReminder(false);
+  };
+
+  const validation = () => {
+    if (selectedDate === '') {
+      setSelectedDateErr('Enter Appointment Date');
+    }
+    if (searchVal === '') {
+      setSearchValErr('Enter doctor name');
+    }
+    // NOTE: for making address field optional
+    // if (addressOne === '') {
+    //   setAddressOneErr('Enter address');
+    // } else {
+    //   setAddressOneErr('');
+    // }
+    if (selectedTime === 'Time') {
+      setSelectedTimeErr('Select time');
+    }
+    if (reminderTime === 'Time') {
+      setSelectedTimeErrSecond('Select time');
+    }
+  };
+  const onDoctorNameType = val => {
+    setSearchVal(val);
+    let text = val.toLowerCase();
+    let address = '';
+    // console.log('doctorData ==> ', doctorData);
+    if (val.length >= 2) {
+      let filteredName = doctorData.filter(item => {
+        if (item.doctor_name.toLowerCase().includes(text)) {
+          address = item.doctor_address;
+        }
+        return item.doctor_name.toLowerCase().includes(text);
+      });
+
+      // console.log('address ==> ', address);
+      setDoctorFilteredName(filteredName);
+      setAddressOne(address);
+      setExtra(extra + 1);
+    } else {
+      setDoctorFilteredName([]);
+    }
+  };
+
+  const onGetDoctorDetails = async () => {
+    setLoading(true);
+    const getOtpResponse = await dispatch(getAppointmentReminderAllDetail());
+    let res = {status: false, message: 'Connection Error...!'};
+    if (getOtpResponse) {
+      res = getOtpResponse;
+    }
+    // console.log('getDoctorData res ==>', res);
+    if (res.status) {
+      setLoading(false);
+      // toastMessage(res.message);
+      setDoctorData(res.data.DoctorsData);
+      setExtra(extra + 1);
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+    }
+  };
+
+  const addAppointmentData = async () => {
+    setLoading(true);
+    let newDate = ConvertToUTC(selectedDate + ' ' + reminderTime);
+    let formData = new FormData();
+    formData.append('doctor_name', searchVal);
+    formData.append('date', selectedDate);
+    formData.append('doctor_address', addressOne);
+    formData.append('appointment_time', `${selectedTime.slice(0, 5)}:00`);
+    formData.append('user_id', userId);
+    formData.append('user_selected_time', `${reminderTime.slice(0, 5)}:00`);
+    formData.append('utc_date_and_time', `${newDate}`);
+    // return;
+    setExtra(extra + 1);
+    // console.log('fevUserBody', formData);
+    const SubCategoryResponse = await dispatch(
+      addAppointmentReminder(formData),
+    );
+    let res = {status: false, message: 'Connection Error...!'};
+    if (SubCategoryResponse) {
+      res = SubCategoryResponse;
+    }
+    // console.log('addUserFavoriteData res RESSS==>', res);
+
+    if (res.status) {
+      setLoading(false);
+      toastMessage(res.message);
+      setExtra(extra + 1);
+      onClosePopUp();
+      navigation.goBack();
+    } else {
+      setLoading(false);
+      toastMessage(res.message);
+    }
+  };
+
+  useEffect(() => {
+    onGetDoctorDetails();
+    setUserId(store.getState().userDataReducer.userDataResponse.userData.id);
+  }, []);
+  useEffect(() => {
+    let currentDateValue = new Date();
+    let day =
+      currentDateValue.getDate() > 9
+        ? currentDateValue.getDate()
+        : `0${currentDateValue.getDate()}`;
+    let month =
+      currentDateValue.getMonth() + 1 > 9
+        ? currentDateValue.getMonth() + 1
+        : `0${currentDateValue.getMonth() + 1}`;
+    let year = currentDateValue.getFullYear();
+    let newDate = year + '-' + month + '-' + day;
+    setCurrentDate(newDate);
+  }, []);
+
+  const onChangeSearchText = e => {
+    // console.log('SU AAVE CHE', e);
+    setAddressOne(e);
+    screenRef.current.scrollToPosition(0, size.deviceHeight * 0.5);
+  };
+
+  const renderRow = row => {
+    return (
+      <View>
+        <Text style={{color: 'black'}}>{row.description}</Text>
+      </View>
+    );
+  };
+  // useEffect(() => {
+  //   setAddressOneErr('');
+  // }, [addressOne]);
+
+  return (
+    <SafeAreaView style={styles.full()}>
+      <Toast
+        ref={toastRef}
+        position="top"
+        style={styles.toast()}
+        fadeOutDuration={200}
+        opacity={0.9}
+      />
+      {loading && <Loader />}
+      <Header
+        leftOnPress={() => {
+          navigation.goBack();
+        }}
+        isColor={true}
+        isLeftArrow={true}
+        isHeading={true}
+        title={'appointment_reminder_screen.title'}
+      />
+      <Screen screenRef={screenRef} style={styles.container()}>
+        <View style={styles.mainView()}>
+          <View style={styles.dataPickerStyle()}>
+            <DatePicker
+              date={new moment(selectedDate, 'YYYY-MM-DD')._d}
+              options={{
+                textHeaderColor: color.black,
+                textDefaultColor: color.black,
+                selectedTextColor: color.white,
+                mainColor: color.turquoise,
+                textSecondaryColor: color.turquoise,
+                borderColor: color.black,
+              }}
+              current={moment(new Date()).format('YYYY-MM-DD')}
+              selected={moment(new Date()).format('YYYY-MM-DD')}
+              onSelectedChange={date => {
+                // console.log('date=>', moment(date).format('YYYY-MM-DD'));
+                setSelectedDate(moment(date).format('YYYY-MM-DD'));
+                setSelectedDateErr('');
+                // setExtra(extra + 1);
+              }}
+              mode="calendar"
+              minuteInterval={30}
+              minimumDate={currentDate}
+              style={styles.calenderMain_view()}
+            />
+          </View>
+
+          <View style={styles.dateMainView()}>
+            <Text style={styles.textDate()}>{selectedDate}</Text>
+          </View>
+          {selectedDateErr ? (
+            <Text style={styles.textValidation()} text={selectedDateErr} />
+          ) : null}
+
+          <Pressable
+            style={styles.timeMainView()}
+            onPress={() => {
+              setShowTime(!showTime);
+            }}>
+            <Text
+              style={styles.textTimeNameDate()}
+              tx={'appointment_reminder_screen.appointmentTime'}
+            />
+            <Text style={styles.textTimeDate()}>{selectedTime} </Text>
+            {showTime && (
+              <DateTimePickerModal
+                isVisible={showTime}
+                mode="time"
+                locale="en_GB"
+                date={new moment(selectedDate, 'YYYY-MM-DD')._d}
+                onConfirm={val => {
+                  setReminderTime('Time');
+                  let currentDay = moment(new moment()).format('DD/MM/YYYY');
+                  let incomingDay = moment(new moment(val)).format(
+                    'DD/MM/YYYY',
+                  );
+                  if (currentDay === incomingDay) {
+                    if (
+                      moment(val, ['hh:mm']).format('hh:mm:ss') >
+                      moment(new moment()).format('hh:mm:ss')
+                    ) {
+                      getAppointmentTime(val);
+                    } else {
+                      alert('Please Select Future Time !!');
+                    }
+                  } else {
+                    getAppointmentTime(val);
+                  }
+                }}
+                onCancel={() => {
+                  setShowTime(false);
+                  setExtra(extra + 1);
+                }}
+              />
+            )}
+          </Pressable>
+          {selectedTimeErr ? (
+            <Text style={styles.textValidation()} text={selectedTimeErr} />
+          ) : null}
+          <Pressable
+            style={styles.timeMainView()}
+            onPress={() => {
+              setShowTimeReminder(!showTimeReminder);
+            }}>
+            <Text
+              style={styles.textTimeNameDate()}
+              tx={'appointment_reminder_screen.appointmentReminderTime'}
+            />
+            <Text style={styles.textTimeDate()}>{reminderTime} </Text>
+            {showTimeReminder && (
+              <DateTimePickerModal
+                isVisible={showTimeReminder}
+                mode="time"
+                locale="en_GB"
+                date={new moment(selectedDate, 'YYYY-MM-DD')._d}
+                onConfirm={val => {
+                  let currentDay = moment(new moment()).format('DD/MM/YYYY');
+                  let incomingDay = moment(new moment(val)).format(
+                    'DD/MM/YYYY',
+                  );
+                  if (selectedTime == 'Time') {
+                    alert(`Please Select Appointment Time !!`);
+                    return;
+                  }
+                  if (currentDay === incomingDay) {
+                    if (
+                      moment(val, ['hh:mm']).format('HH:mm:ss') <
+                      moment(selectedTime, ['hh:mm']).format('HH:mm:ss')
+                    ) {
+                      getReminderTime(val);
+                    } else {
+                      alert(
+                        `Please Select Appropriate Appointment Reminder Time`,
+                      );
+                    }
+                  } else {
+                    if (
+                      moment(val, ['hh:mm']).format('HH:mm:ss') <
+                      moment(selectedTime, ['hh:mm']).format('HH:mm:ss')
+                    ) {
+                      getReminderTime(val);
+                    } else {
+                      alert(
+                        `Please Select Appropriate Appointment Reminder Time`,
+                      );
+                    }
+                  }
+                }}
+                onCancel={() => {
+                  setShowTimeReminder(false);
+                  setExtra(extra + 1);
+                }}
+              />
+            )}
+          </Pressable>
+          {selectedTimeErrSecond ? (
+            <Text
+              style={styles.textValidation()}
+              text={selectedTimeErrSecond}
+            />
+          ) : null}
+          <InputBox
+            value={searchVal}
+            onChangeText={value => {
+              onDoctorNameType(value);
+              setSearchValErr('');
+              setExtra(extra + 1);
+            }}
+            mainContainerStyle={styles.inputMain()}
+            inputStyle={styles.inputTxt()}
+            leftIcon={true}
+            leftIconName={
+              <SearchValNew
+                height={size.moderateScale(20)}
+                width={size.moderateScale(20)}
+                fill={color.blue}
+              />
+            }
+            placeholder={'Doctor/Practice...'}
+          />
+          {searchValErr ? (
+            <Text style={styles.textValidation()} text={searchValErr} />
+          ) : null}
+          {doctorFilteredName.length > 0 &&
+            doctorFilteredName.map(item => {
+              return (
+                <Pressable
+                  style={styles.searchedValueList()}
+                  onPress={() => {
+                    setSearchVal(item.doctor_name);
+                    setAddressOne(item.doctor_address);
+                    setExtra(extra + 1);
+                    // setSpeciality(item.speciality);
+                    setSearchValErr('');
+                    setDoctorFilteredName([]);
+                    // Keyboard.dismiss;
+                  }}>
+                  <Text style={styles.inputTxt()}>{item.doctor_name}</Text>
+                </Pressable>
+              );
+            })}
+
+          <View style={styles.searchPlacesTxt()}>
+            <View
+              style={{
+                height: size.moderateScale(50),
+                justifyContent: 'center',
+              }}>
+              <IcAddress
+                height={size.moderateScale(20)}
+                width={size.moderateScale(20)}
+                fill={color.blue}
+              />
+            </View>
+            <GooglePlacesAutocomplete
+              ref={placesAutocompleteRef}
+              placeholder="search location"
+              query={GOOGLE_API_KEY}
+              fetchDetails={true}
+              returnKeyType={'search'}
+              listViewDisplayed="auto"
+              renderDescription={row => console.log(row)}
+              predefinedPlacesAlwaysVisible={true}
+              onPress={(data, details = null) => {
+                // console.log('details', details);
+                placesAutocompleteRef.current.setAddressText(
+                  details.formatted_address,
+                );
+                setAddressOne(details.formatted_address);
+                setExtra(extra + 1);
+              }}
+              onFail={error => console.error(error)}
+              getDefaultValue={() => ''}
+              textInputProps={{
+                InputComp: InputBox,
+                value: addressOne,
+                onChangeText: onChangeSearchText,
+                style: styles.searchPlacesInputTxt(),
+                placeholder: 'Search address...',
+                errorStyle: {color: 'red'},
+              }}
+              styles={{
+                textInput: {color: 'black'},
+              }}
+              renderRow={rowData => {
+                const title = rowData.structured_formatting.main_text;
+                const address = rowData.structured_formatting.secondary_text;
+                return (
+                  <View>
+                    <Text style={styles.searchTitle()}>{title}</Text>
+                    <Text style={styles.searchDis()}>{address}</Text>
+                  </View>
+                );
+              }}
+            />
+          </View>
+
+          {/* <GooglePlacesAutocomplete
+            // ref={placesAutocompleteRef}
+            placeholder="search location"
+            minLength={2}
+            autoFocus={true}
+            query={{
+              key: 'AIzaSyCYV4DmQ9JtvmR1jQ6rPSbLlPceRc_5qLI',
+              language: 'en',
+              types: 'geocode',
+            }}
+            fetchDetails={true}
+            returnKeyType={'search'}
+            listViewDisplayed="auto"
+            onFail={object => console.log(object)}
+            renderDescription={row => renderRow(row)}
+            onFail={error => console.error(error)}
+            predefinedPlacesAlwaysVisible={true}
+            onPress={(data, details = null) => {
+              console.log('details :', details);
+              placesAutocompleteRef.current.setAddressText(
+                details.formatted_address,
+              );
+            }}
+            getDefaultValue={() => ''}
+            // styles={{
+            //   textInputContainer: styles.searchPlacesTxt(),
+            //   textInput: {color: 'black'},
+            // }}
+            // renderRightButton={() => <SearchBtn />}
+            styles={styles.googleStyle()}
+          /> */}
+
+          {addressOneErr ? (
+            <Text style={styles.textValidation()} text={addressOneErr} />
+          ) : null}
+        </View>
+        <Portal>
+          <Modalize
+            panGestureEnabled={false}
+            withHandle={false}
+            closeOnOverlayTap={false}
+            modalStyle={styles.modalStyle()}
+            ref={popUpRef}
+            tapGestureEnabled={false}
+            scrollViewProps={{
+              showsVerticalScrollIndicator: false,
+              scrollEnabled: false,
+            }}>
+            <View style={styles.modelize_view()}>
+              <Pressable
+                onPress={() => onClosePopUp()}
+                style={styles.crossSvgStyle()}>
+                <IcCrossArrow width={18} height={18} fill={color.grayIcon} />
+              </Pressable>
+
+              {/* <Text
+                tx={'appointment_reminder_screen.appointmentConfirmed'}
+                style={styles.txtConfirm()}
+              /> */}
+              <Text
+                tx={'appointment_reminder_screen.yourAppointmentWillBeginAt'}
+                style={styles.txtBegin()}
+              />
+              <View style={styles.separator()}></View>
+              <Text text={`On ${selectedDate}`} style={styles.txtDate()} />
+              <Text text={`${selectedTime}`} style={styles.txtDate1()} />
+              <Text text={`${searchVal}`} style={styles.txtDoctor()} />
+              <Text text={`${addressOne}`} style={styles.txtBegin()} />
+              <Button
+                nameTx="appointment_reminder_screen.confirm"
+                buttonStyle={styles.btnModel()}
+                buttonText={styles.textAddButton()}
+                onPress={() => {
+                  addAppointmentData();
+                  setExtra(extra + 1);
+                }}
+              />
+            </View>
+          </Modalize>
+        </Portal>
+      </Screen>
+      <Button
+        nameTx="appointment_reminder_screen.saveNow"
+        buttonStyle={styles.addButtonStyle()}
+        buttonText={styles.textAddButton()}
+        onPress={() => {
+          selectedDate &&
+          searchVal &&
+          selectedTime != 'Time' &&
+          reminderTime != 'Time'
+            ? onOpenPopUp()
+            : validation();
+        }}
+      />
+    </SafeAreaView>
+  );
+};

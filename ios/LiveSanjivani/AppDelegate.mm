@@ -3,9 +3,9 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-
+#import <React/RCTLinkingManager.h>
 #import <React/RCTAppSetupUtils.h>
-
+#import <Firebase.h>
 #if RCT_NEW_ARCH_ENABLED
 #import <React/CoreModulesPlugins.h>
 #import <React/RCTCxxBridgeDelegate.h>
@@ -26,9 +26,32 @@
 #endif
 
 @implementation AppDelegate
+- (BOOL)application:(UIApplication *)application
+   openURL:(NSURL *)url
+   options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [RCTLinkingManager application:application openURL:url options:options];
+}
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity
+ restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler
+{
+ return [RCTLinkingManager application:application
+                  continueUserActivity:userActivity
+                    restorationHandler:restorationHandler];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  for (NSString* family in [UIFont familyNames])
+{
+  NSLog(@"font family%@", family);
+  for (NSString* name in [UIFont fontNamesForFamilyName: family])
+  {
+    NSLog(@"font name: %@", name);
+  }
+}
+  [FIRApp configure];
   RCTAppSetupPrepareApp(application);
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
@@ -41,13 +64,17 @@
   bridge.surfacePresenter = _bridgeAdapter.surfacePresenter;
 #endif
 
-  UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"LiveSanjivani", nil);
+  UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"Live Sanjivani", nil);
 
   if (@available(iOS 13.0, *)) {
     rootView.backgroundColor = [UIColor systemBackgroundColor];
   } else {
     rootView.backgroundColor = [UIColor whiteColor];
   }
+  
+  // Force DatePicker locale to current language (for: 24h or 12h format, full day names etc...)
+  NSString *currentLanguage = [[NSLocale preferredLanguages] firstObject];
+  [[UIDatePicker appearance] setLocale:[[NSLocale alloc]initWithLocaleIdentifier:currentLanguage]];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
